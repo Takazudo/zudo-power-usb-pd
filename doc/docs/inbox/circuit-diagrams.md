@@ -70,91 +70,138 @@ USB-C Connector              CH224Q (DFN-10-EP)              LED Status Indicato
 ## Diagram2: USB-PD +15V → +13.5V Buck Converter (LM2596S-ADJ #1)
 
 ```
-+15V ─────┬─── L1: 100µH ──┬─── D1 ──┬─── C3: 470µF/25V ──┬─→ +13.5V/1.3A
-          │    (4.5A)      │   SS34  │   (Input Filter)   │
-          │                │    ↓    │                    │
-          │           ┌────┴─────────┴──┐                 │
-          │           │5  VIN      VOUT │4────────────────┤
-          └───────────┤3  ON        FB  │2────────┬───────┘
-                      │1  GND           │         │
-                      └─────────────────┘         │
-                              │                   │
-                             GND              ┌────┴───┐
-                                              │ R1     │ 10kΩ (actual 13.53V)
-                                              │ 10kΩ   │
-                                              └────┬───┘
-                                              ┌────┴───┐
-                                              │ R2     │ 1kΩ
-                                              │ 1kΩ    │
-                                              └────┬───┘
-                                                   │
-                                                  GND
+                                LM2596S-ADJ (U2)
+                                ┌─────────────────┐
++15V ──────────┬────────────────┤5 VIN            │
+               │                │                 │
+               │         ┌──────┤3 ON             │
+               │         │      │                 │
+               │         │      │            VOUT ├4───┬─→ L1 ──┬─→ C3 ──┬─→ +13.5V/1.3A
+               │         │      │                 │    │ 100µH  │  470µF │   (Output)
+               │         │      │              FB ├2───┼────────┼────────┤
+               │         │      │                 │    │        │        │
+               │         │      │             GND ├1─┐ │        │        │
+               │         │      └─────────────────┘  │ │        │        │
+               │         │                           │ │        │        │
+              C5        C6                          GND│        │        │
+             100µF     100nF                           │        │        │
+          (input)   (decouple)                         │        │        │
+               │         │                             │        │        │
+              GND       GND                            │        │        │
+                                                       │        │        │
+                                           D1: SS34    │        │        │
+                                          Schottky ────┘       GND      GND
+                                           (Flyback)
+                                              │
+                                             GND
+
+                        Feedback Voltage Divider:
+                        +13.5V ─── R1 (10kΩ) ─┬─ R2 (1kΩ) ─── GND
+                                               │
+                                               └──→ FB (pin 2)
 ```
 
 ### Connection List
 
-**Power Lines:**
+**Input Power:**
 - `+15V input` → `U2 (LM2596S-ADJ) pin 5 (VIN)`
-- `+15V input` → `U2 pin 3 (ON)` (enable)
-- `U2 pin 4 (VOUT)` → `L1 (100µH)` → `+13.5V output`
+- `+15V input` → `U2 pin 3 (ON)` (enable - ties VIN to ON for always-on operation)
 
-**Inductor and Diode:**
-- `L1 (100µH, 4.5A)`: Between `U2 VOUT` and `+13.5V output`
-- `D1 (SS34 Schottky)`: Cathode to `L1-VOUT junction`, Anode to `GND` (flyback)
+**Output Path (Buck Converter Topology):**
+1. `U2 pin 4 (VOUT)` → `L1 (100µH, 4.5A)` → Junction point
+2. Junction point → `C3 (470µF/25V)` → `GND` (output filter capacitor)
+3. Junction point → `+13.5V output` (to next stage)
 
-**Capacitors:**
-- `C3 (470µF/25V)`: `+13.5V output` ⟷ `GND` (output filter)
+**Flyback Diode (Freewheeling Diode):**
+- `D1 (SS34 Schottky)`:
+  - Cathode → Junction between `VOUT (pin 4)` and `L1`
+  - Anode → `GND`
+  - Purpose: Provides path for inductor current when switch turns off
 
-**Feedback Network:**
-- `U2 pin 2 (FB)` → `R1 (10kΩ)` → `+13.5V output`
+**Input Capacitors:**
+- `C5 (100µF electrolytic)`: `+15V input` ⟷ `GND` (bulk input filter)
+- `C6 (100nF ceramic)`: `+15V input` ⟷ `GND` (high-frequency decoupling)
+
+**Output Capacitor:**
+- `C3 (470µF/25V electrolytic)`: `+13.5V output` ⟷ `GND` (output filtering and ripple reduction)
+
+**Feedback Network (Voltage Setting):**
+- `+13.5V output` → `R1 (10kΩ)` → `U2 pin 2 (FB)`
 - `U2 pin 2 (FB)` → `R2 (1kΩ)` → `GND`
-- Voltage divider ratio: `VOUT = 1.23V × (1 + R1/R2) = 13.53V`
+- Voltage divider ratio: `VOUT = 1.23V × (1 + R1/R2) = 1.23V × (1 + 10kΩ/1kΩ) = 13.53V`
 
 **Ground:**
 - `U2 pin 1 (GND)` → `System GND`
+- All capacitor negative terminals → `System GND`
+- `D1 anode` → `System GND`
+
+**Key Points:**
+- The inductor L1 is on the **OUTPUT side** of VOUT, not the input side
+- D1 cathode connects to the junction between VOUT and L1 (the "switching node")
+- When U2's internal switch is ON: Current flows VIN → Switch → VOUT → L1 → C3 → Load
+- When U2's internal switch is OFF: Inductor current flows through D1 (L1 → D1 → GND → L1)
 
 ## Diagram3: +15V → +7.5V Buck Converter (LM2596S-ADJ #2)
 
 ```
-+15V ─────┬─── L2: 100µH ──┬─── D2 ──┬─── C4: 470µF/10V ──┬─→ +7.5V/0.6A
-          │    (4.5A)      │   SS34  │   (Input Filter)   │
-          │                │    ↓    │                    │
-          │           ┌────┴─────────┴──┐                 │
-          │           │5  VIN      VOUT │4────────────────┤
-          └───────────┤3  ON        FB  │2────────┬───────┘
-                      │1  GND           │         │
-                      └─────────────────┘         │
-                              │                   │
-                             GND              ┌────┴───┐
-                                              │ R3     │ 5.1kΩ (actual 7.50V)
-                                              │ 5.1kΩ  │
-                                              └────┬───┘
-                                              ┌────┴───┐
-                                              │ R4     │ 1kΩ
-                                              │ 1kΩ    │
-                                              └────┬───┘
-                                                   │
-                                                  GND
+                                LM2596S-ADJ (U3)
+                                ┌─────────────────┐
++15V ──────────┬────────────────┤5 VIN            │
+               │                │                 │
+               │         ┌──────┤3 ON             │
+               │         │      │                 │
+               │         │      │            VOUT ├4───┬─→ L2 ──┬─→ C4 ──┬─→ +7.5V/0.6A
+               │         │      │                 │    │ 100µH  │  470µF │   (Output)
+               │         │      │              FB ├2───┼────────┼────────┤
+               │         │      │                 │    │        │        │
+               │         │      │             GND ├1─┐ │        │        │
+               │         │      └─────────────────┘  │ │        │        │
+               │         │                           │ │        │        │
+              C7        C8                          GND│        │        │
+             100µF     100nF                           │        │        │
+          (input)   (decouple)                         │        │        │
+               │         │                             │        │        │
+              GND       GND                            │        │        │
+                                                       │        │        │
+                                           D2: SS34    │        │        │
+                                          Schottky ────┘       GND      GND
+                                           (Flyback)
+                                              │
+                                             GND
+
+                        Feedback Voltage Divider:
+                        +7.5V ─── R3 (5.1kΩ) ─┬─ R4 (1kΩ) ─── GND
+                                               │
+                                               └──→ FB (pin 2)
 ```
 
 ### Connection List
 
-**Power Lines:**
+**Input Power:**
 - `+15V input` → `U3 (LM2596S-ADJ) pin 5 (VIN)`
-- `+15V input` → `U3 pin 3 (ON)` (enable)
-- `U3 pin 4 (VOUT)` → `L2 (100µH)` → `+7.5V output`
+- `+15V input` → `U3 pin 3 (ON)` (enable - ties VIN to ON for always-on operation)
 
-**Inductor and Diode:**
-- `L2 (100µH, 4.5A)`: Between `U3 VOUT` and `+7.5V output`
-- `D2 (SS34 Schottky)`: Cathode to `L2-VOUT junction`, Anode to `GND` (flyback)
+**Output Path (Buck Converter Topology):**
+1. `U3 pin 4 (VOUT)` → `L2 (100µH, 4.5A)` → Junction point
+2. Junction point → `C4 (470µF/10V)` → `GND` (output filter capacitor)
+3. Junction point → `+7.5V output` (to LM7805 linear regulator)
 
-**Capacitors:**
-- `C4 (470µF/10V)`: `+7.5V output` ⟷ `GND` (output filter)
+**Flyback Diode:**
+- `D2 (SS34 Schottky)`:
+  - Cathode → Junction between `VOUT (pin 4)` and `L2`
+  - Anode → `GND`
+
+**Input Capacitors:**
+- `C7 (100µF electrolytic)`: `+15V input` ⟷ `GND` (bulk input filter)
+- `C8 (100nF ceramic)`: `+15V input` ⟷ `GND` (high-frequency decoupling)
+
+**Output Capacitor:**
+- `C4 (470µF/10V electrolytic)`: `+7.5V output` ⟷ `GND` (output filtering)
 
 **Feedback Network:**
-- `U3 pin 2 (FB)` → `R3 (5.1kΩ)` → `+7.5V output`
+- `+7.5V output` → `R3 (5.1kΩ)` → `U3 pin 2 (FB)`
 - `U3 pin 2 (FB)` → `R4 (1kΩ)` → `GND`
-- Voltage divider ratio: `VOUT = 1.23V × (1 + R3/R4) = 7.50V`
+- Voltage divider ratio: `VOUT = 1.23V × (1 + R3/R4) = 1.23V × (1 + 5.1kΩ/1kΩ) = 7.50V`
 
 **Ground:**
 - `U3 pin 1 (GND)` → `System GND`
@@ -175,12 +222,12 @@ USB-C Connector              CH224Q (DFN-10-EP)              LED Status Indicato
           OPEN ─────┤7   OSC       │   │ │
                     └──────────────┘   │ │
                                        │ │
-                     C9: 10µF Ceramic  │ │
+                    C12: 10µF Ceramic  │ │
                     ┌───────────────────┘ │
                     │                     │
                     └─────────────────────┘
 
-                    C10: 10µF Ceramic
+                    C13: 10µF Ceramic
                     ┌─────────────────────────┐
                     │                         │
             -15V ───┼─────────────────────────┼─── GND
@@ -188,10 +235,10 @@ USB-C Connector              CH224Q (DFN-10-EP)              LED Status Indicato
                     └─────────────────────────┘
 ```
 
-**Flying capacitor (C9) connects directly between PIN1 and PIN4**
+**Flying capacitor (C12) connects directly between PIN1 and PIN4**
 
 ```
-      Flying Capacitor C9 (10µF)
+      Flying Capacitor C12 (10µF)
            ┌─────────┐
 PIN1 ──────┤+       -├────── PIN4
 (CAP+)     └─────────┘     (CAP-)
@@ -205,8 +252,8 @@ PIN1 ──────┤+       -├────── PIN4
 - `U4 pin 5 (V-)` → `-15V output`
 
 **Charge Pump Capacitors:**
-- `C9 (10µF Ceramic)`: `U4 pin 1 (CAP+)` ⟷ `U4 pin 4 (CAP-)` (flying capacitor)
-- `C10 (10µF Ceramic)`: `-15V output` ⟷ `GND` (output filter)
+- `C12 (10µF Ceramic)`: `U4 pin 1 (CAP+)` ⟷ `U4 pin 4 (CAP-)` (flying capacitor)
+- `C13 (10µF Ceramic)`: `-15V output` ⟷ `GND` (output filter)
 
 **Control Pins:**
 - `U4 pin 6 (LV)` → `Open` (normal voltage mode, not low voltage)
@@ -216,56 +263,83 @@ PIN1 ──────┤+       -├────── PIN4
 - `U4 pin 3 (GND)` → `System GND`
 
 **Operation:**
-- Charge pump switches `C9` between `+15V` and `GND` to generate `-15V`
+- Charge pump switches `C12` between `+15V` and `GND` to generate `-15V`
 - Output voltage: `VOUT ≈ -(VIN - 1V) = -14V typical`
 
 ## Diagram5: -15V → -13.5V Buck Converter (LM2596S-ADJ #3)
 
 ```
--15V ─────┬─── L3: 100µH ──┬─── D3 ──┬─── C7: 470µF/25V ──┬─→ -13.5V/0.9A
-          │    (4.5A)      │   SS34  │   (Input Filter)   │
-          │                │    ↓    │                    │
-          │           ┌────┴─────────┴──┐                 │
-          │           │5  VIN      VOUT │4────────────────┤
-          └───────────┤3  ON        FB  │2────────┬───────┘
-                      │1  GND           │         │
-                      └─────────────────┘         │
-                              │                   │
-                             GND              ┌────┴───┐
-                                              │ R5     │ 10kΩ (actual -13.53V)
-                                              │ 10kΩ   │
-                                              └────┬───┘
-                                              ┌────┴───┐
-                                              │ R6     │ 1kΩ
-                                              │ 1kΩ    │
-                                              └────┬───┘
-                                                   │
-                                                  GND
+                                LM2596S-ADJ (U5)
+                                ┌─────────────────┐
+-15V ──────────┬────────────────┤5 VIN            │
+               │                │                 │
+               │         ┌──────┤3 ON             │
+               │         │      │                 │
+               │         │      │            VOUT ├4───┬─→ L3 ──┬─→ C11 ──┬─→ -13.5V/0.9A
+               │         │      │                 │    │ 100µH  │  470µF  │   (Output)
+               │         │      │              FB ├2───┼────────┼─────────┤
+               │         │      │                 │    │        │         │
+               │         │      │             GND ├1─┐ │        │         │
+               │         │      └─────────────────┘  │ │        │         │
+               │         │                           │ │        │         │
+              C9        C10                         GND│        │         │
+             100µF     100nF                           │        │         │
+          (input)   (decouple)                         │        │         │
+               │         │                             │        │         │
+              GND       GND                            │        │         │
+                                                       │        │         │
+                                           D3: SS34    │        │         │
+                                          Schottky ────┘       GND       GND
+                                           (Flyback)
+                                              │
+                                             GND
+
+                        Feedback Voltage Divider:
+                        -13.5V ─── R5 (10kΩ) ─┬─ R6 (1kΩ) ─── GND
+                                               │
+                                               └──→ FB (pin 2)
+
+Note: For negative voltage regulation, all voltages are referenced to GND (0V).
+      The buck converter operates with negative voltages, but the topology is identical.
 ```
 
 ### Connection List
 
-**Power Lines:**
+**Input Power:**
 - `-15V input` → `U5 (LM2596S-ADJ) pin 5 (VIN)`
-- `-15V input` → `U5 pin 3 (ON)` (enable)
-- `U5 pin 4 (VOUT)` → `L3 (100µH)` → `-13.5V output`
+- `-15V input` → `U5 pin 3 (ON)` (enable - ties VIN to ON for always-on operation)
 
-**Inductor and Diode:**
-- `L3 (100µH, 4.5A)`: Between `U5 VOUT` and `-13.5V output`
-- `D3 (SS34 Schottky)`: Cathode to `L3-VOUT junction`, Anode to `GND` (flyback)
+**Output Path (Buck Converter Topology):**
+1. `U5 pin 4 (VOUT)` → `L3 (100µH, 4.5A)` → Junction point
+2. Junction point → `C11 (470µF/25V)` → `GND` (output filter capacitor)
+3. Junction point → `-13.5V output` (to LM7912 linear regulator)
 
-**Capacitors:**
-- `C7 (470µF/25V)`: `-13.5V output` ⟷ `GND` (output filter)
+**Flyback Diode:**
+- `D3 (SS34 Schottky)`:
+  - Cathode → Junction between `VOUT (pin 4)` and `L3`
+  - Anode → `GND`
+
+**Input Capacitors:**
+- `C9 (100µF electrolytic)`: `-15V input` ⟷ `GND` (bulk input filter)
+  - Polarity: Negative terminal to `-15V`, positive terminal to `GND`
+- `C10 (100nF ceramic)`: `-15V input` ⟷ `GND` (high-frequency decoupling)
+
+**Output Capacitor:**
+- `C11 (470µF/25V electrolytic)`: `-13.5V output` ⟷ `GND` (output filtering)
+  - Polarity: Negative terminal to `-13.5V`, positive terminal to `GND`
 
 **Feedback Network:**
-- `U5 pin 2 (FB)` → `R5 (10kΩ)` → `-13.5V output`
+- `-13.5V output` → `R5 (10kΩ)` → `U5 pin 2 (FB)`
 - `U5 pin 2 (FB)` → `R6 (1kΩ)` → `GND`
-- Voltage divider ratio: `VOUT = -1.23V × (1 + R5/R6) = -13.53V`
+- Voltage divider ratio: `VOUT = -1.23V × (1 + R5/R6) = -1.23V × (1 + 10kΩ/1kΩ) = -13.53V`
 
 **Ground:**
-- `U5 pin 1 (GND)` → `System GND`
+- `U5 pin 1 (GND)` → `System GND` (0V reference point)
 
-**Note:** For negative voltage regulation, all voltages are referenced to GND (0V)
+**Important Notes:**
+- All voltages are negative and referenced to GND (0V)
+- Electrolytic capacitors must have correct polarity (negative terminal to negative voltage)
+- The buck converter topology is identical to positive voltage versions, just with negative voltages
 
 ## Diagram6: +13.5V → +12V Linear Regulator
 
