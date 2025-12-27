@@ -1,0 +1,45 @@
+```
+                                          |
+                     LM2596S-ADJ (U5)       |
+                     +---------------+       |
+-15V ---+------------+5 VIN          |       |
+        |            |               |       |
+        |     +------+3 ON           |       |
+        |     |      |               |       |
+        |     |      |          VOUT +4------+-> L3 ---+-> -13.5V/0.9A Output
+        |     |      |                      100uH    |
+        |     |      |            FB +2-> Tap        +-> R5 --+-> Tap -> R6 -> GND
+        |     |      |                               |  10kΩ  |         1kΩ
+        |     |      |           GND +1-> GND        |        |
+        |     |      +---------------+               +-> C11 -> GND
+        |     |                                          470uF
+       C9    C10                                         |
+      100uF 100nF                                       GND
+        |     |                                      Schottky
+       GND   GND                                     D3 (SS34)
+
+Note: For negative voltage regulation, all voltages are referenced to GND (0V).
+      The buck converter operates with negative voltages, but the topology is identical.
+
+      FB pin 2 connects to the tap point between R5 and R6.
+      This tap voltage = VOUT × R6/(R5+R6) = -13.5V × 1kΩ/11kΩ = -1.23V
+      However, the LM2596 measures this relative to its VIN (which is -15V).
+      The FB pin sees: (-1.23V) - (-15V) = +13.77V above VIN, which gives ~1.23V regulation.
+
+Connections:
+  Input power:    -15V -> C9 (100uF) -> GND  (input filter, parallel)
+                  -15V -> U5 pin 5 (VIN)
+  Decoupling:     VIN -> C10 (100nF) -> GND  (high-freq decoupling, parallel)
+  Enable:         ON pin 3 -> tied high (always enabled)
+
+  Output stage:   VOUT (pin 4) -> L3 (100uH inductor) -> -13.5V Output
+  Flyback diode:  Switching node (between pin 4 and L3) -> D3 (SS34 Schottky) -> GND
+  Output filter:  Output -> C11 (470uF) -> GND  (parallel, NOT in series!)
+
+  Voltage divider (sets output voltage):
+                  Output -> R5 (10kΩ) -> Tap point -> R6 (1kΩ) -> GND
+  Feedback:       FB pin 2 -> Tap point (junction between R5 and R6)
+                  The divider creates a tap voltage for negative rail regulation
+
+  Ground:         GND pin 1 -> System ground (shared with all components)
+```
