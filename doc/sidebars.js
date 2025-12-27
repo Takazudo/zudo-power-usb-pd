@@ -23,6 +23,9 @@ const sidebars = {
     'inbox/parts-list',
     'inbox/quick-reference',
   ],
+  partsSidebar: [
+    'parts/index',
+  ],
 };
 
 export default sidebars;

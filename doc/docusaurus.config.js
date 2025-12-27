@@ -82,6 +82,12 @@ const config = {
             position: 'left',
             label: 'INBOX',
           },
+          {
+            type: 'doc',
+            docId: 'parts/index',
+            position: 'left',
+            label: 'Parts',
+          },
         ],
       },
       footer: {
