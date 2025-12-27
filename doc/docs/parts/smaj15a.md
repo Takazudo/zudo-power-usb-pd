@@ -6,6 +6,10 @@ sidebar_position: 2
 
 High-performance Transient Voltage Suppressor (TVS) diode for overvoltage protection on +12V and -12V power rails.
 
+![SMAJ15A Package - SMA (DO-214AC)](/footprints/SMAJ15A.png)
+
+**📄 [Download Datasheet (PDF)](/datasheets/SMAJ-datasheet.pdf)**
+
 ## Overview
 
 The SMAJ15A is a unidirectional TVS diode that provides fast-response overvoltage protection for sensitive electronics. In this power supply design, it protects the +12V and -12V output rails from voltage transients and ESD events.

@@ -6,6 +6,10 @@ sidebar_position: 2
 
 A high-efficiency 3A step-down switching regulator used for intermediate voltage generation through DC-DC conversion.
 
+![LM2596S-ADJ Package - TO-263-5](/footprints/LM2596S-ADJ.png)
+
+**📄 [Download Datasheet (PDF)](/datasheets/LM2596S-datasheet.pdf)**
+
 ## Overview
 
 The LM2596S-ADJ is a 3A output capable step-down (Buck) switching regulator from Texas Instruments. In this project, three LM2596S-ADJ units are used to convert the 15V voltage obtained from USB-C PD into various intermediate voltages.

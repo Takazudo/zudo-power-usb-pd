@@ -6,6 +6,10 @@ sidebar_position: 3
 
 Ultra-low capacitance ESD protection for 5V power rail with dual independent protection channels.
 
+![PRTR5V0U2X Package - SOT-143](/footprints/PRTR5V0U2X.png)
+
+**📄 [Download Datasheet (PDF)](/datasheets/PRTR5V0U2X-datasheet.pdf)**
+
 ## Overview
 
 The PRTR5V0U2X is a bidirectional, dual-channel TVS diode array designed for ultra-low capacitance ESD protection. Its extremely low capacitance (1pF typical) makes it ideal for protecting high-speed signal lines, though in this project it protects the +5V power rail.
