@@ -13,30 +13,44 @@ Complete circuit configuration shown in stages.
 ## Diagram1: USB-PD Power Supply Section
 
 ```
-USB-C Connector              CH224Q (DFN-10-EP)              LED Status Indicator
-+-----------+                +--------------+                 +-------------+
-|           |                |              |                 |  +5V Rail   |
-|VBUS (B9,A9) --+------------+1. VHV        |                 |  (from D7)  |
-|           |   |            |8. VBUS       +-+-> 15V Output  |      |      |
-|           |   |            |              | |               |    330Ω     |
-|CC1 (A5)   +----------------+7. CC1        | |               |   (R1)      |
-|           |                |              | |               |      |      |
-|CC2 (B5)   +----------------+6. CC2        | |               |  Green LED  |
-|           |                |              | |               |   (LED1)    |
-|GND (B12,A12) --+-----------+GND           | |               |      |      |
-+-----------+   |            |11. EP        +<-+               |  PG --------+
-                |            |              |                 +-------------+
-                |            |9. CFG1       +<-- GND
-              C1|            |2. CFG2/SCL   +<-- Open
-          10uF/25V           |3. CFG3/SDA   +<-- Open
-                |            |10. PG        +-----------------+
-                |            |4. DP         |    (N/C)
-              C2|            |5. DM         |    (N/C)
-          10uF/25V           +--------------+
-                |                   |
-                +-------------------+
-                |
-               GND
+┌───────────────┐                                       ┌────────────────────┐
+│ J1 (USB-C)    │                                       │   U1 (CH224Q)      │
+│               │                                       │                    │
+│ CC1 (A5)      ├───────────────────────────────────────┤7. CC1              │
+│               │                                       │                    │
+│ CC2 (B5)      ├───────────────────────────────────────┤6. CC2              │
+│               │                                       │                    │
+│ VBUS (B9,A9)  ├────────────┬──────────────┬───────────┤1. VIN              │
+│               │            │              │           │8. VBUS      ───────┼─→ +15V Output
+│               │       ┌────┴───┐     ┌────┴────┐      │9. CFG1      ←──── GND (15V)
+│               │       │   C1   │     │   C2    │      │2. CFG2/SCL  ←──── Open
+│               │       │  10µF  │     │  100nF  │      │3. CFG3/SDA  ←──── Open
+│               │       └────┬───┘     └────┬────┘      │10. PG       ───────┼─→ See LED circuit below
+│               │            │              │           │4. DP        (N/C)  │
+│               │            │              │           │5. DM        (N/C)  │
+│ GND (B12,A12) ├────────────┴──────────────┴───────────┤GND                 │
+│               │                                       │11. EP              │
+└───────────────┘                                       └────────────────────┘
+```
+
+### LED Status Indicator Circuit (Power Good)
+
+```
+┌─────────────┐     ┌─────────┐     ┌──────────┐
+│ +5V Rail    │     │   R1    │     │  LED1    │
+│ (from D7)   ├─────┤  330Ω   ├─────┤  Green   ├─────┐
+└─────────────┘     └─────────┘     └──────────┘     │
+                                                     │
+                                    ┌────────────────────┐
+                                    │   U1 (CH224Q)      │
+                                    │10. PG (Open-drain) │
+                                    └────────┬───────────┘
+                                             │
+                                            GND
+
+Note: PG pin pulls LOW when power negotiation succeeds, allowing current to flow:
+      +5V → R1 (330Ω) → LED1 → PG pin → GND
+LED current: I = (5V - 2.2V) / 330Ω ≈ 8.5mA
 ```
 
 ### Connection List
