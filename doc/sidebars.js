@@ -25,38 +25,14 @@ const sidebars = {
   ],
   partsSidebar: [
     'parts/index',
-    {
-      type: 'category',
-      label: 'Stage 1: USB-PD Input',
-      items: [
-        'parts/ch224d',
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Stage 2: DC-DC Conversion',
-      items: [
-        'parts/lm2596s-adj',
-        'parts/icl7660m',
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Stage 3: Linear Regulators',
-      items: [
-        'parts/l7812cv',
-        'parts/l7805abd2t',
-        'parts/cj7912',
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Stage 4: Protection',
-      items: [
-        'parts/smaj15a',
-        'parts/prtr5v0u2x',
-      ],
-    },
+    'parts/ch224d',
+    'parts/lm2596s-adj',
+    'parts/icl7660m',
+    'parts/l7812cv',
+    'parts/l7805abd2t',
+    'parts/cj7912',
+    'parts/smaj15a',
+    'parts/prtr5v0u2x',
   ],
 };
 
