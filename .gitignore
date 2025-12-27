@@ -8,3 +8,29 @@
 /doc/.docusaurus
 /doc/build
 /doc/.cache-loader
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor and IDE
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+
+# Backup files
+*.bak
+*.tmp
+*.orig
