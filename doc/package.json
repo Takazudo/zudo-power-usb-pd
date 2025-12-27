@@ -18,7 +18,8 @@
     "format": "prettier --check \"**/*.{ts,tsx,js,jsx,json,css,md,mdx}\" \"!node_modules/**\" \"!.docusaurus/**\" \"!build/**\"",
     "format:fix": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css,md,mdx}\" \"!node_modules/**\" \"!.docusaurus/**\" \"!build/**\"",
     "check": "pnpm run typecheck && pnpm run lint && pnpm run format",
-    "check:fix": "pnpm run lint:fix && pnpm run format:fix"
+    "check:fix": "pnpm run lint:fix && pnpm run format:fix",
+    "prepare": "cd .. && husky doc/.husky || true"
   },
   "dependencies": {
     "@docusaurus/core": "3.9.2",
@@ -44,6 +45,8 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "globals": "^16.5.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "prettier": "^3.7.4",
     "typescript": "^5.9.3"
   },
@@ -61,5 +64,13 @@
   },
   "engines": {
     "node": ">=20.0"
+  },
+  "lint-staged": {
+    "docs/**/*.{md,mdx}": [
+      "node sub-packages/mdx-formatter/src/cli.js --write"
+    ],
+    "**/*.{ts,tsx,js,jsx,json,css}": [
+      "prettier --write"
+    ]
   }
 }
