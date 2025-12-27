@@ -34,3 +34,7 @@ env/
 *.bak
 *.tmp
 *.orig
+
+# Temporary working directory
+__inbox/
+!__inbox/README.md
