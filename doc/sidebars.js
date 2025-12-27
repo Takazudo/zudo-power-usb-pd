@@ -34,6 +34,10 @@ const sidebars = {
     'parts/smaj15a',
     'parts/prtr5v0u2x',
   ],
+  learningSidebar: [
+    'learning/index',
+    'learning/open-drain-pg-pin',
+  ],
 };
 
 export default sidebars;

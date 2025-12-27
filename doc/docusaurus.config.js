@@ -88,6 +88,12 @@ const config = {
             position: 'left',
             label: 'Parts',
           },
+          {
+            type: 'doc',
+            docId: 'learning/index',
+            position: 'left',
+            label: 'Learning',
+          },
         ],
       },
       footer: {
