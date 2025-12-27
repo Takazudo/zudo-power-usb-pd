@@ -37,6 +37,7 @@ const sidebars = {
   learningSidebar: [
     'learning/index',
     'learning/open-drain-pg-pin',
+    'learning/buck-converter-feedback',
   ],
 };
 
