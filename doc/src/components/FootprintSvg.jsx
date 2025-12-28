@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import CircuitDialog from './CircuitDialog';
 
-export default function CircuitSvg({ src: SvgComponent, alt, padding = '10px' }) {
+export default function FootprintSvg({
+  src: SvgComponent,
+  alt,
+  padding = '20px',
+  minWidth = '200px',
+  minHeight = '200px'
+}) {
   // In Docusaurus, SVGs are imported as React components via SVGR
   // So 'src' is actually a React component, not a URL string
 
@@ -35,6 +41,10 @@ export default function CircuitSvg({ src: SvgComponent, alt, padding = '10px' })
           borderRadius: '2px',
           cursor: 'pointer',
           transition: 'border-color 0.2s',
+          display: 'inline-block',
+          minWidth,
+          minHeight,
+          background: 'oklch(86.9% 0.005 56.366)',
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.borderColor = '#888';
@@ -45,7 +55,15 @@ export default function CircuitSvg({ src: SvgComponent, alt, padding = '10px' })
       >
         <SvgComponent
           aria-label={alt}
-          style={{ display: 'block', maxWidth: '100%', pointerEvents: 'none' }}
+          style={{
+            display: 'block',
+            width: '100%',
+            height: '100%',
+            minWidth,
+            minHeight,
+            objectFit: 'contain',
+            pointerEvents: 'none'
+          }}
         />
       </div>
 
@@ -55,7 +73,9 @@ export default function CircuitSvg({ src: SvgComponent, alt, padding = '10px' })
           height: '90vh',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'center'
+          justifyContent: 'center',
+          background: 'oklch(86.9% 0.005 56.366)',
+          padding: '20px',
         }}>
           <SvgComponent
             aria-label={alt}
