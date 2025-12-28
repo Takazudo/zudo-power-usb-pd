@@ -1,0 +1,28 @@
+{
+  "inbox/index": "INBOX Overview",
+  "inbox/current-status": "Current Status",
+  "inbox/overview": "Project Overview",
+  "inbox/circuit-diagrams": "Circuit Diagrams",
+  "inbox/footprint-preview": "Footprint Preview",
+  "inbox/quick-reference": "Quick Reference",
+  
+  "parts/index": "Parts Overview",
+  "parts/bom": "Bill of Materials (BOM)",
+  "parts/ch224d": "CH224D - USB Power Delivery Controller",
+  "parts/lm2596s-adj": "LM2596S-ADJ - Buck Converter",
+  "parts/icl7660m": "ICL7660M - Voltage Inverter",
+  "parts/l7812cv": "L7812CV - +12V Linear Regulator",
+  "parts/l7805abd2t": "L7805ABD2T - +5V Linear Regulator",
+  "parts/cj7912": "CJ7912 - -12V Linear Regulator",
+  "parts/smaj15a": "SMAJ15A - TVS Diode",
+  "parts/prtr5v0u2x": "PRTR5V0U2X - ESD Protection",
+  
+  "learning/index": "Learning Overview",
+  "learning/open-drain-pg-pin": "Open Drain PG Pin",
+  "learning/buck-converter-feedback": "Buck Converter Feedback",
+  
+  "knowledge/index": "Knowledge Base",
+  "knowledge/kicad-footprint-generation": "KiCad Footprint Generation",
+  "knowledge/create-footprint-svg": "Create Footprint SVG Files",
+  "knowledge/create-circuit-svg": "Create Circuit SVG Files"
+}
