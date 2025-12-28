@@ -241,3 +241,98 @@ This documentation is part of a Docusaurus site. When referencing circuit diagra
 - Keep technical accuracy paramount
 - Use English for all text and labels
 - **Preview all diagrams in monospace** before committing
+
+## Circuit Design Workflow
+
+When creating new circuit diagrams for the documentation, follow this systematic workflow:
+
+### Step 1: Collect Parts Data
+
+- Use the `/jlcpcb` skill to search for and verify component availability
+- Document part numbers, specifications, and JLCPCB stock codes
+- Verify voltage ratings, current ratings, and package types
+- Record key specifications (resistance values, capacitance, inductance, etc.)
+
+### Step 2: Create ASCII Art Draft
+
+- Start with ASCII art circuit diagram in markdown code blocks
+- Follow all ASCII Art Best Practices (see above)
+- **Verify all parts connections** - create detailed connection list
+- Ensure electrical correctness before proceeding
+- Preview in monospace font using headless-browser skill
+- This draft serves as the specification for the final diagram
+
+### Step 3: Generate Schemdraw Diagram
+
+- Use the `/schemdraw-circuit-generator` skill to create professional circuit diagram
+- Provide the connection list from Step 2 as the specification
+- The skill will generate Python code and SVG output
+- Dark theme (black background, white lines) is standard
+- Output SVG files go to `docs/_fragments/` directory
+- Python source files go to `diagram-sources/` directory
+
+### Step 4: Integrate into Documentation
+
+- Import the SVG in MDX files using the `CircuitSvg` component:
+  ```jsx
+  import CircuitSvg from '@site/docs/_fragments/CircuitSvg';
+  import BuckU2Diagram from '@site/docs/_fragments/buck-u2-diagram.svg';
+
+  <CircuitSvg src={BuckU2Diagram} alt="LM2596S Buck Converter U2" />
+  ```
+- The component provides click-to-enlarge functionality (90vw × 90vh fullscreen)
+- Hide the ASCII art draft using HTML `<details>` element:
+  ```html
+  <details>
+  <summary>View ASCII art version</summary>
+
+  ```
+  [ASCII diagram here]
+  ```
+
+  </details>
+  ```
+- Keep the connection list visible for reference
+
+### Step 5: Verify and Commit
+
+- Test the click-to-enlarge functionality in browser
+- Verify SVG renders correctly at both thumbnail and fullscreen sizes
+- Ensure all connections match the specification
+- Check that ASCII art is properly hidden but accessible
+- Commit both SVG and Python source files together
+
+### Available Skills
+
+- `/jlcpcb` - Search JLCPCB parts database (~7M components)
+- `/schemdraw-circuit-generator` - Generate professional circuit diagrams
+- `/headless-browser` - Preview diagrams and check rendering
+- `/ascii-circuit-diagram-creator` - Validate ASCII circuit syntax (if needed)
+
+### File Organization
+
+```
+doc/
+├── docs/
+│   ├── _fragments/
+│   │   ├── CircuitSvg.jsx          # Click-to-enlarge component
+│   │   ├── CircuitDialog.jsx       # Fullscreen dialog component
+│   │   └── *.svg                   # Generated diagrams
+│   └── inbox/
+│       └── circuit-diagrams.md     # Documentation with diagrams
+└── diagram-sources/
+    └── *.py                        # Schemdraw Python sources
+```
+
+### Quality Checklist
+
+Before considering a circuit diagram complete:
+
+- ✅ Parts verified in JLCPCB database
+- ✅ Connection list is accurate and complete
+- ✅ ASCII art draft follows all golden rules
+- ✅ Schemdraw SVG generated with dark theme
+- ✅ Click-to-enlarge works correctly
+- ✅ ASCII art hidden in `<details>` element
+- ✅ Connection list remains visible
+- ✅ Both SVG and Python source committed
