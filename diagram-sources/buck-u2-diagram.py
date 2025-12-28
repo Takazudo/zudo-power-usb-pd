@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 LM2596S-ADJ Buck Converter: +15V → +13.5V
-Complete circuit with dark theme (black background, white foreground, Arial font)
+Complete circuit with transparent background, black foreground, Arial font
 """
 
 import schemdraw
@@ -10,8 +10,8 @@ from schemdraw import elements as elm
 with schemdraw.Drawing(
     font='Arial',         # Sans-serif font
     fontsize=11,
-    color='white',        # Foreground: white
-    bgcolor='black'       # Background: black
+    color='black',        # Foreground: black
+    transparent=True      # Transparent background
 ) as d:
     d.config(unit=3)
 
@@ -124,4 +124,4 @@ with schemdraw.Drawing(
     output_path = os.path.join(script_dir, '../docs/_fragments/buck-u2-diagram.svg')
     d.save(output_path)
 
-print("✓ Buck converter diagram generated with dark theme")
+print("✓ Buck converter diagram generated with transparent background")
