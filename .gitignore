@@ -35,6 +35,5 @@ env/
 *.tmp
 *.orig
 
-# Temporary working directory
+# Temporary working directory (gitignored, use for working files)
 __inbox/
-!__inbox/README.md
