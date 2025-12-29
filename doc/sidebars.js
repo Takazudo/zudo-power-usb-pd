@@ -39,6 +39,7 @@ const sidebars = {
     'learning/index',
     'learning/open-drain-pg-pin',
     'learning/buck-converter-feedback',
+    'learning/linear-regulator-capacitors',
   ],
   knowledgeSidebar: [
     'knowledge/index',
