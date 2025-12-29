@@ -3,8 +3,6 @@ sidebar_position: 3
 ---
 
 import BuckU2Diagram from '../_fragments/buck-u2-diagram.mdx';
-import BuckU3Diagram from '../_fragments/buck-u3-diagram.mdx';
-import BuckU5Diagram from '../_fragments/buck-u5-diagram.mdx';
 
 # Circuit Diagrams
 
@@ -182,7 +180,46 @@ Output Filter:
 
 ## Diagram4: -15V → -13.5V Buck Converter (LM2596S-ADJ #3)
 
-<BuckU5Diagram />
+```
+                    ┌─────────────────────────┐
+-15V IN ────────────┤5 VIN              VOUT 4├────┐
+                    │                          │    │
+                 ┌──┤3 ON                      │    │    L3 (100µH)
+                 │  │                          │    └─────[inductor]─────┬──── -13.5V OUT
+                 │  │   LM2596S-ADJ (U5)       │                         │
+                 │  │                          │         D3 (SS34)       │
+                 │  │                     FB 2─┼───┐     Schottky        │
+                 │  │                          │   │     ┌───┐           │
+              ┌──┼──┤1 GND                     │   │  ┌──┤ ├──┐          │
+              │  │  └─────────────────────────┘   │  │  └─┬─┘          │
+             GND │                                 │  │    │            │
+                 │                                 │  │   GND           │
+              -15V (tie ON to VIN)                 │  │                 │
+                                                   │  │                 │
+Input Capacitors:                                  │  │                 │
+-15V ──┬─────────────────────────────────────────────┘                 │
+       │                                            │                   │
+       ├─ C9 (100µF)  ※ Negative to -15V          │                   │
+       │     │          Positive to GND            │                   │
+       │    GND                                     │                   │
+       │                                            │                   │
+       └─ C10 (100nF)                               │                   │
+             │                                      │                   │
+            GND                                     │                   │
+                                                    │                   │
+Feedback Network:                                   │                   │
+-13.5V OUT ──┬─── R5 (10kΩ) ───┬─── R6 (1kΩ) ─── GND                  │
+             │                  │                                       │
+             │                  └─────────────────────────────────────────┘
+             │                       Tap (to FB pin 2)
+             │
+Output Capacitor:
+-13.5V ──┬──────────────────────
+         │
+         └─ C11 (470µF)  ※ Negative to -13.5V
+               │            Positive to GND
+              GND
+```
 
 ### Connection List
 
