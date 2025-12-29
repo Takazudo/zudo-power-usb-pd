@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import CircuitDialog from './CircuitDialog';
+import EnlargeButton from './EnlargeButton';
 
 export default function FootprintSvg({
   src: SvgComponent,
@@ -45,6 +46,7 @@ export default function FootprintSvg({
           minWidth,
           minHeight,
           background: 'oklch(86.9% 0.005 56.366)',
+          position: 'relative',
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.borderColor = '#888';
@@ -65,6 +67,7 @@ export default function FootprintSvg({
             pointerEvents: 'none'
           }}
         />
+        <EnlargeButton />
       </div>
 
       <CircuitDialog isOpen={isDialogOpen} onClose={handleClose} alt={alt}>

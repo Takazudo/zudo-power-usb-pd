@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import CircuitDialog from './CircuitDialog';
+import EnlargeButton from './EnlargeButton';
 
 export default function CircuitSvg({ src: SvgComponent, alt, padding = '20px' }) {
   // In Docusaurus, SVGs are imported as React components via SVGR
@@ -36,6 +37,7 @@ export default function CircuitSvg({ src: SvgComponent, alt, padding = '20px' })
           cursor: 'pointer',
           transition: 'border-color 0.2s',
           background: 'oklch(86.9% 0.005 56.366)',
+          position: 'relative',
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.borderColor = '#888';
@@ -48,6 +50,7 @@ export default function CircuitSvg({ src: SvgComponent, alt, padding = '20px' })
           aria-label={alt}
           style={{ display: 'block', maxWidth: '100%', pointerEvents: 'none' }}
         />
+        <EnlargeButton />
       </div>
 
       <CircuitDialog isOpen={isDialogOpen} onClose={handleClose} alt={alt}>
