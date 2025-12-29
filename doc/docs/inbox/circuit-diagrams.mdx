@@ -196,47 +196,53 @@ Output Filter Capacitor (connected in parallel):
 ## Diagram4: -15V → -13.5V Buck Converter (LM2596S-ADJ #3)
 
 ```
-Input Stage:                IC:                       Output Stage:
+LM2596S-ADJ IC:
+                    ┌──────────────┐
+-15V ───────────────┤1 VIN     OUT 2├───── SW Node
+                    │              │
+                 ┌──┤3 GND      FB 4├──── FB Tap
+                 │  │              │
+                GND │    5 ON/OFF  │
+                    │   (floating) │
+                    └──────────────┘
 
--15V ──┬────────────────────┐
-       │                    │                      L3 (100µH)
-       ├─ C9 (100µF)        │  ┌──────────────┐  ┌───[inductor]───┬─→ -13.5V OUT
-       │     │              └──┤1 VIN     OUT 2├──┤                │
-       │    GND                │              │                    │
-       │                       │  LM2596S-ADJ │   D3 (SS34)        │
-       ├─ C10 (100nF)          │     (U5)     │   ┌──┐            │
-       │     │              ┌──┤3 GND      FB 4├┐ │  ├─┐          │
-       │    GND             │  │              │ │ └──┘ │          │
-       │                    │  │  5 ON/OFF    │ │      │          │
-       │                   GND │  (floating)  │ │     GND         │
-       │                       └──────────────┘ │                 │
-       │                                        │                 │
-       │                                        │                 │
-       │                        Feedback Divider:                 │
-       │                                                          │
-       └────────────────────────────────────────────────────────┬─┤
-                                                                │ │
--13.5V OUT ──────────────────────────────────────────────────────┤
-                                                                  │
-              ┌───────────────────────────────────────────────────┘
-              │  (FB Tap to pin 4)
-              │
-              ├─ R5 (10kΩ)
-              │     │
-              ├─ R6 (1kΩ)
-              │     │
-              │    GND
-              │
-              └─ C11 (470µF)  ※ Polarity: Negative to -13.5V
-                    │            Positive to GND
-                   GND
+Switching Node and Inductor:
+                                 ┌─────────────┐
+SW Node ────────────┬────────────┤ L3 (100µH)  ├──────────── -13.5V OUT
+                    │            └─────────────┘
+                    │
+                    └─── D3 (SS34 Schottky)
+                         Cathode
+                            │
+                         Anode
+                            │
+                           GND
 
-Key Connections:
-- Pin 1 (VIN): Connected to -15V input
-- Pin 3 (GND): Connected to system ground
-- Pin 4 (FB): Connected to feedback voltage divider tap
-- Pin 5 (ON/OFF): Left floating (internal pull-up enables chip)
-- D3: Freewheeling diode (cathode to OUT, anode to GND)
+Input Filter Capacitors:
+-15V ───┬─── To VIN
+        │
+        ├─ C9 (100µF electrolytic)
+        │    │  ※ Negative to -15V, Positive to GND
+        │   GND
+        │
+        └─ C10 (100nF ceramic)
+             │
+            GND
+
+Feedback Voltage Divider:
+-13.5V OUT ─┬─── Output
+            │
+            ├─ R5 (10kΩ)
+            │    │
+            │ FB Tap ─── To FB Pin 4
+            │    │
+            ├─ R6 (1kΩ)
+            │    │
+            │   GND
+            │
+            └─ C11 (470µF electrolytic)
+                 │  ※ Negative to -13.5V, Positive to GND
+                GND
 ```
 
 ### Connection List
