@@ -51,19 +51,30 @@ import ICL7660 from '@site/static/footprints-svg/SOP-8_L4.9-W3.9-P1.27-LS6.0-BL.
 **LCSC:** C356724
 **Part:** ICL7660M/TR
 
+### 100µH Inductor - Power Inductor
+
+import Inductor from '@site/static/footprints-svg/IND-SMD_L13.8-W12.8.svg';
+
+<FootprintSvg src={Inductor} alt="100µH Power Inductor" minWidth="300px" minHeight="300px" />
+
+**Package:** SMD Power Inductor (13.8mm × 12.8mm)
+**LCSC:** C19268674
+**Part:** CYA1265-100UH (4.5A rated)
+**Usage:** L1, L2, L3 (energy storage for LM2596S buck converters)
+
 ---
 
 ## Linear Regulator Stage
 
-### LM7812 - +12V Regulator
+### L7812CD2T-TR - +12V Regulator
 
-import LM7812 from '@site/static/footprints-svg/TO-220-3_L10.0-W4.5-P2.54-L.svg';
+import LM7812 from '@site/static/footprints-svg/TO-263-2_L10.0-W9.1-P5.08-LS15.2-TL.svg';
 
-<FootprintSvg src={LM7812} alt="LM7812 TO-220-3 Package" minWidth="250px" minHeight="250px" />
+<FootprintSvg src={LM7812} alt="L7812CD2T TO-263-2 Package" minWidth="300px" minHeight="200px" />
 
-**Package:** TO-220-3 (10.0mm × 4.5mm)
-**LCSC:** C2914
-**Part:** L7812CV-DG
+**Package:** TO-263-2 (10.0mm × 9.1mm)
+**LCSC:** C13456
+**Part:** L7812CD2T-TR
 
 ### LM7805 - +5V Regulator
 
@@ -98,17 +109,27 @@ import C0603 from '@site/static/footprints-svg/C0603.svg';
 <FootprintSvg src={C0603} alt="0603 Capacitor" minWidth="200px" minHeight="150px" />
 
 **Package:** 0603 (1.6mm × 0.8mm)
-**Used for:** Ceramic capacitors (10µF, 470nF, 100nF)
+**Used for:** Ceramic capacitors (470nF), feedback resistors (1kΩ, 5.1kΩ, 10kΩ)
 
-#### Small Electrolytic Capacitor
+#### 0805 Capacitor
 
-import CapSmall from '@site/static/footprints-svg/CAP-SMD_BD4.0-L4.3-W4.3-LS5.0-FD.svg';
+import C0805 from '@site/static/footprints-svg/C0805.svg';
 
-<FootprintSvg src={CapSmall} alt="Small SMD Electrolytic Capacitor" minWidth="250px" minHeight="250px" />
+<FootprintSvg src={C0805} alt="0805 Capacitor" minWidth="200px" minHeight="150px" />
 
-**Package:** SMD Electrolytic (Ø4.0mm, 4.3mm × 4.3mm)
-**LCSC:** C335982
-**Value:** 470µF 10V
+**Package:** 0805 (2.0mm × 1.25mm)
+**Used for:** Ceramic capacitors (10µF, 100nF), LEDs (Green, Blue, Red)
+**LCSC:** C15850 (10µF 25V), C49678 (100nF 50V)
+
+#### D6.3mm Electrolytic Capacitor
+
+import CapD63 from '@site/static/footprints-svg/CAP-SMD_BD6.3-L6.6-W6.6-FD.svg';
+
+<FootprintSvg src={CapD63} alt="D6.3mm SMD Electrolytic Capacitor" minWidth="250px" minHeight="250px" />
+
+**Package:** SMD Electrolytic (Ø6.3mm, 6.6mm × 6.6mm)
+**LCSC:** C335982 (470µF 10V), C2907 (100µF 25V)
+**Usage:** Most common electrolytic in this design - used for linear regulator I/O and DC-DC outputs
 
 #### Large Electrolytic Capacitor
 
@@ -146,6 +167,54 @@ import LED0603 from '@site/static/footprints-svg/LED0603-RD.svg';
 
 ## Protection Components
 
+### PTC Resettable Fuses
+
+#### 1206 PTC Fuse (0.75A)
+
+import PTC1206 from '@site/static/footprints-svg/F1206.svg';
+
+<FootprintSvg src={PTC1206} alt="1206 PTC Resettable Fuse" minWidth="250px" minHeight="200px" />
+
+**Package:** 1206 (3.2mm × 1.6mm)
+**LCSC:** C883128
+**Part:** BSMD1206-075-16V (0.75A 16V)
+**Usage:** PTC2 (+5V overload protection)
+
+#### 1812 PTC Fuse (1.1A)
+
+import PTC1812 from '@site/static/footprints-svg/F1812.svg';
+
+<FootprintSvg src={PTC1812} alt="1812 PTC Resettable Fuse" minWidth="250px" minHeight="200px" />
+
+**Package:** 1812 (4.5mm × 3.2mm)
+**LCSC:** C883148
+**Part:** BSMD1812-110-16V (1.1A 16V)
+**Usage:** PTC1, PTC3 (±12V overload protection)
+
+### SMD Fuses
+
+#### 2410 SMD Fuse (2A)
+
+import Fuse2410 from '@site/static/footprints-svg/FUSE-SMD_L6.1-W2.6.svg';
+
+<FootprintSvg src={Fuse2410} alt="2410 SMD Fuse" minWidth="250px" minHeight="150px" />
+
+**Package:** 2410 (6.1mm × 2.6mm)
+**LCSC:** C5183824
+**Part:** 6125FA2A (2A 250V)
+**Usage:** F1 (+12V short circuit protection)
+
+#### SMD Fuse 1.5A (10.1x3.1mm)
+
+import FuseLarge from '@site/static/footprints-svg/FUSE-SMD_L10.1-W3.1.svg';
+
+<FootprintSvg src={FuseLarge} alt="Large SMD Fuse" minWidth="300px" minHeight="150px" />
+
+**Package:** SMD (10.1mm × 3.1mm)
+**LCSC:** C95352
+**Part:** 1.5A 250V Fast-Acting Fuse
+**Usage:** F2, F3 (±5V/±12V short circuit protection)
+
 ### Schottky Diode (SMA)
 
 import DiodeSMA from '@site/static/footprints-svg/SMA_L4.4-W2.8-LS5.4-RD.svg';
@@ -156,14 +225,26 @@ import DiodeSMA from '@site/static/footprints-svg/SMA_L4.4-W2.8-LS5.4-RD.svg';
 **LCSC:** C8678
 **Part:** SS34 (3A 40V Schottky)
 
-### TVS Diode (SOD-123FL)
+### TVS Diodes
 
-import DiodeSOD from '@site/static/footprints-svg/SOD-123FL_L2.8-W1.8-LS3.7-RD.svg';
+#### SMAJ15A - 15V TVS Diode (SMA)
 
-<FootprintSvg src={DiodeSOD} alt="SOD-123FL Diode Package" minWidth="200px" minHeight="150px" />
+import TVSSMA from '@site/static/footprints-svg/D-FLAT_L4.3-W2.6-LS5.3-RD.svg';
 
-**Package:** SOD-123FL (2.8mm × 1.8mm)
-**Used for:** TVS protection diodes
+<FootprintSvg src={TVSSMA} alt="SMAJ15A SMA TVS Diode" minWidth="250px" minHeight="150px" />
+
+**Package:** SMA (4.3mm × 2.6mm)
+**LCSC:** C571368
+**Part:** SMAJ15A (15V Unidirectional TVS)
+**Usage:** TVS1, TVS3 (±12V overvoltage protection)
+
+#### PRTR5V0U2X - 5V TVS Diode (SOT-143)
+
+**Package:** SOT-143
+**LCSC:** C5199240
+**Part:** PRTR5V0U2X (5V Bidirectional TVS)
+**Usage:** TVS2 (+5V overvoltage protection)
+**Note:** Footprint not available - download failed from EasyEDA API
 
 ---
 
