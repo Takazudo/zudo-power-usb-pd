@@ -138,22 +138,35 @@ LED current: I = (5V - 2.2V) / 330Ω ≈ 8.5mA
 ## Diagram3: +15V → -15V Voltage Inverter (ICL7660)
 
 ```
-                  ┌────────────────────┐
-+15V ─────────────┤2,8 V+         CAP+ │1─────┐
-                  │                    │      │
-                  │   ICL7660M/TR      │      │  C12
-GND ──────────────┤3  GND         CAP- │4─────┤  10µF Ceramic
-                  │                    │      │  (Flying Capacitor)
-OPEN ─────────────┤6  LV           V-  │5─────┴────── -15V OUT
-                  │                    │
-OPEN ─────────────┤7  OSC              │
-                  └────────────────────┘
+Input Power:
++15V ─────┬──────────────────────────────────── V+ (Pin 2, 8)
+          │
+          │         ┌────────────────────────┐
+          └─────────┤2,8 V+                  │
+                    │                        │
+GND ───────────────┤3   GND                 │
+                    │                        │
+OPEN ──────────────┤6   LV                  │
+                    │                        │
+OPEN ──────────────┤7   OSC                 │
+                    │                        │
+                    │   ICL7660M/TR          │
+                    │                        │
+                    │                  CAP+ 1├──────┐
+                    │                        │      │
+                    │                        │    C12 (10µF)
+                    │                        │    Flying
+                    │                        │    Capacitor
+                    │                  CAP- 4├──────┘
+                    │                        │
+                    │                   V- 5├──────── -15V OUT
+                    └────────────────────────┘
 
-Flying Capacitor (Charge Pump):
-PIN1 (CAP+) ────┬──── C12 (10µF) ────┬──── PIN4 (CAP-)
+NOTE: C12 connects ONLY between Pin 1 (CAP+) and Pin 4 (CAP-)
+      Pin 5 (V-) outputs the inverted voltage (-15V)
 
-Output Filter:
--15V ───────────┬──── C13 (10µF) ────┬──── GND
+Output Filter Capacitor:
+-15V OUT ────┬──── C13 (10µF) ────┬──── GND
 ```
 
 ### Connection List
