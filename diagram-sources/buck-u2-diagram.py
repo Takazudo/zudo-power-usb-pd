@@ -52,11 +52,13 @@ with schemdraw.Drawing(
     d.push()
 
     elm.Line().right(2.0)
-    elm.Dot()
     junction3 = d.here
 
     # Connect junction3 to VIN only (ON pin left floating)
     elm.Line().at(junction3).to(ic.VIN)
+
+    # Extend ON pin lead to the left (double the default leadlen)
+    elm.Line().at(ic.ON).left(1.0)
 
     # C6 from junction2 (closer to IC - high-freq decoupling)
     d.pop()
