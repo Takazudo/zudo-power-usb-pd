@@ -4,6 +4,8 @@ sidebar_position: 3
 
 import BuckU2Diagram from '../_fragments/buck-u2-diagram.mdx';
 import BuckU3Diagram from '../_fragments/buck-u3-diagram.mdx';
+import CircuitSvg from '@site/src/components/CircuitSvg';
+import Diagram1Svg from '@site/static/circuits/diagram1-usb-pd.svg';
 
 # Circuit Diagrams
 
@@ -12,6 +14,15 @@ Complete circuit configuration shown in stages.
 ## Diagram1: USB-PD Power Supply Section
 
 ### Diagram1-1: USB-C Connector to CH224D IC (Complete Connection)
+
+<CircuitSvg
+  src={Diagram1Svg}
+  alt="USB-C Connector J1"
+  padding="10px"
+/>
+
+<details>
+<summary>View ASCII art version</summary>
 
 ```
 USB-C Connector J1 (6-pin power-only):
@@ -149,6 +160,8 @@ Step-by-step PD negotiation sequence:
 CRITICAL: VBUS voltage changes from 5V to 15V on the same pin!
           There is NO separate output pin.
 ```
+
+</details>
 
 ### Diagram1-4: Power Good (PG) LED Indicator
 
