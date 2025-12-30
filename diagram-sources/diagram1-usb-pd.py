@@ -28,7 +28,7 @@ with schemdraw.Drawing(
         ],
         size=(3, 12),  # Explicit size: width=2, height=12
         leadlen=1.0
-    ).label('J1\nUSB-C', loc='center', fontsize=10, ofst=(-0.5, 0.5))
+    ).label('J1\nUSB-C', loc='center', fontsize=14, ofst=(0, 1.5))
 
     # U1 CH224D IC (QFN-20) - USB PD Sink Controller
     # Left side pins aligned with J1 matching pins
@@ -39,22 +39,23 @@ with schemdraw.Drawing(
             elm.IcPin(name='CC2', pin='10', side='left', slot='3/8'),   # Aligned with J1 CC2
             elm.IcPin(name='CC1', pin='11', side='left', slot='4/8'),   # Aligned with J1 CC1
             elm.IcPin(name='VBUS', pin='2', side='left', slot='8/8'),   # Aligned with J1 VBUS1
-            # Right side pins (top to bottom) - inverted slots for right side
-            elm.IcPin(name='GATE', pin='5', side='right', slot='11/11'),
-            elm.IcPin(name='NMOS#', pin='6', side='right', slot='10/11'),
-            elm.IcPin(name='ISP', pin='14', side='right', slot='9/11'),
-            elm.IcPin(name='ISN', pin='15', side='right', slot='8/11'),
-            elm.IcPin(name='DRV', pin='1', side='right', slot='7/11'),
-            elm.IcPin(name='CFG1', pin='19', side='right', slot='6/11'),
-            elm.IcPin(name='CFG2', pin='13', side='right', slot='5/11'),
-            elm.IcPin(name='CFG3', pin='12', side='right', slot='4/11'),
-            elm.IcPin(name='PG', pin='3', side='right', slot='3/11'),
-            elm.IcPin(name='DP', pin='8', side='right', slot='2/11'),
-            elm.IcPin(name='DM', pin='9', side='right', slot='1/11'),
+            # Right side pins (top to bottom) - updated to /12 slots to include VDD
+            elm.IcPin(name='GATE', pin='5', side='right', slot='12/12'),
+            elm.IcPin(name='NMOS#', pin='6', side='right', slot='11/12'),
+            elm.IcPin(name='ISP', pin='14', side='right', slot='10/12'),
+            elm.IcPin(name='ISN', pin='15', side='right', slot='9/12'),
+            elm.IcPin(name='DRV', pin='1', side='right', slot='8/12'),
+            elm.IcPin(name='CFG1', pin='19', side='right', slot='7/12'),
+            elm.IcPin(name='CFG2', pin='13', side='right', slot='6/12'),
+            elm.IcPin(name='CFG3', pin='12', side='right', slot='5/12'),
+            elm.IcPin(name='PG', pin='3', side='right', slot='4/12'),
+            elm.IcPin(name='DP', pin='8', side='right', slot='3/12'),
+            elm.IcPin(name='DM', pin='9', side='right', slot='2/12'),
+            elm.IcPin(name='VDD', pin='7', side='right', slot='1/12'),  # Internal regulator output
         ],
         size=(4, 12),  # Explicit size to match J1 height
         leadlen=1.0
-    ).anchor('center').at((j1.VBUS1[0] + 10.0, j1.center[1])).label('U1\nCH224D', loc='center', fontsize=10)
+    ).anchor('center').at((j1.VBUS1[0] + 10.0, j1.center[1])).label('U1\nCH224D', loc='center', fontsize=14, ofst=(-0.5, 1.5))
 
     # VBUS connection: J1 VBUS1 - dot - dot - dot - dot - U1 VBUS
     elm.Dot().at(j1.VBUS1)  # First dot at J1 VBUS1
@@ -159,6 +160,11 @@ with schemdraw.Drawing(
     elm.LED().right().reverse().label('D1', loc='bot', ofst=(0, -0.5))
     elm.Resistor(scale=0.7).right().label('R10\n330Ω', loc='top', ofst=0.5)
     elm.Dot(open=True).label('+5V IN', loc='top', ofst=(0, 0.2))
+
+    # VDD pin (pin 7) with 1µF decoupling capacitor
+    elm.Line().at(u1.VDD).right(1.0)
+    elm.Capacitor().down(2.0).label('C3\n1µF', loc='bot', ofst=0.5)
+    elm.Ground()
 
     # Save to doc/static/circuits/
     import os
