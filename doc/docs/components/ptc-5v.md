@@ -1,0 +1,126 @@
+---
+sidebar_position: 11
+---
+
+# mSMD110-33V - +5V Rail PTC Resettable Fuse
+
+Auto-reset overcurrent protection for +5V power rail with 1.1A hold current.
+
+- 🔗 [View on JLCPCB: C70119](https://jlcpcb.com/partdetail/C70119)
+- 📄 Datasheet: Contact manufacturer
+
+## Overview
+
+The mSMD110-33V is a PTC resettable fuse providing automatic overcurrent protection for the +5V power rail. It protects the L7805 linear regulator and downstream modules from overcurrent conditions while automatically resetting after cooling.
+
+## Part Information
+
+| Parameter | Value |
+|-----------|-------|
+| **JLCPCB Part Number** | [C70119](https://jlcpcb.com/partdetail/C70119) |
+| **Manufacturer Part Number** | mSMD110-33V |
+| **Package** | 1812 (4.5mm x 3.2mm) |
+| **Stock** | 44,459 units (excellent availability) |
+| **Estimated Price** | ~$0.10-0.15 |
+| **Type** | Resettable Polymeric PTC |
+
+## Electrical Specifications
+
+### Current Ratings
+
+| Parameter | Value | Unit | Conditions |
+|-----------|-------|------|------------|
+| **Hold Current** | 1.1 | A | Maximum safe continuous current |
+| **Trip Current** | ~2.2 | A | Typical (2x hold current) |
+| **Voltage Rating** | 33 | V | Maximum voltage |
+
+### Key Characteristics
+
+| Parameter | Value | Unit |
+|-----------|-------|------|
+| **Initial Resistance** | &lt;0.05Ω | (typical) |
+| **Trip Time @ 2x Hold** | 1-5 | s |
+| **Reset Time** | 30-60 | s |
+| **Operating Temp** | -40 to +85 | °C |
+
+## Circuit Integration
+
+### Protection Architecture
+
+```
+Layer 1: USB-PD Adapter → Overcurrent protection
+Layer 2: LM2596S #2 (+7.5V) → Current limiting ~3-5A
+Layer 3: LM7805 Linear Regulator → Current limiting ~1A, thermal shutdown
+Layer 4: This PTC (1.1A hold / 2.2A trip) → Auto-reset protection
+    ↓
++5V Output to Modules
+```
+
+### Circuit Placement
+
+```
+LM7805 Output ──┬─── PTC2 (1.1A) ───┬─── TVS2 ─── +5V OUT
+                │   mSMD110-33V     │  PRTR5V0U2X
+                │                   │      ↕
+                │                   └─────GND
+                │
+                └─── LED3 ─── R8 (1kΩ) ─── GND
+                     Blue status indicator
+```
+
+## Protection Behavior
+
+### Current vs Protection State
+
+| Current | L7805 State | PTC State | Result |
+|---------|-------------|-----------|--------|
+| 0-1.0A | ✅ Normal | ✅ Normal | Normal operation |
+| 1.0-1.5A | ⚠️ Current limiting | ⚠️ Warming | Both protections activating |
+| &gt;1.5A | 🛑 Hard limit (~1A max) | 🛑 Trips | Dual protection active |
+
+### Design Rationale
+
+**Why 1.1A hold for 0.5A target?**
+
+```
+Hold current:  1.1A
+Design target: 0.5A
+Safety margin: 0.6A (120% overhead)
+
+Benefits:
+✅ Prevents false trips during power-on surge
+✅ Allows brief current spikes
+✅ Protects L7805 (1A max) before reaching limit
+✅ Tolerates LED current variations
+```
+
+## Comparison to +12V Rail
+
+| Feature | +5V PTC (This) | +12V PTC |
+|---------|----------------|----------|
+| Hold current | 1.1A | 1.5A |
+| Package | 1812 | SMD1210 |
+| Design target | 0.5A | 1.2A |
+| Overhead | 120% | 25% |
+| Stock | 44,459 | 7,525 |
+
+**Note:** Higher overhead on +5V rail accounts for power-on inrush and LED indicator current.
+
+## Bill of Materials
+
+| Designator | Part | Package | JLCPCB Part # | Qty | Unit Price | Extended |
+|------------|------|---------|--------------|-----|------------|----------|
+| PTC2 | mSMD110-33V | 1812 | C70119 | 1 | $0.10 | $0.10 |
+
+## Related Components
+
+- **Protected circuit**: L7805ABD2T-TR (U7) - +5V Linear Regulator
+- **Upstream**: LM2596S-ADJ #2 (U3) - +7.5V DC-DC Converter
+- **Overvoltage protection**: PRTR5V0U2X (TVS2)
+- **Parallel rails**: PTC +12V (C7529589), PTC -12V (C2830246)
+
+## References
+
+- **Protection design**: `/doc/docs/learning/protection-fuse-strategy.md`
+- **Circuit diagram**: `/doc/docs/inbox/circuit-diagrams.mdx` - Diagram8
+- **JLCPCB Part Page**: https://jlcpcb.com/partdetail/C70119
