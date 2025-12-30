@@ -59,14 +59,14 @@ with schemdraw.Drawing(
     elm.Line().at(junction3).to(ic.VIN)
     elm.Line().at(junction3).to(ic.ON)
 
-    # C5 from junction1
-    d.pop()
-    elm.Capacitor().down(2.0).label('C5\n100µF', loc='bot')
-    elm.Ground()
-
-    # C6 from junction2
+    # C6 from junction2 (closer to IC - high-freq decoupling)
     d.pop()
     elm.Capacitor().down(2.0).label('C6\n100nF', loc='bot')
+    elm.Ground()
+
+    # C5 from junction1 (farther from IC - bulk filtering)
+    d.pop()
+    elm.Capacitor().down(2.0).label('C5\n100µF', loc='bot')
     elm.Ground()
 
     # Output stage from VOUT pin (halved spacing)
