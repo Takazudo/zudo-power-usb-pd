@@ -82,23 +82,33 @@ with schemdraw.Drawing(
     elm.Ground()
 
     # Connect J1 GND2 to the first dot
-    elm.Line().at(j2.GND2).to(j1.GND1)
+    elm.Line().at(j1.GND2).to(j1.GND1)
 
     ## CC1 to CC1
     elm.Line().at(j1.CC1).right(4.0)
-    elm.Dot()
+    elm.Dot() # to R12
+    d.push()  # Save position for U1 CC1 connection
     elm.Line().up(0.5)
-    elm.Resistor(scale=0.7).up()
-    elm.Line().up(0.5)
+    elm.Resistor(scale=0.7).up().label('R12\n10kΩ', loc='bot', ofst=0.5)
+    elm.Line().up(0.1)
     elm.Ground().flip()
+
+    # Connect dot to U1 CC1
+    d.pop()
+    elm.Line().to(u1.CC1)
 
     ## CC2 to CC2
     elm.Line().at(j1.CC2).right(2.0)
     elm.Dot()
+    d.push()  # Save position for U1 CC2 connection
     elm.Line().up(1.5)
-    elm.Resistor(scale=0.7).up()
-    elm.Line().up(0.5)
+    elm.Resistor(scale=0.7).up().label('R13\n10kΩ', loc='bot', ofst=-2.2)
+    elm.Line().up(0.1)
     elm.Ground().flip()
+
+    # Connect dot to U1 CC2
+    d.pop()
+    elm.Line().to(u1.CC2)
 
     # Save to doc/static/circuits/
     import os
