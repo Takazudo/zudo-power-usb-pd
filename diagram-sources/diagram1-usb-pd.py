@@ -54,7 +54,7 @@ with schemdraw.Drawing(
         ],
         size=(4, 12),  # Explicit size to match J1 height
         leadlen=1.0
-    ).anchor('center').at((j1.VBUS1[0] + 12.0, j1.center[1])).label('U1\nCH224D', loc='center', fontsize=10)
+    ).anchor('center').at((j1.VBUS1[0] + 10.0, j1.center[1])).label('U1\nCH224D', loc='center', fontsize=10)
 
     # VBUS connection: J1 VBUS1 - dot - dot - dot - dot - U1 VBUS
     elm.Dot().at(j1.VBUS1)  # First dot at J1 VBUS1
