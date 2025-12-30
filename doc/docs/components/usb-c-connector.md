@@ -14,7 +14,7 @@ import USBC from '@site/static/footprints-svg/TYPE-C-SMD_TYPE-C-6P.svg';
 
 <FootprintSvg src={USBC} alt="USB Type-C 6P Connector" minWidth="300px" minHeight="200px" />
 
-![USB Type-C 6P Package Preview](/footprints/TYPE-C-6P.png)
+![USB Type-C 6P Package Preview](/footprints/USB-TYPE-C-009.png)
 
 ## Overview
 
