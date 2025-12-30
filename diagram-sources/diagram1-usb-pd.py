@@ -15,16 +15,16 @@ with schemdraw.Drawing(
 ) as d:
     d.config(unit=3)
 
-    # J1 USB-C Connector (6-pin power-only) - Flipped order (top to bottom)
-    # Height matched to U1: (6-1)*1.0 + 2*3.5 = 12 units (same as U1's 11 pins)
+    # J1 USB-C Connector (6-pin power-only) - Flipped order with spacing (top to bottom)
+    # Height matched to U1: 12 units, using /8 slots for more spacing between VBUS and other pins
     j1 = elm.Ic(
         pins=[
-            elm.IcPin(name='GND2', pin='6', side='right', slot='1/6'),
-            elm.IcPin(name='GND1', pin='5', side='right', slot='2/6'),
-            elm.IcPin(name='CC2', pin='4', side='right', slot='3/6'),
-            elm.IcPin(name='CC1', pin='3', side='right', slot='4/6'),
-            elm.IcPin(name='VBUS2', pin='2', side='right', slot='5/6'),
-            elm.IcPin(name='VBUS1', pin='1', side='right', slot='6/6'),
+            elm.IcPin(name='GND2', pin='6', side='right', slot='1/8'),
+            elm.IcPin(name='GND1', pin='5', side='right', slot='2/8'),
+            elm.IcPin(name='CC2', pin='4', side='right', slot='3/8'),
+            elm.IcPin(name='CC1', pin='3', side='right', slot='4/8'),
+            elm.IcPin(name='VBUS2', pin='2', side='right', slot='7/8'),
+            elm.IcPin(name='VBUS1', pin='1', side='right', slot='8/8'),
         ],
         size=(3, 12),  # Explicit size: width=2, height=12
         leadlen=1.0
@@ -34,11 +34,11 @@ with schemdraw.Drawing(
     # Left side pins aligned with J1 matching pins
     u1 = elm.Ic(
         pins=[
-            # Left side pins - aligned by function with J1
-            elm.IcPin(name='GND', pin='0', side='left', slot='1/6'),    # Aligned with J1 GND2
-            elm.IcPin(name='CC2', pin='10', side='left', slot='3/6'),   # Aligned with J1 CC2
-            elm.IcPin(name='CC1', pin='11', side='left', slot='4/6'),   # Aligned with J1 CC1
-            elm.IcPin(name='VBUS', pin='2', side='left', slot='6/6'),   # Aligned with J1 VBUS1
+            # Left side pins - aligned by function with J1 (using /8 slots)
+            elm.IcPin(name='GND', pin='0', side='left', slot='2/8'),    # Aligned with J1 GND1
+            elm.IcPin(name='CC2', pin='10', side='left', slot='3/8'),   # Aligned with J1 CC2
+            elm.IcPin(name='CC1', pin='11', side='left', slot='4/8'),   # Aligned with J1 CC1
+            elm.IcPin(name='VBUS', pin='2', side='left', slot='8/8'),   # Aligned with J1 VBUS1
             # Right side pins (top to bottom)
             elm.IcPin(name='GATE', pin='5', side='right', slot='1/11'),
             elm.IcPin(name='NMOS#', pin='6', side='right', slot='2/11'),
@@ -54,7 +54,7 @@ with schemdraw.Drawing(
         ],
         size=(8, 12),  # Explicit size to match J1 height
         leadlen=1.0
-    ).anchor('center').at((j1.VBUS1[0] + 13.0, j1.center[1])).label('U1\nCH224D', loc='center', fontsize=10)
+    ).anchor('center').at((j1.VBUS1[0] + 12.0, j1.center[1])).label('U1\nCH224D', loc='center', fontsize=10)
 
     # VBUS connection: J1 VBUS1 - dot - dot - dot - dot - U1 VBUS
     elm.Dot().at(j1.VBUS1)  # First dot at J1 VBUS1
@@ -68,6 +68,37 @@ with schemdraw.Drawing(
 
     # Connect J1 VBUS2 to the first dot
     elm.Line().at(j1.VBUS2).to(j1.VBUS1)
+
+    # GND connection: J1 GND1 - dot - - - dot - U1 GND
+    elm.Dot().at(j1.GND1)  # First dot at J1 GND1
+    elm.Line().right(6.0)
+    elm.Dot()  # Final dot
+    d.push()  # Save position for GND symbol
+    elm.Line().to(u1.GND)  # Connect to U1 GND
+
+    # GND symbol from final dot
+    d.pop()
+    elm.Line().down(1.0)
+    elm.Ground()
+
+    # Connect J1 GND2 to the first dot
+    elm.Line().at(j1.GND2).to(j1.GND1)
+
+    # CC1 connection from J1 CC2
+    elm.Line().at(j1.CC1).right(4.0)
+    elm.Dot()
+    elm.Line().up(0.5)
+    elm.Resistor(scale=0.7).up()
+    elm.Line().up(0.5)
+    elm.Ground().flip()
+
+    # CC2 connection from J1 CC2
+    elm.Line().at(j1.CC2).right(2.0)
+    elm.Dot()
+    elm.Line().up(1.5)
+    elm.Resistor(scale=0.7).up()
+    elm.Line().up(0.5)
+    elm.Ground().flip()
 
     # Save to doc/static/circuits/
     import os
