@@ -41,6 +41,7 @@ const sidebars = {
   ],
   learningSidebar: [
     'learning/index',
+    'learning/usb-type-c-pinout',
     'learning/open-drain-pg-pin',
     'learning/buck-converter-feedback',
     'learning/linear-regulator-capacitors',

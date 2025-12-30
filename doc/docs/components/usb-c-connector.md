@@ -4,14 +4,23 @@ sidebar_position: 0
 
 # J1 - USB Type-C Receptacle Connector
 
-24-pin USB Type-C receptacle connector for USB Power Delivery (PD) input and power negotiation.
+6-pin USB Type-C receptacle connector for USB Power Delivery (PD) input and power negotiation (power-only configuration).
 
-- 🔗 [View on JLCPCB: C3151751](https://jlcpcb.com/partdetail/C3151751)
+- 🔗 [View on JLCPCB: C2927029](https://jlcpcb.com/partdetail/C2927029)
 - 📘 [USB Type-C Specification](https://www.usb.org/usb-charger-pd)
+
+import FootprintSvg from '@site/src/components/FootprintSvg';
+import USBC from '@site/static/footprints-svg/TYPE-C-SMD_TYPE-C-6P.svg';
+
+<FootprintSvg src={USBC} alt="USB Type-C 6P Connector" minWidth="300px" minHeight="200px" />
+
+![USB Type-C 6P Package Preview](/footprints/TYPE-C-6P.png)
 
 ## Overview
 
 The USB Type-C receptacle connector (J1) serves as the power input interface for this modular synthesizer power supply. It receives power from USB-C PD chargers and provides the necessary connections for the CH224D USB-PD controller to negotiate 15V/3A power delivery.
+
+This design uses a **6-pin power-only USB Type-C connector** optimized for USB-PD applications where data transfer is not needed. The 6-pin configuration includes only the essential pins for power delivery: VBUS, GND, and CC (Configuration Channel) pins.
 
 USB Type-C features a reversible connector design, allowing insertion in either orientation. The connector uses CC (Configuration Channel) pins to detect orientation and negotiate power delivery profiles with compatible chargers.
 
@@ -19,110 +28,107 @@ USB Type-C features a reversible connector design, allowing insertion in either 
 
 | Parameter | Value | Notes |
 |-----------|-------|-------|
-| **JLCPCB Part Number** | C3151751 | Recommended part |
-| **Manufacturer Part Number** | TYPE-C 24P-GTJB 040 | |
-| **Package** | SMD (Surface Mount) | 24-pin receptacle |
-| **Stock Availability** | 20,147 units | Good availability |
-| **Pin Count** | 24 pins | Full USB Type-C pinout |
-| **Current Rating** | 5A maximum | With appropriate cable |
+| **JLCPCB Part Number** | C2927029 | This design |
+| **Manufacturer Part Number** | USB-TYPE-C-009 | |
+| **Package** | SMD (Surface Mount) | 6-pin power-only |
+| **Stock Availability** | 22,140 units | Good availability |
+| **Pin Count** | 6 pins | Power-only configuration |
+| **Current Rating** | 3A typical | Sufficient for USB-PD |
 | **Voltage Rating** | 20V maximum | USB PD 3.0 compatible |
-| **Mounting Type** | SMD (mid-mount or through-hole posts) | |
+| **Mounting Type** | SMD (mid-mount) | |
 | **Durability** | 10,000+ mating cycles | Typical |
 
 ## Pin Configuration
 
-USB Type-C receptacles have 24 pins arranged symmetrically to support reversible insertion:
+The 6-pin USB Type-C connector provides only the essential pins for USB Power Delivery:
 
 ```
-USB Type-C Receptacle (24-pin)
+USB Type-C 6-Pin Connector (Power-Only)
 Receptacle Front View (looking into the connector)
 
-    Top Row (A1-A12):
-    ┌────────────────────────────────────────┐
-    │ A1  A2  A3  A4  A5  A6  A7  A8  A9 A10 A11 A12 │
-    │ GND TX1+ TX1- VBUS CC1 D+  D-  SBU1 VBUS RX2- RX2+ GND │
-    └────────────────────────────────────────┘
-
-    Bottom Row (B12-B1):
-    ┌────────────────────────────────────────┐
-    │ B12 B11 B10 B9  B8  B7  B6  B5  B4  B3  B2  B1  │
-    │ GND RX1- RX1+ VBUS SBU2 D-  D+  CC2 VBUS TX2- TX2+ GND │
-    └────────────────────────────────────────┘
+    ┌──────────────────┐
+    │   1    2    3    │  Top Row
+    │  GND  VBUS  CC1  │
+    └──────────────────┘
+    ┌──────────────────┐
+    │  CC2  VBUS  GND  │  Bottom Row
+    │   4    5    6    │
+    └──────────────────┘
 ```
 
 ### Pin Descriptions
 
-| Pin | Signal | Function | Used in This Design |
-|-----|--------|----------|---------------------|
-| A1, A12 | GND | Ground | ✅ Connected to system GND |
-| B1, B12 | GND | Ground | ✅ Connected to system GND |
-| A4, A9 | VBUS | Power (+5V default, up to 20V with PD) | ✅ Power input to CH224D |
-| B4, B9 | VBUS | Power (+5V default, up to 20V with PD) | ✅ Power input to CH224D |
-| A5 | CC1 | Configuration Channel 1 | ✅ Connected to CH224D pin 10 |
-| B5 | CC2 | Configuration Channel 2 | ✅ Connected to CH224D pin 11 |
-| A6, A7 | D+, D- | USB 2.0 Data (positive/negative) | ❌ Not used (power-only) |
-| B6, B7 | D+, D- | USB 2.0 Data (positive/negative) | ❌ Not used (power-only) |
-| A2, A3 | TX1+, TX1- | USB 3.x SuperSpeed TX (Lane 1) | ❌ Not used (power-only) |
-| A10, A11 | RX2-, RX2+ | USB 3.x SuperSpeed RX (Lane 2) | ❌ Not used (power-only) |
-| B2, B3 | TX2+, TX2- | USB 3.x SuperSpeed TX (Lane 2) | ❌ Not used (power-only) |
-| B10, B11 | RX1+, RX1- | USB 3.x SuperSpeed RX (Lane 1) | ❌ Not used (power-only) |
-| A8 | SBU1 | Sideband Use 1 | ❌ Not used |
-| B8 | SBU2 | Sideband Use 2 | ❌ Not used |
+| Pin | Signal | Function | Connection in This Design |
+|-----|--------|----------|---------------------------|
+| 1 | GND | Ground (Top) | ✅ System GND, CH224D pin 0 (EPAD) |
+| 2 | VBUS | Power input (Top) | ✅ CH224D pin 2 (VBUS), C1, C2 |
+| 3 | CC1 | Configuration Channel 1 | ✅ CH224D pin 10 (CC1) |
+| 4 | CC2 | Configuration Channel 2 | ✅ CH224D pin 11 (CC2) |
+| 5 | VBUS | Power input (Bottom) | ✅ CH224D pin 2 (VBUS), C1, C2 |
+| 6 | GND | Ground (Bottom) | ✅ System GND, CH224D pin 0 (EPAD) |
+
+**Note**: Pins 2 and 5 (both VBUS) are connected together internally or on PCB. Same for pins 1 and 6 (both GND).
 
 ## Application in This Project
 
-In this power supply design, the USB Type-C connector is used exclusively for **power delivery** - not data transfer. Only the following pins are utilized:
+In this power supply design, the 6-pin USB Type-C connector is used exclusively for **power delivery** - not data transfer. All 6 pins are utilized:
 
-### Active Connections
+### Pin Connections
 
-1. **VBUS Pins (A4, A9, B4, B9)**:
+1. **VBUS Pins (2, 5)**:
    - Receive power from USB-C PD charger
    - Initially at 5V (USB default)
    - Negotiates up to 15V/3A via CH224D
-   - All four VBUS pins connected together for 5A current capacity
+   - Both VBUS pins connected together for 3A current capacity
 
-2. **CC Pins (A5, B5)**:
-   - CC1 (A5) → CH224D pin 10
-   - CC2 (B5) → CH224D pin 11
+2. **CC Pins (3, 4)**:
+   - CC1 (pin 3) → CH224D pin 10
+   - CC2 (pin 4) → CH224D pin 11
    - Used for orientation detection and PD negotiation
    - CH224D uses CC pins to communicate with PD source
 
-3. **Ground Pins (A1, A12, B1, B12)**:
-   - All four GND pins connected to system ground
+3. **Ground Pins (1, 6)**:
+   - Both GND pins connected to system ground
    - Provides solid ground reference for power and signal integrity
 
-### Unused Pins
-
-- **Data pins (D+, D-)**: Not connected - power-only mode
-- **SuperSpeed pins (TX/RX)**: Not connected - no USB 3.x data
-- **SBU pins**: Not connected - no alternate modes
+**Advantages of 6-pin connector**:
+- ✅ Lower cost compared to 24-pin connectors
+- ✅ Smaller PCB footprint
+- ✅ Sufficient for power-only USB-PD applications
+- ✅ No unused pins - all 6 pins are actively used
 
 ## Circuit Connections
 
 See [Diagram1: USB-PD Power Supply Section](/docs/inbox/circuit-diagrams#diagram1-usb-pd-power-supply-section) for complete wiring.
 
 ```
-J1 (USB-C Connector) Connections:
+J1 (USB-C 6P Connector) Connections:
 
-Power Input:
-┌─────────────────────────────┐
-│                             │
-│  B9, A9   VBUS  ────────────┼──────── To CH224D pin 2 (VBUS)
-│                             │         and input capacitors C1, C2
-│  B4       VBUS  ────────────┤
-│  A4       VBUS  ────────────┤
-│                             │
+┌────────────────────────────┐
+│                            │
+│  2, 5  VBUS  ──────────────┼──────── To CH224D pin 2 (VBUS)
+│                            │         and input capacitors C1, C2
+│                            │
+│  3     CC1   ──────────────┼──────── To CH224D pin 10 (CC1)
+│  4     CC2   ──────────────┼──────── To CH224D pin 11 (CC2)
+│                            │
+│  1, 6  GND   ──────────────┼──────── To system GND
+│                            │         and CH224D pin 0 (EPAD)
+│                            │
+└────────────────────────────┘
 
-Configuration Channels:
-│  A5       CC1   ────────────┼──────── To CH224D pin 10 (CC1)
-│  B5       CC2   ────────────┼──────── To CH224D pin 11 (CC2)
-│                             │
+Connection Topology:
 
-Ground:
-│  B12, A12 GND   ────────────┼──────── To system GND
-│  B1,  A1  GND   ────────────┤         and CH224D pin 0 (EPAD)
-│                             │
-└─────────────────────────────┘
+VBUS (pins 2, 5) ──┬─→ C1 (10µF) ──→ GND
+                    │
+                    ├─→ C2 (100nF) ─→ GND
+                    │
+                    └─→ CH224D pin 2 (VBUS)
+
+CC1 (pin 3) ────────→ CH224D pin 10 (CC1)
+CC2 (pin 4) ────────→ CH224D pin 11 (CC2)
+
+GND (pins 1, 6) ────→ System GND / CH224D pin 0 (EPAD)
 ```
 
 ## USB Power Delivery Operation
@@ -165,8 +171,8 @@ When connected to a USB-PD charger:
 
 1. **Keep CC traces short**: Route CC1/CC2 traces directly to CH224D with minimal length
 2. **Match CC trace lengths**: CC1 and CC2 should have similar lengths for symmetry
-3. **VBUS current capacity**: Use wide traces or copper pours for all 4 VBUS pins
-4. **GND plane**: Solid ground connection for all 4 GND pins
+3. **VBUS current capacity**: Use wide traces or copper pours for both VBUS pins (2, 5)
+4. **GND plane**: Solid ground connection for both GND pins (1, 6)
 5. **ESD protection**: Consider adding ESD protection diodes on CC lines (optional but recommended)
 
 ### Mechanical Mounting
@@ -183,24 +189,28 @@ When connected to a USB-PD charger:
 
 ## Alternative Parts
 
-If C3151751 is unavailable, consider these alternatives with good stock:
+If C2927029 is unavailable, consider these 6-pin power-only USB Type-C alternatives:
 
 | Part Number | Stock | Notes |
 |-------------|-------|-------|
-| C5156605 | 16,606 | TYPE-C 24P QT 143 |
-| C2681555 | 16,188 | TYPE-C 24P QT |
-| C456013 | 13,352 | TYPE-C 24P QCHT |
+| C456012 | 186,928 | TYPE-C 6P (very high stock) |
+| C668623 | 133,479 | TYPE-C 6P(073) |
+| C5156600 | 43,224 | TYPE-C 6PLTH6.8-DJ |
+| C36936554 | 38,214 | UC17-0B06F68011 (3A rated) |
 
-**Important**: Verify pinout compatibility when substituting parts. Most 24-pin USB Type-C receptacles follow the standard pinout, but always check the datasheet.
+**Important**: Verify pinout compatibility when substituting parts. Most 6-pin USB Type-C power-only connectors follow the same pinout (GND-VBUS-CC1 / CC2-VBUS-GND), but always check the datasheet.
+
+**Note**: Full 24-pin USB Type-C receptacles can also be used if needed, but the 6-pin version is more cost-effective for power-only applications.
 
 ## Troubleshooting
 
 | Symptom | Possible Cause | Solution |
 |---------|---------------|----------|
-| No power from USB-C | Poor VBUS connection | Check solder joints on A4, A9, B4, B9 pins |
-| PD negotiation fails | CC pins not connected | Verify CC1 (A5) and CC2 (B5) connections to CH224D |
+| No power from USB-C | Poor VBUS connection | Check solder joints on pins 2, 5 (VBUS) |
+| PD negotiation fails | CC pins not connected | Verify CC1 (pin 3) and CC2 (pin 4) connections to CH224D |
 | Intermittent power | Loose connector | Check mechanical mounting and solder joints |
 | Only 5V available | PD source not compatible | Use USB-PD 2.0/3.0 compatible charger (15V profile required) |
+| Ground issues | Poor GND connection | Check solder joints on pins 1, 6 (GND) |
 
 ## References
 
