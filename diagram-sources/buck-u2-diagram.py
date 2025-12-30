@@ -34,10 +34,10 @@ with schemdraw.Drawing(
     elm.Line().at(ic.GND).down(2.5)
     elm.Ground()
 
-    # Calculate Y position (midpoint between VIN and ON)
-    junction_y = (ic.VIN[1] + ic.ON[1]) / 2
+    # Y position at VIN pin level (not connected to ON)
+    junction_y = ic.VIN[1]
 
-    # Input rail: straight horizontal line at junction_y
+    # Input rail: straight horizontal line at VIN level
     # +15V -> dot -> dot -> junction3
     elm.Dot(open=True).at((ic.VIN[0] - 7.0, junction_y)).label('+15V', loc='left')
 
@@ -55,9 +55,8 @@ with schemdraw.Drawing(
     elm.Dot()
     junction3 = d.here
 
-    # Connect junction3 to VIN and ON pins
+    # Connect junction3 to VIN only (ON pin left floating)
     elm.Line().at(junction3).to(ic.VIN)
-    elm.Line().at(junction3).to(ic.ON)
 
     # C6 from junction2 (closer to IC - high-freq decoupling)
     d.pop()
