@@ -82,9 +82,9 @@ with schemdraw.Drawing(
     elm.Ground()
 
     # Connect J1 GND2 to the first dot
-    elm.Line().at(j1.GND2).to(j1.GND1)
+    elm.Line().at(j2.GND2).to(j1.GND1)
 
-    # CC1 connection from J1 CC2
+    ## CC1 to CC1
     elm.Line().at(j1.CC1).right(4.0)
     elm.Dot()
     elm.Line().up(0.5)
@@ -92,7 +92,7 @@ with schemdraw.Drawing(
     elm.Line().up(0.5)
     elm.Ground().flip()
 
-    # CC2 connection from J1 CC2
+    ## CC2 to CC2
     elm.Line().at(j1.CC2).right(2.0)
     elm.Dot()
     elm.Line().up(1.5)
