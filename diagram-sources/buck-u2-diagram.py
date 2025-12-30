@@ -31,7 +31,7 @@ with schemdraw.Drawing(
     ).label('U2\nLM2596S', loc='center', fontsize=10)
 
     # GND connection
-    elm.Line().at(ic.GND).down(2.5)
+    elm.Line().at(ic.GND).down(1.0)
     elm.Ground()
 
     # Y position at VIN pin level (not connected to ON)
@@ -57,8 +57,10 @@ with schemdraw.Drawing(
     # Connect junction3 to VIN only (ON pin left floating)
     elm.Line().at(junction3).to(ic.VIN)
 
-    # Extend ON pin lead to the left (double the default leadlen)
+    # Connect ON pin to GND (enable regulator)
     elm.Line().at(ic.ON).left(1.0)
+    elm.Line().down(1.0)
+    elm.Ground()
 
     # C6 from junction2 (closer to IC - high-freq decoupling)
     d.pop()
@@ -76,7 +78,7 @@ with schemdraw.Drawing(
     vout_junction = d.here
     d.push()
 
-    elm.Inductor().right(2.5).label('L1\n100µH\n4.5A', loc='top')
+    elm.Inductor().right(2.5).label('L1\n100µH\n4.5A', loc='top',ofst=0.2)
     elm.Dot()
     output_junction = d.here
     d.push()
@@ -93,16 +95,16 @@ with schemdraw.Drawing(
     d.pop()
 
     # Feedback voltage divider network (straight down, spacing = 0.5)
-    elm.Line().down(0.5)
-    elm.Resistor().down().label('R1\n10kΩ', loc='bot', ofst=0.5)
-    elm.Line().down(0.5)
+    elm.Line().down(0.2)
+    elm.Resistor(scale=0.7).down().label('R1\n10kΩ', loc='bot', ofst=0.5)
+    elm.Line().down(0.2)
     elm.Dot()  # Tap junction for FB connection
     tap_junction = d.here
     d.push()  # Save tap position for FB connection
 
-    elm.Line().down(0.5)
-    elm.Resistor().down().label('R2\n1kΩ', loc='bot', ofst=0.5)
-    elm.Line().down(0.5)
+    elm.Line().down(0.2)
+    elm.Resistor(scale=0.7).down().label('R2\n1kΩ', loc='bot', ofst=0.5)
+    elm.Line().down(0.2)
     elm.Ground()
 
     # Connect tap junction to FB pin
