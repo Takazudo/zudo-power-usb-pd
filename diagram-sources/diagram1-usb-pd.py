@@ -39,20 +39,20 @@ with schemdraw.Drawing(
             elm.IcPin(name='CC2', pin='10', side='left', slot='3/8'),   # Aligned with J1 CC2
             elm.IcPin(name='CC1', pin='11', side='left', slot='4/8'),   # Aligned with J1 CC1
             elm.IcPin(name='VBUS', pin='2', side='left', slot='8/8'),   # Aligned with J1 VBUS1
-            # Right side pins (top to bottom)
-            elm.IcPin(name='GATE', pin='5', side='right', slot='1/11'),
-            elm.IcPin(name='NMOS#', pin='6', side='right', slot='2/11'),
-            elm.IcPin(name='ISP', pin='14', side='right', slot='3/11'),
-            elm.IcPin(name='ISN', pin='15', side='right', slot='4/11'),
-            elm.IcPin(name='DRV', pin='1', side='right', slot='5/11'),
+            # Right side pins (top to bottom) - inverted slots for right side
+            elm.IcPin(name='GATE', pin='5', side='right', slot='11/11'),
+            elm.IcPin(name='NMOS#', pin='6', side='right', slot='10/11'),
+            elm.IcPin(name='ISP', pin='14', side='right', slot='9/11'),
+            elm.IcPin(name='ISN', pin='15', side='right', slot='8/11'),
+            elm.IcPin(name='DRV', pin='1', side='right', slot='7/11'),
             elm.IcPin(name='CFG1', pin='19', side='right', slot='6/11'),
-            elm.IcPin(name='CFG2', pin='13', side='right', slot='7/11'),
-            elm.IcPin(name='CFG3', pin='12', side='right', slot='8/11'),
-            elm.IcPin(name='PG', pin='3', side='right', slot='9/11'),
-            elm.IcPin(name='DP', pin='8', side='right', slot='10/11'),
-            elm.IcPin(name='DM', pin='9', side='right', slot='11/11'),
+            elm.IcPin(name='CFG2', pin='13', side='right', slot='5/11'),
+            elm.IcPin(name='CFG3', pin='12', side='right', slot='4/11'),
+            elm.IcPin(name='PG', pin='3', side='right', slot='3/11'),
+            elm.IcPin(name='DP', pin='8', side='right', slot='2/11'),
+            elm.IcPin(name='DM', pin='9', side='right', slot='1/11'),
         ],
-        size=(8, 12),  # Explicit size to match J1 height
+        size=(4, 12),  # Explicit size to match J1 height
         leadlen=1.0
     ).anchor('center').at((j1.VBUS1[0] + 12.0, j1.center[1])).label('U1\nCH224D', loc='center', fontsize=10)
 
@@ -62,7 +62,7 @@ with schemdraw.Drawing(
     elm.Dot()  # Second dot
     d.push()
     elm.Line().up(0.1)
-    elm.Capacitor().label('C1\n470µF\n25V', loc='bot', ofst=-1.7)
+    elm.Capacitor().label('C1\n10µF\n25V', loc='bot', ofst=-1.7)
     elm.Ground().flip()
     d.pop()
 
@@ -70,7 +70,7 @@ with schemdraw.Drawing(
     elm.Dot()  # Third dot
     d.push()
     elm.Line().up(0.1)
-    elm.Capacitor().label('C2\n470µF\n25V', loc='bot', ofst=0.2)
+    elm.Capacitor().label('C2\n100nF\n25V', loc='bot', ofst=0.2)
     elm.Ground().flip()
 
     d.pop()
@@ -126,6 +126,33 @@ with schemdraw.Drawing(
     # Connect dot to U1 CC2
     d.pop()
     elm.Line().to(u1.CC2)
+
+    # Connect U1 DM to DP
+    elm.Dot().at(u1.DP)
+    elm.Line().to(u1.DM)
+
+    # NMOS# pin (pin 6) to GND
+    elm.Line().at(getattr(u1, 'NMOS#')).right(1)
+    elm.Line().up(1)
+    elm.Ground().flip()
+
+    elm.Dot().at(u1.ISN)
+    d.push()
+    elm.Line().to(u1.ISP)
+
+    d.pop()
+    elm.Line().right(2)
+    elm.Line().up(2)
+    elm.Ground().flip()
+
+    elm.Dot().at(u1.CFG1)
+    d.push()
+    elm.Line().to(u1.DRV)
+
+    d.pop()
+    elm.Line().right(3.5)
+    elm.Resistor(scale=0.7).up().label('R11\n56kΩ', loc='bot', ofst=-2.1)
+    elm.Ground().flip()
 
     # Save to doc/static/circuits/
     import os
