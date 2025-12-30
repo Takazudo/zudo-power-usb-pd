@@ -182,6 +182,121 @@ In 6-pin connectors, only **2 VBUS pins** are present (pins 2, 5):
 
 **This is adequate for our 15V/3A (45W) power supply.**
 
+## Critical: Always Connect Redundant Pins Together
+
+### Why Connect Both VBUS Pins Together?
+
+USB Type-C has **redundant power pins** by design. For 6-pin connectors, this means:
+- **2 VBUS pins** (pins 2, 5)
+- **2 GND pins** (pins 1, 6)
+
+**You must ALWAYS connect both pins of each type together.** Never connect just one!
+
+### ✅ Correct Connection Strategy
+
+```
+J1 (USB-C 6P Connector)
+
+Pin 1 (GND)  ──┬─→ System GND
+               │   (via wide trace or ground plane)
+Pin 6 (GND)  ──┘
+
+Pin 2 (VBUS) ──┬─→ VBUS node → CH224D pin 2
+               │   (via wide trace or copper pour)
+Pin 5 (VBUS) ──┘
+
+Pin 3 (CC1)  ────→ CH224D pin 10 (separate)
+Pin 4 (CC2)  ────→ CH224D pin 11 (separate)
+```
+
+### ❌ Wrong: Connecting Only One Pin
+
+```
+❌ WRONG:
+Pin 1 (GND)  ──→ System GND
+Pin 6 (GND)  ──→ Not connected  ❌
+
+Pin 2 (VBUS) ──→ VBUS node
+Pin 5 (VBUS) ──→ Not connected  ❌
+```
+
+### Benefits of Connecting Both Pins
+
+| Benefit | Single Pin | Both Pins Connected |
+|---------|-----------|---------------------|
+| **Resistance** | R | **R/2** (half) ✅ |
+| **Current per pin** | 3A | **1.5A** (distributed) ✅ |
+| **Power dissipation** | I²R | **I²R/4** (quarter) ✅ |
+| **Voltage drop** | High | **Low** ✅ |
+| **Heating** | High | **Low** ✅ |
+| **Reliability** | Single point of failure | **Redundancy** ✅ |
+| **EMI/Noise** | Higher | **Lower** ✅ |
+
+### Why This Matters: Practical Example
+
+**Scenario**: 15V @ 3A power delivery
+
+#### ❌ Using Only One GND Pin:
+```
+Resistance: 10mΩ (typical pin + trace resistance)
+Current: 3A (full current through one pin)
+Voltage drop: V = I × R = 3A × 10mΩ = 30mV
+Power dissipation: P = I² × R = 9W × 10mΩ = 90mW (heats up!)
+```
+
+#### ✅ Using Both GND Pins:
+```
+Resistance: 5mΩ (two pins in parallel)
+Current per pin: 1.5A (distributed)
+Voltage drop: V = I × R = 3A × 5mΩ = 15mV (half!)
+Power dissipation: P = I² × R = 9W × 5mΩ = 45mW (half the heating!)
+```
+
+**Result**: Connecting both pins gives you:
+- 50% less voltage drop
+- 50% less heating
+- Better reliability with redundancy
+
+### PCB Layout Best Practices
+
+```
+Top Copper Layer:
+
+┌────────────────────────────────┐
+│  USB-C Connector J1            │
+│                                │
+│  Pin 1 (GND) ────┐             │
+│                  ├──→ Via to GND plane
+│  Pin 6 (GND) ────┘             │
+│                                │
+│  Pin 2 (VBUS) ───┐             │
+│                  ├──→ Wide trace to VBUS
+│  Pin 5 (VBUS) ───┘             │
+└────────────────────────────────┘
+
+Ground Plane (Internal Layer):
+████████████████████████████████
+█ Solid copper pour             █
+█ Multiple vias from pins 1, 6  █
+████████████████████████████████
+```
+
+**Key points**:
+1. Use **wide traces** (≥1mm) or **copper pours** for VBUS
+2. Use **multiple vias** to connect GND pins to ground plane
+3. Keep traces **short and direct**
+4. Use **symmetrical routing** when possible
+
+### USB-C Specification Requirement
+
+The **USB Type-C specification requires** all redundant power pins to be connected:
+- Ensures proper current distribution
+- Guarantees reliable operation in both orientations
+- Meets thermal and electrical specifications
+- Required for USB-IF certification
+
+**Bottom line**: Always connect both VBUS pins together AND both GND pins together. This is not optional!
+
 ## CH224D Connection to USB-C Connector
 
 In this project, the CH224D connects to the 6-pin USB Type-C connector:
