@@ -54,7 +54,7 @@ with schemdraw.Drawing(
     elm.Line().right(2.0)
     junction3 = d.here
 
-    # Connect junction3 to VIN only (ON pin left floating)
+    # Connect junction3 to VIN
     elm.Line().at(junction3).to(ic.VIN)
 
     # Connect ON pin to GND (enable regulator)
@@ -72,10 +72,9 @@ with schemdraw.Drawing(
     elm.Capacitor().down(2.0).label('C5\n100µF', loc='bot')
     elm.Ground()
 
-    # Output stage from VOUT pin (halved spacing)
-    elm.Line().at(ic.VOUT).right(0.5)  # Halved spacing before L1
+    # Output stage from VOUT pin
+    elm.Line().at(ic.VOUT).right(0.5)
     elm.Dot()
-    vout_junction = d.here
     d.push()
 
     elm.Inductor().right(2.5).label('L1\n100µH\n4.5A', loc='top',ofst=0.2)
