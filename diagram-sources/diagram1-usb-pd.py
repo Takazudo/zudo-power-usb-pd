@@ -16,29 +16,29 @@ with schemdraw.Drawing(
     d.config(unit=3)
 
     # J1 USB-C Connector (6-pin power-only) - Flipped order with spacing (top to bottom)
-    # Height matched to U1: 12 units, using /8 slots for more spacing between VBUS and other pins
+    # Height matched to U1: 12 units, using /14 slots for maximum spacing between CC2 and GND
     j1 = elm.Ic(
         pins=[
-            elm.IcPin(name='GND2', pin='6', side='right', slot='1/8'),
-            elm.IcPin(name='GND1', pin='5', side='right', slot='2/8'),
-            elm.IcPin(name='CC2', pin='4', side='right', slot='4/8'),
-            elm.IcPin(name='CC1', pin='3', side='right', slot='5/8'),
-            elm.IcPin(name='VBUS2', pin='2', side='right', slot='7/8'),
-            elm.IcPin(name='VBUS1', pin='1', side='right', slot='8/8'),
+            elm.IcPin(name='GND2', pin='6', side='right', slot='1/15'),
+            elm.IcPin(name='GND1', pin='5', side='right', slot='2/15'),
+            elm.IcPin(name='CC2', pin='4', side='right', slot='8/15'),  # Increased gap: 2->7 (5 slots)
+            elm.IcPin(name='CC1', pin='3', side='right', slot='9/15'),
+            elm.IcPin(name='VBUS2', pin='2', side='right', slot='14/15'),
+            elm.IcPin(name='VBUS1', pin='1', side='right', slot='15/15'),
         ],
         size=(3, 12),  # Explicit size: width=2, height=12
         leadlen=1.0
-    ).label('J1\nUSB-C', loc='center', fontsize=14, ofst=(0, 1.5))
+    ).label('J1\nUSB-C', loc='center', fontsize=14, ofst=(-0.5, 1))
 
     # U1 CH224D IC (QFN-20) - USB PD Sink Controller
     # Left side pins aligned with J1 matching pins
     u1 = elm.Ic(
         pins=[
-            # Left side pins - aligned by function with J1 (using /8 slots)
-            elm.IcPin(name='GND', pin='0', side='left', slot='2/8'),    # Aligned with J1 GND1
-            elm.IcPin(name='CC2', pin='10', side='left', slot='4/8'),   # Aligned with J1 CC2
-            elm.IcPin(name='CC1', pin='11', side='left', slot='5/8'),   # Aligned with J1 CC1
-            elm.IcPin(name='VBUS', pin='2', side='left', slot='8/8'),   # Aligned with J1 VBUS1
+            # Left side pins - aligned by function with J1 (using /14 slots to match J1)
+            elm.IcPin(name='GND', pin='0', side='left', slot='2/15'),    # Aligned with J1 GND1
+            elm.IcPin(name='CC2', pin='10', side='left', slot='8/15'),   # Aligned with J1 CC2
+            elm.IcPin(name='CC1', pin='11', side='left', slot='9/15'),   # Aligned with J1 CC1
+            elm.IcPin(name='VBUS', pin='2', side='left', slot='15/15'),  # Aligned with J1 VBUS1
             # Right side pins (top to bottom) - updated to /12 slots to include VDD
             elm.IcPin(name='GATE', pin='5', side='right', slot='12/12'),
             elm.IcPin(name='NMOS#', pin='6', side='right', slot='11/12'),
@@ -55,7 +55,7 @@ with schemdraw.Drawing(
         ],
         size=(4, 12),  # Explicit size to match J1 height
         leadlen=1.0
-    ).anchor('center').at((j1.VBUS1[0] + 10.0, j1.center[1])).label('U1\nCH224D', loc='center', fontsize=14, ofst=(-0.5, 1.5))
+    ).anchor('center').at((j1.VBUS1[0] + 10.0, j1.center[1])).label('U1\nCH224D', loc='center', fontsize=14, ofst=(-0.5, 1))
 
     # VBUS connection: J1 VBUS1 - dot - dot - dot - dot - U1 VBUS
     elm.Dot().at(j1.VBUS1)  # First dot at J1 VBUS1
@@ -78,7 +78,7 @@ with schemdraw.Drawing(
     elm.Line().right(2.0)
     elm.Dot()  # Fourth dot
     d.push()
-    elm.Line().up(5.0)
+    elm.Line().up(2.5)
     elm.Dot(open=True).label('OUT\n+5V first\n+15V\nafter init', loc='right', ofst=(0.2, -1.0))
 
     d.pop()
@@ -106,7 +106,7 @@ with schemdraw.Drawing(
     elm.Line().at(j1.CC1).right(4.0)
     elm.Dot() # to R12
     d.push()  # Save position for U1 CC1 connection
-    elm.Line().down(1.2)
+    elm.Line().down(0.4)
     elm.Resistor(scale=0.7).down().label('R12\n5.1kΩ', loc='bot', ofst=0.5)
     elm.Line().down(0.1)
     elm.Ground()
@@ -119,7 +119,7 @@ with schemdraw.Drawing(
     elm.Line().at(j1.CC2).right(2.0)
     elm.Dot()
     d.push()  # Save position for U1 CC2 connection
-    elm.Line().down(0.5)
+    elm.Line().down(0.1)
     elm.Resistor(scale=0.7).down().label('R13\n5.1kΩ', loc='bot', ofst=-2.2)
     elm.Line().down(0.1)
     elm.Ground()  # Removed flip()
@@ -134,8 +134,8 @@ with schemdraw.Drawing(
 
     # NMOS# pin (pin 6) to GND
     elm.Line().at(getattr(u1, 'NMOS#')).right(1)
-    elm.Line().up(1)
-    elm.Ground().flip()
+    elm.Line().down(0.5)
+    elm.Ground()
 
     elm.Dot().at(u1.ISN)
     d.push()
@@ -143,8 +143,8 @@ with schemdraw.Drawing(
 
     d.pop()
     elm.Line().right(2)
-    elm.Line().up(2)
-    elm.Ground().flip()
+    elm.Line().down(0.5)
+    elm.Ground()
 
     elm.Dot().at(u1.CFG1)
     d.push()
@@ -152,8 +152,8 @@ with schemdraw.Drawing(
 
     d.pop()
     elm.Line().right(3.5)
-    elm.Resistor(scale=0.7).up().label('R11\n56kΩ', loc='bot', ofst=-2.1)
-    elm.Ground().flip()
+    elm.Resistor(scale=0.7).down().label('R11\n56kΩ', loc='bot', ofst=-2.1)
+    elm.Ground()
 
     # PG pin with LED and R10 to +5V
     elm.Line().at(u1.PG).right(0.1)
