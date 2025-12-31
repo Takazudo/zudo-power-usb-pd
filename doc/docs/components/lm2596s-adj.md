@@ -95,6 +95,7 @@ Vout = 1.23V × (1 + R1/R2)
 - **C3**: 470µF/25V Electrolytic Capacitor (JLCPCB: C3351)
 - **R1**: 10kΩ ±1% 0603 (JLCPCB: C25804)
 - **R2**: 1kΩ ±1% 0603 (JLCPCB: C21190)
+- **C4**: 22nF Ceramic Capacitor (feedback compensation)
 
 ### U3: +15V → +7.5V Conversion (for +5V rail)
 
@@ -131,9 +132,10 @@ Vout = 1.23V × (1 + R3/R4)
 **Component Values**:
 - **L2**: 100µH, 4.5A Inductor (JLCPCB: C19268674)
 - **D2**: SS34 Schottky Diode (JLCPCB: C8678)
-- **C4**: 470µF/10V Electrolytic Capacitor (JLCPCB: C335982)
+- **C7**: 470µF/10V Electrolytic Capacitor (JLCPCB: C335982)
 - **R3**: 5.1kΩ ±1% 0603 (JLCPCB: C23186)
 - **R4**: 1kΩ ±1% 0603 (JLCPCB: C21190)
+- **C8**: 22nF Ceramic Capacitor (feedback compensation)
 
 ### U4: -15V → -13.5V Conversion (for -12V rail)
 
@@ -164,9 +166,10 @@ Vout = 1.23V × (1 + R3/R4)
 **Component Values**:
 - **L3**: 100µH, 4.5A Inductor (JLCPCB: C19268674)
 - **D3**: SS34 Schottky Diode (JLCPCB: C8678)
-- **C7**: 470µF/25V Electrolytic Capacitor (JLCPCB: C3351)
+- **C11**: 470µF/25V Electrolytic Capacitor (JLCPCB: C3351)
 - **R5**: 10kΩ ±1% 0603 (JLCPCB: C25804)
 - **R6**: 1kΩ ±1% 0603 (JLCPCB: C21190)
+- **C12**: 22nF Ceramic Capacitor (feedback compensation)
 
 ## Design Considerations
 
@@ -192,7 +195,41 @@ Where Vref = 1.23V (internal reference voltage).
 | 12V | 8.7kΩ | 12.01V |
 | 13.5V | 10kΩ | 13.53V |
 
-### 2. Inductor Selection
+### 2. Feedback Compensation Network
+
+All three buck converters in this project use a **Type II compensation network** consisting of a capacitor in parallel with the upper feedback resistor. This improves loop stability and transient response.
+
+**Topology**:
+```
+Output ──┬─── R_upper ──┬─── R_lower ─── GND
+         │              │
+         └─── CFF ──────┤
+                        │
+                       Tap → To FB pin
+```
+
+**Component Values**:
+- **CFF (C4, C8, C12)**: 22nF ceramic capacitor
+- In parallel with R_upper (R1, R3, R5)
+
+**Why 22nF for all three converters?**
+
+The compensation capacitor value depends on:
+1. Switching frequency (150kHz - same for all LM2596S units)
+2. LC filter characteristics (100µH inductor + 470µF output cap - same for all)
+3. Feedback resistor values (affect DC gain, but compensation pole/zero placement is similar)
+
+Since all three converters use the same IC, switching frequency, inductor, and output capacitor, **the same 22nF compensation value works optimally for all three circuits**.
+
+**Benefits of CFF capacitor**:
+- Improves transient response during load changes
+- Reduces switching noise on the feedback line
+- Prevents control loop oscillation
+- Creates a pole-zero pair for Type II compensation
+
+**Reference**: See LM2596 datasheet Figure 1 (page 9) for the compensation capacitor (CFF) in the typical application circuit.
+
+### 3. Inductor Selection
 
 **Key Parameters**:
 - **Inductance**: 100µH (recommended, selectable within 47µH-220µH range)
@@ -203,7 +240,7 @@ Where Vref = 1.23V (internal reference voltage).
 - CYA1265-100UH: 100µH, 4.5A saturation current, SMD power inductor
 - JLCPCB: C19268674
 
-### 3. Diode Selection
+### 4. Diode Selection
 
 **Schottky Diode Required**:
 - High-speed switching capability (150kHz)
@@ -215,7 +252,7 @@ Where Vref = 1.23V (internal reference voltage).
 - SS34: 3A, 40V Schottky Diode
 - JLCPCB: C8678 (Very High Stock: 1,859,655 units)
 
-### 4. Capacitor Selection
+### 5. Capacitor Selection
 
 **Input Capacitor** (Between VIN and GND):
 - Electrolytic or ceramic capacitor
@@ -228,7 +265,7 @@ Where Vref = 1.23V (internal reference voltage).
 - ESR: 0.5Ω or less (for ripple reduction)
 - Voltage Rating: 1.5x or more of output voltage
 
-### 5. PCB Layout Guidelines
+### 6. PCB Layout Guidelines
 
 **Important Points**:
 1. **Input loop**: Minimize the area of VIN - L - D - Cout loop
@@ -242,7 +279,7 @@ Where Vref = 1.23V (internal reference voltage).
 - GND: As wide as possible (plane recommended)
 - FB: 0.2mm-0.3mm (thin and short)
 
-### 6. Efficiency Optimization
+### 7. Efficiency Optimization
 
 **Factors Affecting Efficiency**:
 - **Inductor DCR**: Lower is better
@@ -255,7 +292,7 @@ Where Vref = 1.23V (internal reference voltage).
 - U3 (15V→7.5V): ~85% (Moderate voltage difference)
 - U4 (-15V→-13.5V): ~88% (Equivalent efficiency for negative voltage)
 
-### 7. Thermal Considerations
+### 8. Thermal Considerations
 
 **Heat Dissipation Calculation Example** (U2: 15V→13.5V, 1.3A):
 ```
