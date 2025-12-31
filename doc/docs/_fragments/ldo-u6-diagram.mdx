@@ -1,0 +1,58 @@
+import CircuitSvg from '@site/src/components/CircuitSvg';
+import LdoU6Svg from '@site/static/circuits/ldo-u6-diagram.svg';
+
+<CircuitSvg
+  src={LdoU6Svg}
+  alt="LM7812 Linear Regulator U6"
+  padding="10px"
+/>
+
+<details>
+<summary>View ASCII art version</summary>
+
+```
+Regulator IC:
+                    ┌──────────────────┐
++13.5V IN ──────────┤1 IN         OUT 3├──────────── +12V OUT
+                    │                  │
+                 ┌──┤2 GND             │
+                 │  └──────────────────┘
+                GND      LM7812
+                        (TO-263-2)
+
+Input Capacitors (C14 closest to IC):
++13.5V ──┬────────────────┬─── To IC Pin 1
+         │                │
+        C20              C14
+       470µF            470nF
+    electrolytic       ceramic
+     (farther)        (CLOSE!)
+         │                │
+        GND              GND
+
+Output Capacitors (C17 closest to IC):
+From IC Pin 3 ──┬────────────────┬─── +12V
+                │                │
+               C17              C21
+              100nF            470µF
+             ceramic        electrolytic
+             (CLOSE!)        (farther)
+                │                │
+               GND              GND
+
+Status LED:
++12V ──── R7 (1kΩ) ──── LED2 (Green) ──── GND
+```
+
+</details>
+
+**Capacitor Placement (Critical for PCB layout):**
+- **C14/C17 (ceramic)**: Place RIGHT NEXT to IC pins (minimize trace length for high-freq filtering)
+- **C20/C21 (electrolytic)**: Can be placed farther from IC (bulk storage, less sensitive to distance)
+
+**Key Points:**
+- **Two-stage design**: Buck converter (U2) provides efficient voltage reduction, linear regulator (U6) provides low-noise final output
+- **Input capacitor order**: C20 (bulk, farther) and C14 (ceramic, close to IC)
+- **Output capacitor order**: C17 (ceramic, close to IC) and C21 (bulk, farther)
+- **LED indicator**: Green LED (LED2) with 1kΩ current-limiting resistor shows +12V rail is active
+- **Dropout voltage**: LM7812 requires ~2V dropout, so 13.5V input provides 1.5V headroom

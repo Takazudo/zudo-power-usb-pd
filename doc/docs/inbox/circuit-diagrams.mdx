@@ -5,10 +5,9 @@ sidebar_position: 3
 import BuckU2Diagram from '../_fragments/buck-u2-diagram.mdx';
 import BuckU3Diagram from '../_fragments/buck-u3-diagram.mdx';
 import BuckU5Diagram from '../_fragments/buck-u5-diagram.mdx';
+import LdoU6Diagram from '../_fragments/ldo-u6-diagram.mdx';
 import CircuitSvg from '@site/src/components/CircuitSvg';
 import Diagram1Svg from '@site/static/circuits/diagram1-usb-pd.svg';
-import BuckU2Svg from '@site/static/circuits/buck-u2-diagram.svg';
-import BuckU3Svg from '@site/static/circuits/buck-u3-diagram.svg';
 
 # Circuit Diagrams
 
@@ -510,43 +509,7 @@ Output Filter Capacitor (connected in parallel):
 
 ## Diagram6: +13.5V → +12V Linear Regulator (L7812, U6)
 
-```
-Regulator IC:
-                    ┌──────────────────┐
-+13.5V IN ──────────┤1 IN         OUT 3├──────────── +12V OUT
-                    │                  │
-                 ┌──┤2 GND             │
-                 │  └──────────────────┘
-                GND      LM7812
-                        (TO-263-2)
-
-Input Capacitors (C14 closest to IC):
-+13.5V ──┬────────────────┬─── To IC Pin 1
-         │                │
-        C20              C14
-       470µF            470nF
-    electrolytic       ceramic
-     (farther)        (CLOSE!)
-         │                │
-        GND              GND
-
-Output Capacitors (C17 closest to IC):
-From IC Pin 3 ──┬────────────────┬─── +12V
-                │                │
-               C17              C21
-              100nF            470µF
-             ceramic        electrolytic
-             (CLOSE!)        (farther)
-                │                │
-               GND              GND
-
-Status LED:
-+12V ──── R7 (1kΩ) ──── LED2 (Green) ──── GND
-```
-
-**Capacitor Placement (Critical for PCB layout):**
-- **C14/C17 (ceramic)**: Place RIGHT NEXT to IC pins (minimize trace length for high-freq filtering)
-- **C20/C21 (electrolytic)**: Can be placed farther from IC (bulk storage, less sensitive to distance)
+<LdoU6Diagram />
 
 <details>
 <summary>Connection List</summary>
