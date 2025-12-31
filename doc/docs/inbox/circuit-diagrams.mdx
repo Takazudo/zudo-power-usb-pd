@@ -15,6 +15,39 @@ import Diagram1Svg from '@site/static/circuits/diagram1-usb-pd.svg';
 
 Complete circuit configuration shown in stages.
 
+## Power Flow Overview
+
+This diagram shows the complete power conversion chain from USB-C input to all output rails, including the relationship between all circuit diagrams.
+
+```mermaid
+flowchart TD
+    USB["USB-C 15V<br/>(Diagram1)"] --> D2["Buck Converter U2<br/>+15V → +13.5V<br/>(Diagram2)"]
+    USB --> D3["Buck Converter U3<br/>+15V → +7.5V<br/>(Diagram3)"]
+    USB --> D4["Voltage Inverter U5<br/>+15V → -15V<br/>(Diagram4)"]
+
+    D2 --> D6["Linear Regulator U6<br/>+13.5V → +12V<br/>(Diagram6)"]
+    D3 --> D7["Linear Regulator U7<br/>+7.5V → +5V<br/>(Diagram7)"]
+    D4 --> D5["Buck Converter U4<br/>-15V → -13.5V<br/>(Diagram5)"]
+    D5 --> D8["Linear Regulator U8<br/>-13.5V → -12V<br/>(Diagram8)"]
+
+    D6 --> OUT1["+12V OUT<br/>(1.2A max)"]
+    D7 --> OUT2["+5V OUT<br/>(0.5A max)"]
+    D8 --> OUT3["-12V OUT<br/>(0.8A max)"]
+
+    style USB fill:#e1f5ff
+    style OUT1 fill:#c8e6c9
+    style OUT2 fill:#c8e6c9
+    style OUT3 fill:#ffccbc
+```
+
+**Power Conversion Strategy:**
+- **Two-stage design**: DC-DC converters provide efficient voltage reduction, linear regulators provide low-noise final outputs
+- **+12V rail**: USB-C 15V → Buck (U2) → LDO (U6) → +12V OUT
+- **+5V rail**: USB-C 15V → Buck (U3) → LDO (U7) → +5V OUT
+- **-12V rail**: USB-C 15V → Inverter (U5) → Buck (U4) → LDO (U8) → -12V OUT
+
+---
+
 ## Diagram1: USB-PD Power Supply Section
 
 ### Diagram1-1: USB-C Connector to CH224D IC (Complete Connection)
@@ -584,13 +617,3 @@ Output Filter Capacitor (connected in parallel):
 - **Note:** LED is reversed compared to positive rails (anode to GND, cathode to negative voltage)
 
 </details>
-
-## Diagram9: Power Flow Overview
-
-```
-USB-C 15V ──┬─→ +13.5V (DC-DC) ──→ +12V (LDO) ──→ +12V OUT
-            │
-            ├─→ +7.5V  (DC-DC) ──→ +5V  (LDO) ──→ +5V OUT
-            │
-            └─→ -15V (Inverter) ──→ -13.5V (DC-DC) ──→ -12V (LDO) ──→ -12V OUT
-```
