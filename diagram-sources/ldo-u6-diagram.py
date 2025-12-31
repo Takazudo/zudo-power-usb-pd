@@ -22,11 +22,11 @@ with schemdraw.Drawing(
             elm.IcPin(name='IN', pin='1', side='left', slot='2/2'),
             elm.IcPin(name='OUT', pin='3', side='right', slot='1/1'),
         ],
-        edgepadW=2.5,
+        edgepadW=2.0,
         edgepadH=0.8,
         pinspacing=1.0,
         leadlen=1.0
-    ).label('U6\nLM7812', loc='center', fontsize=10)
+    ).label('U6\nLM7812', loc='center', fontsize=14)
 
     # GND connection
     elm.Line().at(ic.GND).down(1.0)
@@ -37,9 +37,9 @@ with schemdraw.Drawing(
 
     # Input rail: straight horizontal line at IN level
     # +13.5V -> dot -> dot -> junction3
-    elm.Dot(open=True).at((ic.IN[0] - 5.5, junction_y)).label('+13.5V', loc='left')
+    elm.Dot(open=True).at((ic.IN[0] - 5, junction_y)).label('+13.5V', loc='left')
 
-    elm.Line().right(0.5)
+    elm.Line().right(1)
     elm.Dot()
     junction1 = d.here
     d.push()
@@ -65,42 +65,8 @@ with schemdraw.Drawing(
     elm.Capacitor().down(2.0).label('C20\n470µF', loc='bot')
     elm.Ground()
 
-    # Output stage from OUT pin
     elm.Line().at(ic.OUT).right(0.5)
     elm.Dot()
-    output_junction1 = d.here
-    d.push()
-
-    elm.Line().right(1.0)
-    elm.Dot()
-    output_junction2 = d.here
-    d.push()
-
-    elm.Line().right(1.0)
-    elm.Dot()
-    output_junction3 = d.here
-    d.push()
-
-    elm.Line().right(1.0)
-    elm.Dot(open=True).label('+12V', loc='right')
-
-    # C17 from output_junction1 (closest to IC - high-freq filtering)
-    d.pop()
-    d.pop()
-    d.pop()
-    elm.Capacitor().down(2.0).label('C17\n100nF', loc='bot')
-    elm.Ground()
-
-    # C21 from output_junction2 (farther - bulk storage)
-    d.pop()
-    elm.Capacitor().down(2.0).label('C21\n470µF', loc='bot')
-    elm.Ground()
-
-    # LED indicator from output_junction3
-    d.pop()
-    elm.Resistor().down(1.0).label('R7\n1kΩ', loc='bot', ofst=0.3)
-    elm.LED().down(1.0).label('LED2', loc='bot')
-    elm.Ground()
 
     # Save to doc/static/circuits/ (one level up from diagram-sources)
     import os
