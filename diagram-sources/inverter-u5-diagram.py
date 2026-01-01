@@ -170,6 +170,24 @@ with schemdraw.Drawing(
     target_y = ic.SW[1]
     elm.Line().up(target_y - current_y)
     elm.Dot()  # Junction at same height as SW pin
+    output_sense = d.here
+    d.push()
+
+    # ========================================================================
+    # Secondary Winding Connection: D4 rectifier to T1.s1
+    # ========================================================================
+
+    # D4: Output rectifier diode (flyback secondary)
+    elm.Diode().left().label('D4', loc='bottom', fontsize=11)
+
+    # Connect to transformer secondary winding (s1)
+    diode_end = d.here
+    elm.Line().left(t1.s1[0] - diode_end[0])
+    elm.Line().up(t1.s1[1] - d.here[1])
+    elm.Line().to(t1.s1)
+
+    # Return to output sense junction
+    d.pop()
 
     # ========================================================================
     # Output Section: -15V with filtering
