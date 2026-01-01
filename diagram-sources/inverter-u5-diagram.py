@@ -16,9 +16,38 @@ with schemdraw.Drawing(
 ) as d:
     d.config(unit=3)
 
+    # +15V input from left with capacitors
+    vin_start = (0, 0)
+    elm.Dot(open=True).at(vin_start).label('+15V IN', loc='left', fontsize=12)
+
+    # Input rail
+    elm.Line().right(1.5)
+    elm.Dot()
+    vin_tap1 = d.here
+    d.push()
+
+    # C13 bulk capacitor (100µF)
+    elm.Capacitor().down(2.5).label('C13\n100µF', loc='bottom', fontsize=11)
+    elm.Ground()
+
+    # Continue input rail
+    d.pop()
+    elm.Line().right(1.5)
+    elm.Dot()
+    vin_tap2 = d.here
+    d.push()
+
+    # C16 ceramic capacitor (100nF)
+    elm.Capacitor().down(2.5).label('C16\n100nF', loc='bottom', fontsize=11)
+    elm.Ground()
+
+    # Continue to IC VIN pin
+    d.pop()
+    elm.Line().right(1.5)
+    vin_to_ic = d.here
+
     # LM2586SX-ADJ IC (TO-263-7 package)
     # U5 - Flyback converter
-    # Centered in the drawing
     ic = (elm.Ic(
         pins=[
             # Left side (top to bottom)
@@ -36,8 +65,15 @@ with schemdraw.Drawing(
         pinspacing=0.8,
         leadlen=1.0,
         pinlblsize=12
-    ).label('U5\nLM2586SX-ADJ', loc='center', fontsize=14)
+    ).at(vin_to_ic)
+     .anchor('VIN')
+     .label('U5\nLM2586SX-ADJ', loc='center', fontsize=14)
     )
+
+    # GND connection from IC GND pin
+    elm.Line().at(ic.GND).left(0.8)
+    elm.Line().down(0.8)
+    elm.Ground()
 
     # Save to doc/static/circuits/
     script_dir = os.path.dirname(os.path.abspath(__file__))
