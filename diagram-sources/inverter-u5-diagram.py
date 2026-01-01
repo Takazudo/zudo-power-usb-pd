@@ -52,19 +52,18 @@ with schemdraw.Drawing(
     cap_plus_top = (ic.CAPP[0], ic.CAPP[1] + 1.0)
     cap_minus_top = (ic.CAPN[0], ic.CAPN[1] + 1.0)
 
-    elm.Line().at(ic.CAPP).up(1.0)
+    elm.Line().at(ic.CAPP).up(0.5)
     elm.Dot()
+    cap_plus_dot = d.here
     d.push()
 
-    elm.Line().at(ic.CAPN).up(1.0)
+    elm.Line().at(ic.CAPN).up(0.5)
     elm.Dot()
+    cap_minus_dot = d.here
 
-    # Draw horizontal line connecting the capacitor
-    elm.Line().at(cap_plus_top).to(cap_minus_top)
-
-    # Add capacitor label at center
-    cap_center = ((cap_plus_top[0] + cap_minus_top[0]) / 2, cap_plus_top[1])
-    elm.Label().at(cap_center).label('C12\n10µF', loc='top', ofst=0.3)
+    # Draw capacitor symbol between the two dots
+    d.pop()
+    elm.Capacitor().at(cap_plus_dot).to(cap_minus_dot).label('C12\n10µF', loc='top', ofst=0.3)
 
     # Output: -15V with filter capacitor C13
     elm.Line().at(ic.VOUT).right(1)
