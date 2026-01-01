@@ -164,8 +164,11 @@ with schemdraw.Drawing(
     # Return to junction, R7 to output sense point
     d.pop()
     elm.Resistor(scale=0.7).right().label('R7\n10kΩ', loc='bottom', fontsize=11, ofst=(0,-0.8))
-    elm.Line().up(2)
-    elm.Dot()
+    # Position dot at exact Y coordinate of SW pin
+    current_y = d.here[1]
+    target_y = ic.SW[1]
+    elm.Line().up(target_y - current_y)
+    elm.Dot()  # Junction at same height as SW pin
 
     # ========================================================================
     # Output Section: -15V with filtering
