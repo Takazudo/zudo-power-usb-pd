@@ -401,6 +401,5 @@ Before considering a circuit diagram complete:
 ## References
 
 - [schemdraw Documentation](https://schemdraw.readthedocs.io/)
-- [schemdraw-circuit-generator Skill](~/.claude/skills/schemdraw-circuit-generator/SKILL.md)
-- [CircuitSvg Component](../../_fragments/CircuitSvg.jsx)
+- schemdraw-circuit-generator Skill (Claude Code skill for circuit generation)
 - [Circuit Diagrams Page](/docs/inbox/circuit-diagrams)
