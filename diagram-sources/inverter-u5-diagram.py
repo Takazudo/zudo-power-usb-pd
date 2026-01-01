@@ -16,46 +16,10 @@ with schemdraw.Drawing(
 ) as d:
     d.config(unit=3)
 
-    # +15V input from left with capacitors
-    vin_start = (0, 0)
-    elm.Dot(open=True).at(vin_start).label('+15V IN', loc='left', fontsize=12)
-    d.push()
+    # Define IC first at a fixed position so we can reference it
+    ic_x = 12.0  # IC X position
+    ic_y = 0.0   # IC Y position
 
-    elm.Line().right(1.0)
-    elm.Dot()
-    junction_in_to_switch = d.here
-    elm.Line().up(4)
-
-    d.pop()
-
-    # Input rail
-    elm.Line().right(2)
-    elm.Dot()
-    vin_tap1 = d.here
-    d.push()
-
-    # C13 bulk capacitor (100µF)
-    elm.Capacitor().down(2.5).label('C13\n100µF', loc='bottom', fontsize=11)
-    elm.Ground()
-
-    # Continue input rail
-    d.pop()
-    elm.Line().right(2)
-    elm.Dot()
-    vin_tap2 = d.here
-    d.push()
-
-    # C16 ceramic capacitor (100nF)
-    elm.Capacitor().down(2.5).label('C16\n100nF', loc='bottom', fontsize=11)
-    elm.Ground()
-
-    # Continue to IC VIN pin
-    d.pop()
-    elm.Line().right(4)
-    vin_to_ic = d.here
-
-    # LM2586SX-ADJ IC (TO-263-7 package)
-    # U5 - Flyback converter
     ic = (elm.Ic(
         pins=[
             # Left side (top to bottom)
@@ -73,10 +37,40 @@ with schemdraw.Drawing(
         pinspacing=0.8,
         leadlen=1.0,
         pinlblsize=12
-    ).at(vin_to_ic)
+    ).at((ic_x, ic_y))
      .anchor('VIN')
      .label('U5\nLM2586SX-ADJ', loc='center', fontsize=14)
     )
+
+    # Now draw input section to the left of IC
+    # +15V input from left with capacitors
+    vin_start = (0, ic.VIN[1])
+    elm.Dot(open=True).at(vin_start).label('+15V IN', loc='left', fontsize=12)
+
+    # Input rail
+    elm.Line().right(1.5)
+    elm.Dot()
+    vin_tap1 = d.here
+    d.push()
+
+    # C13 bulk capacitor (100µF)
+    elm.Capacitor().down(2.5).label('C13\n100µF', loc='bottom', fontsize=11)
+    elm.Ground()
+
+    # Continue input rail
+    d.pop()
+    elm.Line().right(1.5)
+    elm.Dot()
+    vin_tap2 = d.here
+    d.push()
+
+    # C16 ceramic capacitor (100nF)
+    elm.Capacitor().down(2.5).label('C16\n100nF', loc='bottom', fontsize=11)
+    elm.Ground()
+
+    # Continue to IC VIN pin
+    d.pop()
+    elm.Line().to(ic.VIN)
 
     # GND connection from IC GND pin
     elm.Line().at(ic.GND).left(0.8)
@@ -84,9 +78,12 @@ with schemdraw.Drawing(
     elm.Ground()
 
     # T1 flyback transformer primary: +15V -> T1 -> SW
-    # Horizontal line from input going right across the top
-    elm.Line().at(vin_to_ic).up(4.0)
-    elm.Line().right(ic.SW[0] - vin_to_ic[0])
+    # Vertical line up from first tap point
+    elm.Line().at(vin_tap1).up(4.0)
+    point_to_switch = d.here
+
+    # Horizontal line across the top to above SW pin
+    elm.Line().right(ic.SW[0] - point_to_switch[0])
     t1_top = d.here
 
     # T1 primary inductor (positioned above SW pin)
