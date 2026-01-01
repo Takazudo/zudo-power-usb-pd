@@ -5,6 +5,7 @@ sidebar_position: 3
 import BuckU2Diagram from '../_fragments/buck-u2-diagram.mdx';
 import BuckU3Diagram from '../_fragments/buck-u3-diagram.mdx';
 import BuckU5Diagram from '../_fragments/buck-u5-diagram.mdx';
+import InverterU5Diagram from '../_fragments/inverter-u5-diagram.mdx';
 import LdoU6Diagram from '../_fragments/ldo-u6-diagram.mdx';
 import LdoU7Diagram from '../_fragments/ldo-u7-diagram.mdx';
 import LdoU8Diagram from '../_fragments/ldo-u8-diagram.mdx';
@@ -469,39 +470,7 @@ Current Sensing (ISP & ISN):
 
 ## Diagram4: +15V → -15V Voltage Inverter (ICL7660, U5)
 
-```
-                                          ┌───────────┐
-                    ┌──────────────────┐  │           │
-                    │                  │  │ C12 (10µF)│
-                    │1  NC       CAP+ 2├──┤  Ceramic  │
-                    │                  │  │           │
-GND ────────────────┤3  GND            │  └─────┬─────┘
-                    │                  │        │
-                    │   ICL7660M/TR    │        │
-                    │                  │        │
-                    │            CAP- 4├────────┘
-                    │                  │
-                    │            VOUT 5├──────── -15V OUT
-                    │                  │
-                    │6  LV             │
-                    │                  │
-                    │7  OSC            │
-                    │                  │
-+15V ───────────────┤8  V+             │
-                    │                  │
-                    └──────────────────┘
-
-NOTE: C12 flying capacitor connects between Pin 2 (CAP+) and Pin 4 (CAP-)
-      Pin 5 (VOUT) outputs the inverted voltage (-15V)
-      Pin 8 is the ONLY V+ input pin
-
-Output Filter Capacitor (connected in parallel):
--15V OUT ────┬───────────── To next stage
-             │
-           C13 (10µF)
-             │
-            GND
-```
+<InverterU5Diagram />
 
 <details>
 <summary>Connection List</summary>

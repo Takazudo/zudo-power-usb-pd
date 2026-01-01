@@ -1,0 +1,52 @@
+import CircuitSvg from '@site/src/components/CircuitSvg';
+import InverterU5Svg from '@site/static/circuits/inverter-u5-diagram.svg';
+
+<CircuitSvg
+  src={InverterU5Svg}
+  alt="ICL7660 Voltage Inverter U5"
+  padding="10px"
+/>
+
+**Key Points:**
+- **Charge pump operation**: ICL7660 uses C12 as a flying capacitor to generate negative voltage
+- **Flying capacitor C12**: 10µF ceramic capacitor between CAP+ (pin 2) and CAP- (pin 4)
+- **Output filter C13**: 10µF ceramic capacitor from VOUT to GND smooths switching ripple
+- **Output voltage**: Typically -14V (nominal formula: VOUT ≈ -(VIN - 1V))
+- **Oscillator**: Internal 10kHz oscillator (pin 7 OSC left open)
+- **Low voltage mode**: Pin 6 (LV) left open for normal voltage operation
+- **No external components needed**: Only two capacitors required for full operation
+
+<details>
+<summary>View ASCII art circuit</summary>
+
+```
+                                          ┌───────────┐
+                    ┌──────────────────┐  │           │
+                    │                  │  │ C12 (10µF)│
+                    │1  NC       CAP+ 2├──┤  Ceramic  │
+                    │                  │  │           │
+GND ────────────────┤3  GND            │  └─────┬─────┘
+                    │                  │        │
+                    │   ICL7660M/TR    │        │
+                    │                  │        │
+                    │            CAP- 4├────────┘
+                    │                  │
+                    │            VOUT 5├──────── -15V OUT
+                    │                  │
+                    │6  LV             │
+                    │                  │
+                    │7  OSC            │
+                    │                  │
++15V ───────────────┤8  V+             │
+                    │                  │
+                    └──────────────────┘
+
+Output Filter Capacitor:
+-15V OUT ────┬───────────── To Diagram5 (U4 Buck Converter)
+             │
+           C13 (10µF)
+             │
+            GND
+```
+
+</details>
