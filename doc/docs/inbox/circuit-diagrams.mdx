@@ -4,13 +4,14 @@ sidebar_position: 3
 
 import BuckU2Diagram from '../_fragments/buck-u2-diagram.mdx';
 import BuckU3Diagram from '../_fragments/buck-u3-diagram.mdx';
-import BuckU5Diagram from '../_fragments/buck-u5-diagram.mdx';
-import InverterU5Diagram from '../_fragments/inverter-u5-diagram.mdx';
+import InverterU4Diagram from '../_fragments/inverter-u4-diagram.mdx';
 import LdoU6Diagram from '../_fragments/ldo-u6-diagram.mdx';
 import LdoU7Diagram from '../_fragments/ldo-u7-diagram.mdx';
 import LdoU8Diagram from '../_fragments/ldo-u8-diagram.mdx';
 import CircuitSvg from '@site/src/components/CircuitSvg';
 import Diagram1Svg from '@site/static/circuits/diagram1-usb-pd.svg';
+import InverterU5DiagramOld from '../_fragments/inverter-u5-diagram.mdx';
+import BuckU5Diagram from '../_fragments/buck-u5-diagram.mdx';
 
 # Circuit Diagrams
 
@@ -33,25 +34,21 @@ flowchart TD
     +15V to +7.5V
     Diagram3"]
 
-    D4["Voltage Inverter U5
-    +15V to -15V
+    D4["Inverting Buck-Boost U4
+    +15V to -13.5V
     Diagram4"]
 
-    D5["Buck Converter U4
-    -15V to -13.5V
+    D5["Linear Regulator U6
+    +13.5V to +12V
     Diagram5"]
 
-    D6["Linear Regulator U6
-    +13.5V to +12V
+    D6["Linear Regulator U7
+    +7.5V to +5V
     Diagram6"]
 
-    D7["Linear Regulator U7
-    +7.5V to +5V
-    Diagram7"]
-
-    D8["Linear Regulator U8
+    D7["Linear Regulator U8
     -13.5V to -12V
-    Diagram8"]
+    Diagram7"]
 
     OUT1["+12V OUTPUT
     1.2A max"]
@@ -65,13 +62,12 @@ flowchart TD
     USB --> D2
     USB --> D3
     USB --> D4
-    D2 --> D6
-    D3 --> D7
-    D4 --> D5
-    D5 --> D8
-    D6 --> OUT1
-    D7 --> OUT2
-    D8 --> OUT3
+    D2 --> D5
+    D3 --> D6
+    D4 --> D7
+    D5 --> OUT1
+    D6 --> OUT2
+    D7 --> OUT3
 ```
 
 **Power Conversion Strategy:**
@@ -79,7 +75,7 @@ flowchart TD
 - **Two-stage design**: DC-DC converters provide efficient voltage reduction, linear regulators provide low-noise final outputs
 - **+12V rail**: USB-C 15V → Buck (U2) → LDO (U6) → +12V OUT
 - **+5V rail**: USB-C 15V → Buck (U3) → LDO (U7) → +5V OUT
-- **-12V rail**: USB-C 15V → Inverter (U5) → Buck (U4) → LDO (U8) → -12V OUT
+- **-12V rail**: USB-C 15V → Inverting Buck-Boost (U4) → LDO (U8) → -12V OUT
 
 ---
 
@@ -492,45 +488,128 @@ Current Sensing (ISP & ISN):
 
 </details>
 
-## Diagram4: +15V → -15V Voltage Inverter (LM2586 Inverted SEPIC, U5)
+## Diagram4: +15V → -13.5V Inverting Buck-Boost (LM2596S-ADJ, U4)
 
-<InverterU5Diagram />
+<InverterU4Diagram />
+
+## Diagram5: +13.5V → +12V Linear Regulator (L7812, U6)
+
+<LdoU6Diagram />
 
 <details>
 <summary>Connection List</summary>
 
-**Power Lines:**
+**Regulator:**
 
-- `+15V input` → `U5 (ICL7660M) pin 8 (V+)`
-- `U5 pin 5 (VOUT)` → `-15V output`
+- U6 (L7812CD2T-TR): `+13.5V input` → Pin 1 (IN), Pin 3 (OUT) → `+12V output`, Pin 2 (GND) → `GND`
 
-**Charge Pump Capacitors:**
+**Input Capacitors (connected in parallel between +13.5V and GND):**
 
-- `C12 (10µF Ceramic)`: `U5 pin 2 (CAP+)` ⟷ `U5 pin 4 (CAP-)` (flying capacitor)
-- `C13 (10µF Ceramic)`: `-15V output` ⟷ `GND` (output filter)
+- C14 (470nF ceramic): High-frequency noise filtering
+- C20 (470µF electrolytic): Input bulk stabilization
 
-**Control Pins:**
+**Output Capacitors (connected in parallel between +12V and GND):**
 
-- `U5 pin 6 (LV)` → `Open` (normal voltage mode, not low voltage)
-- `U5 pin 7 (OSC)` → `Open` (10kHz internal oscillator)
+- C17 (100nF ceramic): High-frequency decoupling
+- C21 (470µF electrolytic): Output stabilization and transient response
 
-**Ground:**
+**Status LED:**
 
-- `U5 pin 3 (GND)` → `System GND`
-
-**Operation:**
-
-- Charge pump switches `C12` between `+15V` and `GND` to generate `-15V`
-- Output voltage: `VOUT ≈ -(VIN - 1V) = -14V typical`
+- LED2 (Green): `+12V` → `R7 (1kΩ)` → `LED2 anode` → `LED2 cathode` → `GND`
+- LED current: `I = (12V - 2V) / 1kΩ ≈ 10mA`
 
 </details>
 
-## Diagram5: -15V → -13.5V Buck Converter (LM2596S-ADJ #3, U4)
+## Diagram6: +7.5V → +5V Linear Regulator (L7805, U7)
+
+<LdoU7Diagram />
+
+<details>
+<summary>Connection List</summary>
+
+**Regulator:**
+
+- U7 (L7805ABD2T-TR): `+7.5V input` → Pin 1 (IN), Pin 3 (OUT) → `+5V output`, Pin 2 (GND) → `GND`
+
+**Input Capacitors (connected in parallel between +7.5V and GND):**
+
+- C15 (470nF ceramic): High-frequency noise filtering
+- C22 (470µF electrolytic): Input bulk stabilization
+
+**Output Capacitors (connected in parallel between +5V and GND):**
+
+- C18 (100nF ceramic): High-frequency decoupling
+- C23 (470µF electrolytic): Output stabilization and transient response
+
+**Status LED:**
+
+- LED3 (Blue): `+5V` → `R8 (1kΩ)` → `LED3 anode` → `LED3 cathode` → `GND`
+- LED current: `I = (5V - 2V) / 1kΩ = 3mA` (dim, consider 330Ω for brighter)
+
+</details>
+
+## Diagram7: -13.5V → -12V Linear Regulator (CJ7912, U8)
+
+<LdoU8Diagram />
+
+<details>
+<summary>Connection List</summary>
+
+**Regulator:**
+
+- U8 (CJ7912): `-13.5V input` → Pin 1 (IN), Pin 2 (OUT) → `-12V output`, Pin 3 (GND) → `GND`
+- **Note:** LM7912 pinout differs from LM7812/7805: pin 1=IN, pin 2=OUT, pin 3=GND
+
+**Input Capacitors (connected in parallel between -13.5V and GND):**
+
+- C16 (470nF ceramic): High-frequency noise filtering
+- C24 (470µF electrolytic): Input bulk stabilization
+  - **Polarity:** Negative terminal to `-13.5V`, Positive terminal to `GND`
+
+**Output Capacitors (connected in parallel between -12V and GND):**
+
+- C19 (100nF ceramic): High-frequency decoupling
+- C25 (470µF electrolytic): Output stabilization and transient response
+  - **Polarity:** Negative terminal to `-12V`, Positive terminal to `GND`
+
+**Status LED:**
+
+- LED4 (Red): `GND` → `LED4 anode` → `LED4 cathode` → `R9 (1kΩ)` → `-12V`
+- LED current: `I = (0V - (-12V) - 2V) / 1kΩ = 10mA`
+- **Note:** LED is reversed compared to positive rails (anode to GND, cathode to negative voltage)
+
+</details>
+
+---
+
+## [Outdated] Previous Negative Voltage Designs
+
+The following diagrams represent previous design iterations that have been replaced by the simpler, single-stage inverting buck-boost approach in Diagram4.
+
+### [Outdated] Old Diagram4: +15V → -15V Flyback Converter (LM2586, U5)
+
+**⚠️ This design was replaced due to:**
+
+- **Critical feedback pin voltage violation**: FB pin would see -1.25V (violates -0.4V absolute maximum)
+- **Overly complex**: Requires flyback transformer with specific polarity
+- **Additional protection needed**: Missing switch clamp and snubber circuits
+- **Not recommended by TI**: Datasheet examples use positive output regulation with cross-regulated negative outputs
+
+<InverterU5DiagramOld />
+
+### [Outdated] Old Diagram5: -15V → -13.5V Buck Converter (LM2596S-ADJ, U4)
+
+**⚠️ This stage was eliminated because:**
+
+- **Unnecessary intermediate stage**: Direct +15V → -13.5V conversion is possible in one stage
+- **Lower efficiency**: Two-stage conversion (flyback + buck) wastes power
+- **More components**: Additional inductor, diode, and capacitors
+- **Replaced by**: Single-stage inverting buck-boost in new Diagram4
 
 <BuckU5Diagram />
 
 <details>
-<summary>Connection List</summary>
+<summary>Connection List (Old Diagram5)</summary>
 
 **Input Power:**
 
@@ -561,7 +640,6 @@ Current Sensing (ISP & ISN):
 - `C11 (470µF/25V electrolytic)`: Connected **in parallel** between `-13.5V output` ⟷ `GND`
   - Polarity: Negative terminal to `-13.5V`, positive terminal to `GND`
 - Purpose: Output filtering, ripple reduction, and energy storage for transient response
-- **Important**: C11 is NOT in series with the output - it's a shunt element that allows AC ripple current to flow to GND
 
 **Feedback Network:**
 
@@ -577,93 +655,5 @@ Current Sensing (ISP & ISN):
 - All voltages are negative and referenced to GND (0V)
 - Electrolytic capacitors must have correct polarity (negative terminal to negative voltage)
 - The buck converter topology is identical to positive voltage versions, just with negative voltages
-
-</details>
-
-## Diagram6: +13.5V → +12V Linear Regulator (L7812, U6)
-
-<LdoU6Diagram />
-
-<details>
-<summary>Connection List</summary>
-
-**Regulator:**
-
-- U6 (L7812CD2T-TR): `+13.5V input` → Pin 1 (IN), Pin 3 (OUT) → `+12V output`, Pin 2 (GND) → `GND`
-
-**Input Capacitors (connected in parallel between +13.5V and GND):**
-
-- C14 (470nF ceramic): High-frequency noise filtering
-- C20 (470µF electrolytic): Input bulk stabilization
-
-**Output Capacitors (connected in parallel between +12V and GND):**
-
-- C17 (100nF ceramic): High-frequency decoupling
-- C21 (470µF electrolytic): Output stabilization and transient response
-
-**Status LED:**
-
-- LED2 (Green): `+12V` → `R7 (1kΩ)` → `LED2 anode` → `LED2 cathode` → `GND`
-- LED current: `I = (12V - 2V) / 1kΩ ≈ 10mA`
-
-</details>
-
-## Diagram7: +7.5V → +5V Linear Regulator (L7805, U7)
-
-<LdoU7Diagram />
-
-<details>
-<summary>Connection List</summary>
-
-**Regulator:**
-
-- U7 (L7805ABD2T-TR): `+7.5V input` → Pin 1 (IN), Pin 3 (OUT) → `+5V output`, Pin 2 (GND) → `GND`
-
-**Input Capacitors (connected in parallel between +7.5V and GND):**
-
-- C15 (470nF ceramic): High-frequency noise filtering
-- C22 (470µF electrolytic): Input bulk stabilization
-
-**Output Capacitors (connected in parallel between +5V and GND):**
-
-- C18 (100nF ceramic): High-frequency decoupling
-- C23 (470µF electrolytic): Output stabilization and transient response
-
-**Status LED:**
-
-- LED3 (Blue): `+5V` → `R8 (1kΩ)` → `LED3 anode` → `LED3 cathode` → `GND`
-- LED current: `I = (5V - 2V) / 1kΩ = 3mA` (dim, consider 330Ω for brighter)
-
-</details>
-
-## Diagram8: -13.5V → -12V Linear Regulator (CJ7912, U8)
-
-<LdoU8Diagram />
-
-<details>
-<summary>Connection List</summary>
-
-**Regulator:**
-
-- U8 (CJ7912): `-13.5V input` → Pin 1 (IN), Pin 2 (OUT) → `-12V output`, Pin 3 (GND) → `GND`
-- **Note:** LM7912 pinout differs from LM7812/7805: pin 1=IN, pin 2=OUT, pin 3=GND
-
-**Input Capacitors (connected in parallel between -13.5V and GND):**
-
-- C16 (470nF ceramic): High-frequency noise filtering
-- C24 (470µF electrolytic): Input bulk stabilization
-  - **Polarity:** Negative terminal to `-13.5V`, Positive terminal to `GND`
-
-**Output Capacitors (connected in parallel between -12V and GND):**
-
-- C19 (100nF ceramic): High-frequency decoupling
-- C25 (470µF electrolytic): Output stabilization and transient response
-  - **Polarity:** Negative terminal to `-12V`, Positive terminal to `GND`
-
-**Status LED:**
-
-- LED4 (Red): `GND` → `LED4 anode` → `LED4 cathode` → `R9 (1kΩ)` → `-12V`
-- LED current: `I = (0V - (-12V) - 2V) / 1kΩ = 10mA`
-- **Note:** LED is reversed compared to positive rails (anode to GND, cathode to negative voltage)
 
 </details>

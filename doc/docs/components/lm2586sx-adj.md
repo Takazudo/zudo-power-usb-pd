@@ -6,7 +6,21 @@ import InverterU5Diagram from '../\_fragments/inverter-u5-diagram.mdx';
 
 # LM2586SX-ADJ Flyback Converter
 
-A high-efficiency 3A switching regulator designed for flyback, boost, and forward topologies. Used to generate negative voltage (-15V) from positive input (+15V) using flyback transformer topology.
+:::danger Component Not Used in Current Design
+**This component has been removed from the project due to FB pin voltage violation issues.**
+
+**Reason for removal**: The LM2586 flyback topology violated the FB pin voltage specification (required to stay between GND and VCC, but flyback configuration forced it below GND).
+
+**Replacement**: The negative voltage rail now uses **LM2596S-ADJ (U4) in inverting buck-boost configuration** (+15V → -13.5V), which is simpler, more reliable, and uses the same IC as the other DC-DC stages.
+
+**Current diagram**: See [Diagram4: +15V → -13.5V Inverting Buck-Boost](/docs/inbox/circuit-diagrams#diagram4-15v---135v-inverting-buck-boost-lm2596s-adj-u4)
+
+This documentation is kept for reference and educational purposes only.
+:::
+
+## Historical Information
+
+A high-efficiency 3A switching regulator designed for flyback, boost, and forward topologies. **Was previously planned** to generate negative voltage (-15V) from positive input (+15V) using flyback transformer topology, but **has been replaced** with a simpler LM2596S inverting buck-boost design.
 
 - 🔗 [View on JLCPCB: C181324](https://jlcpcb.com/partdetail/C181324)
 - 📄 [Download Datasheet (PDF)](/datasheets/LM2586-datasheet.pdf)
@@ -394,10 +408,16 @@ This is **significantly lower** than other components in this project:
 
 ## Related Documents
 
-- [Diagram4: Flyback Voltage Inverter Circuit](../inbox/circuit-diagrams#diagram4-15v---15v-voltage-inverter-lm2586-inverted-sepic-u5)
-- [Diagram5: -15V → -13.5V Buck Converter](../inbox/circuit-diagrams#diagram5--15v---135v-buck-converter-lm2596s-u4)
-- [Bill of Materials: U5 Components](./bom#lm2586-flyback-converter-components)
-- [Footprint Preview: T1 Transformer](../inbox/footprint-preview#t1---msd1514-473med-coupled-transformer)
+**Current Design:**
+
+- [Diagram4: +15V → -13.5V Inverting Buck-Boost (Current)](/docs/inbox/circuit-diagrams#diagram4-15v---135v-inverting-buck-boost-lm2596s-adj-u4)
+- [LM2596S-ADJ Component Page](./lm2596s-adj) - The IC actually used for negative voltage generation
+
+**Historical (Not Used):**
+
+- Old Diagram4: Used LM2586 Flyback (removed)
+- Old Diagram5: Used -15V → -13.5V Buck (removed)
+- [Bill of Materials: Obsolete Components Section](./bom#obsolete-components---not-used-in-current-design)
 - [Overview: System Architecture](../inbox/overview)
 - [Quick Reference: Component Specifications](../inbox/quick-reference)
 

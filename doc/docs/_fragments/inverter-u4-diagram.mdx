@@ -1,0 +1,218 @@
+import CircuitSvg from '@site/src/components/CircuitSvg';
+
+**Key Points:**
+
+- **Inverting buck-boost topology**: LM2596S-ADJ configured to convert positive input to negative output in a single stage
+- **Bootstrapped ground**: IC GND pin connected to negative output (-13.5V), allowing FB pin to regulate correctly
+- **High efficiency**: Single-stage conversion eliminates intermediate -15V stage
+- **Same IC family**: Uses LM2596S-ADJ (same as Diagram2/3 buck converters)
+- **Input voltage**: +15V from USB-PD
+- **Output voltage**: -13.5V (feeds LM7912 linear regulator for final -12V output)
+- **Current capability**: 800mA+ (sufficient for -12V rail)
+- **Switching frequency**: 150kHz (LM2596 default)
+
+<details>
+<summary>View ASCII art circuit</summary>
+
+```
+Inverting Buck-Boost Configuration (LM2596S-ADJ, U4):
+
+Critical Concept: IC GND pin is connected to -13.5V output (bootstrapped)
+                  System GND (0V) is the reference point for input and feedback
+
+Input Power Path:
+
+                             ┌──────────────────┐
+                             │   LM2596S-ADJ    │
++15V IN ─────────────────────┤1 VIN             │
+                             │      (U4)        │
+                             │                  │
+                             │       ON/OFF 5 ──┼──○ (Float = ON)
+                             │                  │
+                             │            FB 4──┼─── (see feedback network below)
+                             │                  │
+                             │           OUT 2──┼─── (see switching section below)
+                             │                  │
+                             │3 IC GND ─────────┼──── -13.5V OUT
+                             └──────────────────┘     (Bootstrapped: IC GND pin at -13.5V, NOT 0V!)
+
+Input Capacitors (bridge between +15V and -13.5V, in parallel):
+
++15V IN ──┬─── C9 (100µF electrolytic) ───┬─── -13.5V OUT
+          │                               │     (IC GND pin 3)
+          └─── C10 (100nF ceramic) ───────┘
+
+⚠️ Critical: Input capacitors C9/C10 span from +15V to -13.5V (28.5V total stress!)
+            IC GND pin is NOT at system ground - it's at -13.5V
+
+Buck-Boost Switching Section:
+
+                    ┌─────────────────────────┐
+                    │ U4 pin 2 (OUT)          │
+                    └──────┬──────────────────┘
+                           │ SW node
+                           │
+                        ┌──┴──┐ D3 (Catch Diode)
+                        │  ▲  │ SS34 Schottky 3A 40V
+                        │  │  │ Cathode
+                        └──┬──┘
+                           │ Anode
+                           │
+                           ├──────────────────────────┐
+                           │                          │
+                        [  L3  ]                      │
+                        Inductor                      │
+                         100µH                        │
+                           │                          │
+                           │                          │
+                  System GND (0V)              -13.5V OUT
+                                                (= IC GND pin 3)
+
+                  Output Filter Capacitor (bridges between System GND (0V) and -13.5V):
+
+                  System GND (0V) ──┬─── C11 (470µF) ───┬─── -13.5V OUT
+                                    │    electrolytic   │
+                                    │   (+ to System GND (0V)) │
+                                    │                   │
+                                    └─── C12 (10µF) ────┘
+                                         ceramic
+
+Operation Sequence:
+1. SW ON:  Current flows: VIN → U4 switch → L3 → System GND (0V) (storing energy in L3)
+2. SW OFF: Inductor releases energy through D3 to charge output cap negative
+
+Detailed Component Connections:
+
+Input Capacitors (C10 closest to IC):
++15V IN ──┬────────────────┬─── To IC VIN (pin 1)
+          │                │
+         C9               C10
+        100µF            100nF
+    electrolytic        ceramic
+      (farther)        (CLOSE!)
+    Polarity: + to
+    +15V, - to -13.5V
+          │                │
+    -13.5V OUT       -13.5V OUT
+    (IC GND pin 3)   (IC GND pin 3)
+
+Note: Input caps see full VIN + |VOUT| voltage (28.5V total)
+
+Output Capacitors (C12 closest to IC):
+System GND (0V) ──┬────────────────┬─── -13.5V OUT
+                  │                │
+                 C11              C12
+                470µF            10µF
+            electrolytic        ceramic
+              (farther)        (CLOSE!)
+            Polarity: + to
+            System GND (0V), - to -13.5V
+                  │                │
+          System GND (0V)    -13.5V OUT
+
+Feedback Network (Voltage Divider):
+
+System GND (0V) ─── R7 (10kΩ) ───┬─── FB pin 4 (to U4)
+                                 │
+                                R8
+                              (1kΩ)
+                                 │
+                          -13.5V OUT
+
+FB Pin Voltage Calculation:
+- IC regulates FB to +1.23V above IC GND (-13.5V)
+- Output voltage: VOUT = -1.23V × (1 + R7/R8)
+- With R7=10kΩ, R8=1kΩ: VOUT = -1.23V × 11 = -13.53V ✓
+
+FB pin absolute voltage (relative to system GND):
+VFB = -13.5V + 1.23V = -12.27V (relative to system GND)
+But FB is +1.23V relative to IC GND (what matters!) ✓
+
+Complete Pin Connections:
+- Pin 1 (VIN): +15V input power
+- Pin 2 (OUT): Switch output → L3 inductor → System GND (0V)
+- Pin 3 (IC GND): -13.5V output (bootstrapped ground)
+- Pin 4 (FB): Feedback divider tap (R7/R8)
+- Pin 5 (ON/OFF): Floating (internal pull-up enables regulator)
+```
+
+**Component Selection:**
+
+- **U4**: LM2596S-ADJ (same IC as Diagram2/3)
+- **L3**: 100µH inductor, 3A saturation current rating (same as Diagram2/3)
+- **D3**: SS34 Schottky diode, 3A, 40V minimum (catch diode from SW to -13.5V)
+- **C9**: 100µF electrolytic, 35V+ rating (input bulk, sees VIN+|VOUT| = 28.5V)
+- **C10**: 100nF ceramic, 50V X7R (input decoupling)
+- **C11**: 470µF electrolytic, 25V rating (output filter)
+- **C12**: 10µF ceramic, 25V X7R (output decoupling)
+- **R7**: 10kΩ ±1% (feedback upper resistor)
+- **R8**: 1kΩ ±1% (feedback lower resistor)
+
+**Key Design Notes:**
+
+1. **Bootstrapped Ground**: IC GND pin connects to negative output, not system ground
+2. **Input Voltage Stress**: Input caps see VIN + |VOUT| = 28.5V (use 35V+ rating)
+3. **Diode Selection**: D3 must handle VIN + |VOUT| reverse voltage (≥40V)
+4. **FB Pin Safety**: FB is always +1.23V above IC GND (safe, within spec)
+5. **Single Stage**: Eliminates intermediate -15V conversion, improves efficiency
+6. **Output Polarity**: Output capacitor C11 has + terminal to System GND (0V), - terminal to -13.5V
+
+</details>
+
+<details>
+<summary>Connection List</summary>
+
+**Input Power:**
+
+- `+15V input` → `U4 (LM2596S-ADJ) pin 1 (VIN)`
+- `U4 pin 3 (IC GND)` → `-13.5V output` (bootstrapped ground, NOT system GND!)
+- `U4 pin 5 (ON/OFF)` → Floating (internal pull-up enables regulator)
+
+**Output Path (Inverting Buck-Boost Topology):**
+
+1. `U4 pin 2 (OUT)` → `L3 (100µH, 3A)` → `System GND (0V)`
+2. `System GND (0V)` → `C11 (470µF)` → `-13.5V output` (filter capacitor)
+3. `-13.5V output` → To LM7912 linear regulator (Diagram7)
+
+**Catch Diode (Freewheeling Path):**
+
+- `D3 (SS34 Schottky, 3A, 40V)`:
+  - Cathode → Junction between `OUT (pin 2)` and `L3`
+  - Anode → `-13.5V output` (IC GND)
+  - Purpose: Provides energy transfer path when switch turns off
+
+**Input Capacitors:**
+
+- `C9 (100µF electrolytic, 35V)`: Between `+15V input` and `-13.5V output` (IC GND)
+  - **Critical**: Sees VIN + |VOUT| = 28.5V total voltage!
+- `C10 (100nF ceramic, 50V)`: Between `+15V input` and `-13.5V output` (high-frequency decoupling)
+
+**Output Capacitors:**
+
+- `C11 (470µF electrolytic, 25V)`: Between `System GND (0V)` and `-13.5V output`
+  - **Polarity**: Positive terminal to System GND (0V), negative terminal to -13.5V
+- `C12 (10µF ceramic)`: Between `System GND (0V)` and `-13.5V output` (high-frequency decoupling)
+
+**Feedback Network (Voltage Setting):**
+
+- Voltage divider: `System GND (0V)` → `R7 (10kΩ)` → **Tap point** → `R8 (1kΩ)` → `-13.5V output`
+- `U4 pin 4 (FB)` → Connected to **tap point** (junction between R7 and R8)
+- The tap point voltage = `1.23V above IC GND` (FB regulation point)
+- Output voltage formula: `VOUT = -1.23V × (1 + R7/R8) = -1.23V × 11 = -13.53V`
+
+**Key Topology Points:**
+
+- The inductor L3 connects from **OUT (pin 2)** to **System GND (0V)**
+- D3 cathode connects to the junction between OUT (pin 2) and L3 (the "switching node")
+- D3 anode connects to IC GND (which is the -13.5V output)
+- When U4's internal switch is ON: Current flows VIN → Switch → OUT → L3 → System GND (energy stored in L3)
+- When U4's internal switch is OFF: Inductor releases energy through D3 to charge output cap negative
+- This creates a negative output voltage relative to system GND
+
+**Voltage Reference Points:**
+
+- **System GND (0V)**: Reference point for measurements and feedback network top
+- **IC GND (U4 pin 3)**: Connected to -13.5V output (bootstrapped)
+- **FB pin**: Regulated to +1.23V above IC GND = -12.27V relative to system GND (but IC sees +1.23V, which is safe!)
+
+</details>

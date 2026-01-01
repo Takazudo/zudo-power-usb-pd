@@ -221,12 +221,18 @@ Before PCB assembly:
 
 **Bottom line**: In **switching power supplies**, transformer polarity is **always critical**. Never assume "transformer is just a transformer."
 
-## Practical Example: Our LM2586 Circuit
+## Practical Example: LM2586 Flyback Circuit (Historical Reference)
 
-In our USB-PD power supply project, the LM2586 flyback converter generates -15V from +15V:
+:::warning Outdated Information
+This section describes the **old LM2586 flyback converter design** that has been **replaced** with a simpler **LM2596S inverting buck-boost** topology. This information is kept for educational purposes only.
+
+**Current design**: See Diagram4 (+15V → -13.5V inverting buck-boost using LM2596S U4)
+:::
+
+In the old USB-PD power supply design, the LM2586 flyback converter generated -15V from +15V:
 
 ```
-Complete Flyback Circuit (Diagram4):
+Complete Flyback Circuit (OLD Diagram4 - Not Used):
 
 +15V IN ────┬────────────────────────────────┐
             │                                │
@@ -296,5 +302,5 @@ This configuration ensures:
 - **LM2586 Datasheet**: Figure 16 (Flyback Regulator Application, page 14)
 - **Coilcraft MSD1514 Series**: [Coupled Inductors Datasheet](https://www.coilcraft.com/en-us/products/power/coupled-inductors/shielded-coupled-inductors/msd/)
 - **Texas Instruments Application Note**: "Flyback Transformer Design"
-- **Our Circuit**: [Diagram4 - LM2586 Flyback Converter](../inbox/circuit-diagrams#diagram4-15v---15v-voltage-inverter-lm2586-flyback-u5)
-- **Component Documentation**: [LM2586SX-ADJ Component Page](../components/lm2586sx-adj)
+- **Old Circuit (Not Used)**: Diagram4 used LM2586 Flyback (replaced with LM2596S inverting buck-boost)
+- **Component Documentation (Historical)**: [LM2586SX-ADJ Component Page](../components/lm2586sx-adj) - Component not used in current design

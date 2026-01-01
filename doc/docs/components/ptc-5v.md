@@ -122,5 +122,5 @@ Benefits:
 ## References
 
 - **Protection design**: `/doc/docs/learning/protection-fuse-strategy.md`
-- **Circuit diagram**: `/doc/docs/inbox/circuit-diagrams.mdx` - Diagram8
+- **Circuit diagram**: [Diagram6 - +5V Linear Regulator](/docs/inbox/circuit-diagrams#diagram6-75v--5v-linear-regulator-l7805-u7)
 - **JLCPCB Part Page**: https://jlcpcb.com/partdetail/C70119

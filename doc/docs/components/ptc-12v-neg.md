@@ -181,12 +181,12 @@ This is why the -12V PTC has lower current rating (1.0A) compared to +12V (1.5A)
 ## Related Components
 
 - **Protected circuit**: CJ7912 (U8) - -12V Linear Regulator
-- **Upstream**: LM2596S-ADJ #3 (U5) - -13.5V DC-DC Converter
+- **Upstream**: LM2596S-ADJ (U4) - -13.5V DC-DC Converter (Inverting Buck-Boost)
 - **Overvoltage protection**: SMAJ15A (TVS3, reversed polarity)
 - **Parallel rails**: PTC +12V (C7529589), PTC +5V (C70119)
 
 ## References
 
 - **Protection design**: `/doc/docs/learning/protection-fuse-strategy.md`
-- **Circuit diagram**: `/doc/docs/inbox/circuit-diagrams.mdx` - Diagram8
+- **Circuit diagram**: [Diagram7 - -12V Linear Regulator](/docs/inbox/circuit-diagrams#diagram7--135v---12v-linear-regulator-cj7912-u8)
 - **JLCPCB Part Page**: https://jlcpcb.com/partdetail/C2830246
