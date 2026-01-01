@@ -24,14 +24,15 @@ Inverted SEPIC Configuration (LM2586SX-ADJ):
 
 Input Power:
                     ┌────────────────┐
-+15V IN ────┬───────┤1 VIN           │
++15V IN ────┬───────┤7 VIN           │
             │       │                │
            CIN      │  LM2586SX-ADJ  │
           100µF     │   (TO-263-7)   │
             │       │                │
-           GND  ┌───┤3 GND           │
+           GND  ┌───┤4 GND           │
                 │   │                │
-                │   │         ON/OFF 5│  (Float = ON)
+                │   │Freq.Adj./ON/OFF│
+                │   │              1 ├──○ (Float = ON)
                 │   └────────────────┘
                 │
                GND
@@ -41,7 +42,7 @@ Switching and Output Stage:
                     ┌────────────────┐
                     │  LM2586SX-ADJ  │
                     │                │
-                    │            SW 2├──┬─── L1 (47µH) ───┬─── C1 (47µF) ───┐
+                    │            SW 5├──┬─── L1 (47µH) ───┬─── C1 (47µF) ───┐
                     └────────────────┘  │                 │                 │
                                        GND                │                 │
                                                           │                L2
@@ -64,7 +65,7 @@ C1/L2/D1 Junction ──┬─── COUT (100µF) ─── -15V OUT
 
 Feedback Network (Voltage Divider):
 
--15V OUT ─── R1 (10kΩ) ───┬─── FB pin 4 (to LM2586)
+-15V OUT ─── R1 (10kΩ) ───┬─── FB pin 3 (to LM2586)
                           │
                          R2
                        (~920Ω)
@@ -72,12 +73,13 @@ Feedback Network (Voltage Divider):
                          GND
 
 Complete Connection Summary:
-- Pin 1 (VIN): +15V input power
-- Pin 2 (SW): Switching output → L1 → C1 coupling cap
-- Pin 3 (GND): Ground reference
-- Pin 4 (FB): Feedback from voltage divider (R1/R2)
-- Pin 5 (ON/OFF): Floating (always enabled)
-- Pin 6, 7: NC (not connected)
+- Pin 1 (Freq. Adj. - On/Off): Floating (always enabled)
+- Pin 2 (Compensation): Connected to RC compensation network
+- Pin 3 (FB): Feedback from voltage divider (R1/R2)
+- Pin 4 (GND): Ground reference
+- Pin 5 (SW): Switching output → L1 → C1 coupling cap
+- Pin 6 (Freq. Sync.): Not connected
+- Pin 7 (VIN): +15V input power
 
 Output voltage: VOUT = -1.23V × (1 + R1/R2) = -15V
 For R1=10kΩ: R2 = 920Ω

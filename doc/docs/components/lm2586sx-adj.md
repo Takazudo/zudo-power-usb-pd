@@ -58,19 +58,19 @@ Being an adjustable output type (ADJ), the output voltage can be set using a fee
 ## Pin Configuration
 
 ```
-         TOP VIEW
+         TOP VIEW (KTW Package)
     ┌──────────────┐
-    │1            7│
-    │ VIN      NC  │
+    │7            1│
+    │VIN  Freq.Adj.│
     │              │
-    │2            6│
-    │ SW       NC  │
+    │6            2│
+    │Sync     Comp │
     │              │
-    │3            5│
-    │ GND   ON/OFF │
+    │5            3│
+    │SW         FB │
     │              │
     │4             │
-    │ FB           │
+    │GND           │
     │              │
     └──────────────┘
       TO-263-7
@@ -78,13 +78,13 @@ Being an adjustable output type (ADJ), the output voltage can be set using a fee
 
 | Pin | Name | Function |
 |-----|------|----------|
-| 1 | VIN | Input voltage (+15V) |
-| 2 | SW | Switch output (connects to L1) |
-| 3 | GND | Ground reference |
-| 4 | FB | Feedback input (voltage sense) |
-| 5 | ON/OFF | Enable/disable control (floating = ON, ≥3V = shutdown) |
-| 6 | NC | Not connected |
-| 7 | NC | Not connected |
+| 1 | Freq. Adj. - On/Off | Frequency adjustment or shutdown control |
+| 2 | Compensation | Error amplifier compensation |
+| 3 | Feedback | Feedback input (voltage sense via resistor divider) |
+| 4 | Ground | Ground reference |
+| 5 | Switch | Switch output (connects to L1 inductor) |
+| 6 | Freq. Sync. | Frequency synchronization (not used in this project) |
+| 7 | VIN | Input voltage (+15V) |
 
 ## Application in This Project
 
