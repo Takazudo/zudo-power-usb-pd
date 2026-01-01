@@ -15,33 +15,33 @@ The JK-nSMD100/16V is a PTC resettable fuse providing automatic overcurrent prot
 
 ## Part Information
 
-| Parameter | Value |
-|-----------|-------|
-| **JLCPCB Part Number** | [C2830246](https://jlcpcb.com/partdetail/C2830246) |
-| **Manufacturer Part Number** | JK-nSMD100/16V |
-| **Package** | 1206 (3.2mm x 1.6mm) |
-| **Stock** | 99,339 units (excellent availability) |
-| **Estimated Price** | ~$0.10-0.15 |
-| **Type** | Resettable Polymeric PTC |
+| Parameter                    | Value                                              |
+| ---------------------------- | -------------------------------------------------- |
+| **JLCPCB Part Number**       | [C2830246](https://jlcpcb.com/partdetail/C2830246) |
+| **Manufacturer Part Number** | JK-nSMD100/16V                                     |
+| **Package**                  | 1206 (3.2mm x 1.6mm)                               |
+| **Stock**                    | 99,339 units (excellent availability)              |
+| **Estimated Price**          | ~$0.10-0.15                                        |
+| **Type**                     | Resettable Polymeric PTC                           |
 
 ## Electrical Specifications
 
 ### Current Ratings
 
-| Parameter | Value | Unit | Conditions |
-|-----------|-------|------|------------|
-| **Hold Current** | 1.0 | A | Maximum safe continuous current |
-| **Trip Current** | ~2.0 | A | Typical (2x hold current) |
-| **Voltage Rating** | 16 | V | Maximum voltage |
+| Parameter          | Value | Unit | Conditions                      |
+| ------------------ | ----- | ---- | ------------------------------- |
+| **Hold Current**   | 1.0   | A    | Maximum safe continuous current |
+| **Trip Current**   | ~2.0  | A    | Typical (2x hold current)       |
+| **Voltage Rating** | 16    | V    | Maximum voltage                 |
 
 ### Key Characteristics
 
-| Parameter | Value | Unit |
-|-----------|-------|------|
-| **Initial Resistance** | &lt;0.05Ω | (typical) |
-| **Trip Time @ 2x Hold** | 1-5 | s |
-| **Reset Time** | 30-60 | s |
-| **Operating Temp** | -40 to +85 | °C |
+| Parameter               | Value      | Unit      |
+| ----------------------- | ---------- | --------- |
+| **Initial Resistance**  | &lt;0.05Ω  | (typical) |
+| **Trip Time @ 2x Hold** | 1-5        | s         |
+| **Reset Time**          | 30-60      | s         |
+| **Operating Temp**      | -40 to +85 | °C        |
 
 ## Circuit Integration
 
@@ -75,11 +75,11 @@ LM7912 Output ──┬─── PTC3 (1.0A) ───┬─── TVS3 ──�
 
 ### Current vs Protection State
 
-| Current | LM7912 State | PTC State | Result |
-|---------|--------------|-----------|--------|
-| 0-1.0A | ✅ Normal | ✅ Normal | Normal operation |
-| 1.0-1.5A | ⚠️ Current limiting | ⚠️ Warming | Both protections activating |
-| &gt;1.5A | 🛑 Hard limit (~1A max) | 🛑 Trips | Dual protection active |
+| Current  | LM7912 State            | PTC State  | Result                      |
+| -------- | ----------------------- | ---------- | --------------------------- |
+| 0-1.0A   | ✅ Normal               | ✅ Normal  | Normal operation            |
+| 1.0-1.5A | ⚠️ Current limiting     | ⚠️ Warming | Both protections activating |
+| &gt;1.5A | 🛑 Hard limit (~1A max) | 🛑 Trips   | Dual protection active      |
 
 ### Design Rationale
 
@@ -114,11 +114,13 @@ The PTC responds to current magnitude, not polarity.
 ### Protection on Negative Rails
 
 **Current measurement:**
+
 - Current flows from GND to -12V rail (conventional direction)
 - PTC measures absolute current magnitude
 - Trip behavior is identical to positive rails
 
 **Example:**
+
 ```
 Module draws 1.5A from -12V rail:
 
@@ -129,19 +131,20 @@ Result: PTC warms up and may trip (same as +12V rail)
 
 ## Comparison to Other Rails
 
-| Feature | -12V PTC (This) | +12V PTC | +5V PTC |
-|---------|-----------------|----------|---------|
-| Hold current | 1.0A | 1.5A | 1.1A |
-| Package | 1206 | SMD1210 | 1812 |
-| Design target | 0.8A | 1.2A | 0.5A |
-| Overhead | 25% | 25% | 120% |
-| Stock | 99,339 | 7,525 | 44,459 |
+| Feature       | -12V PTC (This) | +12V PTC | +5V PTC |
+| ------------- | --------------- | -------- | ------- |
+| Hold current  | 1.0A            | 1.5A     | 1.1A    |
+| Package       | 1206            | SMD1210  | 1812    |
+| Design target | 0.8A            | 1.2A     | 0.5A    |
+| Overhead      | 25%             | 25%      | 120%    |
+| Stock         | 99,339          | 7,525    | 44,459  |
 
 **Note:** -12V rail typically draws less current than +12V in modular synth applications, hence lower current rating.
 
 ## Typical Modular Synth -12V Usage
 
 **Why -12V draws less current:**
+
 - Analog synth modules use +12V for:
   - Op-amp power (primary)
   - Audio signal processing
@@ -152,6 +155,7 @@ Result: PTC warms up and may trip (same as +12V rail)
   - Bipolar signals
 
 **Typical current split:**
+
 ```
 +12V: 60-70% of total current
 -12V: 30-40% of total current
@@ -159,6 +163,7 @@ Result: PTC warms up and may trip (same as +12V rail)
 ```
 
 **Example modular system (10 modules):**
+
 ```
 +12V: 1.0-1.2A
 -12V: 0.6-0.8A  ← This rail
@@ -169,9 +174,9 @@ This is why the -12V PTC has lower current rating (1.0A) compared to +12V (1.5A)
 
 ## Bill of Materials
 
-| Designator | Part | Package | JLCPCB Part # | Qty | Unit Price | Extended |
-|------------|------|---------|--------------|-----|------------|----------|
-| PTC3 | JK-nSMD100/16V | 1206 | C2830246 | 1 | $0.10 | $0.10 |
+| Designator | Part           | Package | JLCPCB Part # | Qty | Unit Price | Extended |
+| ---------- | -------------- | ------- | ------------- | --- | ---------- | -------- |
+| PTC3       | JK-nSMD100/16V | 1206    | C2830246      | 1   | $0.10      | $0.10    |
 
 ## Related Components
 

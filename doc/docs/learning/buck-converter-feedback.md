@@ -21,6 +21,7 @@ A **buck converter** (step-down converter) is a DC-DC switching regulator that c
 ### Buck Converter vs Linear Regulator
 
 **Linear Regulator** (like LM7812):
+
 ```
 15V ──┬──[Transistor]──┬──→ 12V
       │   (Variable    │
@@ -33,6 +34,7 @@ Efficiency ≈ 80%
 ```
 
 **Buck Converter** (like LM2596S-ADJ):
+
 ```
 15V ──┬──[Switch ON/OFF]──[Inductor]──┬──→ 13.5V
       │   150kHz PWM               │
@@ -80,14 +82,14 @@ Efficiency ≈ 85-90%
 
 Your intuition is **100% correct**! The LM2596S-ADJ uses an error amplifier that works just like an op-amp:
 
-| Op-Amp Circuit | LM2596S-ADJ Buck Converter |
-|----------------|----------------------------|
+| Op-Amp Circuit              | LM2596S-ADJ Buck Converter   |
+| --------------------------- | ---------------------------- |
 | **Non-inverting input (+)** | **Internal 1.23V reference** |
-| **Inverting input (-)** | **FB pin (pin 2)** |
-| **Error amplifier** | **Compares FB to 1.23V** |
-| **Output adjustment** | **Changes PWM duty cycle** |
-| **Goal** | **Make inputs equal** |
-| V(+) = V(-) | **FB = 1.23V** |
+| **Inverting input (-)**     | **FB pin (pin 2)**           |
+| **Error amplifier**         | **Compares FB to 1.23V**     |
+| **Output adjustment**       | **Changes PWM duty cycle**   |
+| **Goal**                    | **Make inputs equal**        |
+| V(+) = V(-)                 | **FB = 1.23V**               |
 
 ```
 Op-Amp Voltage Regulator:
@@ -116,6 +118,7 @@ LM2596S-ADJ:
 The LM2596S-ADJ has an **internal 1.23V reference**. The chip tries to keep the FB pin at exactly 1.23V.
 
 **Circuit**:
+
 ```
                         R1 (10kΩ)
 +13.5V output ──────┬────────────┬──── FB pin (pin 2)
@@ -128,6 +131,7 @@ The LM2596S-ADJ has an **internal 1.23V reference**. The chip tries to keep the 
 ```
 
 **Voltage divider equation**:
+
 ```
 V_FB = V_OUT × (R2 / (R1 + R2))
 
@@ -142,6 +146,7 @@ V_OUT = 1.23V × (R1 + R2) / R2
 ```
 
 **Example (our +13.5V circuit)**:
+
 ```
 V_OUT = 1.23V × (1 + 10kΩ/1kΩ)
       = 1.23V × (1 + 10)
@@ -153,13 +158,13 @@ V_OUT = 1.23V × (1 + 10kΩ/1kΩ)
 
 Just change the resistor ratio!
 
-| Target Voltage | R1 | R2 | Calculation |
-|----------------|----|----|-------------|
-| 3.3V | 1.7kΩ | 1kΩ | 1.23V × (1 + 1.7) = 3.32V |
-| 5V | 3.1kΩ | 1kΩ | 1.23V × (1 + 3.1) = 5.04V |
-| 7.5V | 5.1kΩ | 1kΩ | 1.23V × (1 + 5.1) = 7.50V |
-| 12V | 8.7kΩ | 1kΩ | 1.23V × (1 + 8.7) = 11.94V |
-| **13.5V** | **10kΩ** | **1kΩ** | **1.23V × 11 = 13.53V** |
+| Target Voltage | R1       | R2      | Calculation                |
+| -------------- | -------- | ------- | -------------------------- |
+| 3.3V           | 1.7kΩ    | 1kΩ     | 1.23V × (1 + 1.7) = 3.32V  |
+| 5V             | 3.1kΩ    | 1kΩ     | 1.23V × (1 + 3.1) = 5.04V  |
+| 7.5V           | 5.1kΩ    | 1kΩ     | 1.23V × (1 + 5.1) = 7.50V  |
+| 12V            | 8.7kΩ    | 1kΩ     | 1.23V × (1 + 8.7) = 11.94V |
+| **13.5V**      | **10kΩ** | **1kΩ** | **1.23V × 11 = 13.53V**    |
 
 ## The Control Process: How It Maintains Voltage
 
@@ -310,13 +315,13 @@ The **inductor** acts like a flywheel, smoothing the chopped voltage into steady
 
 ### Component Roles
 
-| Component | Function |
-|-----------|----------|
-| **L1 (100µH)** | Stores energy when switch is ON, releases when OFF (smooths output) |
-| **D1 (Schottky)** | Provides current path when switch is OFF (flywheel effect) |
-| **C5 (input cap)** | Stabilizes input voltage, handles transient currents |
-| **C3 (output cap)** | Filters ripple, provides stable output voltage |
-| **R1, R2** | Voltage divider - sets output voltage by creating 1.23V at FB pin |
+| Component           | Function                                                            |
+| ------------------- | ------------------------------------------------------------------- |
+| **L1 (100µH)**      | Stores energy when switch is ON, releases when OFF (smooths output) |
+| **D1 (Schottky)**   | Provides current path when switch is OFF (flywheel effect)          |
+| **C5 (input cap)**  | Stabilizes input voltage, handles transient currents                |
+| **C3 (output cap)** | Filters ripple, provides stable output voltage                      |
+| **R1, R2**          | Voltage divider - sets output voltage by creating 1.23V at FB pin   |
 
 ## Why Buck Converters Are Better Than Linear Regulators
 
@@ -325,6 +330,7 @@ The **inductor** acts like a flywheel, smoothing the chopped voltage into steady
 **Our circuit: 15V → 13.5V at 1.3A**
 
 **Linear Regulator (LM7812 equivalent)**:
+
 ```
 Power in  = 15V × 1.3A = 19.5W
 Power out = 13.5V × 1.3A = 17.6W
@@ -337,6 +343,7 @@ Heat sink required: Large (to dissipate 1.9W)
 ```
 
 **Buck Converter (LM2596S-ADJ)**:
+
 ```
 Power in  = 15V × 1.3A = 19.5W
 Power out = 13.5V × 1.3A = 17.6W
@@ -381,11 +388,13 @@ Best of both worlds:
 ## Common Mistakes to Avoid
 
 ❌ **Wrong**: "The LM2596S-ADJ outputs 15V and we use resistors to drop it to 13.5V"
+
 - This would waste power like a linear regulator!
 
 ✅ **Correct**: "The LM2596S-ADJ uses PWM switching to create 13.5V directly. The resistors just tell it what voltage to target (by creating 1.23V at FB)."
 
 ❌ **Wrong**: "R1 and R2 pass current from the output"
+
 - The feedback resistors carry almost no current (less than 1mA)!
 
 ✅ **Correct**: "R1 and R2 form a voltage divider that samples the output voltage and reports it to the FB pin."

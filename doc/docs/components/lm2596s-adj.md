@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-import BuckU2Diagram from '../_fragments/buck-u2-diagram.mdx';
+import BuckU2Diagram from '../\_fragments/buck-u2-diagram.mdx';
 
 # LM2596S-ADJ Buck Converter
 
@@ -28,17 +28,17 @@ Being an adjustable output type (ADJ), the output voltage can be freely set usin
 
 ### Electrical Characteristics
 
-| Parameter | Value |
-|-----------|-------|
-| **Input Voltage Range** | 4.5V - 40V DC |
-| **Output Voltage Range** | 1.23V - 37V (adjustable) |
-| **Maximum Output Current** | 3A |
-| **Switching Frequency** | 150kHz (typical) |
-| **Efficiency** | 85% - 90% (typical, depends on load) |
-| **Reference Voltage** | 1.23V (internal) |
-| **Operating Temperature** | -40°C to +125°C |
-| **Dropout Voltage** | ~1.5V (minimum Vin - Vout) |
-| **ON/OFF Control** | High = ON, Low = Shutdown |
+| Parameter                  | Value                                |
+| -------------------------- | ------------------------------------ |
+| **Input Voltage Range**    | 4.5V - 40V DC                        |
+| **Output Voltage Range**   | 1.23V - 37V (adjustable)             |
+| **Maximum Output Current** | 3A                                   |
+| **Switching Frequency**    | 150kHz (typical)                     |
+| **Efficiency**             | 85% - 90% (typical, depends on load) |
+| **Reference Voltage**      | 1.23V (internal)                     |
+| **Operating Temperature**  | -40°C to +125°C                      |
+| **Dropout Voltage**        | ~1.5V (minimum Vin - Vout)           |
+| **ON/OFF Control**         | High = ON, Low = Shutdown            |
 
 ### Package Information
 
@@ -64,14 +64,14 @@ Being an adjustable output type (ADJ), the output voltage can be freely set usin
 
 ### Pin Descriptions
 
-| Pin | Name | Function |
-|-----|------|----------|
-| 1 | VIN | Voltage Input (4.5V - 40V) |
-| 2 | OUTPUT | Switching Output (connect to inductor) |
-| 3 | GND | Ground (also thermal tab) |
-| 4 | FEEDBACK | Voltage Feedback Input (1.23V reference) |
-| 5 | ON/OFF | Enable Control (Low or floating = ON; tie to GND or leave floating for always-on) |
-| TAB | GND | Thermal Tab (must connect to GND plane) |
+| Pin | Name     | Function                                                                          |
+| --- | -------- | --------------------------------------------------------------------------------- |
+| 1   | VIN      | Voltage Input (4.5V - 40V)                                                        |
+| 2   | OUTPUT   | Switching Output (connect to inductor)                                            |
+| 3   | GND      | Ground (also thermal tab)                                                         |
+| 4   | FEEDBACK | Voltage Feedback Input (1.23V reference)                                          |
+| 5   | ON/OFF   | Enable Control (Low or floating = ON; tie to GND or leave floating for always-on) |
+| TAB | GND      | Thermal Tab (must connect to GND plane)                                           |
 
 ## Application in This Project
 
@@ -82,6 +82,7 @@ In this project, three LM2596S-ADJ units are used in the following configuration
 <BuckU2Diagram />
 
 **Output Voltage Calculation**:
+
 ```
 Vout = 1.23V × (1 + R1/R2)
      = 1.23V × (1 + 10kΩ/1kΩ)
@@ -90,6 +91,7 @@ Vout = 1.23V × (1 + R1/R2)
 ```
 
 **Component Values**:
+
 - **L1**: 100µH, 4.5A Inductor (JLCPCB: C19268674, CYA1265-100UH)
 - **D1**: SS34 Schottky Diode 3A/40V (JLCPCB: C8678)
 - **C3**: 470µF/25V Electrolytic Capacitor (JLCPCB: C3351)
@@ -122,6 +124,7 @@ Vout = 1.23V × (1 + R1/R2)
 ```
 
 **Output Voltage Calculation**:
+
 ```
 Vout = 1.23V × (1 + R3/R4)
      = 1.23V × (1 + 5.1kΩ/1kΩ)
@@ -130,6 +133,7 @@ Vout = 1.23V × (1 + R3/R4)
 ```
 
 **Component Values**:
+
 - **L2**: 100µH, 4.5A Inductor (JLCPCB: C19268674)
 - **D2**: SS34 Schottky Diode (JLCPCB: C8678)
 - **C7**: 470µF/10V Electrolytic Capacitor (JLCPCB: C335982)
@@ -164,6 +168,7 @@ Vout = 1.23V × (1 + R3/R4)
 **Output Voltage**: -13.53V (same calculation as U2)
 
 **Component Values**:
+
 - **L3**: 100µH, 4.5A Inductor (JLCPCB: C19268674)
 - **D3**: SS34 Schottky Diode (JLCPCB: C8678)
 - **C11**: 470µF/25V Electrolytic Capacitor (JLCPCB: C3351)
@@ -184,22 +189,24 @@ Vout = Vref × (1 + R_upper / R_lower)
 Where Vref = 1.23V (internal reference voltage).
 
 **Recommended Resistor Values**:
+
 - R_lower: 1kΩ (fixed, optimizes feedback current)
 - R_upper: Select based on desired output voltage
 
 | Target Vout | R_upper | Actual Vout |
-|-------------|---------|-------------|
-| 3.3V | 1.7kΩ | 3.32V |
-| 5V | 3.0kΩ | 4.92V |
-| 7.5V | 5.1kΩ | 7.50V |
-| 12V | 8.7kΩ | 12.01V |
-| 13.5V | 10kΩ | 13.53V |
+| ----------- | ------- | ----------- |
+| 3.3V        | 1.7kΩ   | 3.32V       |
+| 5V          | 3.0kΩ   | 4.92V       |
+| 7.5V        | 5.1kΩ   | 7.50V       |
+| 12V         | 8.7kΩ   | 12.01V      |
+| 13.5V       | 10kΩ    | 13.53V      |
 
 ### 2. Feedback Compensation Network
 
 All three buck converters in this project use a **Type II compensation network** consisting of a capacitor in parallel with the upper feedback resistor. This improves loop stability and transient response.
 
 **Topology**:
+
 ```
 Output ──┬─── R_upper ──┬─── R_lower ─── GND
          │              │
@@ -209,12 +216,14 @@ Output ──┬─── R_upper ──┬─── R_lower ─── GND
 ```
 
 **Component Values**:
+
 - **CFF (C4, C8, C12)**: 22nF ceramic capacitor
 - In parallel with R_upper (R1, R3, R5)
 
 **Why 22nF for all three converters?**
 
 The compensation capacitor value depends on:
+
 1. Switching frequency (150kHz - same for all LM2596S units)
 2. LC filter characteristics (100µH inductor + 470µF output cap - same for all)
 3. Feedback resistor values (affect DC gain, but compensation pole/zero placement is similar)
@@ -222,6 +231,7 @@ The compensation capacitor value depends on:
 Since all three converters use the same IC, switching frequency, inductor, and output capacitor, **the same 22nF compensation value works optimally for all three circuits**.
 
 **Benefits of CFF capacitor**:
+
 - Improves transient response during load changes
 - Reduces switching noise on the feedback line
 - Prevents control loop oscillation
@@ -232,34 +242,40 @@ Since all three converters use the same IC, switching frequency, inductor, and o
 ### 3. Inductor Selection
 
 **Key Parameters**:
+
 - **Inductance**: 100µH (recommended, selectable within 47µH-220µH range)
 - **Saturation Current**: 1.5x or more of output current (4.5A or higher for this project)
 - **DCR (DC Resistance)**: As low as possible (for improved efficiency)
 
 **Selected Component for This Project**:
+
 - CYA1265-100UH: 100µH, 4.5A saturation current, SMD power inductor
 - JLCPCB: C19268674
 
 ### 4. Diode Selection
 
 **Schottky Diode Required**:
+
 - High-speed switching capability (150kHz)
 - Low forward voltage drop (for improved efficiency)
 - Current Rating: Equal to or greater than output current (3A for this project)
 - Reverse Voltage: Equal to or greater than input voltage (40V or higher recommended)
 
 **Selected Component for This Project**:
+
 - SS34: 3A, 40V Schottky Diode
 - JLCPCB: C8678 (Very High Stock: 1,859,655 units)
 
 ### 5. Capacitor Selection
 
 **Input Capacitor** (Between VIN and GND):
+
 - Electrolytic or ceramic capacitor
 - Capacitance: 100µF or higher recommended
 - Voltage Rating: 1.5x or more of input voltage
 
 **Output Capacitor** (Between VOUT and GND):
+
 - **Required**: Low ESR electrolytic capacitor
 - Capacitance: 220µF - 1000µF (470µF for this project)
 - ESR: 0.5Ω or less (for ripple reduction)
@@ -268,6 +284,7 @@ Since all three converters use the same IC, switching frequency, inductor, and o
 ### 6. PCB Layout Guidelines
 
 **Important Points**:
+
 1. **Input loop**: Minimize the area of VIN - L - D - Cout loop
 2. **Ground plane**: Ensure a continuous, wide GND plane
 3. **Thermal relief**: Connect TO-263 package tab directly to GND plane
@@ -275,6 +292,7 @@ Since all three converters use the same IC, switching frequency, inductor, and o
 5. **Via placement**: Place multiple thermal vias (for enhanced heat dissipation)
 
 **Recommended Trace Widths**:
+
 - VIN, VOUT: 2mm or wider (for 3A current handling)
 - GND: As wide as possible (plane recommended)
 - FB: 0.2mm-0.3mm (thin and short)
@@ -282,12 +300,14 @@ Since all three converters use the same IC, switching frequency, inductor, and o
 ### 7. Efficiency Optimization
 
 **Factors Affecting Efficiency**:
+
 - **Inductor DCR**: Lower is better
 - **Diode Vf**: Lower is better (Schottky recommended)
 - **Output capacitor ESR**: Lower is better
 - **Input-Output voltage difference**: Smaller difference yields higher efficiency
 
 **Efficiency Estimates for This Project**:
+
 - U2 (15V→13.5V): ~88% (High efficiency due to small voltage difference)
 - U3 (15V→7.5V): ~85% (Moderate voltage difference)
 - U4 (-15V→-13.5V): ~88% (Equivalent efficiency for negative voltage)
@@ -295,6 +315,7 @@ Since all three converters use the same IC, switching frequency, inductor, and o
 ### 8. Thermal Considerations
 
 **Heat Dissipation Calculation Example** (U2: 15V→13.5V, 1.3A):
+
 ```
 Power dissipation = (Vin - Vout) × Iout × (1 - Efficiency)
                   ≈ (15V - 13.5V) × 1.3A × 0.12

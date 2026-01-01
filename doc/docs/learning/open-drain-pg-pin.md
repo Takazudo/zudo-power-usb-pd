@@ -39,6 +39,7 @@ Open-Drain Output Pin:
 ```
 
 Think of it as a **switch to ground**:
+
 - Switch CLOSED → Pin = GND
 - Switch OPEN → Pin = floating (not connected)
 
@@ -68,6 +69,7 @@ PG pin ────────────┤  Transistor  ├──→ GND (in
 ### Two States
 
 **State 1: Power NOT Good** (negotiating or failed)
+
 ```
 PG Pin = HIGH-Z (floating)
 
@@ -79,6 +81,7 @@ PG Pin = HIGH-Z (floating)
 ```
 
 **State 2: Power Good** (15V stable)
+
 ```
 PG Pin = LOW (connected to GND)
 
@@ -106,6 +109,7 @@ Because the PG pin can only **sink current** (pull to GND), not **source current
 ### Why Not Connect Directly to 15V?
 
 We **could** connect to 15V, but:
+
 ```
 If using 15V:
 I_LED = (15V - 2.2V) / 330Ω = 38.8mA ❌ (Too high! Max is 20mA)
@@ -158,6 +162,7 @@ Time >1000ms:
 ## Common Mistake to Avoid
 
 ❌ **WRONG** - Trying to power LED from PG pin:
+
 ```
 PG pin ──[Resistor]──[LED]──→ GND
 
@@ -166,6 +171,7 @@ When PG = LOW, both sides of LED are at GND → No current → LED OFF
 ```
 
 ✅ **CORRECT** - Power LED from voltage rail:
+
 ```
 +5V ──[Resistor]──[LED]──→ PG pin
 
@@ -175,6 +181,7 @@ When PG = LOW: +5V → LED → GND → Current flows → LED ON ✅
 ## Related Circuits
 
 This open-drain concept is used in many digital ICs:
+
 - **I²C bus** (SDA and SCL are open-drain)
 - **1-Wire protocol** (Dallas/Maxim sensors)
 - **Interrupt outputs** (many sensor ICs)

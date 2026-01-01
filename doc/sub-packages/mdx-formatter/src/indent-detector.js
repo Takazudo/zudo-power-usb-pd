@@ -19,7 +19,7 @@ export class IndentDetector {
       indentedLines: 0,
       patterns: {},
       tabLines: 0,
-      spaceLines: 0
+      spaceLines: 0,
     };
 
     // Perform detection
@@ -90,7 +90,9 @@ export class IndentDetector {
         }
 
         // Track raw indent sizes
-        const key = indent.includes('\t') ? `tab-${indent.split('\t').length - 1}` : `space-${indent.length}`;
+        const key = indent.includes('\t')
+          ? `tab-${indent.split('\t').length - 1}`
+          : `space-${indent.length}`;
         indentCounts.set(key, (indentCounts.get(key) || 0) + 1);
       }
     }
@@ -138,9 +140,9 @@ export class IndentDetector {
 
       // Look for indent level differences (GCD approach)
       const spaceIndents = patterns
-        .filter(p => p.type === 'space')
-        .map(p => p.size)
-        .filter(size => size > 0);
+        .filter((p) => p.type === 'space')
+        .map((p) => p.size)
+        .filter((size) => size > 0);
 
       if (spaceIndents.length > 0) {
         // Find the GCD of all indentation sizes
@@ -158,7 +160,7 @@ export class IndentDetector {
   findCommonIndentSize(sizes) {
     // Count frequency of each size
     const sizeFreq = new Map();
-    sizes.forEach(size => {
+    sizes.forEach((size) => {
       sizeFreq.set(size, (sizeFreq.get(size) || 0) + 1);
     });
 
@@ -236,14 +238,16 @@ export class IndentDetector {
     }
 
     // Count unique indent sizes and their frequencies
-    const uniqueSizes = new Set(patterns.filter(p => p.type === 'space').map(p => p.size));
+    const uniqueSizes = new Set(patterns.filter((p) => p.type === 'space').map((p) => p.size));
     const sizesArray = Array.from(uniqueSizes).sort((a, b) => a - b);
 
     // Count frequency of each size
     const sizeFrequencies = new Map();
-    patterns.filter(p => p.type === 'space').forEach(p => {
-      sizeFrequencies.set(p.size, (sizeFrequencies.get(p.size) || 0) + 1);
-    });
+    patterns
+      .filter((p) => p.type === 'space')
+      .forEach((p) => {
+        sizeFrequencies.set(p.size, (sizeFrequencies.get(p.size) || 0) + 1);
+      });
 
     // Check if the sizes form a consistent progression (e.g., 2, 4, 6, 8)
     let isConsistentProgression = true;
@@ -254,7 +258,7 @@ export class IndentDetector {
 
       // Check if it's a proper progression
       for (let i = 2; i < sizesArray.length; i++) {
-        if (sizesArray[i] - sizesArray[i-1] !== baseStep) {
+        if (sizesArray[i] - sizesArray[i - 1] !== baseStep) {
           isConsistentProgression = false;
           break;
         }
@@ -342,7 +346,7 @@ export class IndentDetector {
     } else {
       // Perfect consistency
       const sampleFactor = Math.min(patterns.length / 5, 1);
-      this.confidence = 0.8 + (0.2 * sampleFactor);
+      this.confidence = 0.8 + 0.2 * sampleFactor;
     }
 
     // Reduce confidence if there's mixed tabs and spaces

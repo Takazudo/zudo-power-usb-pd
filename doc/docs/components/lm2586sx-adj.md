@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-import InverterU5Diagram from '../_fragments/inverter-u5-diagram.mdx';
+import InverterU5Diagram from '../\_fragments/inverter-u5-diagram.mdx';
 
 # LM2586SX-ADJ Inverted SEPIC Converter
 
@@ -23,6 +23,7 @@ import LM2586 from '@site/static/footprints-svg/TO-263-7_L10.2-W8.6-P1.27-LS14.4
 The LM2586SX-ADJ is a 3A output capable switching regulator from Texas Instruments designed for multiple topologies including flyback, boost, forward, and **inverted SEPIC**. In this project, it's configured as an inverted SEPIC converter to generate -15V from +15V input.
 
 **Why LM2586 instead of charge pump (ICL7660)?**
+
 - **Current requirement**: The -12V rail needs 800mA, but charge pumps like ICL7660 only provide ~100mA
 - **High current capability**: LM2586 can deliver 3A, providing ample headroom for the 800mA requirement
 - **Input voltage compatibility**: Handles 4V-40V input (ICL7660 max is 10V, requiring voltage clamping)
@@ -33,17 +34,17 @@ Being an adjustable output type (ADJ), the output voltage can be set using a fee
 
 ### Electrical Characteristics
 
-| Parameter | Value |
-|-----------|-------|
-| **Input Voltage Range** | 4V - 40V DC |
-| **Output Voltage Range** | Adjustable (inverted SEPIC: negative outputs) |
-| **Maximum Output Current** | 3A |
-| **Switching Frequency** | 200kHz (typical) |
-| **Efficiency** | 85% - 90% (typical, topology dependent) |
-| **Reference Voltage** | 1.23V (internal, for feedback) |
-| **Operating Temperature** | -40°C to +125°C |
-| **ON/OFF Control** | Floating = ON, ≥3V = Shutdown |
-| **Shutdown Current** | 56µA typical (16µA to VIN, 40µA to ON/OFF) |
+| Parameter                  | Value                                         |
+| -------------------------- | --------------------------------------------- |
+| **Input Voltage Range**    | 4V - 40V DC                                   |
+| **Output Voltage Range**   | Adjustable (inverted SEPIC: negative outputs) |
+| **Maximum Output Current** | 3A                                            |
+| **Switching Frequency**    | 200kHz (typical)                              |
+| **Efficiency**             | 85% - 90% (typical, topology dependent)       |
+| **Reference Voltage**      | 1.23V (internal, for feedback)                |
+| **Operating Temperature**  | -40°C to +125°C                               |
+| **ON/OFF Control**         | Floating = ON, ≥3V = Shutdown                 |
+| **Shutdown Current**       | 56µA typical (16µA to VIN, 40µA to ON/OFF)    |
 
 ### Package Information
 
@@ -76,15 +77,15 @@ Being an adjustable output type (ADJ), the output voltage can be set using a fee
       TO-263-7
 ```
 
-| Pin | Name | Function |
-|-----|------|----------|
-| 1 | Freq. Adj. - On/Off | Frequency adjustment or shutdown control |
-| 2 | Compensation | Error amplifier compensation |
-| 3 | Feedback | Feedback input (voltage sense via resistor divider) |
-| 4 | Ground | Ground reference |
-| 5 | Switch | Switch output (connects to L1 inductor) |
-| 6 | Freq. Sync. | Frequency synchronization (not used in this project) |
-| 7 | VIN | Input voltage (+15V) |
+| Pin | Name                | Function                                             |
+| --- | ------------------- | ---------------------------------------------------- |
+| 1   | Freq. Adj. - On/Off | Frequency adjustment or shutdown control             |
+| 2   | Compensation        | Error amplifier compensation                         |
+| 3   | Feedback            | Feedback input (voltage sense via resistor divider)  |
+| 4   | Ground              | Ground reference                                     |
+| 5   | Switch              | Switch output (connects to L1 inductor)              |
+| 6   | Freq. Sync.         | Frequency synchronization (not used in this project) |
+| 7   | VIN                 | Input voltage (+15V)                                 |
 
 ## Application in This Project
 
@@ -94,16 +95,16 @@ Being an adjustable output type (ADJ), the output voltage can be set using a fee
 
 ### Component Values for -15V Output
 
-| Component | Value | Purpose |
-|-----------|-------|---------|
-| **L1** | 47µH, 3A rated | Input inductor |
-| **L2** | 47µH, 3A rated | Output inductor (can use coupled inductor with L1) |
-| **C1** | 47µF | SEPIC coupling capacitor |
-| **CIN** | 100µF electrolytic | Input filter capacitor |
-| **COUT** | 100µF electrolytic | Output filter capacitor (reversed polarity) |
-| **D1** | Schottky diode, 3A | Output rectifier (e.g., SS34, MBRS340) |
-| **R1** | 10kΩ | Feedback resistor (upper) |
-| **R2** | TBD | Feedback resistor (lower, sets output voltage) |
+| Component | Value              | Purpose                                            |
+| --------- | ------------------ | -------------------------------------------------- |
+| **L1**    | 47µH, 3A rated     | Input inductor                                     |
+| **L2**    | 47µH, 3A rated     | Output inductor (can use coupled inductor with L1) |
+| **C1**    | 47µF               | SEPIC coupling capacitor                           |
+| **CIN**   | 100µF electrolytic | Input filter capacitor                             |
+| **COUT**  | 100µF electrolytic | Output filter capacitor (reversed polarity)        |
+| **D1**    | Schottky diode, 3A | Output rectifier (e.g., SS34, MBRS340)             |
+| **R1**    | 10kΩ               | Feedback resistor (upper)                          |
+| **R2**    | TBD                | Feedback resistor (lower, sets output voltage)     |
 
 ### Output Voltage Calculation
 
@@ -145,10 +146,12 @@ R2 ≈ 920Ω
 ### ON/OFF Pin Control
 
 For **always-on operation** (this project):
+
 - Leave pin 5 **floating (open circuit)**
 - Do not source or sink current to/from this pin
 
 For **enable/disable control** (future enhancement):
+
 - Connect to microcontroller GPIO or switch
 - Float or pull low (&lt;0.8V) = Enable
 - Pull high (≥3V) = Shutdown
@@ -192,14 +195,16 @@ For **enable/disable control** (future enhancement):
 **JLCPCB Stock**: 89 units (as of last check)
 
 This is **significantly lower** than other components in this project:
+
 - LM2596S: 12,075 units
 - CH224D: 2,291 units
 
 **Recommendations**:
+
 1. Order early if using JLCPCB assembly
 2. Consider alternative part numbers (LM2586S-ADJ/NOPB variants)
 3. Monitor stock levels before PCB production
-:::
+   :::
 
 ## Troubleshooting
 

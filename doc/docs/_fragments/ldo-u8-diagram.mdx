@@ -1,21 +1,20 @@
 import CircuitSvg from '@site/src/components/CircuitSvg';
 import LdoU8Svg from '@site/static/circuits/ldo-u8-diagram.svg';
 
-<CircuitSvg
-  src={LdoU8Svg}
-  alt="LM7912 Linear Regulator U8 (Negative Voltage)"
-  padding="10px"
-/>
+<CircuitSvg src={LdoU8Svg} alt="LM7912 Linear Regulator U8 (Negative Voltage)" padding="10px" />
 
 **Capacitor Placement (Critical for PCB layout):**
+
 - **C28/C19 (ceramic)**: Place RIGHT NEXT to IC pins (minimize trace length for high-freq filtering)
 - **C24/C25 (electrolytic)**: Can be placed farther from IC (bulk storage, less sensitive to distance)
 
 **Important: Negative Voltage Component Polarities**
+
 - **Electrolytic capacitors REVERSED**: C24 and C25 have negative terminal to negative voltage, positive terminal to GND
 - **LED polarity REVERSED**: LED4 anode to GND (0V, highest potential), cathode through R16 to -12V (lowest potential)
 
 **Key Points:**
+
 - **Two-stage design**: Buck converter (U4) provides efficient voltage reduction, linear regulator (U8) provides low-noise final output
 - **Input capacitor order**: C24 (bulk, farther) and C28 (ceramic, close to IC)
 - **Output capacitor order**: C19 (ceramic, close to IC) and C25 (bulk, farther)
@@ -25,6 +24,7 @@ import LdoU8Svg from '@site/static/circuits/ldo-u8-diagram.svg';
 - **LM7912 pinout**: Different from positive regulators - pin 1=IN, pin 2=OUT, pin 3=GND (not pin 3=OUT!)
 
 **Protection Circuit (-12V Rail, 0.8A target, 1A max):**
+
 - **Protection layers**: LM7912 current limiting (~1A max) → LM7912 thermal shutdown (150°C) → PTC3 trips (&gt;2.0A) → USB-PD adapter protection
 - **PTC3**: C2830246 (JK-nSMD100/16V) - 1.0A hold, 2.0A trip, auto-reset fuse
 - **TVS3**: SMAJ15A (unidirectional, 15V) - **Anode to -12V OUT, Cathode to GND** (reversed for negative rail)
@@ -84,4 +84,3 @@ Protection Circuit:
 ```
 
 </details>
-

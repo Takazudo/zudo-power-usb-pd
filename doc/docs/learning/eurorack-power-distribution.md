@@ -15,6 +15,7 @@ When designing a Eurorack power supply, the distribution system is just as impor
 The Toppobrillo Eurobus is a high-end Eurorack power distribution system that represents best-in-class design practices.
 
 **Specifications:**
+
 - Power: +12V @ 3.5A, -12V @ 2A, +5V @ 1.5A
 - 20 keyed power connectors
 - 4-layer PCB with stitched ground plane
@@ -22,6 +23,7 @@ The Toppobrillo Eurobus is a high-end Eurorack power distribution system that re
 - Soft-start and comprehensive protection
 
 **Key Design Philosophy:**
+
 > "By utilizing the full width of the busboard for thicker traces and uninterrupted ground planes, routing and return paths are optimized - reducing impedances, improving power delivery, and lowering noise across the board."
 
 ## Critical Design Features
@@ -31,6 +33,7 @@ The Toppobrillo Eurobus is a high-end Eurorack power distribution system that re
 **What:** Polarized/keyed 16-pin IDC connectors that physically prevent reverse insertion.
 
 **Why important:**
+
 - Eurorack modules can be **destroyed instantly** by reverse polarity
 - +12V to GND short creates catastrophic failure
 - Users work in cramped cases with poor visibility
@@ -54,18 +57,20 @@ Keyed 2x8 Header:
 
 **Implementation Options:**
 
-| Approach | PCB Side | Cable Side | JLCPCB Compatible | Safety Level |
-|----------|----------|------------|-------------------|--------------|
-| **Standard (our current)** | Standard pin header | Standard IDC | ✅ Yes | ⚠️ Low (user dependent) |
-| **Hybrid (recommended)** | Standard pin header | Keyed IDC connector | ✅ Yes | ✅ High (cable-side keying) |
-| **Full keyed** | Keyed pin header | Keyed IDC connector | ❌ No | ✅✅ Highest |
+| Approach                   | PCB Side            | Cable Side          | JLCPCB Compatible | Safety Level                |
+| -------------------------- | ------------------- | ------------------- | ----------------- | --------------------------- |
+| **Standard (our current)** | Standard pin header | Standard IDC        | ✅ Yes            | ⚠️ Low (user dependent)     |
+| **Hybrid (recommended)**   | Standard pin header | Keyed IDC connector | ✅ Yes            | ✅ High (cable-side keying) |
+| **Full keyed**             | Keyed pin header    | Keyed IDC connector | ❌ No             | ✅✅ Highest                |
 
 **Recommendation for DIY builds:**
+
 - Use standard pin header on PCB (JLCPCB compatible)
 - **Strongly recommend keyed IDC connectors** on ribbon cables (user-sourced)
 - Document the pinout clearly with pin 1 marked
 
 **Where to source keyed connectors:**
+
 - Tayda Electronics: 16-pin box headers
 - Mouser/Digikey: Keyed IDC connectors
 - Modular synth suppliers: Pre-made keyed cables
@@ -75,6 +80,7 @@ Keyed 2x8 Header:
 **What:** Multiple decoupled power distribution zones instead of a single point.
 
 **Eurobus approach:**
+
 ```
 Power Input
     │
@@ -90,12 +96,14 @@ Power Input
 ```
 
 **Benefits:**
+
 - Isolates noise between module groups
 - Reduces voltage sag from distant modules
 - Lowers ground bounce and crosstalk
 - Better current distribution
 
 **Our current design:**
+
 ```
 Power Input
     │
@@ -106,11 +114,13 @@ Power Input
 ```
 
 **When to implement zones:**
+
 - Systems with >10 modules
 - Multiple cases/busboards
 - High-power digital modules (sampling, DSP)
 
 **For single-output designs (like ours):**
+
 - Zone filtering not necessary
 - Good decoupling at regulator output is sufficient
 - Keep output connector close to final filter caps
@@ -129,18 +139,21 @@ Layer 4 (Bottom):  Ground plane, return paths
 ```
 
 **Why 4 layers:**
+
 - Continuous ground reference reduces impedance
 - Power planes minimize voltage drop
 - Better EMI/noise performance
 - More routing flexibility
 
 **2-layer alternative (cost-optimized):**
+
 ```
 Layer 1 (Top):     Signal + power traces (thick copper)
 Layer 2 (Bottom):  Ground plane + power traces
 ```
 
 **Trade-offs:**
+
 - 4-layer: Better performance, higher cost (~2-3× PCB cost)
 - 2-layer: Adequate for small systems, lower cost
 
@@ -150,6 +163,7 @@ Layer 2 (Bottom):  Ground plane + power traces
 **Eurobus:** Extra-thick copper (2oz or more)
 
 **Benefits of thick copper:**
+
 - Lower resistance → less voltage drop
 - Better current capacity
 - Improved thermal dissipation
@@ -169,6 +183,7 @@ Example: 10cm trace, 1.2A current
 ```
 
 **Recommendation:**
+
 - Power traces: 2oz copper, 2mm+ width
 - Ground pour: Maximum copper area
 - Signal traces: 1oz acceptable
@@ -190,6 +205,7 @@ Good (Low Impedance):
 ```
 
 **Guidelines:**
+
 - Via spacing: Every 5-10mm on ground areas
 - Around high-current components: 2-3mm spacing
 - Creates "stitched" ground plane with low impedance
@@ -197,6 +213,7 @@ Good (Low Impedance):
 ### 4. Distributed Decoupling Strategy
 
 **Eurobus approach:**
+
 - Bulk electrolytic capacitors at each zone
 - Multiple ceramic capacitors distributed along bus
 - Low-ESR polycapacitors for high-frequency filtering
@@ -215,6 +232,7 @@ Good (Low Impedance):
 ```
 
 **Why distributed:**
+
 - Large electrolytics: Bulk energy storage, slow response
 - Small ceramics: Fast transient response, low ESR
 - Multiple locations: Reduces inductance from wire length
@@ -236,6 +254,7 @@ Good (distributed decoupling):
 **Eurobus achievement:** 90% efficiency, runs "relatively cool"
 
 **Heat sources in power supplies:**
+
 1. DC-DC converters (switching losses)
 2. Linear regulators (dropout voltage × current)
 3. PTCs when tripped (self-heating)
@@ -243,16 +262,19 @@ Good (distributed decoupling):
 **Thermal design checklist:**
 
 ✅ **Component spacing:**
+
 - Keep heat-generating components apart
 - LM7812 away from PTC fuses
 - DC-DC converters in open area
 
 ✅ **PCB heat dissipation:**
+
 - Large copper pours act as heatsinks
 - Thermal vias under hot components (TO-263 packages)
 - Multiple vias from thermal pad to ground plane
 
 ✅ **Airflow:**
+
 - Don't block component top side
 - Consider case ventilation
 - Modular cases are usually well-ventilated
@@ -274,25 +296,27 @@ Bottom layer:
 
 ## Comparison: Eurobus vs Our Design
 
-| Feature | Eurobus | Our USB-PD Design | Gap |
-|---------|---------|-------------------|-----|
-| **Power Output** | +12V@3.5A, -12V@2A, +5V@1.5A | +12V@1.2A, -12V@1A, +5V@1.2A | Smaller capacity (suitable for ~10 modules) |
-| **Connectors** | 20× keyed | 1× standard | ⚠️ No keying, single output |
-| **Zone Filtering** | 2 zones | Single point | Not needed for 1 output |
-| **PCB Layers** | 4-layer | TBD (recommend 4) | Should specify |
-| **Copper Thickness** | Extra-thick | TBD (recommend 2oz) | Should specify |
-| **Protection** | OCP, OVP, thermal, soft-start | 4-layer (USB-PD, DC-DC, LM78xx, PTC) | ✅ Comparable |
-| **Decoupling** | Polycaps, distributed | Electrolytic + ceramic | ✅ Good |
-| **Auto-reset** | Yes (electronic) | Yes (PTC) | ✅ Excellent |
-| **JLCPCB Compatible** | No (custom parts) | Yes (100% JLCPCB parts) | ✅ Major advantage |
+| Feature               | Eurobus                       | Our USB-PD Design                    | Gap                                         |
+| --------------------- | ----------------------------- | ------------------------------------ | ------------------------------------------- |
+| **Power Output**      | +12V@3.5A, -12V@2A, +5V@1.5A  | +12V@1.2A, -12V@1A, +5V@1.2A         | Smaller capacity (suitable for ~10 modules) |
+| **Connectors**        | 20× keyed                     | 1× standard                          | ⚠️ No keying, single output                 |
+| **Zone Filtering**    | 2 zones                       | Single point                         | Not needed for 1 output                     |
+| **PCB Layers**        | 4-layer                       | TBD (recommend 4)                    | Should specify                              |
+| **Copper Thickness**  | Extra-thick                   | TBD (recommend 2oz)                  | Should specify                              |
+| **Protection**        | OCP, OVP, thermal, soft-start | 4-layer (USB-PD, DC-DC, LM78xx, PTC) | ✅ Comparable                               |
+| **Decoupling**        | Polycaps, distributed         | Electrolytic + ceramic               | ✅ Good                                     |
+| **Auto-reset**        | Yes (electronic)              | Yes (PTC)                            | ✅ Excellent                                |
+| **JLCPCB Compatible** | No (custom parts)             | Yes (100% JLCPCB parts)              | ✅ Major advantage                          |
 
 **Our design strengths:**
+
 - ✅ Full JLCPCB compatibility (low cost, high availability)
 - ✅ 4-layer protection (exceeds most commercial designs)
 - ✅ PTC auto-reset (better than manual fuses)
 - ✅ Low-noise architecture (DC-DC + linear)
 
 **Areas for improvement:**
+
 - ⚠️ Add keyed connector recommendation to documentation
 - ⚠️ Specify 4-layer PCB in design files
 - ⚠️ Specify 2oz copper for power traces
@@ -303,23 +327,27 @@ Bottom layer:
 ### Immediate (Documentation Updates)
 
 **1. Update BOM connector section:**
+
 ```markdown
 **Strongly recommended for cable assembly:**
 Use keyed IDC connectors instead of standard ribbon cable connectors.
 This prevents reverse insertion and protects modules from damage.
 
 Sources:
+
 - Tayda Electronics: 16-pin box header connectors
 - Mouser/Digikey: Keyed IDC cable assemblies
 ```
 
 **2. Add PCB design guidelines:**
+
 - Recommend 4-layer PCB (or explain 2-layer trade-offs)
 - Specify 2oz copper on power layers
 - Thermal via pattern for TO-263 regulators
 - Ground stitching recommendations
 
 **3. Add assembly notes:**
+
 - Mark Pin 1 clearly on silkscreen
 - Add polarity warning labels
 - Include Eurorack pinout diagram on PCB
@@ -327,11 +355,13 @@ Sources:
 ### Future Enhancements (v2.0)
 
 **If expanding to multiple outputs:**
+
 1. Implement zone filtering (2 zones, 10 connectors each)
 2. Add distributed decoupling at each zone
 3. Consider larger current capacity (2A per rail)
 
 **If moving to custom PCB manufacturer:**
+
 1. Source keyed pin headers (not on JLCPCB)
 2. Specify 2oz+ copper thickness
 3. Add mounting holes for robust mechanical connection
@@ -339,34 +369,42 @@ Sources:
 ## Key Takeaways
 
 ### 1. Keying is Critical for Safety
+
 **Reverse polarity destroys modules instantly.** While not available on JLCPCB, strongly recommend keyed IDC connectors on cable side.
 
 ### 2. PCB Design Matters
+
 **4-layer PCB with thick copper** significantly reduces noise and voltage drop. Worth the extra cost for >10 module systems.
 
 ### 3. Distributed Decoupling Works
+
 **Multiple capacitor types at multiple locations** provides better transient response than single-point decoupling.
 
 ### 4. Our Design is Competitive
+
 **4-layer protection + PTC auto-reset** exceeds many commercial designs. JLCPCB compatibility is a major advantage for DIY builders.
 
 ### 5. Thermal Management is Essential
+
 **Component spacing, thermal vias, and copper pours** keep the supply cool and reliable. Don't neglect thermal design.
 
 ## References
 
 ### Commercial Systems Studied
+
 - **Toppobrillo Eurobus**: High-end zone-filtered distribution
   - [Product Page](https://toppobrillo.com/products/eurobus)
   - [MOD WIGGLER Discussion](https://www.modwiggler.com/forum/viewtopic.php?t=284015)
   - [Perfect Circuit](https://www.perfectcircuit.com/toppobrillo-eurobus-6u-kit-1-5a-5v-option.html)
 
 ### Related Documentation
+
 - **Protection Strategy**: `/doc/docs/learning/protection-fuse-strategy.md`
 - **Bill of Materials**: `/doc/docs/components/bom.md`
 - **Circuit Diagrams**: `/doc/docs/inbox/circuit-diagrams.mdx`
 
 ### Further Reading
+
 - [Buyer's guide: Eurorack cases and power - Signal Sounds](https://www.signalsounds.com/blog/buyers-guide-eurorack-cases-and-power)
 - Eurorack power best practices (modular synth community wikis)
 - PCB thermal design guidelines (various manufacturers)

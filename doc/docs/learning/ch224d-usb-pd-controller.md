@@ -9,6 +9,7 @@ Understanding the CH224D USB Power Delivery sink controller and how it negotiate
 ## What is CH224D?
 
 CH224D is a **USB PD sink controller** - a specialized IC that:
+
 - Communicates with USB-C PD (Power Delivery) adapters
 - Requests specific voltages (5V, 9V, 12V, 15V, or 20V)
 - Negotiates power up to 100W (with E-Mark simulation)
@@ -54,6 +55,7 @@ Result: Up to 100W power delivery (20V @ 5A)
 ```
 
 **CH224D does NOT have a separate output pin!**
+
 - Pin 2 (VBUS) is the ONLY power pin
 - Initially: VBUS = 5V (default USB voltage)
 - After negotiation: VBUS = 15V (or requested voltage)
@@ -65,37 +67,38 @@ This is fundamentally different from DC-DC converters which have separate input 
 
 ### Power Pins
 
-| Pin | Name | Type | Function |
-|-----|------|------|----------|
-| 2 | VBUS | Power I/O | **Main power pin** - both input (5V) and output (negotiated voltage) |
-| 7 | VDD | Power out | Internal 4.7V LDO output (needs 1µF decoupling cap) |
-| 0 | GND (EPAD) | Ground | Thermal pad - connect to ground plane |
+| Pin | Name       | Type      | Function                                                             |
+| --- | ---------- | --------- | -------------------------------------------------------------------- |
+| 2   | VBUS       | Power I/O | **Main power pin** - both input (5V) and output (negotiated voltage) |
+| 7   | VDD        | Power out | Internal 4.7V LDO output (needs 1µF decoupling cap)                  |
+| 0   | GND (EPAD) | Ground    | Thermal pad - connect to ground plane                                |
 
 ### Communication Pins (PD Protocol)
 
-| Pin | Name | Type | Function |
-|-----|------|------|----------|
-| 11 | CC1 | I/O | Configuration Channel 1 - PD communication |
-| 10 | CC2 | I/O | Configuration Channel 2 - PD communication |
-| 8 | DP (UDP) | I/O | USB D+ data line (not used in PD-only mode) |
-| 9 | DM (UDM) | I/O | USB D- data line (not used in PD-only mode) |
+| Pin | Name     | Type | Function                                    |
+| --- | -------- | ---- | ------------------------------------------- |
+| 11  | CC1      | I/O  | Configuration Channel 1 - PD communication  |
+| 10  | CC2      | I/O  | Configuration Channel 2 - PD communication  |
+| 8   | DP (UDP) | I/O  | USB D+ data line (not used in PD-only mode) |
+| 9   | DM (UDM) | I/O  | USB D- data line (not used in PD-only mode) |
 
 **For PD-only applications**: Short DP (pin 8) to DM (pin 9) to disable BC1.2 and other USB data protocols.
 
 ### Configuration Pins
 
-| Pin | Name | Type | Function |
-|-----|------|------|----------|
-| 1 | DRV | Analog out | Drives configuration resistor (weak output) |
-| 19 | CFG1 | Analog in | Voltage selection input (resistor mode) |
-| 13 | CFG2 | Digital in | Voltage selection (level mode, built-in pull-down) |
-| 12 | CFG3 | Digital in | Voltage selection (level mode, built-in pull-down) |
+| Pin | Name | Type       | Function                                           |
+| --- | ---- | ---------- | -------------------------------------------------- |
+| 1   | DRV  | Analog out | Drives configuration resistor (weak output)        |
+| 19  | CFG1 | Analog in  | Voltage selection input (resistor mode)            |
+| 13  | CFG2 | Digital in | Voltage selection (level mode, built-in pull-down) |
+| 12  | CFG3 | Digital in | Voltage selection (level mode, built-in pull-down) |
 
 #### How DRV Pin Works (Voltage Selection Magic!)
 
 **DRV (pin 1)** is a **weak voltage output** (~4.7V) used to determine which PD voltage you want.
 
 **The clever voltage selection circuit:**
+
 ```
 DRV (pin 1) ──┬── CFG1 (pin 19)  ← Connect DRV to CFG1
               │
@@ -113,6 +116,7 @@ DRV (pin 1) ──┬── CFG1 (pin 19)  ← Connect DRV to CFG1
 5. **Based on CFG1 voltage → requests specific PD voltage**
 
 **Example with our 56kΩ resistor:**
+
 ```
 DRV (4.7V) ─┬─ CFG1
             │
@@ -124,6 +128,7 @@ CH224D reads CFG1 voltage → "Ah, user wants 15V!" → Requests 15V from PD ada
 ```
 
 **Different resistors → Different voltages:**
+
 ```
 Rset = 6.8kΩ  → CFG1 = X volts → Request 9V
 Rset = 24kΩ   → CFG1 = Y volts → Request 12V
@@ -132,6 +137,7 @@ Rset = NC     → CFG1 = ~4.7V   → Request 20V
 ```
 
 **Why "weak" output?**
+
 - Can drive high-impedance loads (kΩ resistors) ✅
 - Cannot drive LEDs, motors, or power circuits ❌
 - Just for voltage sensing - perfect for this use!
@@ -142,20 +148,22 @@ Rset = NC     → CFG1 = ~4.7V   → Request 20V
 
 CH224D has a **built-in MOSFET** (rated up to 5A) to switch VBUS power on/off.
 
-| Pin | Name | Function | Our Connection |
-|-----|------|----------|----------------|
-| 5 | GATE | Drives MOSFET gate (internal or external) | **NC** (not connected - using internal) |
-| 6 | NMOS# | Selects internal (LOW) or external (HIGH) MOSFET | **GND** (use internal MOSFET) |
+| Pin | Name  | Function                                         | Our Connection                          |
+| --- | ----- | ------------------------------------------------ | --------------------------------------- |
+| 5   | GATE  | Drives MOSFET gate (internal or external)        | **NC** (not connected - using internal) |
+| 6   | NMOS# | Selects internal (LOW) or external (HIGH) MOSFET | **GND** (use internal MOSFET)           |
 
 #### How It Works:
 
 **For ≤5A applications (like ours at 3A):**
+
 - Pin 6 (NMOS#) → **GND** = Use internal MOSFET
 - Pin 5 (GATE) → **NC** (not connected)
 - CH224D's internal 5A MOSFET handles the switching
 - Simple and works great! ✅
 
 **For >5A applications (e.g., 100W chargers):**
+
 - Pin 6 (NMOS#) → Configured for external mode
 - Pin 5 (GATE) → **Connected to external MOSFET gate**
 - External high-current MOSFET handles the power
@@ -165,17 +173,19 @@ CH224D has a **built-in MOSFET** (rated up to 5A) to switch VBUS power on/off.
 
 ### Current Sensing Pins (Optional Feature)
 
-| Pin | Name | Function | Our Connection |
-|-----|------|----------|----------------|
-| 14 | ISP | Current sense positive | **Shorted to pin 15 → GND** |
-| 15 | ISN | Current sense negative | **Shorted to pin 14 → GND** |
+| Pin | Name | Function               | Our Connection              |
+| --- | ---- | ---------------------- | --------------------------- |
+| 14  | ISP  | Current sense positive | **Shorted to pin 15 → GND** |
+| 15  | ISN  | Current sense negative | **Shorted to pin 14 → GND** |
 
 **What they do:**
+
 - Can monitor current flowing through the power path
 - Useful for overcurrent protection or current measurement
 - Requires external sense resistor
 
 **Why we don't use them:**
+
 - CH224D provides built-in overcurrent protection
 - Our design doesn't need current monitoring
 - Simplifies the circuit
@@ -193,6 +203,7 @@ VDD (pin 7) → C30 (1µF ceramic) → GND
 ```
 
 **Why C30 is critical:**
+
 - ⚡ **Regulator stability** - LDO requires output cap to remain stable
 - 🔇 **Noise filtering** - Filters high-frequency noise from internal circuits
 - ⚡ **Transient response** - Provides instant current during load changes
@@ -204,10 +215,10 @@ VDD (pin 7) → C30 (1µF ceramic) → GND
 
 ### Unused Pins
 
-| Pins | Status |
-|------|--------|
-| 3, 4, 16-18, 20 | NC (Not Connected) - leave floating |
-| 18 | **NC** - No separate output pin! VBUS (pin 2) is both input and output |
+| Pins            | Status                                                                 |
+| --------------- | ---------------------------------------------------------------------- |
+| 3, 4, 16-18, 20 | NC (Not Connected) - leave floating                                    |
+| 18              | **NC** - No separate output pin! VBUS (pin 2) is both input and output |
 
 ## Voltage Selection Methods
 
@@ -240,6 +251,7 @@ CFG3 (pin 12) = Open/GND
 ```
 
 **Advantages**:
+
 - ✅ Simple - just one resistor
 - ✅ No microcontroller needed
 - ✅ Voltage fixed at design time
@@ -270,11 +282,13 @@ Note: CFG2 and CFG3 have built-in pull-down resistors
 ```
 
 **Advantages**:
+
 - ✅ Dynamic voltage selection
 - ✅ Can change voltage during operation
 - ✅ Multiple voltage outputs from same board
 
 **Disadvantages**:
+
 - ❌ Requires MCU or manual switches
 - ❌ More complex
 - ❌ CFG voltage limits: &lt;5V for CH224D
@@ -303,6 +317,7 @@ CC2 ───┬──→ CH224D pin 10 (CC2)
 ### How USB-C Device Detection Works
 
 **Step 1: PD Adapter checks CC pins**
+
 ```
 PD Adapter sends test signals:
 CC1 ──→ Measures resistance to GND
@@ -310,6 +325,7 @@ CC2 ──→ Measures resistance to GND
 ```
 
 **Step 2: Resistance determines device type**
+
 ```
 Measured Resistance = Device Type:
 ┌──────────┬─────────────────────────┐
@@ -321,12 +337,14 @@ Measured Resistance = Device Type:
 ```
 
 **Step 3: Cable orientation detection**
+
 - USB-C cables can plug in either way (reversible)
 - One of CC1 or CC2 will be the "active" pin (lower resistance path)
 - Adapter uses the active CC pin for PD communication
 - The 5.1kΩ resistor on that pin tells adapter which way cable is oriented
 
 **Step 4: Start PD negotiation**
+
 - Only if 5.1kΩ detected → Adapter recognizes device as PD sink
 - Adapter initiates PD communication via active CC pin
 - CH224D requests desired voltage (15V in our case)
@@ -335,6 +353,7 @@ Measured Resistance = Device Type:
 ### What Happens WITHOUT R12/R13?
 
 **Critical failure scenario:**
+
 ```
 No 5.1kΩ resistors:
   ↓
@@ -354,35 +373,41 @@ Adapter thinks: "Nothing connected" or "Wrong device type"
 ### Why Exactly 5.1kΩ?
 
 **USB Type-C Specification defines this value:**
+
 - **Sink devices MUST have Rd = 5.1kΩ (±20%)**
 - This is a **universal standard** that all USB-C devices follow
 - PD adapters are designed to detect this specific resistance value
 - Not arbitrary - it's carefully chosen to distinguish device types
 
 **Tolerance:**
+
 - ±20% is acceptable (4.08kΩ to 6.12kΩ)
 - We use ±1% for reliability (5.05kΩ to 5.15kΩ)
 - Part: 0603 5.1kΩ ±1% resistor (JLCPCB C23186)
 
 ### Component Specifications
 
-| Component | Value | Tolerance | Purpose | JLCPCB Part |
-|-----------|-------|-----------|---------|-------------|
-| **R12** | **5.1kΩ** | **±1%** | **CC1 pull-down (Rd)** | **C23186** |
-| **R13** | **5.1kΩ** | **±1%** | **CC2 pull-down (Rd)** | **C23186** |
+| Component | Value     | Tolerance | Purpose                | JLCPCB Part |
+| --------- | --------- | --------- | ---------------------- | ----------- |
+| **R12**   | **5.1kΩ** | **±1%**   | **CC1 pull-down (Rd)** | **C23186**  |
+| **R13**   | **5.1kΩ** | **±1%**   | **CC2 pull-down (Rd)** | **C23186**  |
 
 ### Common Mistakes to Avoid
 
 ❌ **Mistake 1**: Forgetting R12/R13 entirely
+
 - Result: No PD negotiation, stuck at 5V
 
 ❌ **Mistake 2**: Using wrong resistance value
+
 - Result: Adapter misidentifies device type, no PD negotiation
 
 ❌ **Mistake 3**: Only installing one resistor (R12 or R13)
+
 - Result: Cable orientation might not be detected correctly
 
 ❌ **Mistake 4**: Connecting resistors to wrong pins
+
 - Result: CC communication fails
 
 ✅ **Correct**: 5.1kΩ ±1% on BOTH CC1 and CC2 to GND
@@ -392,12 +417,14 @@ Adapter thinks: "Nothing connected" or "Wrong device type"
 **R12 and R13 (5.1kΩ pull-downs) are the FIRST thing a PD adapter checks!**
 
 Without them:
+
 - ❌ No device identification
 - ❌ No PD negotiation
 - ❌ No 15V output
 - ❌ Circuit doesn't work
 
 With them:
+
 - ✅ Adapter recognizes device as PD sink
 - ✅ PD negotiation starts
 - ✅ 15V power delivery works
@@ -423,12 +450,14 @@ Part: C2927029 (USB-TYPE-C-009)
 ```
 
 **Why 6-pin is sufficient for PD:**
+
 - ✅ VBUS pins carry negotiated voltage
 - ✅ CC pins handle PD communication
 - ✅ GND provides reference
 - ✅ No data pins needed for power-only applications
 
 **What we lose with 6-pin:**
+
 - ❌ No USB data transfer (DP/DM)
 - ❌ No alternate modes (DisplayPort, etc.)
 - ✅ But we only need power, so perfect!
@@ -438,6 +467,7 @@ Part: C2927029 (USB-TYPE-C-009)
 When using 6-pin connector with no DP/DM pins:
 
 **Datasheet requirement (Section 5.5):**
+
 > "If there is no need to use A-port protocols (various protocols realized by DP/DM communication), the DP/DM pin on CH224K/CH224D is required to be disconnected from the DP/DM on the Type-C connector, and the **DP pin on CH224 is required to be shorted to the DM** on CH224."
 
 ```
@@ -450,6 +480,7 @@ Result: PD-only operation
 ```
 
 **Why this matters:**
+
 - BC1.2 = Battery Charging specification (uses DP/DM)
 - We don't need BC1.2 since we have PD
 - Shorting DP to DM tells CH224D to ignore data protocols
@@ -553,6 +584,7 @@ VBUS ──┬─── C1 (10µF) ──→ GND    (Bulk filtering)
 ```
 
 **Why both capacitors?**
+
 - **10µF (bulk)**: Stores energy during voltage transition (5V→15V)
 - **100nF (ceramic)**: Filters high-frequency noise, placed close to IC
 - Together provide stable power during negotiation
@@ -566,6 +598,7 @@ VDD (pin 7) ─── C30 (1µF) ──→ GND
 ```
 
 **Why needed?**
+
 - VDD powers internal circuits
 - 1µF cap stabilizes internal regulator
 - Prevents oscillation and noise
@@ -579,12 +612,14 @@ VDD (pin 7) ─── C30 (1µF) ──→ GND
 ```
 
 **How it works:**
+
 - PG pin is open-drain output
 - Normal operation: PG = HIGH (LED off)
 - After successful negotiation: PG = LOW (LED on)
 - LED lights up when 15V is ready!
 
 **Why connect to +5V instead of VBUS?**
+
 - VBUS changes from 5V to 15V
 - +5V rail is stable (from linear regulator)
 - LED brightness stays constant
@@ -593,12 +628,14 @@ VDD (pin 7) ─── C30 (1µF) ──→ GND
 ### PCB Layout Guidelines
 
 **Critical traces:**
+
 1. **VBUS**: Wide traces (≥1mm) or copper pour - carries up to 3A
 2. **CC pins**: Keep traces short, symmetric length, away from noisy signals
 3. **GND**: Solid ground plane, thermal pad (pin 0) with multiple vias
 4. **VDD**: 1µF cap placed close to pin 7
 
 **Component placement:**
+
 - C2 (100nF) very close to VBUS pin
 - C30 (1µF) very close to VDD pin
 - R12, R13 (5.1kΩ CC pull-downs) close to IC
@@ -632,6 +669,7 @@ There are three variants in the CH224 family:
 - **Cost**: Lowest
 
 **Why we chose CH224D:**
+
 - ✅ Small SMD package (good for JLCPCB assembly)
 - ✅ Full PD features
 - ✅ Resistor configuration (simple)
@@ -690,6 +728,7 @@ Result: Stable internal regulator
 ## Why CH224D is Perfect for This Project
 
 Our modular synth power supply needs:
+
 - ✅ **15V from USB-C PD** → CH224D negotiates this automatically
 - ✅ **Simple configuration** → Just one 56kΩ resistor
 - ✅ **No microcontroller** → Standalone operation
@@ -698,6 +737,7 @@ Our modular synth power supply needs:
 - ✅ **JLCPCB compatible** → SMD package, good stock
 
 **Alternative approaches would be worse:**
+
 - ❌ Fixed 12V adapter → Less portable, requires wall outlet
 - ❌ USB-C to DC barrel cable → Only 20V max, needs extra converter
 - ❌ PD trigger boards → Usually larger, more expensive

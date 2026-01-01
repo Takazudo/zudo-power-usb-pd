@@ -36,7 +36,9 @@ Just a paragraph with no lists or code.`;
 
     // Check HTML block formatter settings
     expect(formatter.settings.formatHtmlBlocksInMdx.formatterConfig.tabWidth).toBe(fallbackSize);
-    expect(formatter.settings.formatHtmlBlocksInMdx.formatterConfig.useTabs).toBe(fallbackType === 'tab');
+    expect(formatter.settings.formatHtmlBlocksInMdx.formatterConfig.useTabs).toBe(
+      fallbackType === 'tab',
+    );
 
     // Check YAML frontmatter settings
     expect(formatter.settings.formatYamlFrontmatter.indent).toBe(fallbackSize);
@@ -58,7 +60,8 @@ Just a paragraph with no lists or code.`;
     expect(formatter.settings.formatHtmlBlocksInMdx.formatterConfig.tabWidth).toBe(2);
 
     // Restore original settings
-    formatterSettings.autoDetectIndent.minConfidence = originalSettings.autoDetectIndent.minConfidence;
+    formatterSettings.autoDetectIndent.minConfidence =
+      originalSettings.autoDetectIndent.minConfidence;
   });
 
   it('should ensure all formatters use consistent indentation with fallback', () => {
@@ -89,7 +92,9 @@ title: Test
     expect(formatter.settings.indentJsxContent.indentType).toBe(appliedType);
 
     expect(formatter.settings.formatHtmlBlocksInMdx.formatterConfig.tabWidth).toBe(appliedSize);
-    expect(formatter.settings.formatHtmlBlocksInMdx.formatterConfig.useTabs).toBe(appliedType === 'tab');
+    expect(formatter.settings.formatHtmlBlocksInMdx.formatterConfig.useTabs).toBe(
+      appliedType === 'tab',
+    );
 
     expect(formatter.settings.formatYamlFrontmatter.indent).toBe(appliedSize);
 
@@ -115,18 +120,20 @@ title: Test
     expect(formatter.settings.formatHtmlBlocksInMdx.formatterConfig.useTabs).toBe(true);
 
     // Restore original settings
-    formatterSettings.autoDetectIndent.fallbackIndentSize = originalSettings.autoDetectIndent.fallbackIndentSize;
-    formatterSettings.autoDetectIndent.fallbackIndentType = originalSettings.autoDetectIndent.fallbackIndentType;
+    formatterSettings.autoDetectIndent.fallbackIndentSize =
+      originalSettings.autoDetectIndent.fallbackIndentSize;
+    formatterSettings.autoDetectIndent.fallbackIndentType =
+      originalSettings.autoDetectIndent.fallbackIndentType;
   });
 
   it('should handle minConfidence edge cases correctly', () => {
     // Test with various minConfidence values
     const testCases = [
-      { minConfidence: 0, shouldUseFallback: false },      // Always accept detection
-      { minConfidence: 0.5, shouldUseFallback: true },     // Medium threshold
-      { minConfidence: 1, shouldUseFallback: true },       // Never accept detection
+      { minConfidence: 0, shouldUseFallback: false }, // Always accept detection
+      { minConfidence: 0.5, shouldUseFallback: true }, // Medium threshold
+      { minConfidence: 1, shouldUseFallback: true }, // Never accept detection
       { minConfidence: undefined, shouldUseFallback: true }, // Use default (0.7)
-      { minConfidence: null, shouldUseFallback: true },     // Use default (0.7)
+      { minConfidence: null, shouldUseFallback: true }, // Use default (0.7)
     ];
 
     // Content with weak indentation (low confidence)
@@ -151,6 +158,7 @@ title: Test
     }
 
     // Restore original settings
-    formatterSettings.autoDetectIndent.minConfidence = originalSettings.autoDetectIndent.minConfidence;
+    formatterSettings.autoDetectIndent.minConfidence =
+      originalSettings.autoDetectIndent.minConfidence;
   });
 });

@@ -1,13 +1,10 @@
 import CircuitSvg from '@site/src/components/CircuitSvg';
 import BuckU3Svg from '@site/static/circuits/buck-u3-diagram.svg';
 
-<CircuitSvg
-  src={BuckU3Svg}
-  alt="LM2596S Buck Converter U3"
-  padding="10px"
-/>
+<CircuitSvg src={BuckU3Svg} alt="LM2596S Buck Converter U3" padding="10px" />
 
 **Key Points:**
+
 - **Switching node** is the junction at OUTPUT pin 2
 - **Path 1**: Switching node → L2 → +7.5V output (main current path)
 - **Path 2**: Switching node → D2 cathode; D2 anode → GND (flyback/freewheeling path)

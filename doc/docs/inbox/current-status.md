@@ -79,6 +79,7 @@ USB-C 15V ──┬─→ +13.5V (DC-DC) ──→ +12V (LDO) ──→ +12V OUT
 **Circuit design and parts selection phases complete** → **Next: PCB design phase**
 
 Current state:
+
 1. ✅ Circuit design complete - Working design finalized
 2. ✅ **All parts selection complete** - JLCPCB part numbers confirmed (100%), optimized to high-stock parts
 3. ✅ **BOM fully confirmed** - Cost $4.68/board
@@ -137,6 +138,7 @@ Ready to proceed:
 4. Assign footprints to all parts
 
 **Required footprints**:
+
 - `/footprints/CH224D.png` - Already available
 - `/footprints/USB-TYPE-C-009.png` - Already available
 - Other standard footprints use KiCad standard library
@@ -178,12 +180,14 @@ Ready to proceed:
 #### Step 6: Get JLCPCB Quote (Time: 30 minutes)
 
 **Quote contents**:
+
 - PCB manufacturing: 5 or 10 boards
 - SMT assembly: both sides or single side
 - Parts procurement cost
 - Shipping
 
 **Estimated Cost** (for 10 boards):
+
 - PCB manufacturing: ~$30
 - SMT assembly: ~$50-100
 - Parts cost: ~$50 (for 10 boards)
@@ -193,6 +197,7 @@ Ready to proceed:
 #### Step 7: Order Prototype (Time: 15 min order + 2 weeks manufacturing)
 
 **Recommended Initial Order**:
+
 - Quantity: 5-10 boards
 - SMT assembly: All parts installed
 - Delivery: DHL (2-3 weeks)

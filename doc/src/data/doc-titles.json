@@ -5,7 +5,7 @@
   "inbox/circuit-diagrams": "Circuit Diagrams",
   "inbox/footprint-preview": "Footprint Preview",
   "inbox/quick-reference": "Quick Reference",
-  
+
   "parts/index": "Parts Overview",
   "parts/bom": "Bill of Materials (BOM)",
   "parts/ch224d": "CH224D - USB Power Delivery Controller",
@@ -16,11 +16,11 @@
   "parts/cj7912": "CJ7912 - -12V Linear Regulator",
   "parts/smaj15a": "SMAJ15A - TVS Diode",
   "parts/prtr5v0u2x": "PRTR5V0U2X - ESD Protection",
-  
+
   "learning/index": "Learning Overview",
   "learning/open-drain-pg-pin": "Open Drain PG Pin",
   "learning/buck-converter-feedback": "Buck Converter Feedback",
-  
+
   "knowledge/index": "Knowledge Base",
   "knowledge/kicad-footprint-generation": "KiCad Footprint Generation",
   "knowledge/create-footprint-svg": "Create Footprint SVG Files",

@@ -58,6 +58,7 @@ easyeda2kicad --lcsc_id C3975094 --footprint
 ### Output Location
 
 Footprints are saved to:
+
 ```
 ~/Documents/Kicad/easyeda2kicad/easyeda2kicad.pretty/
 ```
@@ -146,6 +147,7 @@ which easyeda2kicad
 ```
 
 If not found, try:
+
 ```bash
 python -m easyeda2kicad --version
 ```
@@ -153,6 +155,7 @@ python -m easyeda2kicad --version
 ### Problem: "Part not found"
 
 **Solution**:
+
 - Verify the LCSC ID is correct
 - Check if the part exists on LCSC.com
 - Try using the EasyEDA part number instead
@@ -160,6 +163,7 @@ python -m easyeda2kicad --version
 ### Problem: Download fails or times out
 
 **Solution**:
+
 - Check internet connection
 - Try again (server might be temporarily down)
 - Use `--full` flag for more detailed error messages:
@@ -191,6 +195,7 @@ easyeda2kicad --easyeda_id <EASYEDA_ID> --footprint
 ## Next Steps
 
 After downloading footprints:
+
 1. [Create Footprint SVG Files](./create-footprint-svg.md) - Export SVGs for documentation
 2. Review footprints in KiCad PCB editor
 3. Add footprints to your PCB design

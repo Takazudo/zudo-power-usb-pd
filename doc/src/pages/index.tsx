@@ -21,7 +21,11 @@ export default function Home(): ReactNode {
 
                 {/* Big Logo */}
                 <div className={styles.logoContainer}>
-                  <img src="/img/logo.svg" alt="USB-PD Synth Power Logo" className={styles.bigLogo} />
+                  <img
+                    src="/img/logo.svg"
+                    alt="USB-PD Synth Power Logo"
+                    className={styles.bigLogo}
+                  />
                 </div>
               </div>
 
@@ -30,7 +34,11 @@ export default function Home(): ReactNode {
                 <h2>関連リンク</h2>
                 <ul className={styles.linksList}>
                   <li>
-                    <a href="https://github.com/takazudo/zudo-power-usb-pd" target="_blank" rel="noopener noreferrer">
+                    <a
+                      href="https://github.com/takazudo/zudo-power-usb-pd"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       GitHub Repository
                     </a>
                   </li>

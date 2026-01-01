@@ -54,15 +54,17 @@ export default function CircuitSvg({ src: SvgComponent, alt, padding = '20px' })
       </div>
 
       <CircuitDialog isOpen={isDialogOpen} onClose={handleClose} alt={alt}>
-        <div style={{
-          width: '90vw',
-          height: '90vh',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          background: 'oklch(86.9% 0.005 56.366)',
-          padding: '20px',
-        }}>
+        <div
+          style={{
+            width: '90vw',
+            height: '90vh',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: 'oklch(86.9% 0.005 56.366)',
+            padding: '20px',
+          }}
+        >
           <SvgComponent
             aria-label={alt}
             width="100%"

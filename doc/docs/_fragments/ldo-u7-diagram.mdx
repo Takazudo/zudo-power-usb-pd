@@ -1,17 +1,15 @@
 import CircuitSvg from '@site/src/components/CircuitSvg';
 import LdoU7Svg from '@site/static/circuits/ldo-u7-diagram.svg';
 
-<CircuitSvg
-  src={LdoU7Svg}
-  alt="LM7805 Linear Regulator U7"
-  padding="10px"
-/>
+<CircuitSvg src={LdoU7Svg} alt="LM7805 Linear Regulator U7" padding="10px" />
 
 **Capacitor Placement (Critical for PCB layout):**
+
 - **C27/C18 (ceramic)**: Place RIGHT NEXT to IC pins (minimize trace length for high-freq filtering)
 - **C22/C23 (electrolytic)**: Can be placed farther from IC (bulk storage, less sensitive to distance)
 
 **Key Points:**
+
 - **Two-stage design**: Buck converter (U3) provides efficient voltage reduction, linear regulator (U7) provides low-noise final output
 - **Input capacitor order**: C22 (bulk, farther) and C27 (ceramic, close to IC)
 - **Output capacitor order**: C18 (ceramic, close to IC) and C23 (bulk, farther)
@@ -20,6 +18,7 @@ import LdoU7Svg from '@site/static/circuits/ldo-u7-diagram.svg';
 - **Dropout voltage**: LM7805 requires ~2V dropout, so 7.5V input provides 2.5V headroom
 
 **Protection Circuit (+5V Rail, 0.5A target, 1A max):**
+
 - **Protection layers**: LM7805 current limiting (~1A max) → LM7805 thermal shutdown (150°C) → PTC2 trips (&gt;2.2A) → USB-PD adapter protection
 - **PTC2**: C70119 (mSMD110-33V) - 1.1A hold, 2.2A trip, auto-reset fuse
 - **TVS2**: PRTR5V0U2X (bidirectional, 5V) - ESD and overvoltage protection
@@ -75,4 +74,3 @@ Protection Circuit:
 ```
 
 </details>
-

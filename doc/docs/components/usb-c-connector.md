@@ -26,17 +26,17 @@ USB Type-C features a reversible connector design, allowing insertion in either 
 
 ## Key Specifications
 
-| Parameter | Value | Notes |
-|-----------|-------|-------|
-| **JLCPCB Part Number** | C2927029 | This design |
-| **Manufacturer Part Number** | USB-TYPE-C-009 | |
-| **Package** | SMD (Surface Mount) | 6-pin power-only |
-| **Stock Availability** | 22,140 units | Good availability |
-| **Pin Count** | 6 pins | Power-only configuration |
-| **Current Rating** | 3A typical | Sufficient for USB-PD |
-| **Voltage Rating** | 20V maximum | USB PD 3.0 compatible |
-| **Mounting Type** | SMD (mid-mount) | |
-| **Durability** | 10,000+ mating cycles | Typical |
+| Parameter                    | Value                 | Notes                    |
+| ---------------------------- | --------------------- | ------------------------ |
+| **JLCPCB Part Number**       | C2927029              | This design              |
+| **Manufacturer Part Number** | USB-TYPE-C-009        |                          |
+| **Package**                  | SMD (Surface Mount)   | 6-pin power-only         |
+| **Stock Availability**       | 22,140 units          | Good availability        |
+| **Pin Count**                | 6 pins                | Power-only configuration |
+| **Current Rating**           | 3A typical            | Sufficient for USB-PD    |
+| **Voltage Rating**           | 20V maximum           | USB PD 3.0 compatible    |
+| **Mounting Type**            | SMD (mid-mount)       |                          |
+| **Durability**               | 10,000+ mating cycles | Typical                  |
 
 ## Pin Configuration
 
@@ -58,14 +58,14 @@ Receptacle Front View (looking into the connector)
 
 ### Pin Descriptions
 
-| Pin | Signal | Function | Connection in This Design |
-|-----|--------|----------|---------------------------|
-| 1 | GND | Ground (Top) | ✅ System GND, CH224D pin 0 (EPAD) |
-| 2 | VBUS | Power input (Top) | ✅ CH224D pin 2 (VBUS), C1, C2 |
-| 3 | CC1 | Configuration Channel 1 | ✅ CH224D pin 10 (CC1) |
-| 4 | CC2 | Configuration Channel 2 | ✅ CH224D pin 11 (CC2) |
-| 5 | VBUS | Power input (Bottom) | ✅ CH224D pin 2 (VBUS), C1, C2 |
-| 6 | GND | Ground (Bottom) | ✅ System GND, CH224D pin 0 (EPAD) |
+| Pin | Signal | Function                | Connection in This Design          |
+| --- | ------ | ----------------------- | ---------------------------------- |
+| 1   | GND    | Ground (Top)            | ✅ System GND, CH224D pin 0 (EPAD) |
+| 2   | VBUS   | Power input (Top)       | ✅ CH224D pin 2 (VBUS), C1, C2     |
+| 3   | CC1    | Configuration Channel 1 | ✅ CH224D pin 10 (CC1)             |
+| 4   | CC2    | Configuration Channel 2 | ✅ CH224D pin 11 (CC2)             |
+| 5   | VBUS   | Power input (Bottom)    | ✅ CH224D pin 2 (VBUS), C1, C2     |
+| 6   | GND    | Ground (Bottom)         | ✅ System GND, CH224D pin 0 (EPAD) |
 
 **Note**: Pins 2 and 5 (both VBUS) are connected together internally or on PCB. Same for pins 1 and 6 (both GND).
 
@@ -92,6 +92,7 @@ In this power supply design, the 6-pin USB Type-C connector is used exclusively 
    - Provides solid ground reference for power and signal integrity
 
 **Advantages of 6-pin connector**:
+
 - ✅ Lower cost compared to 24-pin connectors
 - ✅ Smaller PCB footprint
 - ✅ Sufficient for power-only USB-PD applications
@@ -136,6 +137,7 @@ GND (pins 1, 6) ────→ System GND / CH224D pin 0 (EPAD)
 ### Default Power (No PD Negotiation)
 
 When connected to a standard USB power source:
+
 - **Voltage**: 5V
 - **Current**: Up to 0.9A (4.5W) - USB 2.0 spec
 - **Current**: Up to 3A (15W) - with USB Type-C current advertisement
@@ -143,6 +145,7 @@ When connected to a standard USB power source:
 ### With USB-PD Negotiation (CH224D)
 
 When connected to a USB-PD charger:
+
 1. **Initial State** (0-100ms):
    - Connector establishes physical connection
    - VBUS provides 5V default power
@@ -191,12 +194,12 @@ When connected to a USB-PD charger:
 
 If C2927029 is unavailable, consider these 6-pin power-only USB Type-C alternatives:
 
-| Part Number | Stock | Notes |
-|-------------|-------|-------|
-| C456012 | 186,928 | TYPE-C 6P (very high stock) |
-| C668623 | 133,479 | TYPE-C 6P(073) |
-| C5156600 | 43,224 | TYPE-C 6PLTH6.8-DJ |
-| C36936554 | 38,214 | UC17-0B06F68011 (3A rated) |
+| Part Number | Stock   | Notes                       |
+| ----------- | ------- | --------------------------- |
+| C456012     | 186,928 | TYPE-C 6P (very high stock) |
+| C668623     | 133,479 | TYPE-C 6P(073)              |
+| C5156600    | 43,224  | TYPE-C 6PLTH6.8-DJ          |
+| C36936554   | 38,214  | UC17-0B06F68011 (3A rated)  |
 
 **Important**: Verify pinout compatibility when substituting parts. Most 6-pin USB Type-C power-only connectors follow the same pinout (GND-VBUS-CC1 / CC2-VBUS-GND), but always check the datasheet.
 
@@ -204,13 +207,13 @@ If C2927029 is unavailable, consider these 6-pin power-only USB Type-C alternati
 
 ## Troubleshooting
 
-| Symptom | Possible Cause | Solution |
-|---------|---------------|----------|
-| No power from USB-C | Poor VBUS connection | Check solder joints on pins 2, 5 (VBUS) |
-| PD negotiation fails | CC pins not connected | Verify CC1 (pin 3) and CC2 (pin 4) connections to CH224D |
-| Intermittent power | Loose connector | Check mechanical mounting and solder joints |
-| Only 5V available | PD source not compatible | Use USB-PD 2.0/3.0 compatible charger (15V profile required) |
-| Ground issues | Poor GND connection | Check solder joints on pins 1, 6 (GND) |
+| Symptom              | Possible Cause           | Solution                                                     |
+| -------------------- | ------------------------ | ------------------------------------------------------------ |
+| No power from USB-C  | Poor VBUS connection     | Check solder joints on pins 2, 5 (VBUS)                      |
+| PD negotiation fails | CC pins not connected    | Verify CC1 (pin 3) and CC2 (pin 4) connections to CH224D     |
+| Intermittent power   | Loose connector          | Check mechanical mounting and solder joints                  |
+| Only 5V available    | PD source not compatible | Use USB-PD 2.0/3.0 compatible charger (15V profile required) |
+| Ground issues        | Poor GND connection      | Check solder joints on pins 1, 6 (GND)                       |
 
 ## References
 

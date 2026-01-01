@@ -1,17 +1,15 @@
 import CircuitSvg from '@site/src/components/CircuitSvg';
 import LdoU6Svg from '@site/static/circuits/ldo-u6-diagram.svg';
 
-<CircuitSvg
-  src={LdoU6Svg}
-  alt="LM7812 Linear Regulator U6"
-  padding="10px"
-/>
+<CircuitSvg src={LdoU6Svg} alt="LM7812 Linear Regulator U6" padding="10px" />
 
 **Capacitor Placement (Critical for PCB layout):**
+
 - **C26/C17 (ceramic)**: Place RIGHT NEXT to IC pins (minimize trace length for high-freq filtering)
 - **C20/C21 (electrolytic)**: Can be placed farther from IC (bulk storage, less sensitive to distance)
 
 **Key Points:**
+
 - **Two-stage design**: Buck converter (U2) provides efficient voltage reduction, linear regulator (U6) provides low-noise final output
 - **Input capacitor order**: C20 (bulk, farther) and C26 (ceramic, close to IC)
 - **Output capacitor order**: C17 (ceramic, close to IC) and C21 (bulk, farther)
@@ -19,6 +17,7 @@ import LdoU6Svg from '@site/static/circuits/ldo-u6-diagram.svg';
 - **Dropout voltage**: LM7812 requires ~2V dropout, so 13.5V input provides 1.5V headroom
 
 **Protection Circuit (+12V Rail, 1.2A target, 1.5A max):**
+
 - **Protection layers**: LM7812 current limiting (~2.2A max) → LM7812 thermal shutdown (150°C) → PTC1 trips (&gt;3A) → USB-PD adapter protection
 - **PTC1**: C7529589 (SMD1210P150TF/16) - 1.5A hold, 3A trip, auto-reset fuse
 - **TVS1**: SMAJ15A (unidirectional, 15V) - Overvoltage protection (cathode to +12V OUT, anode to GND)

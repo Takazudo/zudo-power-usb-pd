@@ -15,33 +15,33 @@ The mSMD110-33V is a PTC resettable fuse providing automatic overcurrent protect
 
 ## Part Information
 
-| Parameter | Value |
-|-----------|-------|
-| **JLCPCB Part Number** | [C70119](https://jlcpcb.com/partdetail/C70119) |
-| **Manufacturer Part Number** | mSMD110-33V |
-| **Package** | 1812 (4.5mm x 3.2mm) |
-| **Stock** | 44,459 units (excellent availability) |
-| **Estimated Price** | ~$0.10-0.15 |
-| **Type** | Resettable Polymeric PTC |
+| Parameter                    | Value                                          |
+| ---------------------------- | ---------------------------------------------- |
+| **JLCPCB Part Number**       | [C70119](https://jlcpcb.com/partdetail/C70119) |
+| **Manufacturer Part Number** | mSMD110-33V                                    |
+| **Package**                  | 1812 (4.5mm x 3.2mm)                           |
+| **Stock**                    | 44,459 units (excellent availability)          |
+| **Estimated Price**          | ~$0.10-0.15                                    |
+| **Type**                     | Resettable Polymeric PTC                       |
 
 ## Electrical Specifications
 
 ### Current Ratings
 
-| Parameter | Value | Unit | Conditions |
-|-----------|-------|------|------------|
-| **Hold Current** | 1.1 | A | Maximum safe continuous current |
-| **Trip Current** | ~2.2 | A | Typical (2x hold current) |
-| **Voltage Rating** | 33 | V | Maximum voltage |
+| Parameter          | Value | Unit | Conditions                      |
+| ------------------ | ----- | ---- | ------------------------------- |
+| **Hold Current**   | 1.1   | A    | Maximum safe continuous current |
+| **Trip Current**   | ~2.2  | A    | Typical (2x hold current)       |
+| **Voltage Rating** | 33    | V    | Maximum voltage                 |
 
 ### Key Characteristics
 
-| Parameter | Value | Unit |
-|-----------|-------|------|
-| **Initial Resistance** | &lt;0.05Ω | (typical) |
-| **Trip Time @ 2x Hold** | 1-5 | s |
-| **Reset Time** | 30-60 | s |
-| **Operating Temp** | -40 to +85 | °C |
+| Parameter               | Value      | Unit      |
+| ----------------------- | ---------- | --------- |
+| **Initial Resistance**  | &lt;0.05Ω  | (typical) |
+| **Trip Time @ 2x Hold** | 1-5        | s         |
+| **Reset Time**          | 30-60      | s         |
+| **Operating Temp**      | -40 to +85 | °C        |
 
 ## Circuit Integration
 
@@ -72,11 +72,11 @@ LM7805 Output ──┬─── PTC2 (1.1A) ───┬─── TVS2 ──�
 
 ### Current vs Protection State
 
-| Current | L7805 State | PTC State | Result |
-|---------|-------------|-----------|--------|
-| 0-1.0A | ✅ Normal | ✅ Normal | Normal operation |
-| 1.0-1.5A | ⚠️ Current limiting | ⚠️ Warming | Both protections activating |
-| &gt;1.5A | 🛑 Hard limit (~1A max) | 🛑 Trips | Dual protection active |
+| Current  | L7805 State             | PTC State  | Result                      |
+| -------- | ----------------------- | ---------- | --------------------------- |
+| 0-1.0A   | ✅ Normal               | ✅ Normal  | Normal operation            |
+| 1.0-1.5A | ⚠️ Current limiting     | ⚠️ Warming | Both protections activating |
+| &gt;1.5A | 🛑 Hard limit (~1A max) | 🛑 Trips   | Dual protection active      |
 
 ### Design Rationale
 
@@ -96,21 +96,21 @@ Benefits:
 
 ## Comparison to +12V Rail
 
-| Feature | +5V PTC (This) | +12V PTC |
-|---------|----------------|----------|
-| Hold current | 1.1A | 1.5A |
-| Package | 1812 | SMD1210 |
-| Design target | 0.5A | 1.2A |
-| Overhead | 120% | 25% |
-| Stock | 44,459 | 7,525 |
+| Feature       | +5V PTC (This) | +12V PTC |
+| ------------- | -------------- | -------- |
+| Hold current  | 1.1A           | 1.5A     |
+| Package       | 1812           | SMD1210  |
+| Design target | 0.5A           | 1.2A     |
+| Overhead      | 120%           | 25%      |
+| Stock         | 44,459         | 7,525    |
 
 **Note:** Higher overhead on +5V rail accounts for power-on inrush and LED indicator current.
 
 ## Bill of Materials
 
-| Designator | Part | Package | JLCPCB Part # | Qty | Unit Price | Extended |
-|------------|------|---------|--------------|-----|------------|----------|
-| PTC2 | mSMD110-33V | 1812 | C70119 | 1 | $0.10 | $0.10 |
+| Designator | Part        | Package | JLCPCB Part # | Qty | Unit Price | Extended |
+| ---------- | ----------- | ------- | ------------- | --- | ---------- | -------- |
+| PTC2       | mSMD110-33V | 1812    | C70119        | 1   | $0.10      | $0.10    |
 
 ## Related Components
 

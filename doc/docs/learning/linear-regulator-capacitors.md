@@ -9,6 +9,7 @@ Understanding why linear regulators need specific capacitor values and placement
 ## Overview
 
 Linear voltage regulators (like LM7812, LM7805, LM7912) require external capacitors for:
+
 1. **Stability** - Prevent oscillation
 2. **Noise filtering** - Remove high-frequency switching noise
 3. **Transient response** - Handle sudden load changes
@@ -36,6 +37,7 @@ Input Capacitors:                    Regulator IC:                    Output Cap
 ```
 
 **Key points:**
+
 - **Input side**: C20 (bulk) farther, C14 (ceramic) CLOSE to pin 1
 - **Output side**: C17 (ceramic) CLOSE to pin 3, C21 (bulk) farther
 - **IC in the middle**: Shows physical relationship between caps and IC pins
@@ -45,17 +47,20 @@ Input Capacitors:                    Regulator IC:                    Output Cap
 ### Ceramic Capacitors (Small: 100nF, 470nF)
 
 **Characteristics:**
+
 - **Low ESR** (Equivalent Series Resistance) < 10mΩ
 - **Low ESL** (Equivalent Series Inductance) < 1nH
 - **Fast response** to high-frequency noise
 - **Small physical size**
 
 **Purpose:**
+
 - Filter **high-frequency noise** (1MHz - 100MHz+)
 - Handle **fast transients** (nanosecond response)
 - Provide **local decoupling** for IC
 
 **Why close to IC:**
+
 - Even 1cm of trace adds ~10nH inductance
 - At high frequencies, inductance blocks current
 - Must minimize trace length for effectiveness
@@ -63,18 +68,21 @@ Input Capacitors:                    Regulator IC:                    Output Cap
 ### Electrolytic Capacitors (Large: 470µF)
 
 **Characteristics:**
+
 - **High capacitance** (1000x larger than ceramic)
 - **Higher ESR** (~100mΩ typical)
 - **Higher ESL** (~10nH typical)
 - **Slow response** compared to ceramic
 
 **Purpose:**
+
 - Provide **bulk energy storage**
 - Handle **low-frequency ripple** (100Hz - 10kHz)
 - Manage **load transients** (millisecond response)
 - Supply **inrush current** during startup
 
 **Why farther is OK:**
+
 - Lower frequency operation is less sensitive to inductance
 - Large physical size makes close placement difficult
 - Bulk storage doesn't need ultra-fast response
@@ -83,11 +91,11 @@ Input Capacitors:                    Regulator IC:                    Output Cap
 
 Together, the two capacitor types cover the full spectrum:
 
-| Frequency Range | Handled By | Purpose |
-|----------------|------------|---------|
-| **DC - 10kHz** | 470µF electrolytic | Bulk storage, load transients, ripple filtering |
-| **10kHz - 100kHz** | Both working together | Mid-range filtering, switching noise |
-| **100kHz - 100MHz+** | 100nF/470nF ceramic | High-frequency decoupling, IC bypass |
+| Frequency Range      | Handled By            | Purpose                                         |
+| -------------------- | --------------------- | ----------------------------------------------- |
+| **DC - 10kHz**       | 470µF electrolytic    | Bulk storage, load transients, ripple filtering |
+| **10kHz - 100kHz**   | Both working together | Mid-range filtering, switching noise            |
+| **100kHz - 100MHz+** | 100nF/470nF ceramic   | High-frequency decoupling, IC bypass            |
 
 ## Why Different Values: Input vs Output?
 
@@ -99,6 +107,7 @@ DC-DC Switching → [470nF] → Linear Regulator
 ```
 
 **Reasons:**
+
 1. **Input sees switching noise** from upstream DC-DC converter (LM2596S)
 2. **Switching frequency** typically 50kHz - 500kHz generates harmonics
 3. **Larger cap** provides better attenuation at switching frequency
@@ -106,6 +115,7 @@ DC-DC Switching → [470nF] → Linear Regulator
 5. **Datasheet recommendation**: LM78xx typically specifies 0.33µF - 0.47µF
 
 **Example calculation:**
+
 ```
 Switching freq: 150kHz
 Ripple current: 100mA
@@ -126,6 +136,7 @@ Linear Regulator → [100nF] → Clean Output
 ```
 
 **Reasons:**
+
 1. **Output already filtered** by linear regulator's internal circuitry
 2. **Main purpose** is local high-frequency decoupling
 3. **Smaller value sufficient** for clean, regulated output
@@ -133,6 +144,7 @@ Linear Regulator → [100nF] → Clean Output
 5. **Datasheet recommendation**: LM78xx typically specifies 0.1µF
 
 **Why not larger?**
+
 - Output is already low-noise from regulator
 - 100nF is optimal for HF decoupling (best impedance at 1-10MHz)
 - Larger caps can reduce phase margin (potential instability)
@@ -149,12 +161,14 @@ IC Pin ──┤<-- 2mm max -->├── Ceramic Cap
 ```
 
 **PCB Layout Rules:**
+
 1. **Place RIGHT NEXT to IC pins** (2-5mm max trace length)
 2. **Short, wide traces** (minimize inductance)
 3. **Direct path to GND plane** (via right next to cap)
 4. **No other signals** between cap and IC pin
 
 **Why so critical?**
+
 ```
 Trace inductance: L = 1nH/mm (typical)
 10mm trace = 10nH
@@ -173,12 +187,14 @@ IC Pin ──┤<-- 10-50mm OK -->├── Electrolytic Cap
 ```
 
 **PCB Layout Rules:**
+
 1. **Can be placed 10-50mm from IC** (still reasonable)
 2. **Normal trace width** (2-3mm copper)
 3. **Connect to power plane** (not critical if traces are adequate)
 4. **Keep away from heat sources** (electrolytics are temperature sensitive)
 
 **Why less critical?**
+
 - Operates at lower frequencies where inductance matters less
 - Large physical size prevents very close placement anyway
 - Bulk storage function doesn't need ultra-fast response
@@ -242,6 +258,7 @@ Using Y5V dielectric ceramic (capacitance varies wildly)
 ### Positive Rails (+12V, +5V)
 
 **LM7812 (TO-263-2):**
+
 ```
 Input:
 - C14: 470nF ceramic X7R (RIGHT NEXT to pin 1)
@@ -253,6 +270,7 @@ Output:
 ```
 
 **Why this works:**
+
 - DC-DC converter upstream generates 150kHz switching noise
 - C14 (470nF) filters this switching noise at input
 - C20 (470µF) provides bulk storage for load transients
@@ -262,6 +280,7 @@ Output:
 ### Negative Rail (-12V)
 
 **LM7912 (TO-252-3):**
+
 ```
 Input:
 - C16: 470nF ceramic (CLOSE to pin 1)
@@ -273,6 +292,7 @@ Output:
 ```
 
 **Critical polarity note:**
+
 - For negative voltage rails, electrolytic polarity is REVERSED
 - Negative terminal connects to negative voltage (e.g., -12V)
 - Positive terminal connects to GND (0V)
@@ -290,11 +310,13 @@ Too high ESR → Poor transient response
 ```
 
 **Typical requirements (from datasheets):**
+
 - LM78xx: Output cap ESR should be 0.1Ω - 10Ω
 - Pure ceramic (ESR < 10mΩ) can cause instability
 - Electrolytic + ceramic combination provides optimal ESR
 
 **Our design:**
+
 - C21/C23/C25 (electrolytic 470µF): ESR ~100mΩ (provides damping)
 - C17/C18/C19 (ceramic 100nF): ESR < 10mΩ (provides HF decoupling)
 - **Together:** Optimal combination for stability and performance
@@ -339,14 +361,14 @@ With proper capacitors:
 
 ## Summary: Quick Reference
 
-| Parameter | Input Side | Output Side | Reason |
-|-----------|------------|-------------|--------|
-| **Ceramic value** | 470nF | 100nF | Input needs more switching noise filtering |
-| **Ceramic type** | X7R/X5R | X7R/X5R | Stable across temperature |
-| **Ceramic placement** | RIGHT NEXT to pin | RIGHT NEXT to pin | Minimize trace inductance |
-| **Electrolytic value** | 470µF | 470µF | Bulk storage and load transients |
-| **Electrolytic placement** | 10-50mm from pin OK | 10-50mm from pin OK | Less critical for low frequencies |
-| **Electrolytic polarity** | + to voltage, - to GND | + to voltage, - to GND | (Reversed for negative rails!) |
+| Parameter                  | Input Side             | Output Side            | Reason                                     |
+| -------------------------- | ---------------------- | ---------------------- | ------------------------------------------ |
+| **Ceramic value**          | 470nF                  | 100nF                  | Input needs more switching noise filtering |
+| **Ceramic type**           | X7R/X5R                | X7R/X5R                | Stable across temperature                  |
+| **Ceramic placement**      | RIGHT NEXT to pin      | RIGHT NEXT to pin      | Minimize trace inductance                  |
+| **Electrolytic value**     | 470µF                  | 470µF                  | Bulk storage and load transients           |
+| **Electrolytic placement** | 10-50mm from pin OK    | 10-50mm from pin OK    | Less critical for low frequencies          |
+| **Electrolytic polarity**  | + to voltage, - to GND | + to voltage, - to GND | (Reversed for negative rails!)             |
 
 ## Key Takeaways
 

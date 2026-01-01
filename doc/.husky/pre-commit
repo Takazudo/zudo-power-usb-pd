@@ -1,1 +1,1 @@
-pnpm test
+cd doc && pnpm run check

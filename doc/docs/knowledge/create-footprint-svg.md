@@ -26,16 +26,19 @@ kicad-cli --version
 If `kicad-cli` is not found, you need to add it to your PATH:
 
 **macOS:**
+
 ```bash
 export PATH="/Applications/KiCad/KiCad.app/Contents/MacOS:$PATH"
 ```
 
 **Linux:**
+
 ```bash
 # Usually already in PATH after KiCad installation
 ```
 
 **Windows:**
+
 ```powershell
 # Add KiCad installation directory to PATH
 # Typically: C:\Program Files\KiCad\bin
@@ -82,6 +85,7 @@ python3 scripts/clean-svg-refs.py images/
 ```
 
 The script removes:
+
 - `REF**` placeholder text
 - `VAL**` placeholder text
 - Both text elements and stroked-text path groups
@@ -130,6 +134,7 @@ project/
 ## Cleanup Script Details
 
 ### Location
+
 `/Users/takazudo/repos/personal/zudo-power-usb-pd/footprints/scripts/clean-svg-refs.py`
 
 ### What It Does
@@ -171,7 +176,7 @@ In MDX files (e.g., component pages):
 import FootprintSvg from '@site/src/components/FootprintSvg';
 import CH224D from '@site/static/footprints-svg/QFN-20_L3.0-W3.0-P0.40-BL-EP1.7.svg';
 
-<FootprintSvg src={CH224D} alt="CH224D QFN-20 Package" minWidth="300px" minHeight="300px" />
+<FootprintSvg src={CH224D} alt="CH224D QFN-20 Package" minWidth="300px" minHeight="300px" />;
 ```
 
 ### Component Features
@@ -199,9 +204,10 @@ footprints/kicad/zudo-power.pretty/QFN-20_L3.0-W3.0-P0.40-BL-EP1.7.kicad_mod
 footprints/kicad/QFN-20_L3.0-W3.0-P0.40-BL-EP1.7.kicad_mod
 ```
 
-### Problem: SVG still shows REF** after cleanup
+### Problem: SVG still shows REF\*\* after cleanup
 
 **Solution**:
+
 1. Check that cleanup script ran successfully
 2. Some SVGs may have additional text elements - inspect manually:
    ```bash
@@ -212,6 +218,7 @@ footprints/kicad/QFN-20_L3.0-W3.0-P0.40-BL-EP1.7.kicad_mod
 ### Problem: SVG appears blank in documentation
 
 **Solution**:
+
 1. Verify SVG file is not corrupted:
    ```bash
    head -5 footprint.svg

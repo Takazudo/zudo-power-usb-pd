@@ -12,10 +12,10 @@ async function main() {
   try {
     // Read from stdin
     const input = readFileSync(0, 'utf8');
-    
+
     // Format the content
     const formatted = await format(input);
-    
+
     // Output to stdout
     process.stdout.write(formatted);
   } catch (error) {

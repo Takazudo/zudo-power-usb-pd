@@ -125,10 +125,11 @@ import C0603 from '@site/static/footprints-svg/C0603.svg';
 
 **Package:** 0603 (1.6mm × 0.8mm)
 **Used for:**
+
 - Ceramic capacitors (470nF for CH224D, 47µF for LM2586 coupling cap)
 - High-frequency decoupling throughout circuit
-**Typical values:** 10µF, 470nF, 100nF, 47µF
-**Applications:** IC power supply decoupling, bypass capacitors, SEPIC coupling
+  **Typical values:** 10µF, 470nF, 100nF, 47µF
+  **Applications:** IC power supply decoupling, bypass capacitors, SEPIC coupling
 
 #### 0805 Ceramic Capacitor
 
@@ -138,10 +139,11 @@ import C0805 from '@site/static/footprints-svg/C0805.svg';
 
 **Package:** 0805 (2.0mm × 1.25mm)
 **Used for:**
+
 - Ceramic capacitors (10µF, 100nF)
 - Output filter capacitors for linear regulators
-**LCSC:** [C15850](https://jlcpcb.com/partdetail/C15850) (10µF 25V), [C49678](https://jlcpcb.com/partdetail/C49678) (100nF 50V)
-**Applications:** Bulk decoupling, output filtering
+  **LCSC:** [C15850](https://jlcpcb.com/partdetail/C15850) (10µF 25V), [C49678](https://jlcpcb.com/partdetail/C49678) (100nF 50V)
+  **Applications:** Bulk decoupling, output filtering
 
 #### D6.3mm Electrolytic Capacitor
 
@@ -151,10 +153,11 @@ import CapD63 from '@site/static/footprints-svg/CAP-SMD_BD6.3-L6.6-W6.6-FD.svg';
 
 **Package:** SMD Electrolytic (Ø6.3mm, 6.6mm × 6.6mm)
 **Used for:**
+
 - Linear regulator input/output capacitors (C14-C19: 470µF 10V)
 - DC-DC converter output capacitors (C10-C12: 100µF 25V)
-**LCSC:** [C335982](https://jlcpcb.com/partdetail/C335982) (470µF 10V), [C2907](https://jlcpcb.com/partdetail/C2907) (100µF 25V)
-**Applications:** Most common electrolytic in this design - bulk energy storage
+  **LCSC:** [C335982](https://jlcpcb.com/partdetail/C335982) (470µF 10V), [C2907](https://jlcpcb.com/partdetail/C2907) (100µF 25V)
+  **Applications:** Most common electrolytic in this design - bulk energy storage
 
 #### D18mm Large Electrolytic Capacitor
 
@@ -178,11 +181,12 @@ import R0603 from '@site/static/footprints-svg/R0603.svg';
 
 **Package:** 0603 (1.6mm × 0.8mm)
 **Used for:**
+
 - USB-C CC line resistors (R1, R2: 5.1kΩ for 15V PD negotiation)
 - DC-DC feedback resistors (R3-R8: 1kΩ, 10kΩ for voltage adjustment)
 - LED current limiting resistors
-**Typical values:** 1kΩ, 5.1kΩ, 10kΩ, 330Ω
-**Applications:** Voltage dividers, current limiting, pull-up/pull-down
+  **Typical values:** 1kΩ, 5.1kΩ, 10kΩ, 330Ω
+  **Applications:** Voltage dividers, current limiting, pull-up/pull-down
 
 ### LEDs
 
@@ -196,6 +200,7 @@ import LED0603 from '@site/static/footprints-svg/LED0603-RD.svg';
 **Used for:** Power rail status indicators
 **Colors:** Red, Green, Blue
 **Applications:**
+
 - LED1 (Green): Power good indicator
 - LED2 (Red): Fault indicator
 - LED3 (Blue): +5V rail indicator

@@ -15,44 +15,44 @@ The SMD1210P150TF/16 is a Positive Temperature Coefficient (PTC) resettable fuse
 
 ## Part Information
 
-| Parameter | Value |
-|-----------|-------|
-| **JLCPCB Part Number** | [C7529589](https://jlcpcb.com/partdetail/C7529589) |
-| **Manufacturer Part Number** | SMD1210P150TF/16 |
-| **Package** | SMD1210 (3.2mm x 2.5mm) |
-| **Stock** | 7,525 units |
-| **Estimated Price** | ~$0.15-0.20 |
-| **Type** | Resettable Polymeric PTC |
+| Parameter                    | Value                                              |
+| ---------------------------- | -------------------------------------------------- |
+| **JLCPCB Part Number**       | [C7529589](https://jlcpcb.com/partdetail/C7529589) |
+| **Manufacturer Part Number** | SMD1210P150TF/16                                   |
+| **Package**                  | SMD1210 (3.2mm x 2.5mm)                            |
+| **Stock**                    | 7,525 units                                        |
+| **Estimated Price**          | ~$0.15-0.20                                        |
+| **Type**                     | Resettable Polymeric PTC                           |
 
 ## Electrical Specifications
 
 ### Current Ratings
 
-| Parameter | Symbol | Value | Unit | Conditions |
-|-----------|--------|-------|------|------------|
-| **Hold Current** | I_hold | 1.5 | A | Maximum safe continuous current |
-| **Trip Current** | I_trip | 3.0 | A | Current that will cause device to trip |
-| **Maximum Current** | I_max | 35 | A | Can handle during trip transition |
-| **Voltage Rating** | V_max | 16 | V | Maximum voltage |
-| **Power Dissipation** | P_D | 0.6 | W | @ 25°C |
+| Parameter             | Symbol | Value | Unit | Conditions                             |
+| --------------------- | ------ | ----- | ---- | -------------------------------------- |
+| **Hold Current**      | I_hold | 1.5   | A    | Maximum safe continuous current        |
+| **Trip Current**      | I_trip | 3.0   | A    | Current that will cause device to trip |
+| **Maximum Current**   | I_max  | 35    | A    | Can handle during trip transition      |
+| **Voltage Rating**    | V_max  | 16    | V    | Maximum voltage                        |
+| **Power Dissipation** | P_D    | 0.6   | W    | @ 25°C                                 |
 
 ### Resistance Characteristics
 
-| State | Resistance | Notes |
-|-------|-----------|-------|
-| **Initial (cold)** | 0.03Ω | Minimal voltage drop during normal operation |
-| **After trip (hot)** | &gt;1000Ω | High resistance limits current to ~10mA |
-| **Post-reset** | &lt;0.05Ω | May increase slightly after trip cycles |
+| State                | Resistance | Notes                                        |
+| -------------------- | ---------- | -------------------------------------------- |
+| **Initial (cold)**   | 0.03Ω      | Minimal voltage drop during normal operation |
+| **After trip (hot)** | &gt;1000Ω  | High resistance limits current to ~10mA      |
+| **Post-reset**       | &lt;0.05Ω  | May increase slightly after trip cycles      |
 
 ### Dynamic Characteristics
 
-| Parameter | Value | Unit | Conditions |
-|-----------|-------|------|------------|
-| **Trip Time** | 500 | ms | @ 3A (2x hold current) |
-| **Trip Time** | 1-5 | s | @ 1.5-2A (sustained overload) |
-| **Trip Time** | 0.1-0.5 | s | @ &gt;5A (moderate short) |
-| **Reset Time** | 30-60 | s | Time to cool and auto-reset |
-| **Operating Temp** | -40 to +85 | °C | Full specification range |
+| Parameter          | Value      | Unit | Conditions                    |
+| ------------------ | ---------- | ---- | ----------------------------- |
+| **Trip Time**      | 500        | ms   | @ 3A (2x hold current)        |
+| **Trip Time**      | 1-5        | s    | @ 1.5-2A (sustained overload) |
+| **Trip Time**      | 0.1-0.5    | s    | @ &gt;5A (moderate short)     |
+| **Reset Time**     | 30-60      | s    | Time to cool and auto-reset   |
+| **Operating Temp** | -40 to +85 | °C   | Full specification range      |
 
 ## How PTC Resettable Fuses Work
 
@@ -155,6 +155,7 @@ LM7812 Output ──┬─── PTC1 (1.5A) ───┬─── TVS1 ──�
 ```
 
 **Connection:**
+
 - Input: +12V from LM7812 regulator output
 - Output: +12V rail with TVS overvoltage protection
 - LED indicator: Shows when power is present
@@ -211,6 +212,7 @@ Protection Effectiveness:
 **Design target:** 1.2A maximum continuous current
 
 **Analysis:**
+
 ```
 Hold current:  1.5A  (chosen)
 Design target: 1.2A
@@ -242,15 +244,16 @@ Result:  PTC never sees >2.2A in practice!
 
 **Protection stages:**
 
-| Current | LM7812 State | PTC State | Result |
-|---------|--------------|-----------|--------|
-| 0-1.5A | ✅ Normal | ✅ Normal | Normal operation |
-| 1.5-2.2A | ⚠️ Current limiting | ⚠️ Warming | Both protections active |
-| &gt;2.2A | 🛑 Hard limit | 🛑 Trips (or warming) | Dual protection |
+| Current  | LM7812 State        | PTC State             | Result                  |
+| -------- | ------------------- | --------------------- | ----------------------- |
+| 0-1.5A   | ✅ Normal           | ✅ Normal             | Normal operation        |
+| 1.5-2.2A | ⚠️ Current limiting | ⚠️ Warming            | Both protections active |
+| &gt;2.2A | 🛑 Hard limit       | 🛑 Trips (or warming) | Dual protection         |
 
 ### Voltage Drop
 
 **Normal operation voltage drop:**
+
 ```
 V_drop = I × R
 V_drop = 1.2A × 0.03Ω
@@ -267,11 +270,13 @@ Negligible impact on +12V rail voltage.
 ### PCB Layout Recommendations
 
 **Trace width for 1.5A:**
+
 - Minimum: 0.5mm (1oz copper)
 - Recommended: 1.0mm (better thermal dissipation)
 - Ideal: 1.5mm or copper pour
 
 **Thermal considerations:**
+
 - Place away from heat-generating components (LM7812)
 - Good thermal contact with PCB copper
 - Adequate airflow around component
@@ -282,12 +287,14 @@ Negligible impact on +12V rail voltage.
 ### End-of-Life Behavior
 
 **After many trip cycles (thousands):**
+
 - Initial resistance may increase slightly (0.03Ω → 0.05Ω)
 - Hold current may decrease slightly
 - Trip time may increase
 - Still provides protection, just with degraded specs
 
 **Indicators of wear:**
+
 - Slower reset time
 - Higher voltage drop during normal operation
 - Earlier trip threshold
@@ -297,6 +304,7 @@ Negligible impact on +12V rail voltage.
 ### Failure Mode: Stuck Open (Very Rare)
 
 If PTC fails permanently open:
+
 ```
 Result: +12V rail dead
 Backup: None on this specific rail
@@ -309,6 +317,7 @@ Recovery: Replace PTC
 ### Failure Mode: Stuck Closed (Extremely Rare)
 
 If PTC fails permanently closed (doesn't trip):
+
 ```
 Result: No PTC protection
 Backup 1: LM7812 current limiting (still active)
@@ -324,27 +333,27 @@ Backup 4: USB-PD adapter protection (still active)
 
 ### vs Traditional Fuse (1.5A Fast-Blow)
 
-| Feature | PTC (This Part) | Traditional Fuse |
-|---------|-----------------|------------------|
-| **Auto-reset** | ✅ Yes (30-60s) | ❌ No (must replace) |
-| **Response time** | ⚠️ 0.5-5s | ✅ &lt;100ms |
-| **User convenience** | ✅ Excellent | ❌ Poor |
-| **JLCPCB availability** | ✅ Yes (7,525 stock) | ❌ No (zero stock) |
-| **Cost** | ~$0.15-0.20 | ~$0.05-0.10 |
-| **Voltage drop** | 36mV @ 1.2A | &lt;1mV |
-| **Best for** | Overloads | Catastrophic shorts |
+| Feature                 | PTC (This Part)      | Traditional Fuse     |
+| ----------------------- | -------------------- | -------------------- |
+| **Auto-reset**          | ✅ Yes (30-60s)      | ❌ No (must replace) |
+| **Response time**       | ⚠️ 0.5-5s            | ✅ &lt;100ms         |
+| **User convenience**    | ✅ Excellent         | ❌ Poor              |
+| **JLCPCB availability** | ✅ Yes (7,525 stock) | ❌ No (zero stock)   |
+| **Cost**                | ~$0.15-0.20          | ~$0.05-0.10          |
+| **Voltage drop**        | 36mV @ 1.2A          | &lt;1mV              |
+| **Best for**            | Overloads            | Catastrophic shorts  |
 
 **Verdict:** PTC is better for this application due to auto-reset and availability.
 
 ### vs Electronic Current Limiting
 
-| Feature | PTC (This Part) | Active Limiting |
-|---------|-----------------|-----------------|
-| **Complexity** | ✅ Simple (passive) | ❌ Complex (active) |
-| **Response time** | ⚠️ 0.5-5s | ✅ &lt;1µs |
-| **Cost** | ✅ $0.15-0.20 | ❌ $1-5+ |
-| **Reliability** | ✅ High (passive) | ⚠️ Lower (active) |
-| **Auto-reset** | ✅ Yes | ✅ Yes |
+| Feature           | PTC (This Part)     | Active Limiting     |
+| ----------------- | ------------------- | ------------------- |
+| **Complexity**    | ✅ Simple (passive) | ❌ Complex (active) |
+| **Response time** | ⚠️ 0.5-5s           | ✅ &lt;1µs          |
+| **Cost**          | ✅ $0.15-0.20       | ❌ $1-5+            |
+| **Reliability**   | ✅ High (passive)   | ⚠️ Lower (active)   |
+| **Auto-reset**    | ✅ Yes              | ✅ Yes              |
 
 **Verdict:** PTC is adequate given LM7812 provides fast current limiting.
 
@@ -353,6 +362,7 @@ Backup 4: USB-PD adapter protection (still active)
 ### Acceptance Testing
 
 **Test 1: Normal operation**
+
 ```
 Apply: 1.2A load
 Measure: Voltage drop across PTC
@@ -361,6 +371,7 @@ Pass if: <50mV
 ```
 
 **Test 2: Overload trip**
+
 ```
 Apply: 2.5A load (or short output after regulator)
 Expected: PTC trips within 5 seconds
@@ -369,6 +380,7 @@ Reset: Remove load, wait 60s, verify recovery
 ```
 
 **Test 3: Reset functionality**
+
 ```
 1. Trip PTC with overload
 2. Remove overload
@@ -380,15 +392,16 @@ Reset: Remove load, wait 60s, verify recovery
 ### Long-term Monitoring
 
 Monitor for degradation:
+
 - Measure voltage drop periodically
 - Check reset time after trip events
 - Replace if V_drop >100mV @ 1.2A
 
 ## Bill of Materials
 
-| Designator | Part | Package | JLCPCB Part # | Qty | Unit Price | Extended |
-|------------|------|---------|--------------|-----|------------|----------|
-| PTC1 | SMD1210P150TF/16 | SMD1210 | C7529589 | 1 | $0.15 | $0.15 |
+| Designator | Part             | Package | JLCPCB Part # | Qty | Unit Price | Extended |
+| ---------- | ---------------- | ------- | ------------- | --- | ---------- | -------- |
+| PTC1       | SMD1210P150TF/16 | SMD1210 | C7529589      | 1   | $0.15      | $0.15    |
 
 ## Related Components
 

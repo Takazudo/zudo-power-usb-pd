@@ -8,15 +8,15 @@ A cheat sheet of frequently referenced information during design.
 
 ## 🎯 Basic Specifications (At a Glance)
 
-| Item | Specification |
-|------|------|
-| **Input** | USB-C PD 15V 3A (Max 45W) |
-| **+12V Output** | 1.2A (Design value 1200mA) |
-| **-12V Output** | 1.0A (Design value 800mA) |
-| **+5V Output** | 1.2A (Design value 500mA) |
-| **Ripple** | \<1mVp-p |
-| **Efficiency** | 75-80% |
-| **Protection** | PTC auto-recovery + Fuse backup |
+| Item            | Specification                   |
+| --------------- | ------------------------------- |
+| **Input**       | USB-C PD 15V 3A (Max 45W)       |
+| **+12V Output** | 1.2A (Design value 1200mA)      |
+| **-12V Output** | 1.0A (Design value 800mA)       |
+| **+5V Output**  | 1.2A (Design value 500mA)       |
+| **Ripple**      | \<1mVp-p                        |
+| **Efficiency**  | 75-80%                          |
+| **Protection**  | PTC auto-recovery + Fuse backup |
 
 ## ⚡ Power Flow (Architecture)
 
@@ -32,32 +32,32 @@ USB-C        DC-DC        LDO          Output
 
 ## 🔧 Main ICs and Their Roles
 
-| IC | Part Number | JLCPCB P/N | Stock | Role | Qty |
-|---|------|-----------|--------|------|-----|
-| **USB-PD** | CH224D | C3975094 | 2,291 | PD Negotiation (15V) | 1 |
-| **DC-DC** | LM2596S-ADJ | C347423 | 12,075 | Buck Converter | 3 |
-| **Inverter** | LM2586SX-ADJ/NOPB | C181324 | 89 | +15V → -15V (3A) | 1 |
-| **+12V LDO** | L7812CV-DG | C2914 | 158,795 | +13.5V → +12V | 1 |
-| **+5V LDO** | L7805ABD2T-TR | C86206 | 272,379 | +7.5V → +5V | 1 |
-| **-12V LDO** | CJ7912 | C94173 | 3,386 | -13.5V → -12V | 1 |
+| IC           | Part Number       | JLCPCB P/N | Stock   | Role                 | Qty |
+| ------------ | ----------------- | ---------- | ------- | -------------------- | --- |
+| **USB-PD**   | CH224D            | C3975094   | 2,291   | PD Negotiation (15V) | 1   |
+| **DC-DC**    | LM2596S-ADJ       | C347423    | 12,075  | Buck Converter       | 3   |
+| **Inverter** | LM2586SX-ADJ/NOPB | C181324    | 89      | +15V → -15V (3A)     | 1   |
+| **+12V LDO** | L7812CV-DG        | C2914      | 158,795 | +13.5V → +12V        | 1   |
+| **+5V LDO**  | L7805ABD2T-TR     | C86206     | 272,379 | +7.5V → +5V          | 1   |
+| **-12V LDO** | CJ7912            | C94173     | 3,386   | -13.5V → -12V        | 1   |
 
 ## 📐 DC-DC Feedback Resistor Values (Voltage Setting)
 
 | Output Voltage | R_upper | R_lower | Actual Output |
-|---------|-----|-----|----------|
-| **+13.5V** | 10kΩ | 1kΩ | 13.53V |
-| **+7.5V** | 5.1kΩ | 1kΩ | 7.50V |
-| **-13.5V** | 10kΩ | 1kΩ | -13.53V |
+| -------------- | ------- | ------- | ------------- |
+| **+13.5V**     | 10kΩ    | 1kΩ     | 13.53V        |
+| **+7.5V**      | 5.1kΩ   | 1kΩ     | 7.50V         |
+| **-13.5V**     | 10kΩ    | 1kΩ     | -13.53V       |
 
 **Formula**: `Vout = 1.23V × (1 + R_upper/R_lower)`
 
 ## 🛡️ Protection Circuit Ratings
 
-| Voltage Line | PTC Rating | JLCPCB P/N | Fuse Rating | JLCPCB P/N | TVS Model | Operation |
-|----------|--------|-----------|-----------|-----------|--------|------|
-| **+12V** | 1.1A | C883148 | 2A | C5183824 | SMAJ15A | Overload→PTC / Short circuit→Fuse |
-| **+5V** | 0.75A | C883128 | 1.5A | C95352 | PRTR5V0U2X | Same as above |
-| **-12V** | 1.1A | C883148 | 1.5A | C95352 | SMAJ15A | Same as above |
+| Voltage Line | PTC Rating | JLCPCB P/N | Fuse Rating | JLCPCB P/N | TVS Model  | Operation                         |
+| ------------ | ---------- | ---------- | ----------- | ---------- | ---------- | --------------------------------- |
+| **+12V**     | 1.1A       | C883148    | 2A          | C5183824   | SMAJ15A    | Overload→PTC / Short circuit→Fuse |
+| **+5V**      | 0.75A      | C883128    | 1.5A        | C95352     | PRTR5V0U2X | Same as above                     |
+| **-12V**     | 1.1A       | C883148    | 1.5A        | C95352     | SMAJ15A    | Same as above                     |
 
 ### Protection Operation Sequence
 
@@ -67,69 +67,69 @@ USB-C        DC-DC        LDO          Output
 
 ## 🔌 Connectors and Packages
 
-| Component | Package | Notes |
-|------|-----------|------|
-| CH224D | QFN-20 | USB-PD IC |
-| USB-C | USB-TYPE-C-009 | 6-pin (Power only) |
-| LM2596S | TO-263-5 | Surface mount, large thermal pad |
-| L7812/L7805 | TO-220/TO-263-2 | Heatsink compatible |
-| CJ7912 | TO-252-2L | Surface mount |
-| Inductor | SMD 13.8x12.8mm | 100µH 4.5A |
-| Electrolytic Cap | φ6.3mm / φ10mm | Select by diameter |
+| Component        | Package         | Notes                            |
+| ---------------- | --------------- | -------------------------------- |
+| CH224D           | QFN-20          | USB-PD IC                        |
+| USB-C            | USB-TYPE-C-009  | 6-pin (Power only)               |
+| LM2596S          | TO-263-5        | Surface mount, large thermal pad |
+| L7812/L7805      | TO-220/TO-263-2 | Heatsink compatible              |
+| CJ7912           | TO-252-2L       | Surface mount                    |
+| Inductor         | SMD 13.8x12.8mm | 100µH 4.5A                       |
+| Electrolytic Cap | φ6.3mm / φ10mm  | Select by diameter               |
 
 ## 💰 Cost Breakdown (Per Board)
 
-| Stage | Content | Cost |
-|------|------|--------|
-| **Stage 1** | USB-PD Power Section | $0.43 |
-| **Stage 2** | DC-DC Converters | $2.09 |
-| **Stage 3** | Linear Regulators | $0.37 |
-| **Stage 4** | Protection Circuits | $1.79 |
-| **Total** | Component Cost | **$4.68** |
+| Stage       | Content              | Cost      |
+| ----------- | -------------------- | --------- |
+| **Stage 1** | USB-PD Power Section | $0.43     |
+| **Stage 2** | DC-DC Converters     | $2.09     |
+| **Stage 3** | Linear Regulators    | $0.37     |
+| **Stage 4** | Protection Circuits  | $1.79     |
+| **Total**   | Component Cost       | **$4.68** |
 
 ※ PCB manufacturing and assembly costs are separate (approx. $15-20/board for 10-piece order)
 
 ## 📊 Component Stock Status (JLCPCB)
 
-| Component Category | Minimum Stock | Availability |
-|------------|-----------|----------|
-| Basic Parts Resistors/Capacitors | **1,000,000+** | ✅ Very Stable |
-| CH224D (USB-PD) | **2,291** | ✅ Stable |
-| LM2596S (DC-DC) | **12,075** | ✅ Stable |
-| LM2586SX-ADJ (Inverter) | **89** | ⚠️ Limited Stock |
-| L7812/L7805/CJ7912 (LDO) | **3,386~272,379** | ✅ Very Stable |
-| Inductor (100µH) | **2,763** | ✅ Stable |
-| SS34 (Diode) | **1,859,655** | ✅ Very Stable |
+| Component Category               | Minimum Stock     | Availability     |
+| -------------------------------- | ----------------- | ---------------- |
+| Basic Parts Resistors/Capacitors | **1,000,000+**    | ✅ Very Stable   |
+| CH224D (USB-PD)                  | **2,291**         | ✅ Stable        |
+| LM2596S (DC-DC)                  | **12,075**        | ✅ Stable        |
+| LM2586SX-ADJ (Inverter)          | **89**            | ⚠️ Limited Stock |
+| L7812/L7805/CJ7912 (LDO)         | **3,386~272,379** | ✅ Very Stable   |
+| Inductor (100µH)                 | **2,763**         | ✅ Stable        |
+| SS34 (Diode)                     | **1,859,655**     | ✅ Very Stable   |
 
 ## 🔬 Detailed Performance Specifications
 
 ### Ripple Noise Target
 
-| Stage | Expected Ripple | Countermeasure |
-|------|------------|------|
-| DC-DC Output | ~50mVp-p | 470µF electrolytic capacitor |
-| LDO Output | **\<1mVp-p** | LDO + 470µF×2 |
+| Stage        | Expected Ripple | Countermeasure               |
+| ------------ | --------------- | ---------------------------- |
+| DC-DC Output | ~50mVp-p        | 470µF electrolytic capacitor |
+| LDO Output   | **\<1mVp-p**    | LDO + 470µF×2                |
 
 ### Efficiency Calculation
 
-| Stage | Efficiency | Loss Example |
-|------|------|--------|
-| LM2596S | 85-90% | 15V→13.5V: 1.5V × 1A = 1.5W |
-| LM7812 | ~90% | 13.5V→12V: 1.5V × 1A = 1.5W |
-| LM7805 | ~67% | 7.5V→5V: 2.5V × 0.5A = 1.25W |
-| LM7912 | ~89% | -13.5V→-12V: 1.5V × 0.8A = 1.2W |
-| **Overall** | **75-80%** | Max loss ~10W |
+| Stage       | Efficiency | Loss Example                    |
+| ----------- | ---------- | ------------------------------- |
+| LM2596S     | 85-90%     | 15V→13.5V: 1.5V × 1A = 1.5W     |
+| LM7812      | ~90%       | 13.5V→12V: 1.5V × 1A = 1.5W     |
+| LM7805      | ~67%       | 7.5V→5V: 2.5V × 0.5A = 1.25W    |
+| LM7912      | ~89%       | -13.5V→-12V: 1.5V × 0.8A = 1.2W |
+| **Overall** | **75-80%** | Max loss ~10W                   |
 
 ## 🌡️ Thermal Design Estimation
 
 ### Maximum Heat-Generating Components
 
-| IC | Max Loss | Package | Thermal Resistance | Temperature Rise |
-|---|---------|----------|--------|---------|
-| LM2596S (×3) | 1.5W | TO-263 | ~10℃/W | +15℃ |
-| LM7805 | 1.25W | TO-220 | ~5℃/W | +6℃ |
-| LM7812 | 1.5W | TO-220 | ~5℃/W | +7.5℃ |
-| LM7912 | 1.2W | TO-220 | ~5℃/W | +6℃ |
+| IC           | Max Loss | Package | Thermal Resistance | Temperature Rise |
+| ------------ | -------- | ------- | ------------------ | ---------------- |
+| LM2596S (×3) | 1.5W     | TO-263  | ~10℃/W             | +15℃             |
+| LM7805       | 1.25W    | TO-220  | ~5℃/W              | +6℃              |
+| LM7812       | 1.5W     | TO-220  | ~5℃/W              | +7.5℃            |
+| LM7912       | 1.2W     | TO-220  | ~5℃/W              | +6℃              |
 
 ※ Approx. 40-50℃ max at 25℃ ambient (within acceptable range)
 
@@ -158,12 +158,12 @@ USB-C        DC-DC        LDO          Output
 
 ### Recommended Layer Stack (4-layer board)
 
-| Layer | Purpose | Notes |
-|---------|------|------|
-| **L1 (Top)** | Signal + Components | SMD component side |
-| **L2 (GND)** | GND Plane | Solid GND |
-| **L3 (Power)** | Power Plane | +15V/+12V/+5V/-12V |
-| **L4 (Bottom)** | Signal | Routing auxiliary |
+| Layer           | Purpose             | Notes              |
+| --------------- | ------------------- | ------------------ |
+| **L1 (Top)**    | Signal + Components | SMD component side |
+| **L2 (GND)**    | GND Plane           | Solid GND          |
+| **L3 (Power)**  | Power Plane         | +15V/+12V/+5V/-12V |
+| **L4 (Bottom)** | Signal              | Routing auxiliary  |
 
 ## 📝 Open Items Checklist
 

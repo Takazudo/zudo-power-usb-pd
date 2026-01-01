@@ -1,13 +1,10 @@
 import CircuitSvg from '@site/src/components/CircuitSvg';
 import InverterU5Svg from '@site/static/circuits/inverter-u5-diagram.svg';
 
-<CircuitSvg
-  src={InverterU5Svg}
-  alt="LM2586 Inverted SEPIC Converter U5"
-  padding="10px"
-/>
+<CircuitSvg src={InverterU5Svg} alt="LM2586 Inverted SEPIC Converter U5" padding="10px" />
 
 **Key Points:**
+
 - **Inverted SEPIC topology**: LM2586 configured for negative voltage generation from positive input
 - **High current capability**: 3A output capability (easily handles 800mA requirement for -12V rail)
 - **Input voltage range**: 4V~40V (safely accepts +15V input)
@@ -92,6 +89,7 @@ For R7=10kΩ: R8 = 920Ω
 ```
 
 **Component Selection:**
+
 - **L4, L5**: 47µH inductors rated for 3A (or single 47µH coupled inductor)
 - **C12**: 47µF ceramic or electrolytic coupling capacitor
 - **C13**: 100µF input capacitor

@@ -42,4 +42,4 @@ Additional component documentation coming soon:
 
 ---
 
-*Documentation in progress. Last updated: 2025-12-28*
+_Documentation in progress. Last updated: 2025-12-28_

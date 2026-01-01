@@ -22,46 +22,46 @@ The PRTR5V0U2X is a bidirectional, dual-channel TVS diode array designed for ult
 
 ## Part Information
 
-| Parameter | Value |
-|-----------|-------|
-| **JLCPCB Part Number** | [C5199240](https://jlcpcb.com/partdetail/C5199240) (primary) |
-| **Alternate Part Number** | [C41409257](https://jlcpcb.com/partdetail/C41409257) |
-| **Manufacturer Part Number** | PRTR5V0U2X |
-| **Package** | SOT-143 (4-pin) |
-| **Stock** | Low availability (check alternates) |
-| **Estimated Price** | $0.12 |
-| **Direction** | Bidirectional (both positive and negative) |
-| **Channels** | Dual independent channels |
+| Parameter                    | Value                                                        |
+| ---------------------------- | ------------------------------------------------------------ |
+| **JLCPCB Part Number**       | [C5199240](https://jlcpcb.com/partdetail/C5199240) (primary) |
+| **Alternate Part Number**    | [C41409257](https://jlcpcb.com/partdetail/C41409257)         |
+| **Manufacturer Part Number** | PRTR5V0U2X                                                   |
+| **Package**                  | SOT-143 (4-pin)                                              |
+| **Stock**                    | Low availability (check alternates)                          |
+| **Estimated Price**          | $0.12                                                        |
+| **Direction**                | Bidirectional (both positive and negative)                   |
+| **Channels**                 | Dual independent channels                                    |
 
 ## Electrical Specifications
 
 ### Voltage Characteristics
 
-| Parameter | Symbol | Min | Typ | Max | Unit |
-|-----------|--------|-----|-----|-----|------|
-| **Working Voltage** | V_WM | - | 5 | - | V |
-| **Reverse Standoff Voltage** | V_RWM | - | 5 | - | V |
-| **Breakdown Voltage** | V_BR | 7 | 8 | 9 | V |
-| **Clamping Voltage @ 1A** | V_C | - | - | 20 | V |
-| **Reverse Leakage Current** | I_R | - | - | 1 | µA |
+| Parameter                    | Symbol | Min | Typ | Max | Unit |
+| ---------------------------- | ------ | --- | --- | --- | ---- |
+| **Working Voltage**          | V_WM   | -   | 5   | -   | V    |
+| **Reverse Standoff Voltage** | V_RWM  | -   | 5   | -   | V    |
+| **Breakdown Voltage**        | V_BR   | 7   | 8   | 9   | V    |
+| **Clamping Voltage @ 1A**    | V_C    | -   | -   | 20  | V    |
+| **Reverse Leakage Current**  | I_R    | -   | -   | 1   | µA   |
 
 ### Power and Current Ratings
 
-| Parameter | Symbol | Value | Unit | Conditions |
-|-----------|--------|-------|------|------------|
-| **Peak Pulse Power (per channel)** | P_PP | 140 | W | 8/20µs waveform |
-| **Peak Pulse Current** | I_PP | 7 | A | 8/20µs waveform |
-| **ESD Protection (contact)** | V_ESD | ±8 | kV | IEC 61000-4-2 |
-| **ESD Protection (air)** | V_ESD | ±15 | kV | IEC 61000-4-2 |
+| Parameter                          | Symbol | Value | Unit | Conditions      |
+| ---------------------------------- | ------ | ----- | ---- | --------------- |
+| **Peak Pulse Power (per channel)** | P_PP   | 140   | W    | 8/20µs waveform |
+| **Peak Pulse Current**             | I_PP   | 7     | A    | 8/20µs waveform |
+| **ESD Protection (contact)**       | V_ESD  | ±8    | kV   | IEC 61000-4-2   |
+| **ESD Protection (air)**           | V_ESD  | ±15   | kV   | IEC 61000-4-2   |
 
 ### Dynamic Characteristics
 
-| Parameter | Symbol | Value | Unit | Conditions |
-|-----------|--------|-------|------|------------|
-| **Capacitance** | C_D | 1 | pF | Typical @ 0V |
-| **Response Time** | t_R | &lt;1 | ns | - |
-| **Operating Temperature** | T_OP | -40 to +125 | °C | - |
-| **Storage Temperature** | T_STG | -55 to +150 | °C | - |
+| Parameter                 | Symbol | Value       | Unit | Conditions   |
+| ------------------------- | ------ | ----------- | ---- | ------------ |
+| **Capacitance**           | C_D    | 1           | pF   | Typical @ 0V |
+| **Response Time**         | t_R    | &lt;1       | ns   | -            |
+| **Operating Temperature** | T_OP   | -40 to +125 | °C   | -            |
+| **Storage Temperature**   | T_STG  | -55 to +150 | °C   | -            |
 
 ## Pin Configuration
 
@@ -81,12 +81,12 @@ Top View:
 
 ### Pin Functions
 
-| Pin | Name | Function |
-|-----|------|----------|
-| **1** | GND | Ground reference |
+| Pin   | Name  | Function                 |
+| ----- | ----- | ------------------------ |
+| **1** | GND   | Ground reference         |
 | **2** | I/O_1 | Channel 1 protection I/O |
 | **3** | I/O_2 | Channel 2 protection I/O |
-| **4** | VCC | 5V power rail connection |
+| **4** | VCC   | 5V power rail connection |
 
 ## How Bidirectional TVS Works
 
@@ -160,6 +160,7 @@ Linear Regulator Output:
 ### Connection Options
 
 **Option 1: Dual Protection (Recommended)**
+
 ```
     +5V ─┬─→ Pin 4 (VCC)
          │
@@ -171,6 +172,7 @@ Linear Regulator Output:
 ```
 
 **Option 2: Parallel Channels (Higher Current Handling)**
+
 ```
     +5V ─┬─→ Pin 4 (VCC)
          │
@@ -182,6 +184,7 @@ Linear Regulator Output:
 ```
 
 **Option 3: Rail + Signal Protection**
+
 ```
     +5V ─┬─→ Pin 4 (VCC) ──→ +5V Rail
          │
@@ -196,14 +199,14 @@ Linear Regulator Output:
 
 ### Key Differences
 
-| Characteristic | Bidirectional (PRTR5V0U2X) | Unidirectional (SMAJ15A) |
-|----------------|---------------------------|--------------------------|
-| **Protection Direction** | Both positive and negative | One direction only |
-| **Typical Use** | Signal lines, AC circuits | DC power rails |
-| **Capacitance** | Very low (1pF) | Higher (~500pF) |
-| **Channels** | Dual (2 channels) | Single |
-| **Symmetry** | Symmetric clamping | Asymmetric |
-| **Package** | SOT-143 (4-pin) | SMA (2-pin) |
+| Characteristic           | Bidirectional (PRTR5V0U2X) | Unidirectional (SMAJ15A) |
+| ------------------------ | -------------------------- | ------------------------ |
+| **Protection Direction** | Both positive and negative | One direction only       |
+| **Typical Use**          | Signal lines, AC circuits  | DC power rails           |
+| **Capacitance**          | Very low (1pF)             | Higher (~500pF)          |
+| **Channels**             | Dual (2 channels)          | Single                   |
+| **Symmetry**             | Symmetric clamping         | Asymmetric               |
+| **Package**              | SOT-143 (4-pin)            | SMA (2-pin)              |
 
 ### Clamping Characteristics Comparison
 
@@ -238,6 +241,7 @@ Unidirectional (SMAJ15A):
 ### 1. Ultra-Low Capacitance Benefits
 
 **Why 1pF Matters**:
+
 ```
 Capacitance Impact on Signal Integrity:
     High Capacitance (~500pF):
@@ -250,6 +254,7 @@ Capacitance Impact on Signal Integrity:
 ```
 
 **Best Applications**:
+
 - USB data lines (D+ / D-)
 - HDMI/DisplayPort signal lines
 - High-speed serial communications
@@ -257,6 +262,7 @@ Capacitance Impact on Signal Integrity:
 - Precision analog signals
 
 **In This Project**:
+
 - The 1pF capacitance is "overkill" for DC power rail protection
 - Chosen for availability and bidirectional protection capability
 - Would be ideal if protecting USB communication lines
@@ -264,6 +270,7 @@ Capacitance Impact on Signal Integrity:
 ### 2. Dual Channel Usage Strategies
 
 **Strategy A: Independent Protection**
+
 ```
 Purpose: Protect two separate circuits
     +5V Rail ─→ Pin 4 (VCC)
@@ -275,6 +282,7 @@ Purpose: Protect two separate circuits
 ```
 
 **Strategy B: Parallel Protection**
+
 ```
 Purpose: Double the current handling capability
     +5V Rail ─→ Pin 4 (VCC)
@@ -287,6 +295,7 @@ Purpose: Double the current handling capability
 ```
 
 **Strategy C: Rail + Signal**
+
 ```
 Purpose: Protect power and communication lines
     +5V Rail ─→ Pin 4 (VCC) ─→ Main 5V power
@@ -310,6 +319,7 @@ IEC 61000-4-2 Test Levels:
 ```
 
 **Test Waveforms**:
+
 ```
 ESD Contact Discharge (8kV):
     Current
@@ -326,14 +336,15 @@ ESD Contact Discharge (8kV):
 
 **Why PRTR5V0U2X for 5V Rail**:
 
-| Parameter | Value | Rationale |
-|-----------|-------|-----------|
-| Working voltage | 5V | Matches 5V rail |
-| Breakdown voltage | 7V min | Sufficient margin above 5V |
-| Clamping voltage | 20V max | Below component damage threshold |
-| Bidirectional | Yes | Protects against negative spikes too |
+| Parameter         | Value   | Rationale                            |
+| ----------------- | ------- | ------------------------------------ |
+| Working voltage   | 5V      | Matches 5V rail                      |
+| Breakdown voltage | 7V min  | Sufficient margin above 5V           |
+| Clamping voltage  | 20V max | Below component damage threshold     |
+| Bidirectional     | Yes     | Protects against negative spikes too |
 
 **Voltage Safety Analysis**:
+
 ```
 Normal Operation:  5.0V  ✓ Below working voltage
 Regulation Range:  4.8V - 5.2V  ✓ Safe margin
@@ -344,16 +355,19 @@ Maximum Clamp:     20V  ✓ Below IC damage threshold (typically &gt;25V)
 ### 5. Thermal Considerations
 
 **Power Dissipation**:
+
 - **Normal operation**: ~5µW (5V × 1µA leakage per channel)
 - **ESD events**: Up to 140W per channel (brief pulses)
 - **Repetitive pulse**: See derating curves in datasheet
 
 **SOT-143 Package**:
+
 - **Thermal resistance**: ~250°C/W junction-to-ambient
 - **No heat sink required** for typical ESD protection
 - Small package suitable for dense PCB layouts
 
 **Temperature Rise During ESD Event**:
+
 ```
 Single 8/20µs pulse @ 140W:
     Energy = 140W × (8µs + 20µs)/2 ≈ 2mJ
@@ -365,6 +379,7 @@ Negligible temperature rise, no cooling needed.
 ### 6. PCB Layout Guidelines
 
 **Optimal Layout**:
+
 ```
 Top View PCB Layout:
     ┌────────────────────────────┐
@@ -382,6 +397,7 @@ Top View PCB Layout:
 ```
 
 **Best Practices**:
+
 1. **Place close to connector or I/O**: Minimize trace inductance
 2. **Short ground connection**: Connect Pin 1 directly to ground plane via
 3. **Wide traces**: Use &gt;0.5mm traces for ESD current paths
@@ -389,6 +405,7 @@ Top View PCB Layout:
 5. **Kelvin connection**: Separate I/O protection from power rail if possible
 
 **Trace Routing**:
+
 ```
 ✓ GOOD:
     Signal In ─→ [TVS I/O] ─→ Protected IC
@@ -409,12 +426,14 @@ Top View PCB Layout:
 **Functional Tests**:
 
 1. **Leakage Current Test**:
+
    ```
    Setup: Apply 5V between VCC and GND, measure I/O current
    Expected: &lt;1µA per channel
    ```
 
 2. **Breakdown Voltage Test** (requires curve tracer):
+
    ```
    Setup: Slowly increase voltage on I/O pin
    Expected: Breakdown at 7-9V
@@ -426,6 +445,7 @@ Top View PCB Layout:
    - Ensure no damage to package
 
 **ESD Simulator Test** (optional, requires equipment):
+
 ```
 IEC 61000-4-2 Test Setup:
     ESD Gun → I/O Pin (contact discharge)
@@ -437,12 +457,12 @@ IEC 61000-4-2 Test Setup:
 
 ### TVS Array Comparison
 
-| Part | Channels | V_WM | Capacitance | Clamp @ 1A | Application |
-|------|----------|------|-------------|------------|-------------|
-| **PRTR5V0U2X** | **2** | **5V** | **1pF** | **20V** | **High-speed signals, 5V rail** |
-| TPD2E001 | 2 | 5.5V | 0.5pF | 15V | Ultra-low capacitance USB |
-| PESD5V0L2BT | 2 | 5V | 0.8pF | 18V | Low capacitance alternative |
-| SP0503BAHT | 4 | 6V | 5pF | 17V | Multi-channel protection |
+| Part           | Channels | V_WM   | Capacitance | Clamp @ 1A | Application                     |
+| -------------- | -------- | ------ | ----------- | ---------- | ------------------------------- |
+| **PRTR5V0U2X** | **2**    | **5V** | **1pF**     | **20V**    | **High-speed signals, 5V rail** |
+| TPD2E001       | 2        | 5.5V   | 0.5pF       | 15V        | Ultra-low capacitance USB       |
+| PESD5V0L2BT    | 2        | 5V     | 0.8pF       | 18V        | Low capacitance alternative     |
+| SP0503BAHT     | 4        | 6V     | 5pF         | 17V        | Multi-channel protection        |
 
 ### When to Use Each Type
 
@@ -464,19 +484,21 @@ Selection Guide Based on Application:
 
 ### Usage Summary
 
-| Component | Rail | Function | Quantity |
-|-----------|------|----------|----------|
-| **TVS2** | +5V | Bidirectional spike protection | 1 |
+| Component | Rail | Function                       | Quantity |
+| --------- | ---- | ------------------------------ | -------- |
+| **TVS2**  | +5V  | Bidirectional spike protection | 1        |
 
 ### Why Bidirectional for 5V Rail?
 
 **Design Rationale**:
+
 1. **Negative Spike Protection**: Protects against negative transients (e.g., from inductive loads)
 2. **ESD Events**: Provides protection against both positive and negative ESD
 3. **Availability**: Selected part available at JLCPCB
 4. **Future-Proof**: Could also protect communication lines if design expands
 
 **Negative Transient Scenario**:
+
 ```
 Inductive Load Disconnection:
     Before:  +5V ─→ [Inductor] ─→ GND
@@ -515,15 +537,16 @@ Complete +5V Protection:
 
 If C5199240 is out of stock:
 
-| Part Number | Device | Package | Notes |
-|-------------|--------|---------|-------|
-| **C41409257** | PRTR5V0U2X | SOT-143 | Direct equivalent |
-| C2837790 | PESD5V0L2BT | SOT-23 | 0.8pF, similar specs |
-| C7420372 | TPD2E001 | SOT-23-6 | 0.5pF, lower capacitance |
+| Part Number   | Device      | Package  | Notes                    |
+| ------------- | ----------- | -------- | ------------------------ |
+| **C41409257** | PRTR5V0U2X  | SOT-143  | Direct equivalent        |
+| C2837790      | PESD5V0L2BT | SOT-23   | 0.8pF, similar specs     |
+| C7420372      | TPD2E001    | SOT-23-6 | 0.5pF, lower capacitance |
 
 ### Fallback: Unidirectional Option
 
 If no bidirectional parts available, can substitute:
+
 - **SMAJ5.0A** (C571361) - 5V unidirectional TVS
 - Trade-off: Only protects positive spikes
 - Benefit: Higher stock availability
@@ -543,4 +566,4 @@ If no bidirectional parts available, can substitute:
 
 ---
 
-*Last updated: 2025-12-28*
+_Last updated: 2025-12-28_

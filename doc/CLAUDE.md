@@ -11,23 +11,27 @@ This file provides guidance to Claude Code when working with documentation in th
 #### 1. Less-than/Greater-than Characters (`<` and `>`)
 
 **❌ WRONG** - Direct use of `<` or `>` in text:
+
 ```markdown
 Float or pull low (<0.8V) = Enable
 Input voltage range: 4V - 40V (>5V recommended)
 ```
 
 **✅ CORRECT** - Use HTML entities:
+
 ```markdown
 Float or pull low (&lt;0.8V) = Enable
 Input voltage range: 4V - 40V (&gt;5V recommended)
 ```
 
 **Why**: MDX interprets `<` as the start of a JSX tag. When followed by a number or invalid character, it causes compilation errors like:
+
 ```
 Error: Unexpected character `0` (U+0030) before name, expected a character that can start a name
 ```
 
 **Alternative solutions**:
+
 - Use HTML entities: `&lt;` for `<`, `&gt;` for `>`
 - Use code blocks: `` `<0.8V` ``
 - Rephrase: "below 0.8V" instead of "<0.8V"
@@ -35,11 +39,13 @@ Error: Unexpected character `0` (U+0030) before name, expected a character that 
 #### 2. Curly Braces (`{` and `}`)
 
 **❌ WRONG** - Direct use in text:
+
 ```markdown
 Use the formula {VIN - VOUT} to calculate dropout
 ```
 
 **✅ CORRECT** - Escape or use code:
+
 ```markdown
 Use the formula `{VIN - VOUT}` to calculate dropout
 ```
@@ -48,27 +54,31 @@ Use the formula `{VIN - VOUT}` to calculate dropout
 
 #### 3. Common Characters That Need Escaping
 
-| Character | HTML Entity | When to Escape |
-|-----------|-------------|----------------|
-| `<` | `&lt;` | Always in regular text (except in code blocks) |
-| `>` | `&gt;` | Always in regular text (except in code blocks) |
-| `{` | `&#123;` or backticks | When not used for JSX/MDX syntax |
-| `}` | `&#125;` or backticks | When not used for JSX/MDX syntax |
+| Character | HTML Entity           | When to Escape                                 |
+| --------- | --------------------- | ---------------------------------------------- |
+| `<`       | `&lt;`                | Always in regular text (except in code blocks) |
+| `>`       | `&gt;`                | Always in regular text (except in code blocks) |
+| `{`       | `&#123;` or backticks | When not used for JSX/MDX syntax               |
+| `}`       | `&#125;` or backticks | When not used for JSX/MDX syntax               |
 
 #### 4. Safe Zones (No Escaping Needed)
 
 These locations don't require escaping:
+
 - Inside code blocks (triple backticks)
 - Inside inline code (single backticks)
 - Inside HTML comments `<!-- ... -->`
 
 **Example**:
+
 ```markdown
 ✅ This is safe: `<0.8V`
 ✅ This is safe in code blocks:
 ```
+
 VIN < 5V will cause shutdown
 < and > are safe here
+
 ```
 ❌ This will error: Voltage <0.8V is too low
 ✅ This is correct: Voltage &lt;0.8V is too low
@@ -100,6 +110,7 @@ USB-C 15V ──┬─→ +13.5V (DC-DC) ──→ +12V (LDO) ──→ +12V OUT
 ### 2. Always Include Full Connection List
 
 Under every circuit diagram, provide a detailed connection list showing:
+
 - Component identifiers (U1, R1, C1, etc.)
 - Pin numbers and names
 - Connection destinations
@@ -123,21 +134,25 @@ Connections:
 **Rule 1: 🚫 NEVER cross lines unless they form an electrical junction (connection point)**
 
 If two signals cross paths:
+
 - If they connect electrically: Use a junction symbol and clearly show the connection
 - If they don't connect: **Route one of them differently to avoid the crossing**
 
 **Rule 2: 🚫 NEVER cross lines over text labels - it looks like they're connected**
 
 When a vertical or horizontal line passes over a text label, it creates ambiguity:
+
 - Does the line connect to that label?
 - Or does it just pass through?
 
 **Solutions**:
+
 1. Route lines around labels
 2. Remove intermediate labels that would be crossed
 3. **Route vertically in the opposite direction** - If a downward line crosses labels, route it upward instead to use empty space
 
 **❌ WRONG** - Lines crossing without junction (ambiguous):
+
 ```
 Signal A  ──┼──  (is this connected or just passing?)
             │
@@ -145,6 +160,7 @@ Signal A  ──┼──  (is this connected or just passing?)
 ```
 
 **❌ WRONG** - Lines crossing over labels (ambiguous):
+
 ```
 Output ──┬──→ Load
          │
@@ -154,6 +170,7 @@ Output ──┬──→ Load
 ```
 
 **✅ CORRECT** - Route around to avoid crossing:
+
 ```
 Signal A  ────────  (clearly not connected)
 
@@ -162,6 +179,7 @@ Signal A  ────────  (clearly not connected)
 ```
 
 **✅ CORRECT** - Remove intermediate labels to prevent crossing:
+
 ```
 Output ──┬──→ Load
          │
@@ -170,6 +188,7 @@ Output ──┬──→ Load
 ```
 
 **✅ CORRECT** - Use explicit junction when signals DO connect:
+
 ```
 Signal A  ──┬──  (T-junction: A and B connect here)
             │
@@ -187,19 +206,20 @@ Signal A  ──┬──  (T-junction: A and B connect here)
 
 #### Junction vs Crossing Guidelines
 
-| Symbol | Meaning | When to Use |
-|--------|---------|-------------|
-| `┬` | T-junction (3-way) | One signal splits into two paths |
-| `├` `┤` `┴` | Side junctions | Signal branches from side |
-| `─` `│` | Straight lines | No branching, continuous path |
-| `┼` | **AVOID** | Ambiguous! Looks like connection but might not be |
-| `┌` `┐` `└` `┘` | Corners | Change direction 90° |
+| Symbol          | Meaning            | When to Use                                       |
+| --------------- | ------------------ | ------------------------------------------------- |
+| `┬`             | T-junction (3-way) | One signal splits into two paths                  |
+| `├` `┤` `┴`     | Side junctions     | Signal branches from side                         |
+| `─` `│`         | Straight lines     | No branching, continuous path                     |
+| `┼`             | **AVOID**          | Ambiguous! Looks like connection but might not be |
+| `┌` `┐` `└` `┘` | Corners            | Change direction 90°                              |
 
 #### Using Labels to Avoid Crossings
 
 **Best Practice**: When connections would require crossing wires, use arrow-to-label notation instead of drawing physical wires across the diagram.
 
 **✅ CORRECT** - Use labels to indicate connections:
+
 ```
 IC Pin ├2─→ Tap      ← Pin points to "Tap" label (no wire drawn)
 
@@ -209,12 +229,14 @@ Output ─┬─→ R1 ──┬─→ Tap ─→ R2 ─→ GND
 ```
 
 **❌ WRONG** - Drawing wire creates crossings:
+
 ```
 IC Pin ├2───┼────┼─→ Junction   ← Crosses other signals!
             │    │
 ```
 
 **Key points**:
+
 - Use `─→ Label` notation for pins that connect to distant points
 - The label name indicates the connection without drawing a wire
 - Common labels: `GND`, `Tap`, `VCC`, `Output`
@@ -224,10 +246,12 @@ IC Pin ├2───┼────┼─→ Junction   ← Crosses other signal
 #### Parallel Components (Shunt Elements)
 
 When showing components connected in parallel (between a signal and GND):
+
 - Draw them as vertical drops from the signal line
 - Make it visually obvious they're shunt elements, not series
 
 **Example - Output filter capacitor:**
+
 ```
 Output ──┬──→ Load
          │
@@ -237,6 +261,7 @@ Output ──┬──→ Load
 ```
 
 **Not this** (looks like series):
+
 ```
 Output ── C1 ── Load   ← Confusing! Looks like C1 blocks current
 ```
@@ -246,6 +271,7 @@ Output ── C1 ── Load   ← Confusing! Looks like C1 blocks current
 **Problem**: In monospace fonts, vertical lines can appear misaligned if labels have different character widths.
 
 **❌ WRONG** - Lines slide because labels have different widths:
+
 ```
             │
            GND    ← 3 characters
@@ -257,6 +283,7 @@ Output ── C1 ── Load   ← Confusing! Looks like C1 blocks current
 ```
 
 **✅ CORRECT** - Maintain consistent column spacing:
+
 ```
             │
            GND
@@ -267,6 +294,7 @@ Output ── C1 ── Load   ← Confusing! Looks like C1 blocks current
 ```
 
 **Best practices**:
+
 - Plan your column widths before drawing
 - Use consistent spacing after component labels
 - Align vertical bars (`│`) in the same character column throughout
@@ -284,6 +312,7 @@ Output ── C1 ── Load   ← Confusing! Looks like C1 blocks current
 **CRITICAL**: Always preview ASCII diagrams in monospace font before finalizing to catch label crossing issues and alignment problems.
 
 **Preview method using headless-browser**:
+
 ```bash
 cat > /tmp/preview.html << 'EOF'
 <html>
@@ -307,6 +336,7 @@ node ~/.claude/skills/headless-browser/scripts/headless-check.js --url file:///t
 ```
 
 This renders the diagram exactly as users will see it in monospace font, revealing:
+
 - Label crossings that aren't visible in plain text
 - Column alignment issues ("sliding" vertical bars)
 - Spacing problems
@@ -315,6 +345,7 @@ This renders the diagram exactly as users will see it in monospace font, reveali
 ## Integration with Main Documentation
 
 This documentation is part of a Docusaurus site. When referencing circuit diagrams:
+
 - Place diagrams in the appropriate section (overview.md, circuit-diagrams.md, etc.)
 - Cross-reference from other documents using relative links
 - Keep technical accuracy paramount
@@ -328,6 +359,7 @@ This documentation is part of a Docusaurus site. When referencing circuit diagra
 ### When to Update the Sidebar
 
 Update `sidebars.js` whenever you:
+
 - **Add a new page** to any documentation category
 - **Remove a page** from the documentation
 - **Rename a page** (update the path reference)
@@ -369,12 +401,14 @@ const sidebars = {
 ### Adding a New Page
 
 **Step 1:** Create the markdown file in the appropriate directory:
+
 ```bash
 # Example: Adding a new page to inbox
 touch docs/inbox/my-new-page.md
 ```
 
 **Step 2:** Update `sidebars.js` to include the new page:
+
 ```javascript
 inboxSidebar: [
   'inbox/index',
@@ -386,6 +420,7 @@ inboxSidebar: [
 ```
 
 **Step 3:** Verify the sidebar updates (Docusaurus hot-reloads automatically)
+
 - The new page should appear in the sidebar immediately
 - Click through to verify navigation works
 - Check that the page title displays correctly
@@ -398,13 +433,15 @@ inboxSidebar: [
    - Put reference materials last
 
 2. **Path Format**: Use relative paths without file extensions
+
    ```javascript
-   'inbox/my-page'      // ✅ Correct
-   'inbox/my-page.md'   // ❌ Wrong - no extension
-   '/inbox/my-page'     // ❌ Wrong - no leading slash
+   'inbox/my-page'; // ✅ Correct
+   'inbox/my-page.md'; // ❌ Wrong - no extension
+   '/inbox/my-page'; // ❌ Wrong - no leading slash
    ```
 
 3. **Consistent Naming**: Match the file path exactly
+
    ```
    docs/inbox/my-page.md  →  'inbox/my-page'
    docs/parts/ch224d.md   →  'parts/ch224d'
@@ -436,22 +473,26 @@ inboxSidebar: [
 ### Troubleshooting
 
 **Problem:** New page doesn't appear in sidebar
+
 - ✅ Check that the file path in `sidebars.js` matches the actual file location
 - ✅ Verify no file extension in the path
 - ✅ Restart the dev server if hot-reload fails: `npm start`
 
 **Problem:** Page shows "404 Not Found"
+
 - ✅ Verify the markdown file exists at the correct path
 - ✅ Check for typos in the sidebar path
 - ✅ Ensure the file has proper frontmatter (title, etc.)
 
 **Problem:** Sidebar order is wrong
+
 - ✅ Reorder entries in the `sidebars.js` array
 - ✅ Array order determines display order in the sidebar
 
 ## Circuit Design Workflow
 
 **For detailed instructions on creating circuit diagrams, see:**
+
 - **[Create Circuit SVG Files Guide](/doc/docs/knowledge/create-circuit-svg.md)** - Complete workflow for generating professional circuit diagrams using schemdraw
 
 ### Quick Reference
@@ -465,6 +506,7 @@ When creating new circuit diagrams:
 5. **Verify and Commit** - Test click-to-enlarge, commit both SVG and Python source
 
 **Configuration:**
+
 - Black foreground with transparent background
 - Background color: transparent (allows HTML container `oklch(86.9% 0.005 56.366)` to show through)
 - Font: Arial, 11pt

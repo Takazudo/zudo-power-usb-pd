@@ -46,9 +46,11 @@ console.log("test");
     expect(formatter1.settings.formatMultiLineJsx.indentSize).toBe(4);
 
     // Verify global settings are unchanged
-    expect(formatterSettings.formatMultiLineJsx.indentSize).toBe(originalSettings.formatMultiLineJsx.indentSize);
+    expect(formatterSettings.formatMultiLineJsx.indentSize).toBe(
+      originalSettings.formatMultiLineJsx.indentSize,
+    );
     expect(formatterSettings.formatHtmlBlocksInMdx.formatterConfig.tabWidth).toBe(
-      originalSettings.formatHtmlBlocksInMdx.formatterConfig.tabWidth
+      originalSettings.formatHtmlBlocksInMdx.formatterConfig.tabWidth,
     );
 
     // Create another formatter with 2-space content
@@ -59,9 +61,11 @@ console.log("test");
     expect(formatter2.settings.formatMultiLineJsx.indentSize).toBe(2);
 
     // Verify global settings are still unchanged
-    expect(formatterSettings.formatMultiLineJsx.indentSize).toBe(originalSettings.formatMultiLineJsx.indentSize);
+    expect(formatterSettings.formatMultiLineJsx.indentSize).toBe(
+      originalSettings.formatMultiLineJsx.indentSize,
+    );
     expect(formatterSettings.formatHtmlBlocksInMdx.formatterConfig.tabWidth).toBe(
-      originalSettings.formatHtmlBlocksInMdx.formatterConfig.tabWidth
+      originalSettings.formatHtmlBlocksInMdx.formatterConfig.tabWidth,
     );
 
     // Verify formatter1's settings weren't affected by formatter2
@@ -94,7 +98,7 @@ console.log("test");
 
     // Verify global settings remain untouched
     expect(formatterSettings.formatHtmlBlocksInMdx.formatterConfig.useTabs).toBe(
-      originalSettings.formatHtmlBlocksInMdx.formatterConfig.useTabs
+      originalSettings.formatHtmlBlocksInMdx.formatterConfig.useTabs,
     );
   });
 
@@ -111,12 +115,12 @@ console.log("test");
 
     // Settings should use defaults, not detected values
     expect(disabledFormatter.settings.formatMultiLineJsx.indentSize).toBe(
-      originalSettings.formatMultiLineJsx.indentSize
+      originalSettings.formatMultiLineJsx.indentSize,
     );
 
     // Global settings should remain unchanged (except autoDetectIndent.enabled which we changed)
     expect(formatterSettings.formatMultiLineJsx.indentSize).toBe(
-      originalSettings.formatMultiLineJsx.indentSize
+      originalSettings.formatMultiLineJsx.indentSize,
     );
 
     // Restore original auto-detect state
@@ -139,7 +143,7 @@ console.log("test");
 
     // Verify global settings are unaffected
     expect(formatterSettings.formatHtmlBlocksInMdx.formatterConfig.tabWidth).toBe(
-      originalSettings.formatHtmlBlocksInMdx.formatterConfig.tabWidth
+      originalSettings.formatHtmlBlocksInMdx.formatterConfig.tabWidth,
     );
     expect(formatterSettings.formatHtmlBlocksInMdx.formatterConfig.newProperty).toBeUndefined();
   });

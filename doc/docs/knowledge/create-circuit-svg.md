@@ -28,6 +28,7 @@ Use the `/jlcpcb` skill to search for and verify component availability:
 ```
 
 Document:
+
 - Part numbers
 - Specifications (voltage ratings, current ratings, package types)
 - JLCPCB stock codes
@@ -90,6 +91,7 @@ Use the `/schemdraw-circuit-generator` skill to create professional circuit diag
 Provide the connection list from Step 2 as the specification.
 
 **Configuration:**
+
 - **Theme**: Black foreground with transparent background (default)
 - **Font**: Arial, 11pt
 - **Color**: Black lines and text
@@ -159,7 +161,7 @@ Import and use the SVG in MDX files using the `CircuitSvg` component:
 import CircuitSvg from '@site/src/components/CircuitSvg';
 import BuckU2Diagram from '@site/static/circuits/buck-u2-diagram.svg';
 
-<CircuitSvg src={BuckU2Diagram} alt="LM2596S Buck Converter U2" />
+<CircuitSvg src={BuckU2Diagram} alt="LM2596S Buck Converter U2" />;
 ```
 
 ### Step 6: Hide ASCII Art (Optional)
@@ -168,10 +170,12 @@ Keep the ASCII art draft but collapse it using HTML `<details>` element:
 
 ```html
 <details>
-<summary>View ASCII art version</summary>
-
+  <summary>View ASCII art version</summary>
+</details>
 ```
+
 [ASCII diagram here]
+
 ```
 
 </details>
@@ -294,6 +298,7 @@ The `CircuitSvg` component provides click-to-enlarge functionality:
 ```
 
 **Features:**
+
 - Click to open fullscreen (90vw × 90vh)
 - Background color: `oklch(86.9% 0.005 56.366)`
 - Padding: 20px (both thumbnail and dialog)
@@ -305,6 +310,7 @@ The `CircuitSvg` component provides click-to-enlarge functionality:
 ### Problem: Import errors in Python
 
 **Solution**: Install schemdraw:
+
 ```bash
 pip install schemdraw
 ```

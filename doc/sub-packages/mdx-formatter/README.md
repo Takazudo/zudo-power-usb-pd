@@ -45,7 +45,11 @@ node ~/.claude/scripts/mdx-formatter/src/cli.js --write README.md
 ### API Usage in Scripts
 
 ```javascript
-import { format, formatFile, checkFile } from '/Users/takazudo/.claude/scripts/mdx-formatter/src/index.js';
+import {
+  format,
+  formatFile,
+  checkFile,
+} from '/Users/takazudo/.claude/scripts/mdx-formatter/src/index.js';
 
 // Format a string
 const formatted = await format('# Hello\nWorld');

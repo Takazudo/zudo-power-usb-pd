@@ -159,7 +159,7 @@ export class HtmlBlockFormatter {
       if (html.match(/^<details[\s>]/i)) {
         return html;
       }
-      
+
       // Preprocess: Remove newlines within dd and dt tags to keep them on single lines
       // This is important for Japanese text readability in definition lists
       const preprocessed = html

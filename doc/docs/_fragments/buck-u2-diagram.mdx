@@ -1,13 +1,10 @@
 import CircuitSvg from '@site/src/components/CircuitSvg';
 import BuckU2Svg from '@site/static/circuits/buck-u2-diagram.svg';
 
-<CircuitSvg
-  src={BuckU2Svg}
-  alt="LM2596S Buck Converter U2"
-  padding="10px"
-/>
+<CircuitSvg src={BuckU2Svg} alt="LM2596S Buck Converter U2" padding="10px" />
 
 **Key Points:**
+
 - **Two-stage design**: Buck converter (U2) reduces voltage with high efficiency, then linear regulator (LM7812) provides low-noise final output
 - **Capacitor order**: C5/C6 (input filter) → [U2 + L1] → C3 (buck output filter) → [LM7812] → output capacitors
 - **C3 role**: Filters switching ripple from buck converter before feeding the linear regulator
