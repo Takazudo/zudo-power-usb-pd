@@ -52,7 +52,7 @@ USB-C 15V ──┬─→ +13.5V (DC-DC) ──→ +12V (LDO) ──→ +12V OUT
   - +15V → +13.5V (for +12V rail)
   - +15V → +7.5V (for +5V rail)
   - -15V → -13.5V (for -12V rail)
-- **ICL7660**: Voltage inverter IC (+15V → -15V)
+- **LM2586SX-ADJ**: Inverted SEPIC converter (+15V → -15V, 3A capable)
 - **Efficiency**: Approx. 85-90%
 
 #### Stage 3: Linear Regulator

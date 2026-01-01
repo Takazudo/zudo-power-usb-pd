@@ -2,6 +2,85 @@
 
 This file provides guidance to Claude Code when working with documentation in this directory.
 
+## MDX Syntax Rules
+
+**CRITICAL**: This documentation uses MDX (Markdown + JSX), which requires special handling of certain characters.
+
+### Common MDX Syntax Errors to Avoid
+
+#### 1. Less-than/Greater-than Characters (`<` and `>`)
+
+**❌ WRONG** - Direct use of `<` or `>` in text:
+```markdown
+Float or pull low (<0.8V) = Enable
+Input voltage range: 4V - 40V (>5V recommended)
+```
+
+**✅ CORRECT** - Use HTML entities:
+```markdown
+Float or pull low (&lt;0.8V) = Enable
+Input voltage range: 4V - 40V (&gt;5V recommended)
+```
+
+**Why**: MDX interprets `<` as the start of a JSX tag. When followed by a number or invalid character, it causes compilation errors like:
+```
+Error: Unexpected character `0` (U+0030) before name, expected a character that can start a name
+```
+
+**Alternative solutions**:
+- Use HTML entities: `&lt;` for `<`, `&gt;` for `>`
+- Use code blocks: `` `<0.8V` ``
+- Rephrase: "below 0.8V" instead of "<0.8V"
+
+#### 2. Curly Braces (`{` and `}`)
+
+**❌ WRONG** - Direct use in text:
+```markdown
+Use the formula {VIN - VOUT} to calculate dropout
+```
+
+**✅ CORRECT** - Escape or use code:
+```markdown
+Use the formula `{VIN - VOUT}` to calculate dropout
+```
+
+**Why**: MDX interprets `{...}` as JavaScript expressions.
+
+#### 3. Common Characters That Need Escaping
+
+| Character | HTML Entity | When to Escape |
+|-----------|-------------|----------------|
+| `<` | `&lt;` | Always in regular text (except in code blocks) |
+| `>` | `&gt;` | Always in regular text (except in code blocks) |
+| `{` | `&#123;` or backticks | When not used for JSX/MDX syntax |
+| `}` | `&#125;` or backticks | When not used for JSX/MDX syntax |
+
+#### 4. Safe Zones (No Escaping Needed)
+
+These locations don't require escaping:
+- Inside code blocks (triple backticks)
+- Inside inline code (single backticks)
+- Inside HTML comments `<!-- ... -->`
+
+**Example**:
+```markdown
+✅ This is safe: `<0.8V`
+✅ This is safe in code blocks:
+```
+VIN < 5V will cause shutdown
+< and > are safe here
+```
+❌ This will error: Voltage <0.8V is too low
+✅ This is correct: Voltage &lt;0.8V is too low
+```
+
+### Quick Checklist Before Saving MDX Files
+
+- [ ] Search for `<` in regular text (not in code blocks) → Replace with `&lt;`
+- [ ] Search for `>` in regular text (not in code blocks) → Replace with `&gt;`
+- [ ] Search for `{` `}` in regular text → Wrap in backticks or use entities
+- [ ] Test compilation by checking Docusaurus dev server for errors
+
 ## Circuit Diagram Writing Rules
 
 When creating or updating circuit diagrams in the documentation:

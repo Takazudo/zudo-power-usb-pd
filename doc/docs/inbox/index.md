@@ -26,7 +26,7 @@ Documentation for USB-PD powered modular synthesizer power supply.
 ### 4-Stage Design
 
 1. **USB-PD Power Supply** (CH224D)
-2. **DC-DC Converters** (LM2596S × 3 + ICL7660)
+2. **DC-DC Converters** (LM2596S × 3 + LM2586 inverted SEPIC)
 3. **Linear Regulators** (LM7812/7805/7912)
 4. **Protection Circuit** (PTC + Fuse + TVS)
 

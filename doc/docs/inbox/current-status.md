@@ -30,7 +30,7 @@ USB-C 15V ──┬─→ +13.5V (DC-DC) ──→ +12V (LDO) ──→ +12V OUT
 ```
 
 - ✅ Stage 1: USB-PD Power Supply (CH224D)
-- ✅ Stage 2: DC-DC Converters (LM2596S × 3 + ICL7660)
+- ✅ Stage 2: DC-DC Converters (LM2596S × 3 + LM2586 inverted SEPIC)
 - ✅ Stage 3: Linear Regulators (LM7812/7805/7912)
 - ✅ Stage 4: Protection Circuit (PTC + Fuse + TVS)
 
@@ -40,7 +40,7 @@ USB-C 15V ──┬─→ +13.5V (DC-DC) ──→ +12V (LDO) ──→ +12V OUT
 
 - ✅ USB-PD Controller: CH224D (C3975094)
 - ✅ DC-DC Converter: LM2596S-ADJ × 3 (C347423)
-- ✅ Voltage Inverter IC: ICL7660M (C356724)
+- ✅ Voltage Inverter: LM2586SX-ADJ/NOPB (C181324)
 - ✅ Linear Regulators: L7812CV-DG (C2914) / L7805ABD2T-TR (C86206) / CJ7912 (C94173)
 - ✅ Inductors: 100µH 4.5A × 3 (C19268674)
 - ✅ TVS Diodes: SMAJ15A, PRTR5V0U2X

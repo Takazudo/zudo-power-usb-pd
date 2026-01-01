@@ -47,17 +47,17 @@ import LM2596S from '@site/static/footprints-svg/TO-263-5_L10.2-W8.9-P1.70-BR.sv
 **LCSC:** [C347423](https://jlcpcb.com/partdetail/C347423)
 **Function:** DC-DC conversion (+13.5V, +7.5V, -13.5V outputs)
 
-### U5 - ICL7660M Voltage Inverter
+### U5 - LM2586SX-ADJ Inverted SEPIC Converter
 
-import ICL7660 from '@site/static/footprints-svg/SOP-8_L4.9-W3.9-P1.27-LS6.0-BL.svg';
+import LM2586 from '@site/static/footprints-svg/TO-263-7_L10.2-W8.6-P1.27-LS14.4-TL.svg';
 
-<FootprintSvg src={ICL7660} alt="ICL7660M SOP-8 Package" minWidth="250px" minHeight="200px" />
+<FootprintSvg src={LM2586} alt="LM2586SX-ADJ TO-263-7 Package" minWidth="300px" minHeight="200px" />
 
 **Designator:** U5
-**Component:** [ICL7660M/TR](../components/icl7660m) - Voltage Inverter IC
-**Package:** SOP-8 (4.9mm × 3.9mm, 1.27mm pitch)
-**LCSC:** [C356724](https://jlcpcb.com/partdetail/C356724)
-**Function:** Inverts +15V to -15V for -12V rail generation
+**Component:** [LM2586SX-ADJ/NOPB](../components/lm2586sx-adj) - Inverted SEPIC DC-DC Converter
+**Package:** TO-263-7 (DDPAK, 10.2mm × 8.6mm)
+**LCSC:** [C181324](https://jlcpcb.com/partdetail/C181324)
+**Function:** Inverts +15V to -15V for -12V rail generation (3A capable)
 
 ### L1, L2, L3 - 100µH Power Inductor
 
@@ -125,10 +125,10 @@ import C0603 from '@site/static/footprints-svg/C0603.svg';
 
 **Package:** 0603 (1.6mm × 0.8mm)
 **Used for:**
-- Ceramic capacitors (470nF for CH224D, 10µF for ICL7660)
+- Ceramic capacitors (470nF for CH224D, 47µF for LM2586 coupling cap)
 - High-frequency decoupling throughout circuit
-**Typical values:** 10µF, 470nF, 100nF
-**Applications:** IC power supply decoupling, bypass capacitors
+**Typical values:** 10µF, 470nF, 100nF, 47µF
+**Applications:** IC power supply decoupling, bypass capacitors, SEPIC coupling
 
 #### 0805 Ceramic Capacitor
 

@@ -47,7 +47,7 @@ Complete parts configuration using JLCPCB SMT service.
 | **U2** | **[C347423](https://jlcpcb.com/partdetail/C347423)** | **[LM2596S-ADJ(UMW)](./lm2596s-adj)** | Adjustable 3A Buck | TO-263-5 | **12075** | **$0.266** | +15V→+13.5V | [D2](/docs/inbox/circuit-diagrams#diagram2-usb-pd-15v--135v-buck-converter-lm2596s-adj-1) |
 | **U3** | **[C347423](https://jlcpcb.com/partdetail/C347423)** | **[LM2596S-ADJ(UMW)](./lm2596s-adj)** | Adjustable 3A Buck | TO-263-5 | **12075** | **$0.266** | +15V→+7.5V | [D3](/docs/inbox/circuit-diagrams#diagram3-15v--75v-buck-converter-lm2596s-adj-2-u3) |
 | **U4** | **[C347423](https://jlcpcb.com/partdetail/C347423)** | **[LM2596S-ADJ(UMW)](./lm2596s-adj)** | Adjustable 3A Buck | TO-263-5 | **12075** | **$0.266** | -15V→-13.5V | [D5](/docs/inbox/circuit-diagrams#diagram5--15v---135v-buck-converter-lm2596s-adj-3-u4) |
-| **U5** | **[C356724](https://jlcpcb.com/partdetail/C356724)** | **[ICL7660M/TR](./icl7660m)** | Voltage Inverter IC | SOP-8 | **32192** | **$0.078** | -15V Generation | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---15v-voltage-inverter-icl7660-u5) |
+| **U5** | **[C181324](https://jlcpcb.com/partdetail/C181324)** | **[LM2586SX-ADJ/NOPB](./lm2586sx-adj)** | Inverted SEPIC 3A | TO-263-7 | **89** ⚠️ | **TBD** | +15V→-15V | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---15v-voltage-inverter-lm2586-inverted-sepic-u5) |
 
 #### Inductors
 
@@ -95,14 +95,41 @@ Complete parts configuration using JLCPCB SMT service.
 | **C8** | **[C49678](https://jlcpcb.com/partdetail/C49678)** | **100nF 50V X7R** | 0805 | **23,309,869** | **$0.0021** | U3 Input Decoupling | [D3](/docs/inbox/circuit-diagrams#diagram3-15v--75v-buck-converter-lm2596s-adj-2-u3) |
 | **C10** | **[C49678](https://jlcpcb.com/partdetail/C49678)** | **100nF 50V X7R** | 0805 | **23,309,869** | **$0.0021** | U4 Input Decoupling | [D5](/docs/inbox/circuit-diagrams#diagram5--15v---135v-buck-converter-lm2596s-adj-3-u4) |
 
-#### ICL7660 Capacitors
+#### LM2586 Inverted SEPIC Components
+
+**Inductors:**
 
 | Symbol | Part Number | Specification | Package | Stock | Price | Application | Diagram |
 |------|----------|------|------------|--------|------|------|---------|
-| **C12** | **[C15850](https://jlcpcb.com/partdetail/C15850)** | **10µF 25V X5R** | 0805 | **6000** | **$0.0101** | U5 Flying Cap | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---15v-voltage-inverter-icl7660-u5) |
-| **C13** | **[C15850](https://jlcpcb.com/partdetail/C15850)** | **10µF 25V X5R** | 0805 | **6000** | **$0.0101** | U5 Output Filter | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---15v-voltage-inverter-icl7660-u5) |
+| **L4** | **TBD** | **47µH 3A (Input)** | SMD | **TBD** | **TBD** | U5 SEPIC L1 | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---15v-voltage-inverter-lm2586-inverted-sepic-u5) |
+| **L5** | **TBD** | **47µH 3A (Output)** | SMD | **TBD** | **TBD** | U5 SEPIC L2 | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---15v-voltage-inverter-lm2586-inverted-sepic-u5) |
 
-**Stage 2 Subtotal: $2.09**
+:::note Coupled Inductor Option
+L4 and L5 can be replaced with a single 47µH coupled inductor for better efficiency and smaller footprint.
+:::
+
+**Capacitors:**
+
+| Symbol | Part Number | Specification | Package | Stock | Price | Application | Diagram |
+|------|----------|------|------------|--------|------|------|---------|
+| **C12** | **TBD** | **47µF 25V (Coupling)** | 0805/1206 | **TBD** | **TBD** | U5 SEPIC C1 | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---15v-voltage-inverter-lm2586-inverted-sepic-u5) |
+| **C13** | **[C2907](https://jlcpcb.com/partdetail/C2907)** | **100µF 25V (Input)** | D6.3xL7.7mm | **Rich** | **$0.019** | U5 Input Filter | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---15v-voltage-inverter-lm2586-inverted-sepic-u5) |
+| **C14** | **[C2907](https://jlcpcb.com/partdetail/C2907)** | **100µF 25V (Output)** | D6.3xL7.7mm | **Rich** | **$0.019** | U5 Output Filter | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---15v-voltage-inverter-lm2586-inverted-sepic-u5) |
+
+**Diode:**
+
+| Symbol | Part Number | Specification | Package | Stock | Price | Application | Diagram |
+|------|----------|------|------------|--------|------|------|---------|
+| **D4** | **[C8678](https://jlcpcb.com/partdetail/C8678)** | **SS34 (3A Schottky)** | SMA | **1,859,655** | **$0.012** | U5 Output Rectifier | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---15v-voltage-inverter-lm2586-inverted-sepic-u5) |
+
+**Feedback Resistors:**
+
+| Symbol | Part Number | Value | Package | Price | Application | Diagram |
+|------|----------|-----|------------|------|------|---------|
+| **R7** | **[C25804](https://jlcpcb.com/partdetail/C25804)** | **10kΩ ±1%** | 0603 | **$0.0005** | U5 FB Upper | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---15v-voltage-inverter-lm2586-inverted-sepic-u5) |
+| **R8** | **TBD** | **920Ω ±1%** | 0603 | **TBD** | U5 FB Lower | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---15v-voltage-inverter-lm2586-inverted-sepic-u5) |
+
+**Stage 2 Subtotal: TBD** (pending inductor/capacitor selection)
 
 ### Stage 3: Linear Regulators (LM7812/7805/7912)
 

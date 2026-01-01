@@ -36,7 +36,7 @@ USB-C        DC-DC        LDO          Output
 |---|------|-----------|--------|------|-----|
 | **USB-PD** | CH224D | C3975094 | 2,291 | PD Negotiation (15V) | 1 |
 | **DC-DC** | LM2596S-ADJ | C347423 | 12,075 | Buck Converter | 3 |
-| **Inverter** | ICL7660M/TR | C356724 | 32,192 | +15V → -15V | 1 |
+| **Inverter** | LM2586SX-ADJ/NOPB | C181324 | 89 | +15V → -15V (3A) | 1 |
 | **+12V LDO** | L7812CV-DG | C2914 | 158,795 | +13.5V → +12V | 1 |
 | **+5V LDO** | L7805ABD2T-TR | C86206 | 272,379 | +7.5V → +5V | 1 |
 | **-12V LDO** | CJ7912 | C94173 | 3,386 | -13.5V → -12V | 1 |
@@ -96,7 +96,7 @@ USB-C        DC-DC        LDO          Output
 | Basic Parts Resistors/Capacitors | **1,000,000+** | ✅ Very Stable |
 | CH224D (USB-PD) | **2,291** | ✅ Stable |
 | LM2596S (DC-DC) | **12,075** | ✅ Stable |
-| ICL7660 (Inverter IC) | **32,192** | ✅ Stable |
+| LM2586SX-ADJ (Inverter) | **89** | ⚠️ Limited Stock |
 | L7812/L7805/CJ7912 (LDO) | **3,386~272,379** | ✅ Very Stable |
 | Inductor (100µH) | **2,763** | ✅ Stable |
 | SS34 (Diode) | **1,859,655** | ✅ Very Stable |
@@ -192,7 +192,7 @@ USB-C        DC-DC        LDO          Output
 
 - CH224D: WCH official website (15V support confirmed)
 - LM2596: Texas Instruments
-- ICL7660: Renesas (formerly Intersil)
+- LM2586: Texas Instruments
 - L7812/L7805: STMicroelectronics
 - CJ7912: CJ (Changjiang Micro-Electronics)
 
@@ -211,13 +211,14 @@ USB-C        DC-DC        LDO          Output
 - LDO only: Low noise (\<1mVp-p) but poor efficiency (50-60%), high heat
 - **2-stage**: DC-DC for efficiency + LDO for noise reduction = 75%+ efficiency with \<1mVp-p ripple ✨
 
-### Q: Why use ICL7660 inverter only for -12V?
+### Q: Why use LM2586 inverting converter for -12V?
 
-**A**: Balance of cost, simplicity, and efficiency
+**A**: High current requirement demands switching regulator
 
-- Alternative 1: Transformer isolation → High cost, large size
-- Alternative 2: Buck-boost DC-DC → Complex, high noise
-- **ICL7660**: $0.08, simple, 1A capable and sufficient ✅
+- **Current requirement**: -12V rail needs 800mA (ICL7660 charge pumps only provide ~100mA)
+- **LM2586 advantages**: 3A capable, inverted SEPIC topology, handles +15V input directly
+- **Trade-off**: More complex (requires inductors, diode, feedback network) vs charge pump simplicity
+- Alternative charge pumps insufficient: ICL7660 (100mA), TPS63700 (360mA but 5.5V max input) ❌
 
 ### Q: Is 2-stage protection with PTC and fuse really necessary?
 
