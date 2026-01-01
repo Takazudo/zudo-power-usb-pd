@@ -106,8 +106,8 @@ with schemdraw.Drawing(
     t1_top = d.here
 
     # T1 flyback transformer (1:1 ratio, 47µH:47µH)
-    # Primary (p1, p2) on left, Secondary (s1, s2) on right
-    t1 = elm.Transformer(t1=3, t2=3).down().label('T1\n1:1', loc='right', fontsize=11, ofst=(0.3, 0))
+    # Rotate 90° so primary is on top, secondary on bottom
+    t1 = elm.Transformer(t1=3, t2=3).theta(-90).label('T1\n1:1', loc='right', fontsize=11, ofst=(0.5, 0))
 
     # Connect from transformer p2 down to SW pin
     elm.Line().at(t1.p2).to(ic.SW)
