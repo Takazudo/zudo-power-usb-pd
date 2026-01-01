@@ -8,16 +8,16 @@ import LdoU8Svg from '@site/static/circuits/ldo-u8-diagram.svg';
 />
 
 **Capacitor Placement (Critical for PCB layout):**
-- **C16/C19 (ceramic)**: Place RIGHT NEXT to IC pins (minimize trace length for high-freq filtering)
+- **C28/C19 (ceramic)**: Place RIGHT NEXT to IC pins (minimize trace length for high-freq filtering)
 - **C24/C25 (electrolytic)**: Can be placed farther from IC (bulk storage, less sensitive to distance)
 
 **Important: Negative Voltage Component Polarities**
 - **Electrolytic capacitors REVERSED**: C24 and C25 have negative terminal to negative voltage, positive terminal to GND
-- **LED polarity REVERSED**: LED4 anode to GND (0V, highest potential), cathode through R9 to -12V (lowest potential)
+- **LED polarity REVERSED**: LED4 anode to GND (0V, highest potential), cathode through R16 to -12V (lowest potential)
 
 **Key Points:**
 - **Two-stage design**: Buck converter (U4) provides efficient voltage reduction, linear regulator (U8) provides low-noise final output
-- **Input capacitor order**: C24 (bulk, farther) and C16 (ceramic, close to IC)
+- **Input capacitor order**: C24 (bulk, farther) and C28 (ceramic, close to IC)
 - **Output capacitor order**: C19 (ceramic, close to IC) and C25 (bulk, farther)
 - **LED indicator**: Red LED (LED4) with 1kΩ current-limiting resistor shows -12V rail is active
 - **LED current**: I = (0V - 2V - (-12V)) / 1kΩ = 10mA (current flows from GND through LED to -12V)
@@ -43,10 +43,10 @@ Regulator IC:
                 GND      LM7912
                         (TO-252-3)
 
-Input Capacitors (C16 closest to IC):
+Input Capacitors (C28 closest to IC):
 -13.5V ──┬────────────────┬─── To IC Pin 1
          │                │
-        C24              C16
+        C24              C28
        470µF            470nF
     electrolytic       ceramic
      (farther)        (CLOSE!)
@@ -68,7 +68,7 @@ From IC Pin 2 ──┬────────────────┬──
                GND              GND
 
 Status LED (reversed polarity for negative rail):
-GND ──── LED4 Anode (Red) ──── LED4 Cathode ──── R9 (1kΩ) ──── -12V
+GND ──── LED4 Anode (Red) ──── LED4 Cathode ──── R16 (1kΩ) ──── -12V
 
 Protection Circuit:
 -12V IN ─── PTC3 ───┬─→ -12V OUT
