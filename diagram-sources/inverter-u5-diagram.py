@@ -48,15 +48,18 @@ with schemdraw.Drawing(
     d.push()
 
     # LM2586SX-ADJ IC (TO-263-7 package)
+    # U5 - Flyback converter
     ic = (elm.Ic(
         pins=[
-            elm.IcPin(name='VIN', pin='7', side='top', slot='1/4'),
-            elm.IcPin(name='GND', pin='4', side='bot', slot='2/5'),
-            elm.IcPin(name='COMP', pin='2', side='left', slot='1/4'),
-            elm.IcPin(name='Freq.Sync.', pin='6', side='left', slot='2/4'),
-            elm.IcPin(name='FB', pin='3', side='left', slot='3/4'),
-            elm.IcPin(name='SW', pin='5', side='right', slot='2/4'),
-            elm.IcPin(name='Freq.Adj', pin='1', side='right', slot='3/4'),
+            # Left side (top to bottom)
+            elm.IcPin(name='VIN', pin='7', side='left', slot='1/4'),
+            elm.IcPin(name='COMP', pin='2', side='left', slot='2/4'),
+            elm.IcPin(name='Freq.Sync.', pin='6', side='left', slot='3/4'),
+            elm.IcPin(name='GND', pin='4', side='left', slot='4/4'),
+            # Right side (top to bottom)
+            elm.IcPin(name='SW', pin='5', side='right', slot='1/4'),
+            elm.IcPin(name='Freq.Adj', pin='1', side='right', slot='2/4'),
+            elm.IcPin(name='FB', pin='3', side='right', slot='3/4'),
         ],
         edgepadW=2.0,
         edgepadH=1.2,
@@ -64,14 +67,16 @@ with schemdraw.Drawing(
         leadlen=1.0,
         pinlblsize=12
     ).at((vin_to_ic[0] + 2.0, vin_to_ic[1] - 3.5))
+     .label('U5', loc='top', fontsize=13, ofst=(0, 0.3))
      .label('LM2586SX-ADJ', loc='center', fontsize=13)
     )
 
-    # VIN connection from +15V rail to IC
-    elm.Line().at(vin_to_ic).down(ic.VIN[1] - vin_to_ic[1]).to(ic.VIN)
+    # VIN connection from +15V rail to IC (VIN now on left side)
+    elm.Line().at(vin_to_ic).to(ic.VIN)
 
-    # GND connection
-    elm.Line().at(ic.GND).down(0.8)
+    # GND connection (GND now on left side bottom)
+    elm.Line().at(ic.GND).left(0.5)
+    elm.Line().down(0.8)
     elm.Ground()
 
     # Compensation network (COMP pin): R9 + C15 to GND
@@ -165,10 +170,11 @@ with schemdraw.Drawing(
     fb_middle = d.here
     d.push()
 
-    # Connect FB tap to IC FB pin
-    elm.Line().left(fb_middle[0] - ic.FB[0] - 0.5)
+    # Connect FB tap to IC FB pin (FB now on right side)
+    elm.Line().left(fb_middle[0] - ic.FB[0] + 0.5)
     elm.Dot()
-    elm.Line().up(fb_middle[1] - ic.FB[1]).to(ic.FB)
+    elm.Line().up(fb_middle[1] - ic.FB[1])
+    elm.Line().to(ic.FB)
 
     # R8 to GND
     d.pop()
