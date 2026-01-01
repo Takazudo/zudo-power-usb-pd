@@ -98,16 +98,18 @@ with schemdraw.Drawing(
 
     # T1 flyback transformer: +15V -> T1 (primary) -> SW
     # Vertical line up from first tap point
-    elm.Line().at(vin_tap1).up(3.0)
+    elm.Line().at(vin_tap1).up(4.0)
     point_to_switch = d.here
 
     # Horizontal line across the top to above SW pin
     elm.Line().right(ic.SW[0] - point_to_switch[0])
+    elm.Line().down(1)
     t1_top = d.here
 
     # T1 flyback transformer (1:1 ratio, 47µH:47µH)
-    # Rotate 90° so primary is on top, secondary on bottom
-    t1 = elm.Transformer(t1=3, t2=3).theta(-90).label('T1\n1:1', loc='right', fontsize=11, ofst=(0.5, 0))
+    # When using .down(), transformer extends downward from current position
+    # Anchor to p1 to start the primary winding at t1_top
+    t1 = elm.Transformer(t1=3, t2=3).right().anchor('p1').label('T1\n1:1', loc='left', fontsize=11, ofst=(-0.5, 0))
 
     # Connect from transformer p2 down to SW pin
     elm.Line().at(t1.p2).to(ic.SW)
