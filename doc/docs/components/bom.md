@@ -43,12 +43,12 @@ Complete parts configuration using JLCPCB SMT service.
 
 #### Main ICs
 
-| Symbol | Part Number                                          | Manufacturer Part Number                | Description        | Package  | Stock     | Price      | Application | Diagram                                                                                         |
-| ------ | ---------------------------------------------------- | --------------------------------------- | ------------------ | -------- | --------- | ---------- | ----------- | ----------------------------------------------------------------------------------------------- |
-| **U2** | **[C347423](https://jlcpcb.com/partdetail/C347423)** | **[LM2596S-ADJ(UMW)](./lm2596s-adj)**   | Adjustable 3A Buck | TO-263-5 | **12075** | **$0.266** | +15V→+13.5V | [D2](/docs/inbox/circuit-diagrams#diagram2-usb-pd-15v--135v-buck-converter-lm2596s-adj-1)       |
-| **U3** | **[C347423](https://jlcpcb.com/partdetail/C347423)** | **[LM2596S-ADJ(UMW)](./lm2596s-adj)**   | Adjustable 3A Buck | TO-263-5 | **12075** | **$0.266** | +15V→+7.5V  | [D3](/docs/inbox/circuit-diagrams#diagram3-15v--75v-buck-converter-lm2596s-adj-2-u3)            |
-| **U4** | **[C347423](https://jlcpcb.com/partdetail/C347423)** | **[LM2596S-ADJ(UMW)](./lm2596s-adj)**   | Adjustable 3A Buck | TO-263-5 | **12075** | **$0.266** | -15V→-13.5V | [D5](/docs/inbox/circuit-diagrams#diagram5--15v---135v-buck-converter-lm2596s-adj-3-u4)         |
-| **U5** | **[C181324](https://jlcpcb.com/partdetail/C181324)** | **[LM2586SX-ADJ/NOPB](./lm2586sx-adj)** | Inverted SEPIC 3A  | TO-263-7 | **89** ⚠️ | **TBD**    | +15V→-15V   | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---15v-voltage-inverter-lm2586-inverted-sepic-u5) |
+| Symbol | Part Number                                          | Manufacturer Part Number                | Description          | Package  | Stock     | Price      | Application | Diagram                                                                                         |
+| ------ | ---------------------------------------------------- | --------------------------------------- | -------------------- | -------- | --------- | ---------- | ----------- | ----------------------------------------------------------------------------------------------- |
+| **U2** | **[C347423](https://jlcpcb.com/partdetail/C347423)** | **[LM2596S-ADJ(UMW)](./lm2596s-adj)**   | Adjustable 3A Buck   | TO-263-5 | **12075** | **$0.266** | +15V→+13.5V | [D2](/docs/inbox/circuit-diagrams#diagram2-usb-pd-15v--135v-buck-converter-lm2596s-adj-1)       |
+| **U3** | **[C347423](https://jlcpcb.com/partdetail/C347423)** | **[LM2596S-ADJ(UMW)](./lm2596s-adj)**   | Adjustable 3A Buck   | TO-263-5 | **12075** | **$0.266** | +15V→+7.5V  | [D3](/docs/inbox/circuit-diagrams#diagram3-15v--75v-buck-converter-lm2596s-adj-2-u3)            |
+| **U4** | **[C347423](https://jlcpcb.com/partdetail/C347423)** | **[LM2596S-ADJ(UMW)](./lm2596s-adj)**   | Adjustable 3A Buck   | TO-263-5 | **12075** | **$0.266** | -15V→-13.5V | [D5](/docs/inbox/circuit-diagrams#diagram5--15v---135v-buck-converter-lm2596s-adj-3-u4)         |
+| **U5** | **[C181324](https://jlcpcb.com/partdetail/C181324)** | **[LM2586SX-ADJ/NOPB](./lm2586sx-adj)** | Flyback Converter 3A | TO-263-7 | **89** ⚠️ | **TBD**    | +15V→-15V   | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---15v-voltage-inverter-lm2586-inverted-sepic-u5) |
 
 #### Inductors
 
@@ -96,26 +96,26 @@ Complete parts configuration using JLCPCB SMT service.
 | **C8**  | **[C49678](https://jlcpcb.com/partdetail/C49678)** | **100nF 50V X7R** | 0805    | **23,309,869** | **$0.0021** | U3 Input Decoupling | [D3](/docs/inbox/circuit-diagrams#diagram3-15v--75v-buck-converter-lm2596s-adj-2-u3)      |
 | **C10** | **[C49678](https://jlcpcb.com/partdetail/C49678)** | **100nF 50V X7R** | 0805    | **23,309,869** | **$0.0021** | U4 Input Decoupling | [D5](/docs/inbox/circuit-diagrams#diagram5--15v---135v-buck-converter-lm2596s-adj-3-u4)   |
 
-#### LM2586 Inverted SEPIC Components
+#### LM2586 Flyback Converter Components
 
-**Inductors:**
+**Transformer:**
 
-| Symbol | Part Number | Specification        | Package | Stock   | Price   | Application | Diagram                                                                                         |
-| ------ | ----------- | -------------------- | ------- | ------- | ------- | ----------- | ----------------------------------------------------------------------------------------------- |
-| **L4** | **TBD**     | **47µH 3A (Input)**  | SMD     | **TBD** | **TBD** | U5 SEPIC L1 | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---15v-voltage-inverter-lm2586-inverted-sepic-u5) |
-| **L5** | **TBD**     | **47µH 3A (Output)** | SMD     | **TBD** | **TBD** | U5 SEPIC L2 | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---15v-voltage-inverter-lm2586-inverted-sepic-u5) |
+| Symbol | Part Number                                              | Specification                             | Package | Stock    | Price   | Application            | Diagram                                                                                         |
+| ------ | -------------------------------------------------------- | ----------------------------------------- | ------- | -------- | ------- | ---------------------- | ----------------------------------------------------------------------------------------------- |
+| **T1** | **[C40657138](https://jlcpcb.com/partdetail/C40657138)** | **MSD1514-473MED (47µH, 7.5A, Shielded)** | SMD-4P  | **0** ⚠️ | **TBD** | U5 Flyback Transformer | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---15v-voltage-inverter-lm2586-inverted-sepic-u5) |
 
-:::note Coupled Inductor Option
-L4 and L5 can be replaced with a single 47µH coupled inductor for better efficiency and smaller footprint.
+:::warning Transformer Required
+T1 must be a coupled transformer (magnetically coupled primary and secondary windings). Separate inductors will NOT work in flyback topology.
 :::
 
 **Capacitors:**
 
-| Symbol  | Part Number                                      | Specification           | Package     | Stock    | Price      | Application      | Diagram                                                                                         |
-| ------- | ------------------------------------------------ | ----------------------- | ----------- | -------- | ---------- | ---------------- | ----------------------------------------------------------------------------------------------- |
-| **C12** | **TBD**                                          | **47µF 25V (Coupling)** | 0805/1206   | **TBD**  | **TBD**    | U5 SEPIC C1      | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---15v-voltage-inverter-lm2586-inverted-sepic-u5) |
-| **C13** | **[C2907](https://jlcpcb.com/partdetail/C2907)** | **100µF 25V (Input)**   | D6.3xL7.7mm | **Rich** | **$0.019** | U5 Input Filter  | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---15v-voltage-inverter-lm2586-inverted-sepic-u5) |
-| **C14** | **[C2907](https://jlcpcb.com/partdetail/C2907)** | **100µF 25V (Output)**  | D6.3xL7.7mm | **Rich** | **$0.019** | U5 Output Filter | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---15v-voltage-inverter-lm2586-inverted-sepic-u5) |
+| Symbol  | Part Number                                        | Specification           | Package     | Stock          | Price       | Application               | Diagram                                                                                         |
+| ------- | -------------------------------------------------- | ----------------------- | ----------- | -------------- | ----------- | ------------------------- | ----------------------------------------------------------------------------------------------- |
+| **C13** | **[C2907](https://jlcpcb.com/partdetail/C2907)**   | **100µF 25V (Bulk)**    | D6.3xL7.7mm | **Rich**       | **$0.019**  | U5 Input Bulk Filter      | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---15v-voltage-inverter-lm2586-inverted-sepic-u5) |
+| **C16** | **[C49678](https://jlcpcb.com/partdetail/C49678)** | **100nF 50V X7R**       | 0805        | **23,309,869** | **$0.0021** | U5 Input Decoupling       | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---15v-voltage-inverter-lm2586-inverted-sepic-u5) |
+| **C14** | **[C2907](https://jlcpcb.com/partdetail/C2907)**   | **100µF 25V (Output)**  | D6.3xL7.7mm | **Rich**       | **$0.019**  | U5 Output Filter          | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---15v-voltage-inverter-lm2586-inverted-sepic-u5) |
+| **C15** | **[C1622](https://jlcpcb.com/partdetail/C1622)**   | **47nF 50V X7R (Comp)** | 0603        | **Rich**       | **$0.0012** | U5 Compensation Capacitor | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---15v-voltage-inverter-lm2586-inverted-sepic-u5) |
 
 **Diode:**
 
@@ -123,12 +123,13 @@ L4 and L5 can be replaced with a single 47µH coupled inductor for better effici
 | ------ | ------------------------------------------------ | ---------------------- | ------- | ------------- | ---------- | ------------------- | ----------------------------------------------------------------------------------------------- |
 | **D4** | **[C8678](https://jlcpcb.com/partdetail/C8678)** | **SS34 (3A Schottky)** | SMA     | **1,859,655** | **$0.012** | U5 Output Rectifier | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---15v-voltage-inverter-lm2586-inverted-sepic-u5) |
 
-**Feedback Resistors:**
+**Feedback and Compensation Resistors:**
 
-| Symbol | Part Number                                        | Value        | Package | Price       | Application | Diagram                                                                                         |
-| ------ | -------------------------------------------------- | ------------ | ------- | ----------- | ----------- | ----------------------------------------------------------------------------------------------- |
-| **R7** | **[C25804](https://jlcpcb.com/partdetail/C25804)** | **10kΩ ±1%** | 0603    | **$0.0005** | U5 FB Upper | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---15v-voltage-inverter-lm2586-inverted-sepic-u5) |
-| **R8** | **TBD**                                            | **920Ω ±1%** | 0603    | **TBD**     | U5 FB Lower | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---15v-voltage-inverter-lm2586-inverted-sepic-u5) |
+| Symbol | Part Number                                        | Value        | Package | Price       | Application          | Diagram                                                                                         |
+| ------ | -------------------------------------------------- | ------------ | ------- | ----------- | -------------------- | ----------------------------------------------------------------------------------------------- |
+| **R7** | **[C25804](https://jlcpcb.com/partdetail/C25804)** | **10kΩ ±1%** | 0603    | **$0.0005** | U5 FB Upper          | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---15v-voltage-inverter-lm2586-inverted-sepic-u5) |
+| **R8** | **[C22843](https://jlcpcb.com/partdetail/C22843)** | **910Ω ±1%** | 0603    | **$0.0005** | U5 FB Lower          | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---15v-voltage-inverter-lm2586-inverted-sepic-u5) |
+| **R9** | **[C22980](https://jlcpcb.com/partdetail/C22980)** | **3kΩ ±1%**  | 0603    | **$0.0005** | U5 Compensation Res. | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---15v-voltage-inverter-lm2586-inverted-sepic-u5) |
 
 **Stage 2 Subtotal: TBD** (pending inductor/capacitor selection)
 
