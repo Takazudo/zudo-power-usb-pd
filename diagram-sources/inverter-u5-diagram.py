@@ -179,8 +179,8 @@ with schemdraw.Drawing(
 
     # Output filter path to GND
     elm.Line().down(1)
-    elm.Capacitor().down().label('C14\n100µF', loc='right', fontsize=11)
-    elm.Line().down(1)
+    elm.Capacitor().down().label('C14\n100µF', fontsize=11, ofst=0.2)
+    elm.Line().down(0.5)
     elm.Ground()
 
     # Return to junction, continue to output terminal
