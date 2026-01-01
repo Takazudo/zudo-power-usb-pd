@@ -19,9 +19,17 @@ with schemdraw.Drawing(
     # +15V input from left with capacitors
     vin_start = (0, 0)
     elm.Dot(open=True).at(vin_start).label('+15V IN', loc='left', fontsize=12)
+    d.push()
+
+    elm.Line().right(1.0)
+    elm.Dot()
+    junction_in_to_switch = d.here
+    elm.Line().up(4)
+
+    d.pop()
 
     # Input rail
-    elm.Line().right(1.5)
+    elm.Line().right(2)
     elm.Dot()
     vin_tap1 = d.here
     d.push()
@@ -32,7 +40,7 @@ with schemdraw.Drawing(
 
     # Continue input rail
     d.pop()
-    elm.Line().right(1.5)
+    elm.Line().right(2)
     elm.Dot()
     vin_tap2 = d.here
     d.push()
@@ -43,7 +51,7 @@ with schemdraw.Drawing(
 
     # Continue to IC VIN pin
     d.pop()
-    elm.Line().right(1.5)
+    elm.Line().right(4)
     vin_to_ic = d.here
 
     # LM2586SX-ADJ IC (TO-263-7 package)
