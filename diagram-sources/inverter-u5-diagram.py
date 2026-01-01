@@ -17,29 +17,35 @@ with schemdraw.Drawing(
     d.config(unit=3)
 
     # ICL7660M voltage inverter IC (8-pin)
-    ic = elm.Ic(
+    # Use empty names for CAPP/CAPN to hide default labels
+    ic = (elm.Ic(
         pins=[
-            elm.IcPin(name='GND', pin='3', side='left', slot='1/3'),
-            elm.IcPin(name='NC', pin='1', side='left', slot='2/3'),
-            elm.IcPin(name='VIN', pin='8', side='left', slot='3/3'),
-            elm.IcPin(name='CAPP', pin='2', side='top', slot='2/7'),
-            elm.IcPin(name='CAPN', pin='4', side='top', slot='6/7'),
-            elm.IcPin(name='LV', pin='6', side='right', slot='1/3'),
-            elm.IcPin(name='OSC', pin='7', side='right', slot='2/3'),
-            elm.IcPin(name='VOUT', pin='5', side='right', slot='3/3'),
+            elm.IcPin(name='GND', pin='3', side='left', slot='1/4'),
+            elm.IcPin(name='NC', pin='1', side='left', slot='2/4'),
+            elm.IcPin(name='VIN', pin='8', side='left', slot='3/4'),
+            elm.IcPin(name='', pin='2', side='top', slot='2/7', anchorname='CAPP'),
+            elm.IcPin(name='', pin='4', side='top', slot='6/7', anchorname='CAPN'),
+            elm.IcPin(name='LV', pin='6', side='right', slot='1/4'),
+            elm.IcPin(name='OSC', pin='7', side='right', slot='2/4'),
+            elm.IcPin(name='VOUT', pin='5', side='right', slot='3/4'),
         ],
         edgepadW=2.5,
         edgepadH=0.8,
-        pinspacing=1.0,
-        leadlen=1.0
+        pinspacing=0.8,
+        leadlen=1.0,
+        pinlblsize=14
     ).label('U5\nICL7660M', loc='center', fontsize=14)
+     .label('CAPP', 'CAPP', fontsize=14, ofst=(0, -1.5))
+     .label('CAPN', 'CAPN', fontsize=14, ofst=(0, -1.5))
+    )
 
     # GND connection
-    elm.Line().at(ic.GND).down(1.0)
+    elm.Line().at(ic.GND).left(0.5)
+    elm.Line().down(1.0)
     elm.Ground()
 
     # +15V input
-    elm.Dot(open=True).at((ic.VIN[0] - 3, ic.VIN[1])).label('+15V', loc='left')
+    elm.Dot(open=True).at((ic.VIN[0] - 1.5, ic.VIN[1])).label('+15V\nIN', loc='top', ofst=(0.5, 0.5), fontsize=14)
     elm.Line().to(ic.VIN)
 
     # Flying capacitor C12 (between CAPP and CAPN)
@@ -61,7 +67,7 @@ with schemdraw.Drawing(
     elm.Label().at(cap_center).label('C12\n10µF', loc='top', ofst=0.3)
 
     # Output: -15V with filter capacitor C13
-    elm.Line().at(ic.VOUT).right(0.5)
+    elm.Line().at(ic.VOUT).right(1)
     elm.Dot()
     output_junction = d.here
     d.push()
@@ -73,7 +79,7 @@ with schemdraw.Drawing(
     # -15V output label
     d.pop()
     elm.Line().right(1.5)
-    elm.Dot(open=True).label('-15V\nOUT', loc='top', ofst=(0,0.3))
+    elm.Dot(open=True).label('-15V\nOUT', loc='top', fontsize=14, ofst=(-0.5, 0.5))
 
     # LV and OSC pins left open (floating)
     # No connections needed - just labels showing they're open
