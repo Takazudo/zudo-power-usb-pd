@@ -6,6 +6,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a hardware project for designing a USB-PD powered modular synthesizer power supply that converts USB-C PD 15V to +12V/1.2A, -12V/0.8A, and +5V/0.5A outputs for modular synthesizers. The project uses a multi-stage design with DC-DC converters followed by linear regulators for low-noise output.
 
+## Deployment
+
+The documentation is automatically deployed to Netlify:
+
+- **Production URL**: https://zudopd.netlify.app/
+- **Deployment**: Automatic on every push to `main` branch
+- **Technology**: Docusaurus static site deployed via Netlify CLI on GitHub Actions
+- **Configuration**: See `.github/workflows/main-deploy.yml` for deployment workflow
+
 ## Repository Structure
 
 ### Current Documentation (Use These)
