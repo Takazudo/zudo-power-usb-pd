@@ -90,11 +90,15 @@ Complete parts configuration using JLCPCB SMT service.
 
 #### Ceramic Capacitors (DC-DC Stage)
 
-| Symbol  | Part Number                                        | Specification     | Package | Stock          | Price       | Application         | Diagram                                                                                    |
-| ------- | -------------------------------------------------- | ----------------- | ------- | -------------- | ----------- | ------------------- | ------------------------------------------------------------------------------------------ |
-| **C6**  | **[C49678](https://jlcpcb.com/partdetail/C49678)** | **100nF 50V X7R** | 0805    | **23,309,869** | **$0.0021** | U2 Input Decoupling | [D2](/docs/inbox/circuit-diagrams#diagram2-usb-pd-15v--135v-buck-converter-lm2596s-adj-1)  |
-| **C8**  | **[C49678](https://jlcpcb.com/partdetail/C49678)** | **100nF 50V X7R** | 0805    | **23,309,869** | **$0.0021** | U3 Input Decoupling | [D3](/docs/inbox/circuit-diagrams#diagram3-15v--75v-buck-converter-lm2596s-adj-2-u3)       |
-| **C10** | **[C49678](https://jlcpcb.com/partdetail/C49678)** | **100nF 50V X7R** | 0805    | **23,309,869** | **$0.0021** | U4 Input Decoupling | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---135v-inverting-buck-boost-lm2596s-adj-u4) |
+| Symbol  | Part Number                                            | Specification     | Package | Stock          | Price       | Application              | Diagram                                                                                    |
+| ------- | ------------------------------------------------------ | ----------------- | ------- | -------------- | ----------- | ------------------------ | ------------------------------------------------------------------------------------------ |
+| **C6**  | **[C49678](https://jlcpcb.com/partdetail/C49678)**     | **100nF 50V X7R** | 0805    | **23,309,869** | **$0.0021** | U2 Input Decoupling      | [D2](/docs/inbox/circuit-diagrams#diagram2-usb-pd-15v--135v-buck-converter-lm2596s-adj-1)  |
+| **C8**  | **[C49678](https://jlcpcb.com/partdetail/C49678)**     | **100nF 50V X7R** | 0805    | **23,309,869** | **$0.0021** | U3 Input Decoupling      | [D3](/docs/inbox/circuit-diagrams#diagram3-15v--75v-buck-converter-lm2596s-adj-2-u3)       |
+| **C10** | **[C49678](https://jlcpcb.com/partdetail/C49678)**     | **100nF 50V X7R** | 0805    | **23,309,869** | **$0.0021** | U4 Input Decoupling      | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---135v-inverting-buck-boost-lm2596s-adj-u4) |
+| **C12** | **[C5448891](https://jlcpcb.com/partdetail/C5448891)** | **10µF 25V X5R**  | 0805    | **188,598**    | **$0.0066** | U4 Output Decoupling     | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---135v-inverting-buck-boost-lm2596s-adj-u4) |
+| **C31** | **[C7393941](https://jlcpcb.com/partdetail/C7393941)** | **22nF 250V X7R** | 0805    | **4,046**      | **$0.0135** | U2 Feedback Compensation | [D2](/docs/inbox/circuit-diagrams#diagram2-usb-pd-15v--135v-buck-converter-lm2596s-adj-1)  |
+| **C32** | **[C7393941](https://jlcpcb.com/partdetail/C7393941)** | **22nF 250V X7R** | 0805    | **4,046**      | **$0.0135** | U3 Feedback Compensation | [D3](/docs/inbox/circuit-diagrams#diagram3-15v--75v-buck-converter-lm2596s-adj-2-u3)       |
+| **C33** | **[C7393941](https://jlcpcb.com/partdetail/C7393941)** | **22nF 250V X7R** | 0805    | **4,046**      | **$0.0135** | U4 Feedback Compensation | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---135v-inverting-buck-boost-lm2596s-adj-u4) |
 
 :::info Obsolete Components - Not Used in Current Design
 The following components were used in the old negative voltage generation design (LM2586 flyback converter) but have been replaced with a simpler LM2596S inverting buck-boost topology in Diagram4. These are kept here for reference only.

@@ -110,14 +110,24 @@ System GND (0V) ──┬────────────────┬─�
                   │                │
           System GND (0V)    -13.5V OUT
 
-Feedback Network (Voltage Divider):
+Feedback Network (Voltage Divider with Compensation):
 
-System GND (0V) ─── R7 (10kΩ) ───┬─── FB pin 4 (to U4)
-                                 │
-                                R8
-                              (1kΩ)
-                                 │
-                          -13.5V OUT
+System GND (0V) ──┬─── R7 (10kΩ) ───┬─── FB pin 4 (to U4)
+                  │                 │
+                  └─── C33 (22nF) ──┤
+                                    │
+                                   R8
+                                 (1kΩ)
+                                    │
+                             -13.5V OUT
+
+Components:
+- R7 (10kΩ) with C33 (22nF) in parallel: Creates pole-zero compensation (Type II)
+- R8 (1kΩ): Sets feedback tap voltage
+- C33 (22nF ceramic): Feedback compensation capacitor in parallel with R7
+  - Improves transient response and loop stability
+  - Reduces switching noise on feedback line
+  - Prevents oscillation
 
 FB Pin Voltage Calculation:
 - IC regulates FB to +1.23V above IC GND (-13.5V)
@@ -147,6 +157,7 @@ Complete Pin Connections:
 - **C12**: 10µF ceramic, 25V X7R (output decoupling)
 - **R7**: 10kΩ ±1% (feedback upper resistor)
 - **R8**: 1kΩ ±1% (feedback lower resistor)
+- **C33**: 22nF ceramic, 250V X7R (feedback compensation, parallel with R7)
 
 **Key Design Notes:**
 

@@ -93,10 +93,10 @@ with schemdraw.Drawing(
     # Return from feedback_junction to add voltage divider
     d.pop()
 
-    # Feedback voltage divider network (R1 || C4 in parallel, then R2)
+    # Feedback voltage divider network (R1 || C31 in parallel, then R2)
     elm.Line().up(4)
     elm.Dot()
-    d.push()  # Save position before R1 for parallel C4 capacitor
+    d.push()  # Save position before R1 for parallel C31 capacitor
 
     elm.Resistor(scale=0.7).left().label('R1\n10kΩ', loc='bot', ofst=0.5)
     r1_end = d.here
@@ -114,11 +114,11 @@ with schemdraw.Drawing(
     d.pop()
     elm.Line().to(ic.FB)
 
-    # C4 capacitor in parallel with R1 (feedback compensation)
+    # C31 capacitor in parallel with R1 (feedback compensation)
     d.pop()  # Return to r1_end (after R1)
     d.pop()  # Return to r1_start (the dot junction)
     elm.Line().up(2)
-    elm.Capacitor().left().label('C4\n22nF', loc='top', ofst=0.3)
+    elm.Capacitor().left().label('C31\n22nF', loc='top', ofst=0.3)
     elm.Line().to(r1_end)
 
     # Output capacitor C3 (from output junction - right side, facing up)

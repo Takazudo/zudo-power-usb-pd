@@ -54,14 +54,14 @@ Output Filter:
 Feedback Network (Voltage Divider with Compensation):
 +13.5V ──┬─── R1 (10kΩ) ───┬─── R2 (1kΩ) ─── GND
          │                 │
-         └─── C4 (22nF) ───┤
+         └─── C31 (22nF) ──┤
                            │
                           Tap → To IC Pin 4 (FB)
 
 Components:
-- R1 (10kΩ) with C4 (22nF) in parallel: Creates pole-zero compensation (Type II)
+- R1 (10kΩ) with C31 (22nF) in parallel: Creates pole-zero compensation (Type II)
 - R2 (1kΩ): Sets feedback tap voltage
-- C4 (22nF ceramic): Feedback compensation capacitor in parallel with R1
+- C31 (22nF ceramic): Feedback compensation capacitor in parallel with R1
   - Improves transient response and loop stability
   - Reduces switching noise on feedback line
   - Prevents oscillation
