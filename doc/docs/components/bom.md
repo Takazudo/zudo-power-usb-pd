@@ -159,11 +159,11 @@ The following components were used in the old negative voltage generation design
 
 #### PTC Resettable Fuses (Auto-Recovery)
 
-| Symbol   | Part Number                                            | Manufacturer Part Number            | Specification             | Package | Stock      | Price     | Application          | Diagram                                                                            |
-| -------- | ------------------------------------------------------ | ----------------------------------- | ------------------------- | ------- | ---------- | --------- | -------------------- | ---------------------------------------------------------------------------------- |
-| **PTC1** | **[C7529589](https://jlcpcb.com/partdetail/C7529589)** | **[SMD1210P150TF/16](./ptc-12v)**   | **1.5A hold / 3A trip**   | SMD1210 | **7,525**  | **$0.15** | +12V Rail Protection | [D5](/docs/inbox/circuit-diagrams#diagram5-135v--12v-linear-regulator-l7812-u6)    |
-| **PTC2** | **[C70119](https://jlcpcb.com/partdetail/C70119)**     | **[mSMD110-33V](./ptc-5v)**         | **1.1A hold / 2.2A trip** | 1812    | **44,459** | **$0.10** | +5V Rail Protection  | [D6](/docs/inbox/circuit-diagrams#diagram6-75v--5v-linear-regulator-l7805-u7)      |
-| **PTC3** | **[C2830246](https://jlcpcb.com/partdetail/C2830246)** | **[JK-nSMD100/16V](./ptc-12v-neg)** | **1.0A hold / 2.0A trip** | 1206    | **99,339** | **$0.10** | -12V Rail Protection | [D7](/docs/inbox/circuit-diagrams#diagram7--135v---12v-linear-regulator-cj7912-u8) |
+| Symbol   | Part Number                                          | Manufacturer Part Number              | Specification             | Package | Stock      | Price     | Application          | Diagram                                                                            |
+| -------- | ---------------------------------------------------- | ------------------------------------- | ------------------------- | ------- | ---------- | --------- | -------------------- | ---------------------------------------------------------------------------------- |
+| **PTC1** | **[C20808](https://jlcpcb.com/partdetail/C20808)**   | **[SMD1210P200TF](./ptc-12v)**        | **2.0A hold / 4A trip**   | SMD1210 | **1,744**  | **$0.22** | +12V Rail Protection | [D5](/docs/inbox/circuit-diagrams#diagram5-135v--12v-linear-regulator-l7812-u6)    |
+| **PTC2** | **[C70119](https://jlcpcb.com/partdetail/C70119)**   | **[mSMD110-33V](./ptc-5v)**           | **1.1A hold / 2.2A trip** | 1812    | **44,459** | **$0.10** | +5V Rail Protection  | [D6](/docs/inbox/circuit-diagrams#diagram6-75v--5v-linear-regulator-l7805-u7)      |
+| **PTC3** | **[C883133](https://jlcpcb.com/partdetail/C883133)** | **[BSMD1206-150-16V](./ptc-12v-neg)** | **1.5A hold / 3.0A trip** | 1206    | **60,591** | **$0.14** | -12V Rail Protection | [D7](/docs/inbox/circuit-diagrams#diagram7--135v---12v-linear-regulator-cj7912-u8) |
 
 **Protection Philosophy:**
 
