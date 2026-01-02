@@ -80,7 +80,7 @@ Complete parts configuration using JLCPCB SMT service.
 
 | Symbol  | Part Number                                              | Specification | Package     | Stock          | Price      | Application      | Diagram                                                                                    |
 | ------- | -------------------------------------------------------- | ------------- | ----------- | -------------- | ---------- | ---------------- | ------------------------------------------------------------------------------------------ |
-| **C3**  | **[C335982](https://jlcpcb.com/partdetail/C335982)**     | **470µF 10V** | D6.3xL7.7mm | **164,155**    | **$0.014** | U2 Output Filter | [D2](/docs/inbox/circuit-diagrams#diagram2-usb-pd-15v--135v-buck-converter-lm2596s-adj-1)  |
+| **C3**  | **[C3351](https://jlcpcb.com/partdetail/C3351)**         | **470µF 25V** | D10xL10.2mm | **19,150**     | **$0.044** | U2 Output Filter | [D2](/docs/inbox/circuit-diagrams#diagram2-usb-pd-15v--135v-buck-converter-lm2596s-adj-1)  |
 | **C4**  | **[C335982](https://jlcpcb.com/partdetail/C335982)**     | **470µF 10V** | D6.3xL7.7mm | **164,155**    | **$0.014** | U3 Output Filter | [D3](/docs/inbox/circuit-diagrams#diagram3-15v--75v-buck-converter-lm2596s-adj-2-u3)       |
 | **C5**  | **[C2907](https://jlcpcb.com/partdetail/C2907)**         | **100µF 25V** | D6.3xL7.7mm | **Rich Stock** | **$0.019** | U2 Input Bulk    | [D2](/docs/inbox/circuit-diagrams#diagram2-usb-pd-15v--135v-buck-converter-lm2596s-adj-1)  |
 | **C7**  | **[C2907](https://jlcpcb.com/partdetail/C2907)**         | **100µF 25V** | D6.3xL7.7mm | **Rich Stock** | **$0.019** | U3 Input Bulk    | [D3](/docs/inbox/circuit-diagrams#diagram3-15v--75v-buck-converter-lm2596s-adj-2-u3)       |
