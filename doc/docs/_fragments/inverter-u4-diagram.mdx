@@ -140,7 +140,7 @@ Complete Pin Connections:
 
 - **U4**: LM2596S-ADJ (same IC as Diagram2/3)
 - **L3**: 100µH inductor, 4.5A saturation current rating (same as Diagram2/3)
-- **D3**: SS34 Schottky diode, 3A, 40V minimum (catch diode from SW to -13.5V)
+- **D3**: SS36 Schottky diode, 3A, 60V (catch diode from SW to -13.5V, provides 110% margin at 28.5V stress)
 - **C9**: 100µF electrolytic, 50V rating (input bulk, sees VIN+|VOUT| = 28.5V)
 - **C10**: 100nF ceramic, 50V X7R (input decoupling)
 - **C11**: 470µF electrolytic, 25V rating (output filter)
@@ -152,7 +152,7 @@ Complete Pin Connections:
 
 1. **Bootstrapped Ground**: IC GND pin connects to negative output, not system ground
 2. **Input Voltage Stress**: Input caps see VIN + |VOUT| = 28.5V (use 50V rating)
-3. **Diode Selection**: D3 must handle VIN + |VOUT| reverse voltage (≥40V)
+3. **Diode Selection**: D3 must handle VIN + |VOUT| reverse voltage (60V provides 110% margin at 28.5V stress)
 4. **FB Pin Safety**: FB is always +1.23V above IC GND (safe, within spec)
 5. **Single Stage**: Eliminates intermediate -15V conversion, improves efficiency
 6. **Output Polarity**: Output capacitor C11 has + terminal to System GND (0V), - terminal to -13.5V

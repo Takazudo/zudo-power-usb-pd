@@ -60,11 +60,11 @@ Complete parts configuration using JLCPCB SMT service.
 
 #### Diodes
 
-| Symbol | Part Number                                      | Manufacturer Part Number | Description     | Package | Stock         | Price      | Application     | Diagram                                                                                    |
-| ------ | ------------------------------------------------ | ------------------------ | --------------- | ------- | ------------- | ---------- | --------------- | ------------------------------------------------------------------------------------------ |
-| **D1** | **[C8678](https://jlcpcb.com/partdetail/C8678)** | **SS34**                 | 3A 40V Schottky | SMA     | **1,859,655** | **$0.012** | U2 Freewheeling | [D2](/docs/inbox/circuit-diagrams#diagram2-usb-pd-15v--135v-buck-converter-lm2596s-adj-1)  |
-| **D2** | **[C8678](https://jlcpcb.com/partdetail/C8678)** | **SS34**                 | 3A 40V Schottky | SMA     | **1,859,655** | **$0.012** | U3 Freewheeling | [D3](/docs/inbox/circuit-diagrams#diagram3-15v--75v-buck-converter-lm2596s-adj-2-u3)       |
-| **D3** | **[C8678](https://jlcpcb.com/partdetail/C8678)** | **SS34**                 | 3A 40V Schottky | SMA     | **1,859,655** | **$0.012** | U4 Freewheeling | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---135v-inverting-buck-boost-lm2596s-adj-u4) |
+| Symbol | Part Number                                            | Manufacturer Part Number | Description     | Package | Stock         | Price      | Application     | Diagram                                                                                    |
+| ------ | ------------------------------------------------------ | ------------------------ | --------------- | ------- | ------------- | ---------- | --------------- | ------------------------------------------------------------------------------------------ |
+| **D1** | **[C8678](https://jlcpcb.com/partdetail/C8678)**       | **SS34**                 | 3A 40V Schottky | SMA     | **1,859,655** | **$0.012** | U2 Freewheeling | [D2](/docs/inbox/circuit-diagrams#diagram2-usb-pd-15v--135v-buck-converter-lm2596s-adj-1)  |
+| **D2** | **[C8678](https://jlcpcb.com/partdetail/C8678)**       | **SS34**                 | 3A 40V Schottky | SMA     | **1,859,655** | **$0.012** | U3 Freewheeling | [D3](/docs/inbox/circuit-diagrams#diagram3-15v--75v-buck-converter-lm2596s-adj-2-u3)       |
+| **D3** | **[C7428237](https://jlcpcb.com/partdetail/C7428237)** | **SS36**                 | 3A 60V Schottky | SMA     | **8,176**     | **$0.031** | U4 Freewheeling | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---135v-inverting-buck-boost-lm2596s-adj-u4) |
 
 #### Feedback Resistors (Basic Parts)
 
