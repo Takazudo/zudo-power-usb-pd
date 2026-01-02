@@ -63,7 +63,7 @@ with schemdraw.Drawing(
     elm.Dot()  # Second dot
     d.push()
     elm.Line().down(0.1)
-    elm.Capacitor().label('C1\n10µF\n25V', loc='bot', ofst=-1.7)
+    elm.Capacitor().label('C1\n10µF\n50V', loc='bot', ofst=-1.7)
     elm.Ground()
     d.pop()
 
@@ -71,7 +71,7 @@ with schemdraw.Drawing(
     elm.Dot()  # Third dot
     d.push()
     elm.Line().down(0.1)
-    elm.Capacitor().label('C2\n100nF\n25V', loc='bot', ofst=0.2)
+    elm.Capacitor().label('C2\n10µF\n50V', loc='bot', ofst=0.2)
     elm.Ground()
 
     d.pop()
