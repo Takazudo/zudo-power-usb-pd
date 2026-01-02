@@ -158,11 +158,11 @@ The following components were used in the old negative voltage generation design
 
 #### PTC Resettable Fuses (Auto-Recovery)
 
-| Symbol   | Part Number                                            | Manufacturer Part Number            | Specification             | Package | Stock      | Price     | Application          | Diagram |
-| -------- | ------------------------------------------------------ | ----------------------------------- | ------------------------- | ------- | ---------- | --------- | -------------------- | ------- |
-| **PTC1** | **[C7529589](https://jlcpcb.com/partdetail/C7529589)** | **[SMD1210P150TF/16](./ptc-12v)**   | **1.5A hold / 3A trip**   | SMD1210 | **7,525**  | **$0.15** | +12V Rail Protection | -       |
-| **PTC2** | **[C70119](https://jlcpcb.com/partdetail/C70119)**     | **[mSMD110-33V](./ptc-5v)**         | **1.1A hold / 2.2A trip** | 1812    | **44,459** | **$0.10** | +5V Rail Protection  | -       |
-| **PTC3** | **[C2830246](https://jlcpcb.com/partdetail/C2830246)** | **[JK-nSMD100/16V](./ptc-12v-neg)** | **1.0A hold / 2.0A trip** | 1206    | **99,339** | **$0.10** | -12V Rail Protection | -       |
+| Symbol   | Part Number                                            | Manufacturer Part Number            | Specification             | Package | Stock      | Price     | Application          | Diagram                                                                            |
+| -------- | ------------------------------------------------------ | ----------------------------------- | ------------------------- | ------- | ---------- | --------- | -------------------- | ---------------------------------------------------------------------------------- |
+| **PTC1** | **[C7529589](https://jlcpcb.com/partdetail/C7529589)** | **[SMD1210P150TF/16](./ptc-12v)**   | **1.5A hold / 3A trip**   | SMD1210 | **7,525**  | **$0.15** | +12V Rail Protection | [D5](/docs/inbox/circuit-diagrams#diagram5-135v--12v-linear-regulator-l7812-u6)    |
+| **PTC2** | **[C70119](https://jlcpcb.com/partdetail/C70119)**     | **[mSMD110-33V](./ptc-5v)**         | **1.1A hold / 2.2A trip** | 1812    | **44,459** | **$0.10** | +5V Rail Protection  | [D6](/docs/inbox/circuit-diagrams#diagram6-75v--5v-linear-regulator-l7805-u7)      |
+| **PTC3** | **[C2830246](https://jlcpcb.com/partdetail/C2830246)** | **[JK-nSMD100/16V](./ptc-12v-neg)** | **1.0A hold / 2.0A trip** | 1206    | **99,339** | **$0.10** | -12V Rail Protection | [D7](/docs/inbox/circuit-diagrams#diagram7--135v---12v-linear-regulator-cj7912-u8) |
 
 **Protection Philosophy:**
 
@@ -173,11 +173,11 @@ The following components were used in the old negative voltage generation design
 
 #### TVS Diodes
 
-| Symbol   | Part Number                                            | Manufacturer Part Number       | Description            | Package | Estimated Price | Application     | Diagram |
-| -------- | ------------------------------------------------------ | ------------------------------ | ---------------------- | ------- | --------------- | --------------- | ------- |
-| **TVS1** | **[C571368](https://jlcpcb.com/partdetail/C571368)**   | **[SMAJ15A](./smaj15a)**       | 15V TVS Unidirectional | SMA     | **$0.15**       | +12V Protection | -       |
-| **TVS2** | **[C5199240](https://jlcpcb.com/partdetail/C5199240)** | **[PRTR5V0U2X](./prtr5v0u2x)** | 5V TVS Bidirectional   | SOT-143 | **$0.12**       | +5V Protection  | -       |
-| **TVS3** | **[C571368](https://jlcpcb.com/partdetail/C571368)**   | **[SMAJ15A](./smaj15a)**       | 15V TVS Unidirectional | SMA     | **$0.15**       | -12V Protection | -       |
+| Symbol   | Part Number                                            | Manufacturer Part Number       | Description            | Package | Estimated Price | Application     | Diagram                                                                            |
+| -------- | ------------------------------------------------------ | ------------------------------ | ---------------------- | ------- | --------------- | --------------- | ---------------------------------------------------------------------------------- |
+| **TVS1** | **[C571368](https://jlcpcb.com/partdetail/C571368)**   | **[SMAJ15A](./smaj15a)**       | 15V TVS Unidirectional | SMA     | **$0.15**       | +12V Protection | [D5](/docs/inbox/circuit-diagrams#diagram5-135v--12v-linear-regulator-l7812-u6)    |
+| **TVS2** | **[C5199240](https://jlcpcb.com/partdetail/C5199240)** | **[PRTR5V0U2X](./prtr5v0u2x)** | 5V TVS Bidirectional   | SOT-143 | **$0.12**       | +5V Protection  | [D6](/docs/inbox/circuit-diagrams#diagram6-75v--5v-linear-regulator-l7805-u7)      |
+| **TVS3** | **[C571368](https://jlcpcb.com/partdetail/C571368)**   | **[SMAJ15A](./smaj15a)**       | 15V TVS Unidirectional | SMA     | **$0.15**       | -12V Protection | [D7](/docs/inbox/circuit-diagrams#diagram7--135v---12v-linear-regulator-cj7912-u8) |
 
 #### Status Indicator LEDs (Using Basic Parts)
 
