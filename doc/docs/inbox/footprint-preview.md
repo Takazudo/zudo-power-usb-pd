@@ -47,42 +47,17 @@ import LM2596S from '@site/static/footprints-svg/TO-263-5_L10.2-W8.9-P1.70-BR.sv
 **LCSC:** [C347423](https://jlcpcb.com/partdetail/C347423)
 **Function:** DC-DC conversion (+13.5V, +7.5V, -13.5V outputs)
 
-### U5 - LM2586SX-ADJ Flyback Converter
-
-import LM2586 from '@site/static/footprints-svg/TO-263-7_L10.2-W8.6-P1.27-LS14.4-TL.svg';
-
-<FootprintSvg src={LM2586} alt="LM2586SX-ADJ TO-263-7 Package" minWidth="300px" minHeight="200px" />
-
-**Designator:** U5
-**Component:** [LM2586SX-ADJ/NOPB](../components/lm2586sx-adj) - Flyback DC-DC Converter
-**Package:** TO-263-7 (DDPAK, 10.2mm × 8.6mm)
-**LCSC:** [C181324](https://jlcpcb.com/partdetail/C181324)
-**Function:** Inverts +15V to -15V for -12V rail generation (3A capable)
-
-### T1 - MSD1514-473MED Coupled Transformer
-
-import T1Transformer from '@site/docs/\_fragments/footprints/IND-SMD_4P-L15.0-W15.0_MSD1583-473ME.svg';
-
-<FootprintSvg src={T1Transformer} alt="MSD1514-473MED Coupled Inductor" minWidth="400px" minHeight="400px" />
-
-**Designator:** T1
-**Component:** [MSD1514-473MED](https://jlcpcb.com/partdetail/C40657138) - Coupled Transformer (Coilcraft)
-**Package:** SMD-4P (15.0mm × 15.0mm)
-**Specification:** 47µH:47µH coupled inductor, 7.5A, 75mΩ DCR, Shielded
-**LCSC:** [C40657138](https://jlcpcb.com/partdetail/C40657138)
-**Function:** Flyback transformer for U5 voltage inverter (1:1 turns ratio)
-
-### L1, L2, L3 - 100µH Power Inductor
+### L1, L2 - 100µH Power Inductor
 
 import Inductor from '@site/static/footprints-svg/IND-SMD_L13.8-W12.8.svg';
 
 <FootprintSvg src={Inductor} alt="100µH Power Inductor" minWidth="300px" minHeight="300px" />
 
-**Designators:** L1, L2, L3 (3× units)
+**Designators:** L1, L2 (2× units)
 **Component:** CYA1265-100UH - 100µH 4.5A Power Inductor
 **Package:** SMD Power Inductor (13.8mm × 12.8mm)
 **LCSC:** [C19268674](https://jlcpcb.com/partdetail/C19268674)
-**Function:** Energy storage for LM2596S buck converters
+**Function:** Energy storage for LM2596S buck converters (U2, U3)
 
 ---
 

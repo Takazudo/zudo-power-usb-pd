@@ -29,7 +29,6 @@ const sidebars = {
     'components/usb-c-connector',
     'components/ch224d',
     'components/lm2596s-adj',
-    'components/lm2586sx-adj',
     'components/l7812cv',
     'components/l7805abd2t',
     'components/cj7912',
@@ -57,7 +56,7 @@ const sidebars = {
     'knowledge/create-footprint-svg',
     'knowledge/create-circuit-svg',
   ],
-  miscSidebar: ['misc/index', 'misc/outdated-diagrams'],
+  miscSidebar: ['misc/index', 'misc/outdated-diagrams', 'misc/lm2586sx-adj'],
 };
 
 export default sidebars;
