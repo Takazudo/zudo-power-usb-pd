@@ -158,11 +158,11 @@ The following components were used in the old negative voltage generation design
 
 #### PTC Resettable Fuses (Auto-Recovery)
 
-| Symbol   | Part Number                                            | Manufacturer Part Number            | Specification             | Package | Stock      | Price     | Application          | Diagram                                                                                                   |
-| -------- | ------------------------------------------------------ | ----------------------------------- | ------------------------- | ------- | ---------- | --------- | -------------------- | --------------------------------------------------------------------------------------------------------- |
-| **PTC1** | **[C7529589](https://jlcpcb.com/partdetail/C7529589)** | **[SMD1210P150TF/16](./ptc-12v)**   | **1.5A hold / 3A trip**   | SMD1210 | **7,525**  | **$0.15** | +12V Rail Protection | [D9](/docs/inbox/circuit-diagrams#diagram9-protection-circuit-ptc-auto-reset-with-multi-layer-protection) |
-| **PTC2** | **[C70119](https://jlcpcb.com/partdetail/C70119)**     | **[mSMD110-33V](./ptc-5v)**         | **1.1A hold / 2.2A trip** | 1812    | **44,459** | **$0.10** | +5V Rail Protection  | [D9](/docs/inbox/circuit-diagrams#diagram9-protection-circuit-ptc-auto-reset-with-multi-layer-protection) |
-| **PTC3** | **[C2830246](https://jlcpcb.com/partdetail/C2830246)** | **[JK-nSMD100/16V](./ptc-12v-neg)** | **1.0A hold / 2.0A trip** | 1206    | **99,339** | **$0.10** | -12V Rail Protection | [D9](/docs/inbox/circuit-diagrams#diagram9-protection-circuit-ptc-auto-reset-with-multi-layer-protection) |
+| Symbol   | Part Number                                            | Manufacturer Part Number            | Specification             | Package | Stock      | Price     | Application          | Diagram |
+| -------- | ------------------------------------------------------ | ----------------------------------- | ------------------------- | ------- | ---------- | --------- | -------------------- | ------- |
+| **PTC1** | **[C7529589](https://jlcpcb.com/partdetail/C7529589)** | **[SMD1210P150TF/16](./ptc-12v)**   | **1.5A hold / 3A trip**   | SMD1210 | **7,525**  | **$0.15** | +12V Rail Protection | -       |
+| **PTC2** | **[C70119](https://jlcpcb.com/partdetail/C70119)**     | **[mSMD110-33V](./ptc-5v)**         | **1.1A hold / 2.2A trip** | 1812    | **44,459** | **$0.10** | +5V Rail Protection  | -       |
+| **PTC3** | **[C2830246](https://jlcpcb.com/partdetail/C2830246)** | **[JK-nSMD100/16V](./ptc-12v-neg)** | **1.0A hold / 2.0A trip** | 1206    | **99,339** | **$0.10** | -12V Rail Protection | -       |
 
 **Protection Philosophy:**
 
@@ -173,11 +173,11 @@ The following components were used in the old negative voltage generation design
 
 #### TVS Diodes
 
-| Symbol   | Part Number                                            | Manufacturer Part Number       | Description            | Package | Estimated Price | Application     | Diagram                                                                                                   |
-| -------- | ------------------------------------------------------ | ------------------------------ | ---------------------- | ------- | --------------- | --------------- | --------------------------------------------------------------------------------------------------------- |
-| **TVS1** | **[C571368](https://jlcpcb.com/partdetail/C571368)**   | **[SMAJ15A](./smaj15a)**       | 15V TVS Unidirectional | SMA     | **$0.15**       | +12V Protection | [D9](/docs/inbox/circuit-diagrams#diagram9-protection-circuit-ptc-auto-reset-with-multi-layer-protection) |
-| **TVS2** | **[C5199240](https://jlcpcb.com/partdetail/C5199240)** | **[PRTR5V0U2X](./prtr5v0u2x)** | 5V TVS Bidirectional   | SOT-143 | **$0.12**       | +5V Protection  | [D9](/docs/inbox/circuit-diagrams#diagram9-protection-circuit-ptc-auto-reset-with-multi-layer-protection) |
-| **TVS3** | **[C571368](https://jlcpcb.com/partdetail/C571368)**   | **[SMAJ15A](./smaj15a)**       | 15V TVS Unidirectional | SMA     | **$0.15**       | -12V Protection | [D9](/docs/inbox/circuit-diagrams#diagram9-protection-circuit-ptc-auto-reset-with-multi-layer-protection) |
+| Symbol   | Part Number                                            | Manufacturer Part Number       | Description            | Package | Estimated Price | Application     | Diagram |
+| -------- | ------------------------------------------------------ | ------------------------------ | ---------------------- | ------- | --------------- | --------------- | ------- |
+| **TVS1** | **[C571368](https://jlcpcb.com/partdetail/C571368)**   | **[SMAJ15A](./smaj15a)**       | 15V TVS Unidirectional | SMA     | **$0.15**       | +12V Protection | -       |
+| **TVS2** | **[C5199240](https://jlcpcb.com/partdetail/C5199240)** | **[PRTR5V0U2X](./prtr5v0u2x)** | 5V TVS Bidirectional   | SOT-143 | **$0.12**       | +5V Protection  | -       |
+| **TVS3** | **[C571368](https://jlcpcb.com/partdetail/C571368)**   | **[SMAJ15A](./smaj15a)**       | 15V TVS Unidirectional | SMA     | **$0.15**       | -12V Protection | -       |
 
 #### Status Indicator LEDs (Using Basic Parts)
 
@@ -196,9 +196,9 @@ The following components were used in the old negative voltage generation design
 
 #### Eurorack Power Connector (16-pin)
 
-| Symbol | Part Number                                            | Manufacturer Part Number | Description            | Package      | Stock     | Price     | Application           | Diagram                                                           |
-| ------ | ------------------------------------------------------ | ------------------------ | ---------------------- | ------------ | --------- | --------- | --------------------- | ----------------------------------------------------------------- |
-| **J2** | **[C5383092](https://jlcpcb.com/partdetail/C5383092)** | **2541WR-2x08P**         | 2x8P Pin Header 2.54mm | Through-hole | **6,813** | **$0.08** | Eurorack Power Output | [D10](/docs/inbox/circuit-diagrams#diagram10-power-flow-overview) |
+| Symbol | Part Number                                            | Manufacturer Part Number | Description            | Package      | Stock     | Price     | Application           | Diagram |
+| ------ | ------------------------------------------------------ | ------------------------ | ---------------------- | ------------ | --------- | --------- | --------------------- | ------- |
+| **J2** | **[C5383092](https://jlcpcb.com/partdetail/C5383092)** | **2541WR-2x08P**         | 2x8P Pin Header 2.54mm | Through-hole | **6,813** | **$0.08** | Eurorack Power Output | -       |
 
 **Connector Type:** Standard 2x8 pin header (male, through-hole, 2.54mm pitch)
 
