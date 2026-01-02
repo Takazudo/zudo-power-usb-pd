@@ -13,12 +13,19 @@ type SidebarItem =
 
 const SIDEBAR_LABELS: Record<string, string> = {
   inboxSidebar: 'INBOX',
-  partsSidebar: 'Parts',
+  componentsSidebar: 'Components',
   learningSidebar: 'Learning',
   knowledgeSidebar: 'Knowledge',
+  miscSidebar: 'Misc',
 };
 
-const SIDEBAR_ORDER = ['inboxSidebar', 'partsSidebar', 'learningSidebar', 'knowledgeSidebar'];
+const SIDEBAR_ORDER = [
+  'inboxSidebar',
+  'componentsSidebar',
+  'learningSidebar',
+  'knowledgeSidebar',
+  'miscSidebar',
+];
 
 function renderSidebarItem(item: SidebarItem): ReactNode {
   // String item (doc ID)
