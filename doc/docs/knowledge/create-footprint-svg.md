@@ -266,4 +266,3 @@ npm start
 
 - [KiCad CLI Documentation](https://docs.kicad.org/master/en/cli/cli.html)
 - [SVG Specification](https://www.w3.org/TR/SVG2/)
-- [FootprintSvg Component](../../_fragments/FootprintSvg.jsx)

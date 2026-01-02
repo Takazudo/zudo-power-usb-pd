@@ -303,4 +303,4 @@ This configuration ensures:
 - **Coilcraft MSD1514 Series**: [Coupled Inductors Datasheet](https://www.coilcraft.com/en-us/products/power/coupled-inductors/shielded-coupled-inductors/msd/)
 - **Texas Instruments Application Note**: "Flyback Transformer Design"
 - **Old Circuit (Not Used)**: Diagram4 used LM2586 Flyback (replaced with LM2596S inverting buck-boost)
-- **Component Documentation (Historical)**: [LM2586SX-ADJ Component Page](../components/lm2586sx-adj) - Component not used in current design
+- **Component Documentation (Historical)**: [LM2586SX-ADJ Component Page](../misc/lm2586sx-adj) - Component not used in current design

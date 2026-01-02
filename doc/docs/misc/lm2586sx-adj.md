@@ -408,13 +408,13 @@ This is **significantly lower** than other components in this project:
 **Current Design:**
 
 - [Diagram4: +15V → -13.5V Inverting Buck-Boost (Current)](/docs/inbox/circuit-diagrams#diagram4-15v---135v-inverting-buck-boost-lm2596s-adj-u4)
-- [LM2596S-ADJ Component Page](./lm2596s-adj) - The IC actually used for negative voltage generation
+- [LM2596S-ADJ Component Page](../components/lm2596s-adj) - The IC actually used for negative voltage generation
 
 **Historical (Not Used):**
 
 - Old Diagram4: Used LM2586 Flyback (removed)
 - Old Diagram5: Used -15V → -13.5V Buck (removed)
-- [Bill of Materials: Obsolete Components Section](./bom#obsolete-components---not-used-in-current-design)
+- [Bill of Materials: Obsolete Components Section](../components/bom#obsolete-components---not-used-in-current-design)
 - [Overview: System Architecture](../inbox/overview)
 - [Quick Reference: Component Specifications](../inbox/quick-reference)
 
