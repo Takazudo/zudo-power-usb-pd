@@ -100,6 +100,12 @@ const config = {
             position: 'left',
             label: 'Knowledge',
           },
+          {
+            type: 'doc',
+            docId: 'misc/index',
+            position: 'left',
+            label: 'Misc',
+          },
         ],
       },
       footer: {

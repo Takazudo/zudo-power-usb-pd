@@ -57,6 +57,7 @@ const sidebars = {
     'knowledge/create-footprint-svg',
     'knowledge/create-circuit-svg',
   ],
+  miscSidebar: ['misc/index', 'misc/outdated-diagrams'],
 };
 
 export default sidebars;

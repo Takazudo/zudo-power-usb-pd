@@ -10,8 +10,6 @@ import LdoU7Diagram from '../_fragments/ldo-u7-diagram.mdx';
 import LdoU8Diagram from '../_fragments/ldo-u8-diagram.mdx';
 import CircuitSvg from '@site/src/components/CircuitSvg';
 import Diagram1Svg from '@site/static/circuits/diagram1-usb-pd.svg';
-import InverterU5DiagramOld from '../_fragments/inverter-u5-diagram.mdx';
-import BuckU5Diagram from '../_fragments/buck-u5-diagram.mdx';
 
 # Circuit Diagrams
 
@@ -577,83 +575,5 @@ Current Sensing (ISP & ISN):
 - LED4 (Red): `GND` → `LED4 anode` → `LED4 cathode` → `R9 (1kΩ)` → `-12V`
 - LED current: `I = (0V - (-12V) - 2V) / 1kΩ = 10mA`
 - **Note:** LED is reversed compared to positive rails (anode to GND, cathode to negative voltage)
-
-</details>
-
----
-
-## [Outdated] Previous Negative Voltage Designs
-
-The following diagrams represent previous design iterations that have been replaced by the simpler, single-stage inverting buck-boost approach in Diagram4.
-
-### [Outdated] Old Diagram4: +15V → -15V Flyback Converter (LM2586, U5)
-
-**⚠️ This design was replaced due to:**
-
-- **Critical feedback pin voltage violation**: FB pin would see -1.25V (violates -0.4V absolute maximum)
-- **Overly complex**: Requires flyback transformer with specific polarity
-- **Additional protection needed**: Missing switch clamp and snubber circuits
-- **Not recommended by TI**: Datasheet examples use positive output regulation with cross-regulated negative outputs
-
-<InverterU5DiagramOld />
-
-### [Outdated] Old Diagram5: -15V → -13.5V Buck Converter (LM2596S-ADJ, U4)
-
-**⚠️ This stage was eliminated because:**
-
-- **Unnecessary intermediate stage**: Direct +15V → -13.5V conversion is possible in one stage
-- **Lower efficiency**: Two-stage conversion (flyback + buck) wastes power
-- **More components**: Additional inductor, diode, and capacitors
-- **Replaced by**: Single-stage inverting buck-boost in new Diagram4
-
-<BuckU5Diagram />
-
-<details>
-<summary>Connection List (Old Diagram5)</summary>
-
-**Input Power:**
-
-- `-15V input` → `U4 (LM2596S-ADJ) pin 1 (VIN)`
-- `U4 pin 5 (ON/OFF)` → Left floating (internal pull-up enables regulator)
-- `U4 pin 3 (GND)` → `System GND`
-
-**Output Path (Buck Converter Topology):**
-
-1. `U4 pin 2 (OUT)` → `L3 (100µH, 4.5A)` → Junction point
-2. Junction point → `C11 (470µF/25V)` → `GND` (output filter capacitor)
-3. Junction point → `-13.5V output` (to LM7912 linear regulator)
-
-**Flyback Diode:**
-
-- `D3 (SS34 Schottky)`:
-  - Cathode → Junction between `OUT (pin 2)` and `L3`
-  - Anode → `GND`
-
-**Input Capacitors:**
-
-- `C9 (100µF electrolytic)`: `-15V input` ⟷ `GND` (bulk input filter)
-  - Polarity: Negative terminal to `-15V`, positive terminal to `GND`
-- `C10 (100nF ceramic)`: `-15V input` ⟷ `GND` (high-frequency decoupling)
-
-**Output Capacitor:**
-
-- `C11 (470µF/25V electrolytic)`: Connected **in parallel** between `-13.5V output` ⟷ `GND`
-  - Polarity: Negative terminal to `-13.5V`, positive terminal to `GND`
-- Purpose: Output filtering, ripple reduction, and energy storage for transient response
-
-**Feedback Network:**
-
-- Voltage divider with compensation: `-13.5V output` → `R5 (10kΩ) || C12 (22nF)` → **Tap point** → `R6 (1kΩ)` → `GND`
-- `C12 (22nF)` in parallel with `R5`: Feedback compensation (Type II), improves transient response and loop stability
-- `U4 pin 4 (FB)` → Connected to **tap point** (junction between R5/C12 and R6)
-- The tap point voltage = `-13.5V × R6/(R5+R6) = -13.5V × 1kΩ/11kΩ = -1.23V`
-- Chip maintains FB pin at 1.23V below GND by adjusting duty cycle
-- Output voltage formula: `VOUT = -1.23V × (1 + R5/R6) = -1.23V × (1 + 10kΩ/1kΩ) = -13.53V`
-
-**Important Notes:**
-
-- All voltages are negative and referenced to GND (0V)
-- Electrolytic capacitors must have correct polarity (negative terminal to negative voltage)
-- The buck converter topology is identical to positive voltage versions, just with negative voltages
 
 </details>
