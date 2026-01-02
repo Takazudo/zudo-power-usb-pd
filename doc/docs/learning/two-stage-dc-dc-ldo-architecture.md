@@ -131,12 +131,12 @@ Operating below maximum rated current reduces actual dropout requirements, makin
 
 ### Target Specifications
 
-| Application                 | Ripple Target | Our Design    |
-| --------------------------- | ------------- | ------------- |
-| Typical Eurorack switching  | 25-120 mVp-p  | **<1 mVp-p**  |
-| Good DIY linear design      | 10-22 mVp-p   | **<1 mVp-p**  |
-| Professional audio          | <1 mVp-p      | **<1 mVp-p**  |
-| Ultra-low noise (reference) | 100 µVp-p     | Not targeting |
+| Application                 | Ripple Target | Our Design      |
+| --------------------------- | ------------- | --------------- |
+| Typical Eurorack switching  | 25-120 mVp-p  | **&lt;1 mVp-p** |
+| Good DIY linear design      | 10-22 mVp-p   | **&lt;1 mVp-p** |
+| Professional audio          | &lt;1 mVp-p   | **&lt;1 mVp-p** |
+| Ultra-low noise (reference) | 100 µVp-p     | Not targeting   |
 
 **Our design meets professional audio standards**, significantly exceeding typical modular synthesizer requirements.
 
@@ -150,9 +150,9 @@ Operating below maximum rated current reduces actual dropout requirements, makin
 
 **Frequency Response:**
 
-- **Low frequencies (<1 kHz):** Excellent PSRR (60-80 dB)
+- **Low frequencies (&lt;1 kHz):** Excellent PSRR (60-80 dB)
 - **Mid-range (1-100 kHz):** Error amplifier loop gain provides PSRR
-- **High frequencies (>100 kHz):** Output capacitors dominate PSRR
+- **High frequencies (&gt;100 kHz):** Output capacitors dominate PSRR
 
 **LM2596S switching frequency:** ~150 kHz → Falls in range where both loop gain and output capacitors contribute to ripple rejection.
 
@@ -167,7 +167,7 @@ From [Rohm Application Note](https://fscdn.rohm.com/en/products/databook/applino
 **Practical Results:**
 
 - Hybrid designs (DC-DC + LDO) combine efficiency of switching regulators with low-noise characteristics of linear regulation
-- Two-stage approach achieves <1mVp-p ripple typical for audio applications
+- Two-stage approach achieves &lt;1mVp-p ripple typical for audio applications
 - An LDO with good PSRR after a switching supply is "the way to go if you want clean supplies"
 
 ---
@@ -204,7 +204,7 @@ If even better dropout margin is desired, consider these alternatives:
 In modular synthesizer and audio applications:
 
 1. **Noise reduction is paramount** - Clean power prevents audio artifacts
-2. **Efficiency is secondary** - Power levels are low (<30W total)
+2. **Efficiency is secondary** - Power levels are low (&lt;30W total)
 3. **Two-stage filtering provides maximum ripple rejection** - DC-DC handles bulk conversion, LDO eliminates switching noise
 4. **Thermal management is not limiting** - Heat dissipation at these power levels is manageable
 
@@ -213,10 +213,10 @@ In modular synthesizer and audio applications:
 | Approach               | Dropout  | Efficiency | Noise Performance | Thermal Load |
 | ---------------------- | -------- | ---------- | ----------------- | ------------ |
 | Pure switching DC-DC   | N/A      | 85-95%     | 25-120 mVp-p      | Low          |
-| DC-DC + LDO (4V drop)  | 4.0V     | 60-70%     | <1 mVp-p          | High         |
-| DC-DC + LDO (2V drop)  | 2.0V     | 70-80%     | <1 mVp-p          | Medium       |
-| **DC-DC + LDO (1.5V)** | **1.5V** | **75-82%** | **<1 mVp-p**      | **Low**      |
-| DC-DC + LDO (0.6V)     | 0.6V     | 85-90%     | <1 mVp-p          | Very Low     |
+| DC-DC + LDO (4V drop)  | 4.0V     | 60-70%     | &lt;1 mVp-p       | High         |
+| DC-DC + LDO (2V drop)  | 2.0V     | 70-80%     | &lt;1 mVp-p       | Medium       |
+| **DC-DC + LDO (1.5V)** | **1.5V** | **75-82%** | **&lt;1 mVp-p**   | **Low**      |
+| DC-DC + LDO (0.6V)     | 0.6V     | 85-90%     | &lt;1 mVp-p       | Very Low     |
 
 **Our design sits in the "sweet spot":**
 
@@ -264,7 +264,7 @@ In the modular synthesizer community:
 2. ✅ **Industry guidelines support 1-1.5V headroom** for low-noise/precision applications
 3. ✅ **PSRR performance is excellent** at 1.5V headroom (minimal degradation vs. 2V)
 4. ✅ **Two-stage topology is industry standard** for audio power supplies
-5. ✅ **Target ripple <1mVp-p matches professional audio** requirements
+5. ✅ **Target ripple &lt;1mVp-p matches professional audio** requirements
 
 ### When to Accept Lower Dropout
 
@@ -280,7 +280,7 @@ In the modular synthesizer community:
 
 **Consider 2V+ dropout if:**
 
-- Input voltage has significant ripple (>100 mVp-p)
+- Input voltage has significant ripple (&gt;100 mVp-p)
 - Operating at maximum rated load currents
 - Temperature extremes reduce regulator performance
 - PSRR requirements exceed standard LDO capabilities
@@ -329,6 +329,6 @@ In the modular synthesizer community:
 
 The 1.5V dropout margin used in this power supply design is not "marginal" in the negative sense - it represents **proper engineering for low-noise audio applications**, validated by professional implementations and industry best practices.
 
-The design achieves professional audio noise specifications (<1mVp-p) while maintaining reasonable efficiency and manageable thermal dissipation. The two-stage DC-DC + LDO architecture is industry-standard for combining the efficiency of switching regulators with the clean output of linear regulation.
+The design achieves professional audio noise specifications (&lt;1mVp-p) while maintaining reasonable efficiency and manageable thermal dissipation. The two-stage DC-DC + LDO architecture is industry-standard for combining the efficiency of switching regulators with the clean output of linear regulation.
 
 **For modular synthesizer applications, this approach is optimal.**
