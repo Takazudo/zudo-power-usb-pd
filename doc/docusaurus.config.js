@@ -110,7 +110,7 @@ const config = {
       },
       footer: {
         style: 'dark',
-        copyright: `Copyright © ${new Date().getFullYear()} USB-PD Synth Power. Documentation built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Takazudo. Documentation built with Docusaurus.`,
       },
       prism: {
         theme: prismThemes.github,
