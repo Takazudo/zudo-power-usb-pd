@@ -56,7 +56,12 @@ const sidebars = {
     'knowledge/create-footprint-svg',
     'knowledge/create-circuit-svg',
   ],
-  miscSidebar: ['misc/index', 'misc/outdated-diagrams', 'misc/lm2586sx-adj'],
+  miscSidebar: [
+    'misc/index',
+    'misc/pcb-design-specification',
+    'misc/outdated-diagrams',
+    'misc/lm2586sx-adj',
+  ],
 };
 
 export default sidebars;

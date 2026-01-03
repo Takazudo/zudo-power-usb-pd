@@ -31,7 +31,7 @@ export default function Home(): ReactNode {
 
               {/* Quick Links */}
               <section className={styles.linksSection}>
-                <h2>関連リンク</h2>
+                <h2>Related Links</h2>
                 <ul className={styles.linksList}>
                   <li>
                     <a
@@ -52,23 +52,23 @@ export default function Home(): ReactNode {
 
               {/* Stats Section */}
               <section className={styles.statsSection}>
-                <h2>仕様</h2>
+                <h2>Specifications</h2>
                 <div className={styles.statsGrid}>
                   <div className={styles.statItem}>
                     <div className={styles.statNumber}>15V</div>
-                    <div className={styles.statLabel}>USB-PD入力</div>
+                    <div className={styles.statLabel}>USB-PD Input</div>
                   </div>
                   <div className={styles.statItem}>
                     <div className={styles.statNumber}>±12V</div>
-                    <div className={styles.statLabel}>出力電圧</div>
+                    <div className={styles.statLabel}>Output Voltage</div>
                   </div>
                   <div className={styles.statItem}>
                     <div className={styles.statNumber}>+5V</div>
-                    <div className={styles.statLabel}>補助電源</div>
+                    <div className={styles.statLabel}>Auxiliary Power</div>
                   </div>
                   <div className={styles.statItem}>
                     <div className={styles.statNumber}>2A</div>
-                    <div className={styles.statLabel}>合計電流</div>
+                    <div className={styles.statLabel}>Total Current</div>
                   </div>
                 </div>
               </section>
