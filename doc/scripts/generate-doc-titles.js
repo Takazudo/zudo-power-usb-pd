@@ -53,8 +53,7 @@ function extractTitle(filePath) {
   // Fall back to first H1 heading
   const h1Match = content.match(/^#\s+(.+)$/m);
   if (h1Match) {
-    // Remove [outdated] prefix if present
-    return h1Match[1].replace(/^\[outdated\]\s*/i, '').trim();
+    return h1Match[1].trim();
   }
 
   return null;

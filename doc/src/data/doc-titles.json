@@ -35,7 +35,7 @@
   "learning/two-stage-dc-dc-ldo-architecture": "Two-Stage DC-DC + LDO Power Supply Architecture for Low-Noise Audio",
   "learning/usb-type-c-pinout": "USB Type-C Pinout and Power Delivery",
   "misc/index": "Misc",
-  "misc/lm2586sx-adj": "LM2586SX-ADJ Flyback Converter",
-  "misc/outdated-diagrams": "Outdated Circuit Diagrams",
+  "misc/lm2586sx-adj": "[outdated] LM2586SX-ADJ Flyback Converter",
+  "misc/outdated-diagrams": "[outdated] Outdated Circuit Diagrams",
   "misc/pcb-design-specification": "PCB Design Specification"
 }
