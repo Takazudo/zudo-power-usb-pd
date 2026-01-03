@@ -32,11 +32,43 @@ with schemdraw.Drawing(
 
     # Input rail from VIN pin
     elm.Line().at(ic.VIN).left(2)
-    elm.Dot()
+    elm.Dot() # to C10
+    d.push()
+
     elm.Line().left(2)
-    elm.Dot()
+    elm.Dot() # to C9
+    d.push()
+
     elm.Line().left(2)
     elm.Dot(open=True).label('+15V\nIN', loc='left')
+
+    # C9 capacitor (farther from IC)
+    d.pop()
+    elm.Line().down(0.5)
+    elm.Capacitor().down().label('C9\n100µF', loc='bot')
+    elm.Line().down(0.5)
+    elm.Dot()
+
+    # C10 capacitor (closer to IC)
+    d.pop()
+    elm.Line().down(0.5)
+    elm.Capacitor().down().label('C10\n100nF', loc='bot')
+    elm.Line().down(0.5)
+    elm.Dot()
+    bottom_rail_pos = d.here  # Save position of bottom rail
+
+    # GND pin to bottom rail
+    elm.Line().at(ic.GND).to((ic.GND[0], bottom_rail_pos[1]))
+    elm.Dot()
+
+    # Output from OUT pin
+    elm.Line().at(ic.OUT).right(1)
+    elm.Dot()
+    elm.Inductor().right().label('L3\n100µH', loc='bottom', ofst=0.5)
+    elm.Dot()
+    elm.Line().right(2)
+    elm.Line().down(1)
+    elm.Ground()
 
     # Save to doc/static/circuits/ (one level up from diagram-sources)
     import os
