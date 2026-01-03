@@ -11,21 +11,27 @@ type SidebarItem =
       link?: { id: string };
     };
 
-const SIDEBAR_LABELS: Record<string, string> = {
-  inboxSidebar: 'INBOX',
-  componentsSidebar: 'Components',
-  learningSidebar: 'Learning',
-  howToSidebar: 'HowTo',
-  miscSidebar: 'Misc',
-};
+/**
+ * Auto-generate display label from sidebar ID
+ * Examples:
+ *   inboxSidebar → INBOX
+ *   componentsSidebar → Components
+ *   howToSidebar → HowTo
+ *   learningSidebar → Learning
+ */
+function generateLabel(sidebarId: string): string {
+  // Remove "Sidebar" suffix
+  const name = sidebarId.replace(/Sidebar$/, '');
 
-const SIDEBAR_ORDER = [
-  'inboxSidebar',
-  'componentsSidebar',
-  'learningSidebar',
-  'howToSidebar',
-  'miscSidebar',
-];
+  // Special case: inbox → INBOX (all caps)
+  if (name.toLowerCase() === 'inbox') {
+    return 'INBOX';
+  }
+
+  // Convert camelCase to Title Case
+  // howTo → HowTo, learning → Learning
+  return name.charAt(0).toUpperCase() + name.slice(1);
+}
 
 function renderSidebarItem(item: SidebarItem): ReactNode {
   // String item (doc ID)
@@ -63,6 +69,9 @@ function renderSidebarItem(item: SidebarItem): ReactNode {
 }
 
 export default function DocsSitemap(): ReactNode {
+  // Auto-generate sidebar list from sidebars.js (preserves object key order)
+  const sidebarEntries = Object.entries(sidebars);
+
   return (
     <section style={{ marginTop: '3rem' }}>
       <h2>Documentation Index</h2>
@@ -70,11 +79,10 @@ export default function DocsSitemap(): ReactNode {
         Complete list of all documentation pages (auto-generated from sidebars.js)
       </p>
 
-      {SIDEBAR_ORDER.map((sidebarId) => {
-        const sidebarItems = sidebars[sidebarId];
-        const label = SIDEBAR_LABELS[sidebarId];
+      {sidebarEntries.map(([sidebarId, sidebarItems]) => {
+        const label = generateLabel(sidebarId);
 
-        if (!sidebarItems || !label || !Array.isArray(sidebarItems)) {
+        if (!sidebarItems || !Array.isArray(sidebarItems)) {
           return null;
         }
 
