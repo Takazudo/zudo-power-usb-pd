@@ -99,6 +99,8 @@ Complete parts configuration using JLCPCB SMT service.
 | **C32** | **[C7393941](https://jlcpcb.com/partdetail/C7393941)** | **22nF 250V X7R** | 0805    | **4,046**      | **$0.0135** | U3 Feedback Compensation | [D3](/docs/inbox/circuit-diagrams#diagram3-15v--75v-buck-converter-lm2596s-adj-2-u3)       |
 | **C33** | **[C7393941](https://jlcpcb.com/partdetail/C7393941)** | **22nF 250V X7R** | 0805    | **4,046**      | **$0.0135** | U4 Feedback Compensation | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---135v-inverting-buck-boost-lm2596s-adj-u4) |
 
+## Obsolete Components - Not Used in Current Design
+
 :::info Obsolete Components - Not Used in Current Design
 The following components were used in the old negative voltage generation design (LM2586 flyback converter) but have been replaced with a simpler LM2596S inverting buck-boost topology in Diagram4. These are kept here for reference only.
 
