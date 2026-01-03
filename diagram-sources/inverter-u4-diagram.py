@@ -63,12 +63,28 @@ with schemdraw.Drawing(
 
     # Output from OUT pin
     elm.Line().at(ic.OUT).right(1)
-    elm.Dot()
+    elm.Dot() # to D3
+    d.push()
+
     elm.Inductor().right().label('L3\n100µH', loc='bottom', ofst=0.5)
-    elm.Dot()
+    elm.Dot() # to C11
+    d.push()
+
     elm.Line().right(2)
     elm.Line().down(1)
     elm.Ground()
+
+    # C11 capacitor (from "to C11" dot)
+    d.pop()
+    elm.Capacitor().down().label('C11\n470µF', loc='bot')
+    elm.Line().to((d.here[0], bottom_rail_pos[1]))
+    elm.Dot()
+
+    # D3 diode (from "to D3" dot)
+    d.pop()
+    elm.Diode().down().reverse().label('D3\nSS34', loc='bot')
+    elm.Line().to((d.here[0], bottom_rail_pos[1]))
+    elm.Dot()
 
     # Save to doc/static/circuits/ (one level up from diagram-sources)
     import os
