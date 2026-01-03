@@ -42,20 +42,20 @@ with schemdraw.Drawing(
     elm.Line().left(2)
     elm.Dot(open=True).label('+15V\nIN', loc='left')
 
-    # C9 capacitor (farther from IC)
-    d.pop()
-    elm.Line().down(0.5)
-    elm.Capacitor().down().label('C9\n100µF', loc='bot')
-    elm.Line().down(0.5)
-    elm.Dot()
-
-    # C10 capacitor (closer to IC)
+    # C10 capacitor (closer to IC) - establish bottom rail position first
     d.pop()
     elm.Line().down(0.5)
     elm.Capacitor().down().label('C10\n100nF', loc='bot')
-    elm.Line().down(0.5)
+    elm.Line().down(2)
     elm.Dot()
     bottom_rail_pos = d.here  # Save position of bottom rail
+
+    # C9 capacitor (farther from IC) - align to bottom rail
+    d.pop()
+    elm.Line().down(0.5)
+    elm.Capacitor().down().label('C9\n100µF', loc='bot')
+    elm.Line().to((d.here[0], bottom_rail_pos[1]))
+    elm.Dot()
 
     # GND pin to bottom rail
     elm.Line().at(ic.GND).to((ic.GND[0], bottom_rail_pos[1]))
