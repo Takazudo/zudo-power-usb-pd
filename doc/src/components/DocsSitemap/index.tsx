@@ -15,7 +15,7 @@ const SIDEBAR_LABELS: Record<string, string> = {
   inboxSidebar: 'INBOX',
   componentsSidebar: 'Components',
   learningSidebar: 'Learning',
-  knowledgeSidebar: 'Knowledge',
+  howToSidebar: 'HowTo',
   miscSidebar: 'Misc',
 };
 
@@ -23,7 +23,7 @@ const SIDEBAR_ORDER = [
   'inboxSidebar',
   'componentsSidebar',
   'learningSidebar',
-  'knowledgeSidebar',
+  'howToSidebar',
   'miscSidebar',
 ];
 
