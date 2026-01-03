@@ -34,17 +34,8 @@ export default function Home(): ReactNode {
                 <h2>Related Links</h2>
                 <ul className={styles.linksList}>
                   <li>
-                    <a
-                      href="https://github.com/takazudo/zudo-power-usb-pd"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      GitHub Repository
-                    </a>
-                  </li>
-                  <li>
-                    <a href="https://www.jlcpcb.com/" target="_blank" rel="noopener noreferrer">
-                      JLCPCB
+                    <a href="https://takazudomodular.com/" rel="noopener noreferrer">
+                      Takazudo Modular
                     </a>
                   </li>
                 </ul>
@@ -55,20 +46,16 @@ export default function Home(): ReactNode {
                 <h2>Specifications</h2>
                 <div className={styles.statsGrid}>
                   <div className={styles.statItem}>
-                    <div className={styles.statNumber}>15V</div>
-                    <div className={styles.statLabel}>USB-PD Input</div>
+                    <div className={styles.statNumber}>+12V: 1.2A</div>
                   </div>
                   <div className={styles.statItem}>
-                    <div className={styles.statNumber}>±12V</div>
-                    <div className={styles.statLabel}>Output Voltage</div>
+                    <div className={styles.statNumber}>-12V: 1A</div>
                   </div>
                   <div className={styles.statItem}>
-                    <div className={styles.statNumber}>+5V</div>
-                    <div className={styles.statLabel}>Auxiliary Power</div>
+                    <div className={styles.statNumber}>+5V: 1.2A</div>
                   </div>
                   <div className={styles.statItem}>
-                    <div className={styles.statNumber}>2A</div>
-                    <div className={styles.statLabel}>Total Current</div>
+                    <div className={styles.statNumber}>USB-PD</div>
                   </div>
                 </div>
               </section>

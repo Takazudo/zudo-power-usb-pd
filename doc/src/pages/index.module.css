@@ -81,14 +81,14 @@
 }
 
 .statNumber {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: bold;
   color: var(--ifm-color-primary);
   margin-bottom: 0.5rem;
 }
 
 .statLabel {
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: var(--ifm-color-emphasis-700);
 }
 
@@ -99,9 +99,7 @@
 }
 
 .linksList {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  list-style: disc;
 }
 
 .linksList li {
