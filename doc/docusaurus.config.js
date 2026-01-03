@@ -96,9 +96,9 @@ const config = {
           },
           {
             type: 'doc',
-            docId: 'knowledge/index',
+            docId: 'how-to/index',
             position: 'left',
-            label: 'Knowledge',
+            label: 'HowTo',
           },
           {
             type: 'doc',

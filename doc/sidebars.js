@@ -52,11 +52,11 @@ const sidebars = {
     'learning/protection-fuse-strategy',
     'learning/eurorack-power-distribution',
   ],
-  knowledgeSidebar: [
-    'knowledge/index',
-    'knowledge/kicad-footprint-generation',
-    'knowledge/create-footprint-svg',
-    'knowledge/create-circuit-svg',
+  howToSidebar: [
+    'how-to/index',
+    'how-to/kicad-footprint-generation',
+    'how-to/create-footprint-svg',
+    'how-to/create-circuit-svg',
   ],
   miscSidebar: [
     'misc/index',

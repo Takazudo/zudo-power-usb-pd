@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Knowledge Base
+# How to use tools
 
 Technical guides and workflow documentation for the USB-PD Power Supply project.
 
