@@ -556,8 +556,8 @@ Current Sensing (ISP & ISN):
 
 **Regulator:**
 
-- U8 (CJ7912): `-13.5V input` → Pin 1 (IN), Pin 2 (OUT) → `-12V output`, Pin 3 (GND) → `GND`
-- **Note:** LM7912 pinout differs from LM7812/7805: pin 1=IN, pin 2=OUT, pin 3=GND
+- U8 (CJ7912): Pin 1 (GND) → `GND`, Pin 2 (IN) ← `-13.5V input`, Pin 3 (OUT) → `-12V output`
+- **Note:** LM7912 pinout differs from LM7812/7805: pin 1=GND, pin 2=IN, pin 3=OUT (79xx negative regulators)
 
 **Input Capacitors (connected in parallel between -13.5V and GND):**
 

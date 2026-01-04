@@ -21,7 +21,7 @@ import LdoU8Svg from '@site/static/circuits/ldo-u8-diagram.svg';
 - **LED indicator**: Red LED (LED4) with 1kΩ current-limiting resistor shows -12V rail is active
 - **LED current**: I = (0V - 2V - (-12V)) / 1kΩ = 10mA (current flows from GND through LED to -12V)
 - **Dropout voltage**: LM7912 requires ~2V dropout, so -13.5V input provides 1.5V headroom
-- **LM7912 pinout**: Different from positive regulators - pin 1=IN, pin 2=OUT, pin 3=GND (not pin 3=OUT!)
+- **LM7912 pinout**: Different from positive regulators - pin 1=GND, pin 2=IN, pin 3=OUT (79xx series)
 
 **Protection Circuit (-12V Rail, 0.8A target, 1A max):**
 
@@ -36,15 +36,15 @@ import LdoU8Svg from '@site/static/circuits/ldo-u8-diagram.svg';
 ```
 Regulator IC:
                     ┌──────────────────┐
--13.5V IN ──────────┤1 IN         OUT 2├──────────── -12V OUT
+-13.5V IN ──────────┤2 IN         OUT 3├──────────── -12V OUT
                     │                  │
-                 ┌──┤3 GND             │
+                 ┌──┤1 GND             │
                  │  └──────────────────┘
                 GND      LM7912
                         (TO-252-3)
 
 Input Capacitors (C28 closest to IC):
--13.5V ──┬────────────────┬─── To IC Pin 1
+-13.5V ──┬────────────────┬─── To IC Pin 2 (IN)
          │                │
         C24              C28
        470µF            470nF
@@ -56,7 +56,7 @@ Input Capacitors (C28 closest to IC):
         GND              GND
 
 Output Capacitors (C19 closest to IC):
-From IC Pin 2 ──┬────────────────┬─── -12V
+From IC Pin 3 (OUT) ──┬────────────────┬─── -12V
                 │                │
                C19              C25
               100nF            470µF
