@@ -58,6 +58,10 @@ with schemdraw.Drawing(
     elm.Line().at(ic.GND).toy(bottom_rail.start)
     elm.Dot()
 
+    # ON pin to GND pin (connects to bottom rail / IC GND)
+    elm.Line().at(ic.ON).toy(bottom_rail.start)
+    elm.Dot()
+
     # Output from OUT pin
     elm.Line().at(ic.OUT).right(0.5)
     elm.Dot() # to D3
