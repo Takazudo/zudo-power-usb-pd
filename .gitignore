@@ -40,3 +40,21 @@ __inbox/
 
 # env
 .env
+
+# KiCad
+# Project local settings (window positions, zoom, etc.)
+*.kicad_prl
+# Auto-generated footprint cache
+fp-info-cache
+# KiCad automatic backup directory
+*-backups/
+# PCB backup files
+*.kicad_pcb-bak
+# Schematic backup files
+*.kicad_sch-bak
+# Rescue library files
+*-rescue.lib
+*-rescue.dcm
+# Lock files
+*.kicad_pcb.lck
+*.kicad_sch.lck
