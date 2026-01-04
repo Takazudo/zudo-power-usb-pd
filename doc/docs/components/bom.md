@@ -28,10 +28,10 @@ Complete parts configuration using JLCPCB SMT service.
 | **C30**     | **[C6119849](https://jlcpcb.com/partdetail/C6119849)** | **CGA0603X5R105K160JT**                 | 1µF 16V X5R ±10%                  | 0603    | **1,225,237**  | **$0.0012**     | VDD Decoupling       | [D1](/docs/inbox/circuit-diagrams#diagram1-usb-pd-power-supply-section) |
 | **R11**     | **[C705785](https://jlcpcb.com/partdetail/C705785)**   | **RT0603BRD0756KL**                     | 56kΩ ±0.1%                        | 0603    | **19,902**     | **$0.0011**     | 15V Config (Rset)    | [D1](/docs/inbox/circuit-diagrams#diagram1-usb-pd-power-supply-section) |
 | **R12,R13** | **[C23186](https://jlcpcb.com/partdetail/C23186)**     | **0603WAF5101T5E**                      | 5.1kΩ ±1%                         | 0603    | **Rich Stock** | **$0.0005 × 2** | CC Pull-down (Rd)    | [D1](/docs/inbox/circuit-diagrams#diagram1-usb-pd-power-supply-section) |
-| **R10**     | **[C23138](https://jlcpcb.com/partdetail/C23138)**     | **0603WAF3300T5E**                      | 330Ω ±1%                          | 0603    | **Rich Stock** | **$0.00099**    | LED Current Limit    | [D1](/docs/inbox/circuit-diagrams#diagram1-usb-pd-power-supply-section) |
-| **LED1**    | **[C2286](https://jlcpcb.com/partdetail/C2286)**       | **0805G**                               | Green LED 20mA                    | 0805    | **Rich Stock** | **$0.0115**     | Power Good Indicator | [D1](/docs/inbox/circuit-diagrams#diagram1-usb-pd-power-supply-section) |
 
-**Stage 1 Subtotal: $0.46** (Updated with CC pull-down resistors)
+**Stage 1 Subtotal: $0.40**
+
+**Note:** CH224D does not have a Power Good (PG) output pin. Status indication is provided by output stage LEDs (LED2, LED3, LED4) which confirm the entire power chain is operational.
 
 **Critical Notes:**
 
