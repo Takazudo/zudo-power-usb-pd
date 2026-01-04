@@ -97,7 +97,9 @@ Complete parts configuration using JLCPCB SMT service.
 | **C10** | **[C49678](https://jlcpcb.com/partdetail/C49678)**     | **100nF 50V X7R** | 0805    | **23,309,869** | **$0.0021** | U4 Input Decoupling      | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---135v-inverting-buck-boost-lm2596s-adj-u4) |
 | **C31** | **[C7393941](https://jlcpcb.com/partdetail/C7393941)** | **22nF 250V X7R** | 0805    | **4,046**      | **$0.0135** | U2 Feedback Compensation | [D2](/docs/inbox/circuit-diagrams#diagram2-usb-pd-15v--135v-buck-converter-lm2596s-adj-1)  |
 | **C32** | **[C7393941](https://jlcpcb.com/partdetail/C7393941)** | **22nF 250V X7R** | 0805    | **4,046**      | **$0.0135** | U3 Feedback Compensation | [D3](/docs/inbox/circuit-diagrams#diagram3-15v--75v-buck-converter-lm2596s-adj-2-u3)       |
-| **C33** | **[C7393941](https://jlcpcb.com/partdetail/C7393941)** | **22nF 250V X7R** | 0805    | **4,046**      | **$0.0135** | U4 Feedback Compensation | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---135v-inverting-buck-boost-lm2596s-adj-u4) |
+| **C33** | **[C7393941](https://jlcpcb.com/partdetail/C7393941)** | **22nF 250V X7R** | 0805    | **4,046**      | **$0.0135** | U4 Feedback Compensation | [D4](/docs/inbox/circuit-diagrams#diagram4-15v---135v-inverting-buck-boost-lm2296s-adj-u4) |
+
+**Note on C31/C32/C33:** These capacitors are not available in EasyEDA's symbol database. Use KiCad's built-in `Device:C` symbol paired with the `C0805.kicad_mod` footprint. This is standard practice for passive components in JLCPCB PCBA projects.
 
 **Stage 2 Subtotal: TBD** (pending inductor/capacitor selection)
 
