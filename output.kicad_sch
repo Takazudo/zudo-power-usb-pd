@@ -126,7 +126,7 @@
 					)
 				)
 			)
-			(property "Footprint" "easyeda2kicad:CONN-TH_1217754-1"
+			(property "Footprint" "zudo-pd:CONN-TH_1217754-1"
 				(at 0 -8.89 0)
 				(effects
 					(font
@@ -244,7 +244,7 @@
 					)
 				)
 			)
-			(property "Footprint" "easyeda2kicad:HDR-TH_16P-P2.54-H-M-R2-C8-S2.54"
+			(property "Footprint" "zudo-pd:HDR-TH_16P-P2.54-H-M-R2-C8-S2.54"
 				(at 0 -16.51 0)
 				(effects
 					(font
@@ -3011,7 +3011,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "easyeda2kicad:HDR-TH_16P-P2.54-H-M-R2-C8-S2.54"
+		(property "Footprint" "zudo-pd:HDR-TH_16P-P2.54-H-M-R2-C8-S2.54"
 			(at 129.54 63.5 0)
 			(effects
 				(font
@@ -3130,7 +3130,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "easyeda2kicad:CONN-TH_1217754-1"
+		(property "Footprint" "zudo-pd:CONN-TH_1217754-1"
 			(at 27.94 62.23 0)
 			(effects
 				(font
@@ -3207,7 +3207,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "easyeda2kicad:HDR-TH_16P-P2.54-H-M-R2-C8-S2.54"
+		(property "Footprint" "zudo-pd:HDR-TH_16P-P2.54-H-M-R2-C8-S2.54"
 			(at 82.55 96.52 0)
 			(effects
 				(font
@@ -3326,7 +3326,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "easyeda2kicad:HDR-TH_16P-P2.54-H-M-R2-C8-S2.54"
+		(property "Footprint" "zudo-pd:HDR-TH_16P-P2.54-H-M-R2-C8-S2.54"
 			(at 82.55 63.5 0)
 			(effects
 				(font
@@ -3511,7 +3511,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "easyeda2kicad:CONN-TH_1217754-1"
+		(property "Footprint" "zudo-pd:CONN-TH_1217754-1"
 			(at 27.94 74.93 0)
 			(effects
 				(font
@@ -3588,7 +3588,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "easyeda2kicad:CONN-TH_1217754-1"
+		(property "Footprint" "zudo-pd:CONN-TH_1217754-1"
 			(at 27.94 100.33 0)
 			(effects
 				(font
@@ -3665,7 +3665,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "easyeda2kicad:CONN-TH_1217754-1"
+		(property "Footprint" "zudo-pd:CONN-TH_1217754-1"
 			(at 27.94 87.63 0)
 			(effects
 				(font
@@ -3742,7 +3742,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "easyeda2kicad:HDR-TH_16P-P2.54-H-M-R2-C8-S2.54"
+		(property "Footprint" "zudo-pd:HDR-TH_16P-P2.54-H-M-R2-C8-S2.54"
 			(at 130.81 96.52 0)
 			(effects
 				(font

@@ -126,7 +126,7 @@
 					)
 				)
 			)
-			(property "Footprint" "easyeda2kicad:R0603"
+			(property "Footprint" "zudo-pd:R0603"
 				(at 0 -7.62 0)
 				(effects
 					(font
@@ -233,7 +233,7 @@
 					)
 				)
 			)
-			(property "Footprint" "easyeda2kicad:C0805"
+			(property "Footprint" "zudo-pd:C0805"
 				(at 0 -7.62 0)
 				(effects
 					(font
@@ -377,7 +377,7 @@
 					)
 				)
 			)
-			(property "Footprint" "easyeda2kicad:C0603"
+			(property "Footprint" "zudo-pd:C0603"
 				(at 0 68.58 0)
 				(effects
 					(font
@@ -521,7 +521,7 @@
 					)
 				)
 			)
-			(property "Footprint" "easyeda2kicad:QFN-20_L3.0-W3.0-P0.40-BL-EP1.7"
+			(property "Footprint" "zudo-pd:QFN-20_L3.0-W3.0-P0.40-BL-EP1.7"
 				(at 0 -33.02 0)
 				(effects
 					(font
@@ -981,7 +981,7 @@
 					)
 				)
 			)
-			(property "Footprint" "easyeda2kicad:C1206"
+			(property "Footprint" "zudo-pd:C1206"
 				(at 0 -7.62 0)
 				(effects
 					(font
@@ -1125,7 +1125,7 @@
 					)
 				)
 			)
-			(property "Footprint" "easyeda2kicad:R0603"
+			(property "Footprint" "zudo-pd:R0603"
 				(at 0 -7.62 0)
 				(effects
 					(font
@@ -1232,7 +1232,7 @@
 					)
 				)
 			)
-			(property "Footprint" "easyeda2kicad:TYPE-C-SMD_TYPE-C-6P"
+			(property "Footprint" "zudo-pd:TYPE-C-SMD_TYPE-C-6P"
 				(at 0 -12.7 0)
 				(effects
 					(font
@@ -2119,7 +2119,7 @@
 				)
 			)
 		)
-		(property "Footprint" "easyeda2kicad:TYPE-C-SMD_TYPE-C-6P"
+		(property "Footprint" "zudo-pd:TYPE-C-SMD_TYPE-C-6P"
 			(at 53.34 41.91 0)
 			(effects
 				(font
@@ -2210,7 +2210,7 @@
 				)
 			)
 		)
-		(property "Footprint" "easyeda2kicad:R0603"
+		(property "Footprint" "zudo-pd:R0603"
 			(at 118.11 69.85 0)
 			(effects
 				(font
@@ -2486,7 +2486,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "easyeda2kicad:C1206"
+		(property "Footprint" "zudo-pd:C1206"
 			(at 105.41 68.58 0)
 			(effects
 				(font
@@ -2630,7 +2630,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "easyeda2kicad:C0805"
+		(property "Footprint" "zudo-pd:C0805"
 			(at 115.57 68.58 0)
 			(effects
 				(font
@@ -2708,7 +2708,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "easyeda2kicad:R0603"
+		(property "Footprint" "zudo-pd:R0603"
 			(at 93.98 68.58 0)
 			(effects
 				(font
@@ -2919,7 +2919,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "easyeda2kicad:C0603"
+		(property "Footprint" "zudo-pd:C0603"
 			(at 161.29 144.78 0)
 			(effects
 				(font
@@ -2997,7 +2997,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "easyeda2kicad:R0603"
+		(property "Footprint" "zudo-pd:R0603"
 			(at 85.09 68.58 0)
 			(effects
 				(font
@@ -3404,7 +3404,7 @@
 				)
 			)
 		)
-		(property "Footprint" "easyeda2kicad:QFN-20_L3.0-W3.0-P0.40-BL-EP1.7"
+		(property "Footprint" "zudo-pd:QFN-20_L3.0-W3.0-P0.40-BL-EP1.7"
 			(at 152.4 96.52 0)
 			(effects
 				(font
