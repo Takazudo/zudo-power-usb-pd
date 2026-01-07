@@ -48,8 +48,8 @@ Input Capacitors:                    Regulator IC:                    Output Cap
 
 **Characteristics:**
 
-- **Low ESR** (Equivalent Series Resistance) < 10mΩ
-- **Low ESL** (Equivalent Series Inductance) < 1nH
+- **Low ESR** (Equivalent Series Resistance) &lt; 10mΩ
+- **Low ESL** (Equivalent Series Inductance) &lt; 1nH
 - **Fast response** to high-frequency noise
 - **Small physical size**
 
@@ -259,7 +259,7 @@ IC Output ──┬── 5cm trace (~50nH inductance) ── Ceramic cap ──
 
 **At 10MHz with 5cm trace:** 3Ω impedance blocks oscillation current from reaching the capacitor!
 
-**If ceramic cap is VERY CLOSE (<2mm):**
+**If ceramic cap is VERY CLOSE (&lt;2mm):**
 
 ```
 IC Output ──┬── 2mm trace (~2nH) ── Ceramic cap ── GND
@@ -545,13 +545,13 @@ Too high ESR → Poor transient response
 **Typical requirements (from datasheets):**
 
 - LM78xx: Output cap ESR should be 0.1Ω - 10Ω
-- Pure ceramic (ESR < 10mΩ) can cause instability
+- Pure ceramic (ESR &lt; 10mΩ) can cause instability
 - Electrolytic + ceramic combination provides optimal ESR
 
 **Our design:**
 
 - C21/C23/C25 (electrolytic 470µF): ESR ~100mΩ (provides damping)
-- C17/C18/C19 (ceramic 100nF): ESR < 10mΩ (provides HF decoupling)
+- C17/C18/C19 (ceramic 100nF): ESR &lt; 10mΩ (provides HF decoupling)
 - **Together:** Optimal combination for stability and performance
 
 ### Load Transient Response
@@ -577,16 +577,16 @@ With proper capacitors:
 ### What to Check on PCB
 
 1. **Ceramic placement:** Measure distance from cap to IC pin
-   - ✓ Goal: < 5mm
-   - ✗ Problem: > 10mm
+   - ✓ Goal: &lt; 5mm
+   - ✗ Problem: &gt; 10mm
 
 2. **Output ripple:** Measure with oscilloscope (20MHz bandwidth)
-   - ✓ Goal: < 1mVp-p at full load
-   - ✗ Problem: > 10mVp-p (missing/far ceramic caps)
+   - ✓ Goal: &lt; 1mVp-p at full load
+   - ✗ Problem: &gt; 10mVp-p (missing/far ceramic caps)
 
 3. **Load transient:** Step load from 0% to 100%
-   - ✓ Goal: < 100mV deviation, < 50µs recovery
-   - ✗ Problem: > 500mV deviation (missing bulk caps)
+   - ✓ Goal: &lt; 100mV deviation, &lt; 50µs recovery
+   - ✗ Problem: &gt; 500mV deviation (missing bulk caps)
 
 4. **Oscillation check:** Probe output with 100MHz scope, no load
    - ✓ Goal: Clean DC, no oscillation
@@ -606,7 +606,7 @@ With proper capacitors:
 ## Key Takeaways
 
 1. **Always use BOTH ceramic and electrolytic** - they work together across different frequencies
-2. **Ceramic placement is CRITICAL** - must be right next to IC pins (< 5mm)
+2. **Ceramic placement is CRITICAL** - must be right next to IC pins (&lt; 5mm)
 3. **Different values for input/output** - input handles more noise (470nF), output is cleaner (100nF)
 4. **Electrolytic provides bulk storage** - placement less critical (10-50mm OK)
 5. **Negative rail polarity** - don't forget to reverse electrolytic polarity!
