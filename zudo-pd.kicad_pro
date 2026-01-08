@@ -225,10 +225,6 @@
           "drill": 0.0
         },
         {
-          "diameter": 0.2,
-          "drill": 0.1
-        },
-        {
           "diameter": 0.6,
           "drill": 0.3
         },
@@ -246,7 +242,11 @@
         },
         {
           "diameter": 4.0,
-          "drill": 3.2
+          "drill": 1.8
+        },
+        {
+          "diameter": 8.0,
+          "drill": 0.5
         }
       ],
       "zones_allow_external_fillets": false
@@ -528,7 +528,7 @@
       "gencad": "",
       "idf": "",
       "netlist": "zudo-pd.net",
-      "plot": "",
+      "plot": "gerbers/",
       "pos_files": "",
       "specctra_dsn": "",
       "step": "",
