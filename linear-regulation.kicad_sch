@@ -5804,7 +5804,7 @@
 		)
 	)
 	(symbol
-		(lib_id "zudo-pd:FC-2012HRK-620D")
+		(lib_id "zudo-pd:19-217_GHC-YR1S2_3T")
 		(at 213.36 86.36 180)
 		(unit 1)
 		(exclude_from_sim no)
@@ -5829,7 +5829,7 @@
 				)
 			)
 		)
-		(property "Footprint" "zudo-pd:LED0805-R-RD"
+		(property "Footprint" "zudo-pd:LED0603-RD"
 			(at 213.36 78.74 0)
 			(effects
 				(font
@@ -5838,7 +5838,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://lcsc.com/product-detail/Light-Emitting-Diodes-LED_Red-LED-SMDLED-80-180mcd_C84256.html"
+		(property "Datasheet" "https://lcsc.com/product-detail/C2286.html"
 			(at 213.36 76.2 0)
 			(effects
 				(font
@@ -5856,7 +5856,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC Part" "C84256"
+		(property "LCSC Part" "C2286"
 			(at 213.36 73.66 0)
 			(effects
 				(font
