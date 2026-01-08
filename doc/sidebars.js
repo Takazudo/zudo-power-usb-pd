@@ -21,6 +21,7 @@ const sidebars = {
     'inbox/overview',
     'inbox/circuit-diagrams',
     'inbox/footprint-preview',
+    'inbox/mechanical-design',
     'inbox/quick-reference',
   ],
   componentsSidebar: [
