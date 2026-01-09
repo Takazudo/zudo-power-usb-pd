@@ -25,6 +25,7 @@
   "inbox/mechanical-design": "Mechanical Design",
   "inbox/overview": "Project Overview",
   "inbox/quick-reference": "Quick Reference",
+  "inbox/usb-pd-adapter": "USB-PD AC Adapter",
   "learning/buck-converter-feedback": "How Buck Converters Work: Feedback Control Explained",
   "learning/ch224d-usb-pd-controller": "CH224D USB PD Sink Controller",
   "learning/eurorack-power-distribution": "Eurorack Power Distribution Best Practices",

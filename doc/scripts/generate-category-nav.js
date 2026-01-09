@@ -2,6 +2,7 @@
 /**
  * Generate category-nav.json for auto-generating navigation lists in category index pages
  * Separate from generate-doc-titles.js - this is a standalone feature
+ * Supports nested subcategories with ul > li > ul > li structure
  */
 
 const fs = require('fs');
@@ -11,21 +12,32 @@ const matter = require('gray-matter');
 const DOCS_DIR = path.join(__dirname, '../docs');
 const OUTPUT_FILE = path.join(__dirname, '../src/data/category-nav.json');
 
-// Categories to generate navigation for
-const CATEGORIES = ['inbox', 'components', 'learning', 'how-to', 'misc'];
+// Top-level categories and their subcategories
+// Add subcategory folder names to the array to enable nested navigation
+const CATEGORY_STRUCTURE = {
+  inbox: [],
+  components: [],
+  learning: [],
+  'how-to': [],
+  misc: [],
+};
 
 /**
- * Find all .md and .mdx files in a specific category directory
+ * Find all .md and .mdx files in a specific directory (non-recursive)
  */
-function findMarkdownFiles(categoryDir) {
-  if (!fs.existsSync(categoryDir)) {
+function findMarkdownFiles(dirPath) {
+  if (!fs.existsSync(dirPath)) {
     return [];
   }
 
-  const files = fs.readdirSync(categoryDir);
+  const files = fs.readdirSync(dirPath);
   return files
-    .filter((file) => file.endsWith('.md') || file.endsWith('.mdx'))
-    .map((file) => path.join(categoryDir, file));
+    .filter((file) => {
+      const filePath = path.join(dirPath, file);
+      const stat = fs.statSync(filePath);
+      return stat.isFile() && (file.endsWith('.md') || file.endsWith('.mdx'));
+    })
+    .map((file) => path.join(dirPath, file));
 }
 
 /**
@@ -74,9 +86,9 @@ function extractSidebarPosition(filePath) {
 /**
  * Get doc ID from file path (relative to docs dir, without extension)
  */
-function getDocId(filePath, category) {
-  const fileName = path.basename(filePath).replace(/\.(md|mdx)$/, '');
-  return `${category}/${fileName}`;
+function getDocId(filePath) {
+  const relativePath = path.relative(DOCS_DIR, filePath);
+  return relativePath.replace(/\.(md|mdx)$/, '').replace(/\\/g, '/');
 }
 
 /**
@@ -87,32 +99,96 @@ function isIndexFile(filePath) {
   return fileName === 'index.md' || fileName === 'index.mdx';
 }
 
+/**
+ * Get pages for a directory
+ */
+function getPagesForDirectory(dirPath) {
+  const files = findMarkdownFiles(dirPath);
+
+  return files
+    .filter((filePath) => !isIndexFile(filePath))
+    .map((filePath) => {
+      const docId = getDocId(filePath);
+      const title = extractTitle(filePath);
+      const position = extractSidebarPosition(filePath);
+
+      return {
+        docId,
+        title: title || docId,
+        position,
+      };
+    })
+    .sort((a, b) => a.position - b.position);
+}
+
+/**
+ * Get index file info for a directory
+ */
+function getIndexInfo(dirPath) {
+  const indexMd = path.join(dirPath, 'index.md');
+  const indexMdx = path.join(dirPath, 'index.mdx');
+
+  let indexPath = null;
+  if (fs.existsSync(indexMdx)) {
+    indexPath = indexMdx;
+  } else if (fs.existsSync(indexMd)) {
+    indexPath = indexMd;
+  }
+
+  if (!indexPath) {
+    return null;
+  }
+
+  const docId = getDocId(indexPath);
+  const title = extractTitle(indexPath);
+  const position = extractSidebarPosition(indexPath);
+
+  return {
+    docId,
+    title: title || docId,
+    position,
+  };
+}
+
 function main() {
   console.log('Generating category-nav.json...');
 
   const categoryNav = {};
 
-  CATEGORIES.forEach((category) => {
+  Object.entries(CATEGORY_STRUCTURE).forEach(([category, subcategories]) => {
     const categoryDir = path.join(DOCS_DIR, category);
-    const files = findMarkdownFiles(categoryDir);
+    const pages = getPagesForDirectory(categoryDir);
 
-    const pages = files
-      .filter((filePath) => !isIndexFile(filePath)) // Exclude index files
-      .map((filePath) => {
-        const docId = getDocId(filePath, category);
-        const title = extractTitle(filePath);
-        const position = extractSidebarPosition(filePath);
+    const subcats = subcategories
+      .map((subcat) => {
+        const subcatDir = path.join(categoryDir, subcat);
+        const indexInfo = getIndexInfo(subcatDir);
+        const subcatPages = getPagesForDirectory(subcatDir);
+
+        if (!indexInfo && subcatPages.length === 0) {
+          return null;
+        }
 
         return {
-          docId,
-          title: title || docId,
-          position,
+          key: subcat,
+          title: indexInfo?.title || subcat,
+          docId: indexInfo?.docId || `${category}/${subcat}/index`,
+          position: indexInfo?.position || 999,
+          pages: subcatPages,
         };
       })
-      .sort((a, b) => a.position - b.position); // Sort by sidebar_position
+      .filter(Boolean)
+      .sort((a, b) => a.position - b.position);
 
-    categoryNav[category] = pages;
-    console.log(`  ${category}: ${pages.length} pages`);
+    categoryNav[category] = {
+      pages,
+      subcategories: subcats,
+    };
+
+    const totalPages = pages.length + subcats.reduce((sum, s) => sum + s.pages.length, 0);
+    console.log(
+      `  ${category}: ${pages.length} pages, ${subcats.length} subcategories (${totalPages} total)`,
+    );
   });
 
   // Ensure output directory exists
