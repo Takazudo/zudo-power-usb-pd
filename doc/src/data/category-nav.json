@@ -152,6 +152,11 @@
         "position": 4
       },
       {
+        "docId": "learning/usb-pd-vs-traditional-usb",
+        "title": "USB-PD vs Traditional USB: Why Power Hubs Don't Exist",
+        "position": 5
+      },
+      {
         "docId": "learning/usb-type-c-pinout",
         "title": "USB Type-C Pinout and Power Delivery",
         "position": 6

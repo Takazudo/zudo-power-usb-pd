@@ -39,6 +39,7 @@
   "learning/protection-fuse-strategy": "Protection Fuse Strategy: Multi-Stage Design",
   "learning/transformer-polarity-flyback": "Transformer Polarity & Phasing: Why Direction Matters in Flyback Converters",
   "learning/two-stage-dc-dc-ldo-architecture": "Two-Stage DC-DC + LDO Power Supply Architecture for Low-Noise Audio",
+  "learning/usb-pd-vs-traditional-usb": "USB-PD vs Traditional USB: Why Power Hubs Don't Exist",
   "learning/usb-type-c-pinout": "USB Type-C Pinout and Power Delivery",
   "misc/index": "Misc",
   "misc/lm2586sx-adj": "[outdated] LM2586SX-ADJ Flyback Converter",
