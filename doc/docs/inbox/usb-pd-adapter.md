@@ -202,21 +202,21 @@ Each zudo-PD unit requires approximately **40W at 15V** (15V × 2.5A with some m
 
 #### For 2 zudo-PD Units
 
-| Brand      | Model                                                                                           | Power | Ports               | Simultaneous Output | Price |
-| ---------- | ----------------------------------------------------------------------------------------------- | ----- | ------------------- | ------------------- | ----- |
-| **Anker**  | [Prime 200W (A2683)](https://www.anker.com/products/a2683-anker-prime-charger-200w-6-ports-gan) | 200W  | 4× USB-C            | 100W + 100W ✅      | ~$90  |
-| **UGREEN** | [Nexode 200W Desktop](https://us.ugreen.com/products/ugreen-nexode-200w-usb-c-desktop-charger)  | 200W  | 4× USB-C + 2× USB-A | 100W + 100W ✅      | ~$100 |
-| **UGREEN** | [Nexode 100W](https://www.amazon.com/UGREEN-100W-USB-Multiport-Charger/dp/B091Z6JNX4)           | 100W  | 3× USB-C + 1× USB-A | 65W + 30W ⚠️        | ~$60  |
+| Brand      | Model                                                                                          | Power | Ports               | Simultaneous Output | Price |
+| ---------- | ---------------------------------------------------------------------------------------------- | ----- | ------------------- | ------------------- | ----- |
+| **Anker**  | [Prime 200W (A2683)](https://www.amazon.co.jp/dp/B0D3GG4M9N)                                   | 200W  | 4× USB-C            | 100W + 100W ✅      | ~$90  |
+| **UGREEN** | [Nexode 200W Desktop](https://us.ugreen.com/products/ugreen-nexode-200w-usb-c-desktop-charger) | 200W  | 4× USB-C + 2× USB-A | 100W + 100W ✅      | ~$100 |
+| **UGREEN** | [Nexode 100W](https://www.amazon.com/UGREEN-100W-USB-Multiport-Charger/dp/B091Z6JNX4)          | 100W  | 3× USB-C + 1× USB-A | 65W + 30W ⚠️        | ~$60  |
 
 **Best Choice for 2 units:** **Anker Prime 200W** - Well documented, proven 100W + 100W simultaneous output on two USB-C ports.
 
 #### For 3 zudo-PD Units
 
-| Brand      | Model                                                                                           | Power | Ports               | Notes                            |
-| ---------- | ----------------------------------------------------------------------------------------------- | ----- | ------------------- | -------------------------------- |
-| **Anker**  | [Prime 250W](https://www.anker.com/products/a2345-anker-prime-charger-250w-6-ports-ganprime)    | 250W  | 4× USB-C + 2× USB-A | Maximum headroom                 |
-| **Anker**  | [Prime 200W (A2683)](https://www.anker.com/products/a2683-anker-prime-charger-200w-6-ports-gan) | 200W  | 4× USB-C            | 200W ÷ 3 = 66W each (sufficient) |
-| **UGREEN** | [Nexode 200W Desktop](https://us.ugreen.com/products/ugreen-nexode-200w-usb-c-desktop-charger)  | 200W  | 6 ports             | Likely sufficient for 3 units    |
+| Brand      | Model                                                                                          | Power | Ports               | Notes                            |
+| ---------- | ---------------------------------------------------------------------------------------------- | ----- | ------------------- | -------------------------------- |
+| **Anker**  | [Prime 250W](https://www.anker.com/products/a2345-anker-prime-charger-250w-6-ports-ganprime)   | 250W  | 4× USB-C + 2× USB-A | Maximum headroom                 |
+| **Anker**  | [Prime 200W (A2683)](https://www.amazon.co.jp/dp/B0D3GG4M9N)                                   | 200W  | 4× USB-C            | 200W ÷ 3 = 66W each (sufficient) |
+| **UGREEN** | [Nexode 200W Desktop](https://us.ugreen.com/products/ugreen-nexode-200w-usb-c-desktop-charger) | 200W  | 6 ports             | Likely sufficient for 3 units    |
 
 **Note:** Verify each port maintains 15V when 3 devices are connected. Anker provides detailed power distribution specs via QR code in the manual.
 
