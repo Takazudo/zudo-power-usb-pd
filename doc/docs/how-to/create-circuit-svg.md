@@ -147,7 +147,7 @@ print("✓ Buck converter diagram generated with transparent background")
 
 ```bash
 # Run the Python script
-cd /Users/takazudo/repos/personal/zudo-power-usb-pd/diagram-sources
+cd /Users/takazudo/repos/personal/zudo-pd/diagram-sources
 python3 buck-u2-diagram.py
 
 # Output: SVG saved to /doc/docs/_fragments/buck-u2-diagram.svg
@@ -368,14 +368,14 @@ elm.Resistor().label('R1\n10kΩ', loc='top', ofst=0.2)
 # Example: /diagram-sources/buck-u2-diagram.py
 
 # 4. Execute Python script
-cd /Users/takazudo/repos/personal/zudo-power-usb-pd/diagram-sources
+cd /Users/takazudo/repos/personal/zudo-pd/diagram-sources
 python3 buck-u2-diagram.py
 
 # 5. Verify SVG output
 ls -l doc/docs/_fragments/buck-u2-diagram.svg
 
 # 6. Test in documentation
-cd /Users/takazudo/repos/personal/zudo-power-usb-pd/doc
+cd /Users/takazudo/repos/personal/zudo-pd/doc
 npm start
 # Open: http://localhost:3000/do../components/lm2596s-adj
 

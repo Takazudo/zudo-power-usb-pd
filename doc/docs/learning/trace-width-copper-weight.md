@@ -315,5 +315,5 @@ Consider 2oz copper when:
 ---
 
 **Document created:** 2026-01-11
-**Applies to:** zudo-power-usb-pd PCB design
+**Applies to:** zudo-pd PCB design
 **Design decision:** 1oz copper, 0.7mm power traces for 3A USB-PD input

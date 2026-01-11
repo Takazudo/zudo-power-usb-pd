@@ -47,7 +47,7 @@ easyeda2kicad --version
 
 **Don't want to generate footprints yourself?** Download the complete footprint library directly from GitHub:
 
-**🔗 [Download Footprints from GitHub](https://github.com/Takazudo/zudo-power-usb-pd/tree/main/footprints)**
+**🔗 [Download Footprints from GitHub](https://github.com/Takazudo/zudo-pd/tree/main/footprints)**
 
 The `/footprints/kicad/` directory contains all `.kicad_mod` files ready to use in your KiCad project.
 
@@ -172,15 +172,15 @@ easyeda2kicad --lcsc_id C502527 --footprint --symbol
 
 ```bash
 # Create symbols directory
-mkdir -p /Users/takazudo/repos/personal/zudo-power-usb-pd/symbols
+mkdir -p /Users/takazudo/repos/personal/zudo-pd/symbols
 
 # Copy footprints
 cp ~/Documents/Kicad/easyeda2kicad/easyeda2kicad.pretty/*.kicad_mod \
-   /Users/takazudo/repos/personal/zudo-power-usb-pd/footprints/kicad/
+   /Users/takazudo/repos/personal/zudo-pd/footprints/kicad/
 
 # Copy symbols
 cp ~/Documents/Kicad/easyeda2kicad/easyeda2kicad.kicad_sym \
-   /Users/takazudo/repos/personal/zudo-power-usb-pd/symbols/zudo-pd.kicad_sym
+   /Users/takazudo/repos/personal/zudo-pd/symbols/zudo-pd.kicad_sym
 ```
 
 ### 3. Add Libraries to KiCad
@@ -206,10 +206,10 @@ cp ~/Documents/Kicad/easyeda2kicad/easyeda2kicad.kicad_sym \
 
 ```bash
 # Check footprints
-ls -l /Users/takazudo/repos/personal/zudo-power-usb-pd/footprints/kicad/*.kicad_mod
+ls -l /Users/takazudo/repos/personal/zudo-pd/footprints/kicad/*.kicad_mod
 
 # Check symbols
-ls -l /Users/takazudo/repos/personal/zudo-power-usb-pd/symbols/zudo-pd.kicad_sym
+ls -l /Users/takazudo/repos/personal/zudo-pd/symbols/zudo-pd.kicad_sym
 ```
 
 ## Footprint File Format

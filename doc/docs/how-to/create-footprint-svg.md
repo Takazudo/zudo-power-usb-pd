@@ -51,7 +51,7 @@ export PATH="/Applications/KiCad/KiCad.app/Contents/MacOS:$PATH"
 KiCad CLI requires footprints in a `.pretty` directory structure:
 
 ```bash
-cd /Users/takazudo/repos/personal/zudo-power-usb-pd/footprints/kicad
+cd /Users/takazudo/repos/personal/zudo-pd/footprints/kicad
 
 # Create .pretty directory
 mkdir -p zudo-power.pretty
@@ -65,7 +65,7 @@ cp *.kicad_mod zudo-power.pretty/
 Export all footprints to SVG format with black-and-white rendering:
 
 ```bash
-cd /Users/takazudo/repos/personal/zudo-power-usb-pd/footprints
+cd /Users/takazudo/repos/personal/zudo-pd/footprints
 
 # Export SVGs
 kicad-cli fp export svg kicad/zudo-power.pretty -o images --black-and-white
@@ -78,7 +78,7 @@ kicad-cli fp export svg kicad/zudo-power.pretty -o images --black-and-white
 Remove KiCad placeholder text (REF**, VAL**) from SVGs using the cleanup script:
 
 ```bash
-cd /Users/takazudo/repos/personal/zudo-power-usb-pd/footprints
+cd /Users/takazudo/repos/personal/zudo-pd/footprints
 
 # Run cleanup script
 python3 scripts/clean-svg-refs.py images/
@@ -93,7 +93,7 @@ The script removes:
 ### Step 4: Copy to Documentation
 
 ```bash
-cd /Users/takazudo/repos/personal/zudo-power-usb-pd/footprints
+cd /Users/takazudo/repos/personal/zudo-pd/footprints
 
 # Copy cleaned SVGs to documentation fragments
 cp images/*.svg ../doc/docs/_fragments/footprints/
@@ -104,7 +104,7 @@ cp images/*.svg ../doc/docs/_fragments/footprints/
 Check that SVGs are clean:
 
 ```bash
-cd /Users/takazudo/repos/personal/zudo-power-usb-pd/doc/docs/_fragments/footprints
+cd /Users/takazudo/repos/personal/zudo-pd/doc/docs/_fragments/footprints
 
 # Quick check: should find NO instances of REF** in SVG files
 grep -l "REF\*\*" *.svg
@@ -135,7 +135,7 @@ project/
 
 ### Location
 
-`/Users/takazudo/repos/personal/zudo-power-usb-pd/footprints/scripts/clean-svg-refs.py`
+`/Users/takazudo/repos/personal/zudo-pd/footprints/scripts/clean-svg-refs.py`
 
 ### What It Does
 
@@ -231,7 +231,7 @@ footprints/kicad/QFN-20_L3.0-W3.0-P0.40-BL-EP1.7.kicad_mod
 
 ```bash
 # 1. Navigate to footprints directory
-cd /Users/takazudo/repos/personal/zudo-power-usb-pd/footprints
+cd /Users/takazudo/repos/personal/zudo-pd/footprints
 
 # 2. Create .pretty directory structure
 mkdir -p kicad/zudo-power.pretty

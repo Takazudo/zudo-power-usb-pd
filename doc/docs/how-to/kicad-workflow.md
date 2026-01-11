@@ -7,7 +7,7 @@ Complete workflow for creating a PCB design in KiCad, from schematic to manufact
 **CRITICAL:** Before starting, ensure your KiCad project files are located at the repository root:
 
 ```
-zudo-power-usb-pd/          ← Repository root
+zudo-pd/          ← Repository root
 ├── zudo-pd.kicad_pro       ← Project file must be here
 ├── zudo-pd.kicad_sch       ← Schematic file
 ├── zudo-pd.kicad_pcb       ← PCB file (created later)
@@ -203,7 +203,7 @@ cp ~/Documents/Kicad/easyeda2kicad/easyeda2kicad.pretty/*.kicad_mod ./footprints
 **Project structure:**
 
 ```
-zudo-power-usb-pd/          ← Repository root
+zudo-pd/          ← Repository root
 ├── zudo-pd.kicad_pro       ← KiCad project file should be here
 ├── zudo-pd.kicad_sch       ← Schematic file
 ├── zudo-pd.kicad_pcb       ← PCB file

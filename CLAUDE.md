@@ -150,8 +150,8 @@ cp ~/Documents/Kicad/easyeda2kicad/easyeda2kicad.kicad_sym ./symbols/zudo-pd.kic
 ```
 
 **For users**: Download directly from GitHub:
-- [Footprints](https://github.com/Takazudo/zudo-power-usb-pd/tree/main/footprints)
-- [Symbols](https://github.com/Takazudo/zudo-power-usb-pd/tree/main/symbols)
+- [Footprints](https://github.com/Takazudo/zudo-pd/tree/main/footprints)
+- [Symbols](https://github.com/Takazudo/zudo-pd/tree/main/symbols)
 
 ### Exporting SVG Files for Documentation (Manual Workflow)
 

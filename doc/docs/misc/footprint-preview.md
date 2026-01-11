@@ -349,7 +349,7 @@ All footprints in this project were downloaded using [easyeda2kicad.py](https://
 
 ### Download Pre-Generated Footprints
 
-**🔗 [Download all footprints from GitHub](https://github.com/Takazudo/zudo-power-usb-pd/tree/main/footprints)**
+**🔗 [Download all footprints from GitHub](https://github.com/Takazudo/zudo-pd/tree/main/footprints)**
 
 The `/footprints/kicad/` directory contains all `.kicad_mod` files ready for use.
 

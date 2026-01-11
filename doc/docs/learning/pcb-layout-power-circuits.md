@@ -729,5 +729,5 @@ Best of both worlds! ✨
 ---
 
 **Document created:** 2026-01-04
-**Applies to:** All power circuits in zudo-power-usb-pd project
+**Applies to:** All power circuits in zudo-pd project
 **Reference circuits:** Diagram2, 3, 4 (switching), Diagram5, 6, 7 (linear)
