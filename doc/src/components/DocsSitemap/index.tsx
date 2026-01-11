@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import sidebars from '@site/sidebars';
 import docTitles from '@site/src/data/doc-titles.json';
 
@@ -36,13 +37,13 @@ function generateLabel(sidebarId: string): string {
 /**
  * Render a single sidebar item (doc link or category)
  */
-function renderSidebarItem(item: SidebarItem): ReactNode {
+function renderSidebarItem(item: SidebarItem, docsBaseUrl: string): ReactNode {
   // String item (doc ID)
   if (typeof item === 'string') {
     const title = docTitles[item as keyof typeof docTitles] || item;
     return (
       <li key={item}>
-        <a href={`/docs/${item}`}>{title}</a>
+        <a href={`${docsBaseUrl}${item}`}>{title}</a>
       </li>
     );
   }
@@ -58,7 +59,7 @@ function renderSidebarItem(item: SidebarItem): ReactNode {
     return (
       <li key={item.label}>
         <strong>{item.label}:</strong>
-        <ul>{item.items.map((subItem: SidebarItem) => renderSidebarItem(subItem))}</ul>
+        <ul>{item.items.map((subItem: SidebarItem) => renderSidebarItem(subItem, docsBaseUrl))}</ul>
       </li>
     );
   }
@@ -72,6 +73,9 @@ function renderSidebarItem(item: SidebarItem): ReactNode {
 }
 
 export default function DocsSitemap(): ReactNode {
+  // Get the base URL for docs (e.g., /pj/zudo-pd/docs/)
+  const docsBaseUrl = useBaseUrl('/docs/');
+
   // Auto-generate sidebar list from sidebars.js (preserves object key order)
   const sidebarEntries = Object.entries(sidebars);
 
@@ -107,7 +111,7 @@ export default function DocsSitemap(): ReactNode {
               {label}
             </summary>
             <ul style={{ marginTop: '0.5rem' }}>
-              {(sidebarItems as SidebarItem[]).map((item) => renderSidebarItem(item))}
+              {(sidebarItems as SidebarItem[]).map((item) => renderSidebarItem(item, docsBaseUrl))}
             </ul>
           </details>
         );

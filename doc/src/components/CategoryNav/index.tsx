@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import categoryNav from '@site/src/data/category-nav.json';
 import styles from './styles.module.css';
 
@@ -33,6 +34,9 @@ interface CategoryNavProps {
  * Supports nested subcategories with ul > li > ul > li structure
  */
 export default function CategoryNav({ category }: CategoryNavProps): ReactNode {
+  // Get the base URL for docs (e.g., /pj/zudo-pd/docs/)
+  const docsBaseUrl = useBaseUrl('/docs/');
+
   const data = categoryNav[category] as CategoryData;
 
   if (!data) {
@@ -50,17 +54,17 @@ export default function CategoryNav({ category }: CategoryNavProps): ReactNode {
     <ul className={styles.navList}>
       {pages.map((page) => (
         <li key={page.docId} className={styles.navItem}>
-          <a href={`/docs/${page.docId}`}>{page.title}</a>
+          <a href={`${docsBaseUrl}${page.docId}`}>{page.title}</a>
         </li>
       ))}
       {subcategories.map((subcat) => (
         <li key={subcat.key} className={styles.navItem}>
-          <a href={`/docs/${subcat.docId}`}>{subcat.title}</a>
+          <a href={`${docsBaseUrl}${subcat.docId}`}>{subcat.title}</a>
           {subcat.pages.length > 0 && (
             <ul className={styles.navList}>
               {subcat.pages.map((page) => (
                 <li key={page.docId} className={styles.navItem}>
-                  <a href={`/docs/${page.docId}`}>{page.title}</a>
+                  <a href={`${docsBaseUrl}${page.docId}`}>{page.title}</a>
                 </li>
               ))}
             </ul>
