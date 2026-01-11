@@ -17,6 +17,11 @@
         "position": 3
       },
       {
+        "docId": "overview/bom",
+        "title": "Bill of Materials (BOM)",
+        "position": 4
+      },
+      {
         "docId": "overview/mechanical-design",
         "title": "Mechanical Design",
         "position": 6
@@ -50,11 +55,6 @@
         "docId": "components/ch224d",
         "title": "CH224D - USB Power Delivery Controller",
         "position": 1
-      },
-      {
-        "docId": "components/bom",
-        "title": "Bill of Materials (BOM)",
-        "position": 2
       },
       {
         "docId": "components/l7812cv",

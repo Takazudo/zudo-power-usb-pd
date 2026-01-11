@@ -1,5 +1,4 @@
 {
-  "components/bom": "Bill of Materials (BOM)",
   "components/ch224d": "CH224D - USB Power Delivery Controller",
   "components/cj7912": "CJ7912 - -12V Negative Linear Regulator",
   "components/faston-terminal": "FASTON 250 PCB Power Terminal",
@@ -39,6 +38,7 @@
   "learning/usb-type-c-pinout": "USB Type-C Pinout and Power Delivery",
   "misc/footprint-preview": "Footprint Preview",
   "misc/index": "Misc",
+  "overview/bom": "Bill of Materials (BOM)",
   "overview/circuit-diagrams": "Circuit Diagrams",
   "overview/index": "Overview",
   "overview/mechanical-design": "Mechanical Design",
