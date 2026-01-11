@@ -402,4 +402,4 @@ Before considering a circuit diagram complete:
 
 - [schemdraw Documentation](https://schemdraw.readthedocs.io/)
 - schemdraw-circuit-generator Skill (Claude Code skill for circuit generation)
-- [Circuit Diagrams Page](/docs/inbox/circuit-diagrams)
+- [Circuit Diagrams Page](/docs/overview/circuit-diagrams)

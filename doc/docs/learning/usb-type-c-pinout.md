@@ -365,7 +365,7 @@ Pin 6 (GND) ──────────→ Pin 0 (GND/EPAD)
 
 - [J1 USB-C Connector Component Page](/docs/components/usb-c-connector) - Full specifications and footprint
 - [CH224D USB-PD Controller](/docs/components/ch224d) - PD negotiation IC
-- [Diagram1: USB-PD Section](/docs/inbox/circuit-diagrams#diagram1-usb-pd-power-supply-section) - Complete circuit diagram
+- [Diagram1: USB-PD Section](/docs/overview/circuit-diagrams#diagram1-usb-pd-power-supply-section) - Complete circuit diagram
 - [Open-Drain PG Pin](/docs/learning/open-drain-pg-pin) - Understanding the Power Good indicator
 
 ## References

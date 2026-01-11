@@ -78,9 +78,9 @@ const config = {
         items: [
           {
             type: 'doc',
-            docId: 'inbox/index',
+            docId: 'overview/index',
             position: 'left',
-            label: 'INBOX',
+            label: 'Overview',
           },
           {
             type: 'doc',
@@ -105,6 +105,12 @@ const config = {
             docId: 'misc/index',
             position: 'left',
             label: 'Misc',
+          },
+          {
+            type: 'doc',
+            docId: 'inbox/index',
+            position: 'left',
+            label: 'INBOX',
           },
         ],
       },

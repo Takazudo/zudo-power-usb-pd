@@ -401,7 +401,7 @@ Sources:
 
 - **Protection Strategy**: `/doc/docs/learning/protection-fuse-strategy.md`
 - **Bill of Materials**: `/doc/docs/components/bom.md`
-- **Circuit Diagrams**: `/doc/docs/inbox/circuit-diagrams.mdx`
+- **Circuit Diagrams**: `/doc/docs/overview/circuit-diagrams.mdx`
 
 ### Further Reading
 

@@ -15,16 +15,14 @@
  @type {import('@docusaurus/plugin-content-docs').SidebarsConfig}
  */
 const sidebars = {
-  inboxSidebar: [
-    'inbox/index',
-    'inbox/current-status',
-    'inbox/overview',
-    'inbox/circuit-diagrams',
-    'inbox/footprint-preview',
-    'inbox/mechanical-design',
-    'inbox/usb-pd-adapter',
-    'inbox/quick-reference',
+  overviewSidebar: [
+    'overview/index',
+    'overview/overview',
+    'overview/circuit-diagrams',
+    'overview/mechanical-design',
+    'overview/usb-pd-adapter',
   ],
+  inboxSidebar: ['inbox/index', 'inbox/current-status', 'inbox/quick-reference'],
   componentsSidebar: [
     'components/index',
     'components/bom',
@@ -66,7 +64,7 @@ const sidebars = {
     'how-to/create-footprint-svg',
     'how-to/create-circuit-svg',
   ],
-  miscSidebar: ['misc/index'],
+  miscSidebar: ['misc/index', 'misc/footprint-preview'],
 };
 
 export default sidebars;

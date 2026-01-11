@@ -413,5 +413,5 @@ Monitor for degradation:
 ## References
 
 - **Protection design**: `/doc/docs/learning/protection-fuse-strategy.md`
-- **Circuit diagram**: [Diagram5 - +12V Linear Regulator](/docs/inbox/circuit-diagrams#diagram5-135v--12v-linear-regulator-l7812-u6)
+- **Circuit diagram**: [Diagram5 - +12V Linear Regulator](/docs/overview/circuit-diagrams#diagram5-135v--12v-linear-regulator-l7812-u6)
 - **JLCPCB Part Page**: https://jlcpcb.com/partdetail/C7529589

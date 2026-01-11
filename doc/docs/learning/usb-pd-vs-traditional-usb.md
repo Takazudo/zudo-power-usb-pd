@@ -193,4 +193,4 @@ For powering multiple zudo-PD units, use a **multi-port USB-PD charger** (not a 
 - Shared ground eliminates ground loops between cases
 - Central MCU manages power allocation
 
-See [USB-PD AC Adapter](/docs/inbox/usb-pd-adapter#multi-case-setup-multiple-zudo-pd-units) for recommended multi-port chargers.
+See [USB-PD AC Adapter](/docs/overview/usb-pd-adapter#multi-case-setup-multiple-zudo-pd-units) for recommended multi-port chargers.

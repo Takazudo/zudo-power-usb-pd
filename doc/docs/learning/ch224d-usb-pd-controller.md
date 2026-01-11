@@ -749,7 +749,7 @@ Our modular synth power supply needs:
 
 - [CH224D Component Page](/docs/components/ch224d) - Full specifications and pinout
 - [J1 USB-C Connector](/docs/components/usb-c-connector) - Connector specifications
-- [Diagram1: USB-PD Section](/docs/inbox/circuit-diagrams#diagram1-usb-pd-power-supply-section) - Complete circuit
+- [Diagram1: USB-PD Section](/docs/overview/circuit-diagrams#diagram1-usb-pd-power-supply-section) - Complete circuit
 - [USB Type-C Pinout](/docs/learning/usb-type-c-pinout) - Understanding USB-C pins
 - [CH224D Datasheet](/datasheets/CH224D-datasheet.pdf) - Official datasheet
 

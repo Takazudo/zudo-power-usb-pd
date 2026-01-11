@@ -258,7 +258,7 @@ npm start
 
 ## Next Steps
 
-- [View Footprint Preview](../inbox/footprint-preview.md) - See all footprints in the documentation
+- [View Footprint Preview](../misc/footprint-preview.md) - See all footprints in the documentation
 - Update component pages to include new footprints
 - Commit changes to git
 

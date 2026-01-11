@@ -188,5 +188,5 @@ This is why the -12V PTC has lower current rating (1.0A) compared to +12V (1.5A)
 ## References
 
 - **Protection design**: `/doc/docs/learning/protection-fuse-strategy.md`
-- **Circuit diagram**: [Diagram7 - -12V Linear Regulator](/docs/inbox/circuit-diagrams#diagram7--135v---12v-linear-regulator-cj7912-u8)
+- **Circuit diagram**: [Diagram7 - -12V Linear Regulator](/docs/overview/circuit-diagrams#diagram7--135v---12v-linear-regulator-cj7912-u8)
 - **JLCPCB Part Page**: https://jlcpcb.com/partdetail/C2830246
