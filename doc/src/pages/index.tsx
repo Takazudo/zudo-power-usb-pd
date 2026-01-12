@@ -36,6 +36,11 @@ export default function Home(): ReactNode {
                       Takazudo Modular
                     </a>
                   </li>
+                  <li>
+                    <a href="https://github.com/Takazudo/zudo-pd" rel="noopener noreferrer">
+                      GitHub Repository
+                    </a>
+                  </li>
                 </ul>
               </section>
 
