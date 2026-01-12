@@ -65,6 +65,9 @@ tab_width_actual = tab_width + printer_fudge;
 // Divider fills the gap between the two pin row slots
 divider_thickness = pin_pitch - slot_width;  // 2.54 - 0.84 = 1.7mm
 
+// Pin hole diameter
+pin_hole_diameter = 0.8;
+
 
 difference() {
     cube([outside_length, outside_width, height]);
@@ -76,20 +79,22 @@ difference() {
         translate([-conn_length_actual/2, -conn_width_actual/2, bottom_thickness])
             cube([conn_length_actual, conn_width_actual, height]);
 
-        //Hole for pin header in base - ROW 1 (tight slot for first pin row)
-        // Centered at -pin_pitch/2 from center (Y offset = -1.27mm)
-        translate([-base_length/2, -pin_pitch/2 - slot_width/2, -0.1])
-            cube([base_length, slot_width, bottom_thickness + 0.2]);
-
-        //Hole for pin header in base - ROW 2 (tight slot for second pin row)
-        // Centered at +pin_pitch/2 from center (Y offset = +1.27mm)
-        translate([-base_length/2, pin_pitch/2 - slot_width/2, -0.1])
-            cube([base_length, slot_width, bottom_thickness + 0.2]);
-
         //Tab (key notch for IDC connector) - extends from bottom plate to top
         //Bottom plate remains intact at tab end (no foot separator)
         translate([-tab_width_actual/2, -outside_width, bottom_thickness])
             cube([tab_width_actual, outside_width, height]);
+
+        //Pin holes (2x8 grid) - 0.8mm diameter at 2.54mm pitch
+        for (col = [0 : n_pins-1]) {
+            for (row = [0 : 1]) {
+                translate([
+                    -pin_pitch*(n_pins-1)/2 + col*pin_pitch,  // X position
+                    -pin_pitch/2 + row*pin_pitch,              // Y position (row 0 and row 1)
+                    -0.1                                        // Z position (through bottom)
+                ])
+                cylinder(d=pin_hole_diameter, h=bottom_thickness+0.2, $fn=16);
+            }
+        }
 
     }
 
