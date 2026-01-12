@@ -11,7 +11,7 @@ This is a hardware project for designing a USB-PD powered modular synthesizer po
 The documentation is automatically deployed to Netlify:
 
 - **Production URL**: https://takazudomodular.com/pj/zudo-pd/
-- **Netlify URL**: https://manual-oxi-one-mk2.netlify.app/pj/zudo-pd/ (rewritten to production URL)
+- **Netlify URL**: https://zudopd.netlify.app/pj/zudo-pd/ (rewritten to production URL)
 - **Base Path**: `/pj/zudo-pd/`
 - **Deployment**: Automatic on every push to `main` branch
 - **Technology**: Docusaurus static site deployed via Netlify CLI on GitHub Actions
