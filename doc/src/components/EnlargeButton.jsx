@@ -1,6 +1,9 @@
 import React from 'react';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 
 export default function EnlargeButton() {
+  const enlargeIconUrl = useBaseUrl('/img/enlarge.svg');
+
   return (
     <div
       style={{
@@ -14,7 +17,7 @@ export default function EnlargeButton() {
       }}
     >
       <img
-        src="/img/enlarge.svg"
+        src={enlargeIconUrl}
         alt="Enlarge"
         style={{
           width: '20px',
