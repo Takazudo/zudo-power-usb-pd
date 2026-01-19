@@ -27,6 +27,9 @@ const sidebars = {
   componentsSidebar: [
     'components/index',
     'components/usb-c-connector',
+    'components/stusb4500',
+    'components/ao3401a',
+    'components/esda25l',
     'components/ch224d',
     'components/lm2596s-adj',
     'components/l7812cv',
