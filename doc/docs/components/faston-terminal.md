@@ -22,10 +22,10 @@ This design uses **4 terminals** for the three power rails plus ground return:
 
 | Terminal | Signal | Purpose              |
 | -------- | ------ | -------------------- |
-| **J3**   | +12V   | Positive 12V output  |
-| **J4**   | -12V   | Negative 12V output  |
-| **J5**   | +5V    | Positive 5V output   |
-| **J6**   | GND    | Common ground return |
+| **J6**   | -12V   | Negative 12V output  |
+| **J7**   | +12V   | Positive 12V output  |
+| **J8**   | +5V    | Positive 5V output   |
+| **J9**   | GND    | Common ground return |
 
 ## Key Specifications
 
@@ -74,10 +74,10 @@ This design uses **4 terminals** for the three power rails plus ground return:
 USB-PD Power Supply                    Busboard
 ┌─────────────────┐                   ┌─────────────────┐
 │                 │   FASTON cable    │                 │
-│  J3 [+12V] ─────┼───────────────────┼─→ +12V rail     │
-│  J4 [-12V] ─────┼───────────────────┼─→ -12V rail     │
-│  J5 [+5V]  ─────┼───────────────────┼─→ +5V rail      │
-│  J6 [GND]  ─────┼───────────────────┼─→ GND plane     │
+│  J6 [-12V] ─────┼───────────────────┼─→ -12V rail     │
+│  J7 [+12V] ─────┼───────────────────┼─→ +12V rail     │
+│  J8 [+5V]  ─────┼───────────────────┼─→ +5V rail      │
+│  J9 [GND]  ─────┼───────────────────┼─→ GND plane     │
 │                 │                   │                 │
 └─────────────────┘                   └─────────────────┘
 ```
@@ -86,10 +86,10 @@ USB-PD Power Supply                    Busboard
 
 | Terminal | Signal | Max Design Current | Terminal Rating | Margin |
 | -------- | ------ | ------------------ | --------------- | ------ |
-| J3       | +12V   | 1.2A               | 7A              | 483%   |
-| J4       | -12V   | 0.8A               | 7A              | 775%   |
-| J5       | +5V    | 0.5A               | 7A              | 1300%  |
-| J6       | GND    | 2.5A (combined)    | 7A              | 180%   |
+| J6       | -12V   | 0.8A               | 7A              | 775%   |
+| J7       | +12V   | 1.2A               | 7A              | 483%   |
+| J8       | +5V    | 0.5A               | 7A              | 1300%  |
+| J9       | GND    | 2.5A (combined)    | 7A              | 180%   |
 
 **Note:** GND terminal carries combined return current from all three rails. Even at maximum load, this is well within the 7A rating.
 

@@ -232,39 +232,41 @@ This stage was upgraded from CH224D to **STUSB4500** for significantly improved 
 - Mouser / Digikey
 - Other electronics distributors
 
-**Eurorack 16-Pin Pinout (Standard):**
+**Eurorack 16-Pin Pinout (Flipped for bottom-facing PCB):**
 
 ```
-  GATE  [16]  [15]  GATE
-  CV    [14]  [13]  CV
-  +5V   [12]  [11]  +5V
-  +12V  [10]  [ 9]  +12V
-  GND   [ 8]  [ 7]  GND
-  GND   [ 6]  [ 5]  GND
-  GND   [ 4]  [ 3]  GND
-  -12V  [ 2]  [ 1]  -12V   ← Red stripe
+  GATE  [ 1]  [ 2]  GATE
+  CV    [ 3]  [ 4]  CV
+  +5V   [ 5]  [ 6]  +5V
+  +12V  [ 7]  [ 8]  +12V
+  n/c   [ 9]  [10]  n/c
+  GND   [11]  [12]  GND
+  n/c   [13]  [14]  n/c
+  -12V  [15]  [16]  -12V   ← Red stripe side
 ```
 
-**Note:** This power supply provides +12V, -12V, +5V, and GND. The CV (pins 13-14) and GATE (pins 15-16) pins are typically unused for power-only applications.
+**Design Note:** The pinout is vertically flipped from the standard Eurorack orientation because the PCB is mounted facing downward. When viewed from the module side (looking up at the PCB), the red stripe (-12V) is at the bottom as expected.
 
-#### FASTON Power Terminals (Busboard Connection)
+**Note:** This power supply provides +12V, -12V, +5V, and GND. The CV (pins 3-4) and GATE (pins 1-2) pins are active but typically unused for power-only applications.
 
-| Symbol    | Part Number                                          | Manufacturer Part Number                            | Description               | Package      | Stock     | Price         | Application           |
-| --------- | ---------------------------------------------------- | --------------------------------------------------- | ------------------------- | ------------ | --------- | ------------- | --------------------- |
-| **J3-J6** | **[C305825](https://jlcpcb.com/partdetail/C305825)** | **[1217754-1](../components/faston-terminal)** (×4) | FASTON 250 PCB Tab 6.35mm | Through-hole | **4,044** | **$0.03 × 4** | Busboard Power Output |
+#### Individual Power Terminals
 
-**FASTON Terminal Configuration:**
+| Symbol    | Part Number                                          | Manufacturer Part Number                            | Description               | Package      | Stock     | Price         | Application             |
+| --------- | ---------------------------------------------------- | --------------------------------------------------- | ------------------------- | ------------ | --------- | ------------- | ----------------------- |
+| **J6-J9** | **[C305825](https://jlcpcb.com/partdetail/C305825)** | **[1217754-1](../components/faston-terminal)** (×4) | FASTON 250 PCB Tab 6.35mm | Through-hole | **4,044** | **$0.03 × 4** | Individual Power Output |
+
+**Individual Terminal Configuration:**
 
 | Terminal | Signal | Max Current |
 | -------- | ------ | ----------- |
-| **J3**   | +12V   | 7A (rated)  |
-| **J4**   | -12V   | 7A (rated)  |
-| **J5**   | +5V    | 7A (rated)  |
-| **J6**   | GND    | 7A (rated)  |
+| **J6**   | -12V   | 7A (rated)  |
+| **J7**   | +12V   | 7A (rated)  |
+| **J8**   | +5V    | 7A (rated)  |
+| **J9**   | GND    | 7A (rated)  |
 
-**Purpose:** Heavy-duty power output for busboard connection. FASTON 250 series terminals support thick gauge wire for low-resistance, low-noise power delivery to multiple Eurorack modules.
+**Purpose:** Individual power output terminals for direct wire connection or busboard connection. FASTON 250 series terminals support thick gauge wire for low-resistance, low-noise power delivery.
 
-**Note:** Requires matching FASTON receptacles on the busboard. Combined GND return current is ~2.5A max (well within 7A rating).
+**Note:** Requires matching FASTON receptacles. Combined GND return current is ~2.5A max (well within 7A rating).
 
 **Stage 5 Subtotal: $0.20** (Header: $0.08 + FASTON × 4: $0.12)
 
