@@ -121,6 +121,128 @@ Before purchasing, check the product page for:
 3. **Safety Certification** - PSE mark for Japan
 4. **Reviews** - Check for stability issues
 
+## CH224D Compatibility with Multi-Port GaN Chargers
+
+### Known Issue: High-Wattage Multi-Port Chargers May Not Work
+
+**Important Discovery:** Some high-wattage multi-port GaN chargers do not work with the CH224D-based zudo-PD, even though they work perfectly with laptops, tablets, and phones.
+
+#### Confirmed Working
+
+| Charger               | Model | Power | Ports    | Status             |
+| --------------------- | ----- | ----- | -------- | ------------------ |
+| **Anker Nano II 65W** | A2663 | 65W   | 1× USB-C | ✅ Works perfectly |
+
+#### Confirmed NOT Working
+
+| Charger              | Model        | Power | Ports               | Status            |
+| -------------------- | ------------ | ----- | ------------------- | ----------------- |
+| **Anker Prime 200W** | A2683        | 200W  | 4× USB-C + 2× USB-A | ❌ All ports fail |
+| **Elecom**           | EC-AC67150BK | 150W  | 3× USB-C + 1× USB-A | ❌ All ports fail |
+
+### Why This Happens
+
+The CH224D is a **simple hardware-only PD sink controller**, while laptops and tablets use **sophisticated software PD stacks**. Multi-port GaN chargers with intelligent power management expect active, responsive PD sinks.
+
+#### Comparison: CH224D vs PC/Tablet PD Controllers
+
+| Aspect               | PC / iPad                             | CH224D                       |
+| -------------------- | ------------------------------------- | ---------------------------- |
+| **PD Controller**    | Full software stack with dedicated IC | Simple hardware-only sink IC |
+| **Negotiation**      | Active, bi-directional communication  | Passive, one-shot request    |
+| **Retries**          | Multiple retry attempts with backoff  | Limited or no retry logic    |
+| **Timing Tolerance** | Flexible, handles delays              | Strict timing requirements   |
+| **Re-negotiation**   | Handles dynamic PDO changes           | May fail on PDO updates      |
+| **Error Recovery**   | Sophisticated error handling          | Falls back to 5V or fails    |
+
+#### How PC/iPad Negotiation Works
+
+1. Detects charger connection
+2. Waits for Source_Capabilities message
+3. If timeout or error, **retries multiple times**
+4. Parses all PDOs including PPS/AVS
+5. Selects optimal voltage/current
+6. Sends Request message
+7. If rejected, **tries alternative PDO**
+8. Monitors for re-negotiation requests
+9. Responds to GetStatus, Alert messages
+
+#### How CH224D Works
+
+1. Detects charger connection
+2. Waits for Source_Capabilities (fixed timeout)
+3. Looks for configured voltage (15V)
+4. Sends single Request message
+5. If fails → falls back to 5V
+6. No active monitoring or re-negotiation
+
+### Root Causes
+
+#### 1. Dynamic Power Management Interference
+
+Multi-port chargers constantly redistribute power as devices connect/disconnect. Features like:
+
+- **Anker PowerIQ / ActiveShield** - Proprietary device detection
+- **Dynamic PDO re-advertisement** - Changes available power in real-time
+- **Intelligent power sharing** - May confuse simple sink controllers
+
+#### 2. Non-Standard Timing
+
+Some high-wattage chargers:
+
+- Output 0V initially until specific conditions are met
+- Have longer negotiation sequences
+- Use stricter CC line detection than USB PD specification requires
+
+#### 3. Missing 5V PDO (Some Chargers)
+
+Some chargers violate USB PD specification by not including 5V as PDO1:
+
+- USB PD spec requires 5V as the first PDO
+- When CH224D receives Source_Capabilities starting at 9V, negotiation fails
+- Device falls back to pre-PD 5V default (insufficient for zudo-PD)
+
+### Symptoms When Charger Is Incompatible
+
+When connecting zudo-PD to an incompatible charger:
+
+1. Only the -12V LED briefly flickers
+2. All LEDs turn off
+3. No output voltage on any rail
+
+**Explanation:** With only 5V input (failed negotiation), the DC-DC converters cannot produce proper voltages. The ICL7660 voltage inverter briefly attempts to invert whatever voltage exists, causing the -12V LED to flicker momentarily.
+
+### Recommendations
+
+#### For Best Compatibility
+
+| Charger Type                     | Compatibility                |
+| -------------------------------- | ---------------------------- |
+| **Single-port PD chargers**      | ✅ Best - Simple negotiation |
+| **Laptop chargers (65W-100W)**   | ✅ Usually works             |
+| **Multi-port chargers &lt;100W** | ⚠️ Test before relying on    |
+| **Multi-port GaN &gt;100W**      | ❌ Often fails               |
+
+#### Recommended Approach
+
+1. **Use a dedicated single-port charger** for zudo-PD
+2. **Test before purchasing** - If possible, test with your specific charger before committing to a setup
+3. **Avoid high-wattage multi-port GaN chargers** unless confirmed working
+
+### Multi-Case Setup Caveat
+
+The [Multi-Case Setup](#multi-case-setup-multiple-zudo-pd-units) section recommends multi-port chargers for ground loop elimination. However, due to this compatibility issue:
+
+- **Preferred:** Use confirmed-working chargers (like Anker Nano II series)
+- **Alternative:** Accept separate adapters with proper ground management
+- **Testing required:** Always test multi-port chargers before relying on them for live performance
+
+### This Is Not a Design Defect
+
+This limitation is inherent to simple PD sink controllers like CH224D. The same issue affects other CH224x-based projects and similar simple sink ICs. The board works correctly - some chargers simply don't support simple sink devices properly.
+
+---
+
 ## Troubleshooting
 
 ### Adapter Not Working
@@ -198,27 +320,42 @@ Each zudo-PD unit requires approximately **40W at 15V** (15V × 2.5A with some m
 2. **Check simultaneous output specs** - Not just total wattage, but per-port when multiple ports are used
 3. **USB Hubs don't work** - Regular USB hubs only provide 5V, not USB-PD
 
-### Recommended Multi-Port Chargers
+### ⚠️ Critical Compatibility Warning
+
+**The multi-port chargers listed below have NOT been tested with zudo-PD.** Based on our testing (see [CH224D Compatibility](#ch224d-compatibility-with-multi-port-gan-chargers)), high-wattage multi-port GaN chargers often fail to work with the CH224D controller.
+
+**Confirmed NOT working:**
+
+- Anker Prime 200W (A2683) - ❌ All ports fail
+- Elecom EC-AC67150BK (150W) - ❌ All ports fail
+
+**Before purchasing any multi-port charger for multi-case setup:**
+
+1. Check if the specific model has been tested with CH224D-based devices
+2. Consider using multiple single-port chargers instead (with ground loop mitigation)
+3. Test before relying on for live performance
+
+### Multi-Port Chargers (Untested - Use at Your Own Risk)
+
+The following chargers have sufficient power specifications but **have not been verified** to work with zudo-PD:
 
 #### For 2 zudo-PD Units
 
-| Brand      | Model                                                                                          | Power | Ports               | Simultaneous Output | Price |
-| ---------- | ---------------------------------------------------------------------------------------------- | ----- | ------------------- | ------------------- | ----- |
-| **Anker**  | [Prime 200W (A2683)](https://www.amazon.co.jp/dp/B0D3GG4M9N)                                   | 200W  | 4× USB-C            | 100W + 100W ✅      | ~$90  |
-| **UGREEN** | [Nexode 200W Desktop](https://us.ugreen.com/products/ugreen-nexode-200w-usb-c-desktop-charger) | 200W  | 4× USB-C + 2× USB-A | 100W + 100W ✅      | ~$100 |
-| **UGREEN** | [Nexode 100W](https://www.amazon.com/UGREEN-100W-USB-Multiport-Charger/dp/B091Z6JNX4)          | 100W  | 3× USB-C + 1× USB-A | 65W + 30W ⚠️        | ~$60  |
-
-**Best Choice for 2 units:** **Anker Prime 200W** - Well documented, proven 100W + 100W simultaneous output on two USB-C ports.
+| Brand      | Model                                                                                          | Power | Ports               | Simultaneous Output | Compatibility            |
+| ---------- | ---------------------------------------------------------------------------------------------- | ----- | ------------------- | ------------------- | ------------------------ |
+| **Anker**  | [Prime 200W (A2683)](https://www.amazon.co.jp/dp/B0D3GG4M9N)                                   | 200W  | 4× USB-C            | 100W + 100W         | ❌ Confirmed NOT working |
+| **UGREEN** | [Nexode 200W Desktop](https://us.ugreen.com/products/ugreen-nexode-200w-usb-c-desktop-charger) | 200W  | 4× USB-C + 2× USB-A | 100W + 100W         | ❓ Untested              |
+| **UGREEN** | [Nexode 100W](https://www.amazon.com/UGREEN-100W-USB-Multiport-Charger/dp/B091Z6JNX4)          | 100W  | 3× USB-C + 1× USB-A | 65W + 30W           | ❓ Untested              |
 
 #### For 3 zudo-PD Units
 
-| Brand      | Model                                                                                          | Power | Ports               | Notes                            |
-| ---------- | ---------------------------------------------------------------------------------------------- | ----- | ------------------- | -------------------------------- |
-| **Anker**  | [Prime 250W](https://www.anker.com/products/a2345-anker-prime-charger-250w-6-ports-ganprime)   | 250W  | 4× USB-C + 2× USB-A | Maximum headroom                 |
-| **Anker**  | [Prime 200W (A2683)](https://www.amazon.co.jp/dp/B0D3GG4M9N)                                   | 200W  | 4× USB-C            | 200W ÷ 3 = 66W each (sufficient) |
-| **UGREEN** | [Nexode 200W Desktop](https://us.ugreen.com/products/ugreen-nexode-200w-usb-c-desktop-charger) | 200W  | 6 ports             | Likely sufficient for 3 units    |
+| Brand      | Model                                                                                          | Power | Ports               | Compatibility            |
+| ---------- | ---------------------------------------------------------------------------------------------- | ----- | ------------------- | ------------------------ |
+| **Anker**  | [Prime 250W](https://www.anker.com/products/a2345-anker-prime-charger-250w-6-ports-ganprime)   | 250W  | 4× USB-C + 2× USB-A | ❓ Untested              |
+| **Anker**  | [Prime 200W (A2683)](https://www.amazon.co.jp/dp/B0D3GG4M9N)                                   | 200W  | 4× USB-C            | ❌ Confirmed NOT working |
+| **UGREEN** | [Nexode 200W Desktop](https://us.ugreen.com/products/ugreen-nexode-200w-usb-c-desktop-charger) | 200W  | 6 ports             | ❓ Untested              |
 
-**Note:** Verify each port maintains 15V when 3 devices are connected. Anker provides detailed power distribution specs via QR code in the manual.
+**Note:** If you find a multi-port charger that works with zudo-PD, please report it so we can update this list.
 
 ### Verification Checklist
 
@@ -229,12 +366,24 @@ Before purchasing a multi-port charger for multi-case setup:
 - [ ] Check reviews for multi-device usage scenarios
 - [ ] Verify power distribution when all ports are used (check manual or QR code specs)
 
-### Alternative: Separate Adapters (Not Recommended)
+### Alternative: Separate Single-Port Adapters
 
-If you must use separate adapters:
+Given the compatibility issues with multi-port GaN chargers, using separate single-port adapters may be more reliable:
 
-1. **Do not connect patch cables between cases** - This creates ground loops
-2. Keep each system completely isolated
-3. Use separate audio interfaces/mixers for each system
+**Pros:**
 
-Using a single multi-port charger is the recommended approach for multi-case modular synth setups.
+- ✅ Confirmed working (Anker Nano II 65W tested)
+- ✅ Simple, predictable PD negotiation
+- ✅ Each unit has dedicated power
+
+**Cons:**
+
+- ⚠️ Potential ground loops when connecting patch cables between cases
+- ⚠️ More wall outlets needed
+
+**Ground Loop Mitigation (if using separate adapters):**
+
+1. **Use balanced audio connections** where possible
+2. **Ground lift on one case** (if your synth supports it)
+3. **Use the same power strip** for all adapters (shared AC ground)
+4. **Avoid connecting patch cables** between separately-powered cases during performance

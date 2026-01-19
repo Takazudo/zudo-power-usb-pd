@@ -66,8 +66,8 @@ tab_width_actual = tab_width + printer_fudge;
 // Divider fills the gap between the two pin row slots
 divider_thickness = pin_pitch - slot_width;  // 2.54 - 0.84 = 1.7mm
 
-// Pin hole diameter - MODIFIED: 1.2mm (0.8mm, 1.0mm were too tight)
-pin_hole_diameter = 1.2;
+// Pin hole diameter - MODIFIED: 1.1mm (0.8mm, 1.0mm too tight, 1.2mm too loose)
+pin_hole_diameter = 1.1;
 
 
 difference() {
@@ -85,7 +85,7 @@ difference() {
         translate([-tab_width_actual/2, -outside_width, bottom_thickness])
             cube([tab_width_actual, outside_width, height]);
 
-        //Pin holes (2x8 grid) - 1.2mm diameter at 2.54mm pitch
+        //Pin holes (2x8 grid) - 1.1mm diameter at 2.54mm pitch
         for (col = [0 : n_pins-1]) {
             for (row = [0 : 1]) {
                 translate([
