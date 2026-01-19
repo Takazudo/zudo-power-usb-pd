@@ -463,7 +463,7 @@
 				(justify left)
 			)
 		)
-		(pin "USB-PD-power OUT" input
+		(pin "VBUS_OUT" input
 			(at 64.77 35.56 0)
 			(uuid "d9eb9448-fff8-4090-a133-0b072c0b5317")
 			(effects
