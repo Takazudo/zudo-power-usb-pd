@@ -4,15 +4,15 @@ sidebar_position: 8
 
 # ESD Protection: How TVS Diodes Save Your Circuit
 
-Understanding how TVS diodes like ESDA25L protect sensitive IC pins from static electricity and voltage spikes.
+Understanding how TVS diodes protect sensitive IC pins from static electricity and voltage spikes.
 
 ## The Question
 
-When looking at the USB-PD input circuit, there's a small component (TVS4) connected to the CC lines:
+When looking at the USB-PD input circuit, there's a small component (D4) connected to the CC lines:
 
-> "What is TVS4 for? Why do the CC lines need special protection?"
+> "What is D4 for? Why do the CC lines need special protection?"
 
-**Short answer**: TVS4 is an ESD protection device that acts like a pressure relief valve - it dumps dangerous voltage spikes to ground before they can destroy the STUSB4500.
+**Short answer**: D4 is an ESD protection device that acts like a pressure relief valve - it dumps dangerous voltage spikes to ground before they can destroy the STUSB4500.
 
 ## What is ESD?
 
@@ -104,56 +104,69 @@ Voltage
 2. **25-27V (breakdown)**: TVS starts conducting, limiting voltage rise
 3. **Above 27V (clamping)**: TVS conducts heavily, dumping current to GND
 
-## The ESDA25L in Our Circuit
+## CC Line ESD Protection
 
-### Circuit connection
+:::info Current Design Uses USBLC6-2SC6
+The v1.1 design uses **[USBLC6-2SC6](../components/usblc6-2sc6)** (D4) instead of ESDA25L for CC line protection. USBLC6-2SC6 provides:
+
+- Lower clamping voltage (~17V vs ~44V)
+- Additional VBUS protection channel
+- Better suited for USB-C applications
+
+The principles below still apply - only the specific component has changed.
+:::
+
+### Circuit connection (USBLC6-2SC6)
 
 ```
-USB-C Connector                    STUSB4500
-      │                                │
- CC1 ─┼────────────┬───────────────────┤ CC1 (pin 2)
-      │            │                   │
- CC2 ─┼────────┬───┼───────────────────┤ CC2 (pin 4)
-      │        │   │                   │
-      │        │   │   TVS4 (ESDA25L)  │
-      │        │   │   ┌──────────┐    │
-      │        │   └───┤ K1 (1)   │    │
-      │        │       │          │    │
-      │        │       │ A  (2)   ├─── GND
-      │        │       │          │    │
-      │        └───────┤ K2 (3)   │    │
-      │                └──────────┘    │
+USB-C Connector        D4 (USBLC6-2SC6)        STUSB4500
+      │               ┌──────────────┐              │
+ CC1 ─┼───────────────┤ 1 (I/O1)     │              │
+      │               │         6    ├──────────────┤ CC1 (pin 2)
+      │               │              │              │
+      │               │ 2 (GND)──GND │              │
+      │               │              │              │
+ CC2 ─┼───────────────┤ 3 (I/O2)     │              │
+      │               │         4    ├──────────────┤ CC2 (pin 4)
+      │               │              │              │
+VBUS ─┼───────────────┤ 5 (VBUS)     │              │
+      │               └──────────────┘              │
 ```
 
 ### Internal structure
 
-The ESDA25L is a **dual TVS** - two diodes in one package:
+The USBLC6-2SC6 is a **dual TVS array** with VBUS protection:
 
 ```
-        CC1                    CC2
-         │                      │
-         │    ┌────────────┐    │
-         └────┤◄   TVS1    │    │
-              │            │    │
-              │     A      ├────┴─── GND
-              │            │
-         ┌────┤◄   TVS2    │
-         │    └────────────┘
-         │
-        CC2
+     I/O1 (1)              I/O1 (6)
+        │                      │
+        └────┬────────────┬────┘
+             │   VBUS(5)  │
+             │     │      │
+        ┌────┴─────┼──────┴────┐
+        │    ─┬─   │     ─┬─   │
+        │   ╲│╱    │    ╲│╱    │
+        │    │     │     │     │
+        ├────┴─────┼─────┴─────┤
+        │          │           │
+        └────┬─────┼──────┬────┘
+             │     │      │
+     I/O2 (3)│    GND(2)  │I/O2 (4)
+             │            │
 
-Each TVS clamps its CC line to GND independently
+Each channel clamps to GND and VBUS independently
 ```
 
-### Key specifications
+### Key specifications (USBLC6-2SC6)
 
-| Parameter             | Value      | Why it matters                          |
-| --------------------- | ---------- | --------------------------------------- |
-| **Working voltage**   | 25V        | CC lines can see up to 22V in USB-PD    |
-| **Breakdown voltage** | 27.6V      | Starts protecting above this            |
-| **Clamping voltage**  | 40V @ 1A   | Maximum voltage IC will see during ESD  |
-| **Capacitance**       | 3pF        | Low enough to not affect CC signaling   |
-| **ESD rating**        | 15kV (HBM) | Survives typical human static discharge |
+| Parameter             | Value       | Why it matters                          |
+| --------------------- | ----------- | --------------------------------------- |
+| **Working voltage**   | 5.25V       | Optimized for USB signal levels         |
+| **Breakdown voltage** | 6V          | Starts protecting above this            |
+| **Clamping voltage**  | 17V @ 1A    | Much lower than ESDA25L (44V)           |
+| **Capacitance**       | 3.5pF       | Low enough to not affect CC signaling   |
+| **ESD rating**        | 15kV (HBM)  | Survives typical human static discharge |
+| **VBUS channel**      | Yes (Pin 5) | Additional protection for power rail    |
 
 ## ESD Event Timeline
 
@@ -164,36 +177,36 @@ Time 0ns:
 ├─ Your finger approaches USB-C plug
 ├─ Static charge: 10,000V
 ├─ CC line voltage: 0V
-└─ TVS4 state: High impedance (invisible)
+└─ D4 state: High impedance (invisible)
 
 Time 1ns:
 ├─ Spark jumps from finger to CC pin
 ├─ CC line voltage shoots up rapidly
 ├─ Heading toward 10,000V!
-└─ TVS4 state: Still high impedance
+└─ D4 state: Still high impedance
 
 Time 2ns:
 ├─ CC line reaches 27V (breakdown voltage)
-├─ TVS4 starts conducting
+├─ D4 starts conducting
 ├─ Current diverts to GND
 └─ Voltage rise slows dramatically
 
 Time 5ns:
 ├─ CC line clamped at ~40V
-├─ TVS4 conducting heavily (amps of current)
+├─ D4 conducting heavily (amps of current)
 ├─ All excess energy dumped to GND
 └─ STUSB4500 sees only 40V spike (survivable!)
 
 Time 100ns:
 ├─ ESD event over
 ├─ CC line returns to normal
-├─ TVS4 returns to high impedance
+├─ D4 returns to high impedance
 └─ Circuit continues working normally ✓
 ```
 
-**Without TVS4**: CC line would reach thousands of volts → STUSB4500 destroyed
+**Without D4**: CC line would reach thousands of volts → STUSB4500 destroyed
 
-**With TVS4**: CC line clamped to 40V → STUSB4500 survives
+**With D4**: CC line clamped to ~17V → STUSB4500 well protected
 
 ## Why 25V Working Voltage?
 
@@ -207,8 +220,8 @@ USB-PD CC lines can see various voltages:
 
 The 25V working voltage ensures:
 
-- TVS4 **doesn't interfere** with normal CC operation (0-22V)
-- TVS4 **does protect** against overvoltage (&gt;27V)
+- D4 **doesn't interfere** with normal CC operation (0-22V)
+- D4 **does protect** against overvoltage (&gt;27V)
 
 ## Why Low Capacitance Matters
 
@@ -259,12 +272,12 @@ ESD travels long trace before clamping ❌
 
 Our circuit has multiple TVS diodes for different protection needs:
 
-| Component | Type    | Protects         | Working Voltage |
-| --------- | ------- | ---------------- | --------------- |
-| **TVS4**  | ESDA25L | CC1, CC2 lines   | 25V             |
-| **TVS1**  | SMAJ15A | VBUS power rail  | 15V             |
-| **TVS2**  | SD05    | +5V output rail  | 5V              |
-| **TVS3**  | SMAJ15A | +12V output rail | 15V             |
+| Component | Type        | Protects         | Working Voltage |
+| --------- | ----------- | ---------------- | --------------- |
+| **D4**    | USBLC6-2SC6 | CC1, CC2, VBUS   | 5.25V           |
+| **TVS1**  | SMAJ15A     | VBUS power rail  | 15V             |
+| **TVS2**  | SD05        | +5V output rail  | 5V              |
+| **TVS3**  | SMAJ15A     | +12V output rail | 15V             |
 
 Each TVS is matched to the voltage of the line it protects.
 
@@ -307,7 +320,8 @@ Each TVS is matched to the voltage of the line it protects.
 
 ## See Also
 
-- [ESDA25L Documentation](../components/esda25l) - Full component specifications
+- [USBLC6-2SC6 Documentation](../components/usblc6-2sc6) - Full component specifications
+- [ESDA25L Documentation](../components/esda25l) - Legacy component (replaced by USBLC6-2SC6)
 - [SMAJ15A Documentation](../components/smaj15a) - VBUS protection TVS
 - [SD05 Documentation](../components/sd05) - 5V rail protection TVS
 - [USB Type-C Pinout](./usb-type-c-pinout) - Understanding CC and other pins

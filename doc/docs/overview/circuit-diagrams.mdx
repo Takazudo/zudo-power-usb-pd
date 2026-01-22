@@ -95,7 +95,7 @@ This section documents the **STUSB4500-based** design (v1.1). The STUSB4500 is U
     │                               │                                   │
     │                               ├──────── Q1 (AO3401A) ─────────────┤
     │                               │          S ←───── D               │
-    │                          R12 (33kΩ)          │                    │
+    │                          R12 (56kΩ)          │                    │
     │                               │              G                    │
     │                               │              │                    │
     │   STUSB4500 (QFN-24)          │              │                    │
@@ -142,13 +142,13 @@ This section documents the **STUSB4500-based** design (v1.1). The STUSB4500 is U
     │   │                    │    │                                     │
     │   └────────────────────┘    │                                     │
     │                             │                                     │
-    │   Optional ESD Protection:  │                                     │
-    │   TVS4 (ESDA25L)            │                                     │
-    │   ┌──────────────┐          │                                     │
-    │   │ K1 ──────────┼──────────┘ (CC1)                               │
-    │   │ K2 ──────────┼──────────── (CC2)                              │
-    │   │ A  ──────────┼── GND                                          │
-    │   └──────────────┘                                                │
+    │   ESD Protection D4 (USBLC6-2SC6):                                 │
+    │   ┌──────────────────────┐                                        │
+    │   │ Pin 1 (I/O1) ────────┼─ USB-C CC1 ─→ Pin 6 (I/O1) ─→ CC1     │
+    │   │ Pin 3 (I/O2) ────────┼─ USB-C CC2 ─→ Pin 4 (I/O2) ─→ CC2     │
+    │   │ Pin 2 (GND)  ────────┼─ GND                                   │
+    │   │ Pin 5 (VBUS) ────────┼─ VBUS_IN                               │
+    │   └──────────────────────┘                                        │
     │                                                                   │
     └───────────────────────────────────────────────────────────────────┘
                                     │
@@ -174,7 +174,7 @@ Power Path with P-Channel MOSFET Load Switch:
                            │
                       R11 (100kΩ)  ← Gate pull-up (default OFF)
                            │
-VBUS_EN_SNK ───┬── R12 (33kΩ) ──┴─── Gate ─── Q1 (AO3401A)
+VBUS_EN_SNK ───┬── R12 (56kΩ) ──┴─── Gate ─── Q1 (AO3401A)
 (from STUSB4500)│                              │    │
                │                            Source Drain
               C35 (100nF)                      │    │
@@ -196,7 +196,7 @@ Why P-Channel MOSFET?
 - Default OFF when gate is pulled to VBUS via R11
 
 Soft-Start Calculation:
-- Time constant: τ = R12 × C35 = 33kΩ × 100nF = 3.3ms
+- Time constant: τ = R12 × C35 = 56kΩ × 100nF = 5.6ms
 - Limits dV/dt during turn-on, reducing inrush current
 ```
 
@@ -308,12 +308,12 @@ Critical Pin Connections:
 
 - `USB-C CC1 (pin A5)` → `STUSB4500 CC1 (pin 2)` → `CC1DB (pin 1)` (tie CC1 and CC1DB together)
 - `USB-C CC2 (pin B5)` → `STUSB4500 CC2 (pin 4)` → `CC2DB (pin 5)` (tie CC2 and CC2DB together)
-- Optional: `TVS4 (ESDA25L)` K1 → CC1, K2 → CC2, A → GND
+- `D4 (USBLC6-2SC6)`: Pin 1 → USB-C CC1, Pin 6 → STUSB4500 CC1/CC1DB, Pin 3 → USB-C CC2, Pin 4 → STUSB4500 CC2/CC2DB, Pin 2 → GND, Pin 5 → VBUS_IN
 
 **Load Switch (Power Path Control):**
 
 - `VBUS_IN` → `R11 (100kΩ)` → `Q1 Gate` (pull-up, default OFF)
-- `VBUS_EN_SNK (pin 16)` → `R12 (33kΩ)` → `Q1 Gate`
+- `VBUS_EN_SNK (pin 16)` → `R12 (56kΩ)` → `Q1 Gate`
 - `Q1 Gate` → `C35 (100nF)` → `GND` (soft-start)
 - `Q1 (AO3401A)`: Source = VBUS_IN, Drain = VBUS_OUT
 - **Result**: Q1 conducts when VBUS_EN_SNK goes HIGH after PD success
