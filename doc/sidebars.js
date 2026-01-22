@@ -29,6 +29,7 @@ const sidebars = {
     'components/usb-c-connector',
     'components/stusb4500',
     'components/ao3401a',
+    'components/usblc6-2sc6',
     'components/esda25l',
     'components/ch224d',
     'components/lm2596s-adj',

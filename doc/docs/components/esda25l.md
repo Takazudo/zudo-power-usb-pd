@@ -2,9 +2,15 @@
 sidebar_position: 4
 ---
 
-# ESDA25L - CC Line ESD Protection
+# ESDA25L - TVS Diode (Legacy)
 
-TVS diode for USB Type-C CC line ESD and overvoltage protection.
+:::caution Not Used in Current Design
+ESDA25L has been **replaced by [USBLC6-2SC6](./usblc6-2sc6.md)** in v1.1 design.
+
+**Reason**: ESDA25L's clamping voltage (~44V) is too high for CC line protection. USBLC6-2SC6 clamps at ~17V and includes VBUS protection.
+:::
+
+TVS diode for high-voltage ESD and overvoltage protection.
 
 - [View on JLCPCB: C343997](https://jlcpcb.com/partdetail/C343997)
 

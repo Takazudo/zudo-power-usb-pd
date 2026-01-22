@@ -58,143 +58,145 @@ Key advantages:
 ## Pin Configuration
 
 ```
-              STUSB4500 (QFN-24)
-                  Top View
-    ┌─────────────────────────────────┐
-    │                                 │
- A_B│1                            24│ VREG_1V2
-CC1 │2                            23│ CC1DB
-CC2 │3                            22│ CC2DB
-VBUS│4                            21│ DISCH
- VDD│5                            20│ ATTACH
- GND│6                            19│ GPIO
-    │                                │
-VREG│7                            18│ ALERT
-_2V7│                                │
- SCL│8                            17│ ADDR1
- SDA│9                            16│ ADDR0
-    │10                           15│ RESET
-VSYS│11                           14│ POWER_OK3
- GND│12                           13│ POWER_OK2
-    │       ┌──────────────┐         │
-    └───────┤  Exposed Pad ├─────────┘
-            │     GND      │
-            └──────────────┘
+                 STUSB4500QTR (QFN-24)
+                      Top View
+    ┌──────────────────────────────────────┐
+    │                                      │
+    │ 1  CC1DB                   VDD    24 │
+    │ 2  CC1                 VREG_2V7  23 │
+    │ 3  NC                      VSYS  22 │
+    │ 4  CC2                 VREG_1V2  21 │
+    │ 5  CC2DB              POWER_OK2  20 │
+    │ 6  RESET                  ALERT  19 │
+    │ 7  SCL             VBUS_VS_DISCH 18 │
+    │ 8  SDA                 A_B_SIDE  17 │
+    │ 9  DISCH            VBUS_EN_SNK  16 │
+    │ 10 GND                     GPIO  15 │
+    │ 11 ATTACH            POWER_OK3   14 │
+    │ 12 ADDR0                  ADDR1  13 │
+    │                                      │
+    │          ┌──────────────┐            │
+    └──────────┤  Exposed Pad ├────────────┘
+               │   GND (25)   │
+               └──────────────┘
 
-Note: Pin 10 is VBUS_EN_SNK (critical for load switch control)
+Note: Pin 16 (VBUS_EN_SNK) is critical for load switch control
 ```
 
 ### Pin Descriptions
 
-| Pin  | Name        | Function                             | Connection in Design                       |
-| ---- | ----------- | ------------------------------------ | ------------------------------------------ |
-| EPAD | GND         | Ground / Thermal pad                 | System ground plane                        |
-| 1    | A_B_SIDE    | Cable orientation indicator          | NC or monitor (optional)                   |
-| 2    | CC1         | USB-C Configuration Channel 1        | USB-C connector CC1                        |
-| 3    | CC2         | USB-C Configuration Channel 2        | USB-C connector CC2                        |
-| 4    | VBUS_VS     | VBUS voltage sense                   | USB-C VBUS via resistor divider (optional) |
-| 5    | VDD         | Main power supply (4.1-22V)          | USB-C VBUS + 100nF decoupling              |
-| 6    | GND         | Ground                               | System ground                              |
-| 7    | VREG_2V7    | 2.7V internal regulator output       | 1µF decoupling to GND                      |
-| 8    | SCL         | I2C clock                            | I2C bus or NC (with pull-up if used)       |
-| 9    | SDA         | I2C data                             | I2C bus or NC (with pull-up if used)       |
-| 10   | VBUS_EN_SNK | **Load switch enable (active HIGH)** | To P-MOSFET gate network                   |
-| 11   | VSYS        | System voltage input (3.0-5.5V)      | 3.3V or tie to VREG_2V7                    |
-| 12   | GND         | Ground                               | System ground                              |
-| 13   | POWER_OK2   | PDO2 selected indicator              | LED or MCU (optional)                      |
-| 14   | POWER_OK3   | PDO3 selected indicator              | LED or MCU (optional)                      |
-| 15   | RESET       | Active-HIGH reset                    | GND or NC (has internal pull-down)         |
-| 16   | ADDR0       | I2C address bit 0                    | GND or VDD (sets I2C address)              |
-| 17   | ADDR1       | I2C address bit 1                    | GND (with &gt;10kΩ pull-up recommended)    |
-| 18   | ALERT       | Interrupt output (open-drain)        | MCU interrupt or NC                        |
-| 19   | GPIO        | General purpose I/O                  | NC or custom use                           |
-| 20   | ATTACH      | Cable attach indicator               | LED or MCU (optional)                      |
-| 21   | DISCH       | VBUS discharge control               | Via 470Ω to VBUS (for discharge)           |
-| 22   | CC2DB       | CC2 dead battery mode                | Connect to CC2 or GND                      |
-| 23   | CC1DB       | CC1 dead battery mode                | Connect to CC1 or GND                      |
-| 24   | VREG_1V2    | 1.2V internal regulator output       | 1µF decoupling to GND                      |
+| Pin | Name          | Function                             | Connection in Design              |
+| --- | ------------- | ------------------------------------ | --------------------------------- |
+| 25  | GND (EPAD)    | Ground / Thermal pad                 | System ground plane               |
+| 1   | CC1DB         | CC1 dead battery mode                | Connect to CC1                    |
+| 2   | CC1           | USB-C Configuration Channel 1        | USB-C CC1 via ESD protection (D4) |
+| 3   | NC            | No connection                        | Leave unconnected                 |
+| 4   | CC2           | USB-C Configuration Channel 2        | USB-C CC2 via ESD protection (D4) |
+| 5   | CC2DB         | CC2 dead battery mode                | Connect to CC2                    |
+| 6   | RESET         | Active-HIGH reset                    | GND (normal operation)            |
+| 7   | SCL           | I2C clock                            | NC (not used in this design)      |
+| 8   | SDA           | I2C data                             | NC (not used in this design)      |
+| 9   | DISCH         | VBUS discharge control               | Via R13 (470Ω) to VBUS_OUT        |
+| 10  | GND           | Ground                               | System ground                     |
+| 11  | ATTACH        | Cable attach indicator               | NC (optional LED/MCU)             |
+| 12  | ADDR0         | I2C address bit 0                    | GND (I2C address 0x28)            |
+| 13  | ADDR1         | I2C address bit 1                    | GND (I2C address 0x28)            |
+| 14  | POWER_OK3     | PDO3 selected indicator              | NC (optional LED/MCU)             |
+| 15  | GPIO          | General purpose I/O                  | NC                                |
+| 16  | VBUS_EN_SNK   | **Load switch enable (active HIGH)** | To P-MOSFET gate via R12 (56kΩ)   |
+| 17  | A_B_SIDE      | Cable orientation indicator          | NC                                |
+| 18  | VBUS_VS_DISCH | VBUS voltage sense / discharge       | NC                                |
+| 19  | ALERT         | Interrupt output (open-drain)        | NC                                |
+| 20  | POWER_OK2     | PDO2 selected indicator              | NC (optional LED/MCU)             |
+| 21  | VREG_1V2      | 1.2V internal regulator output       | C34 (1µF) to GND                  |
+| 22  | VSYS          | System voltage input (3.0-5.5V)      | Tie to VREG_2V7 (pin 23)          |
+| 23  | VREG_2V7      | 2.7V internal regulator output       | C30 (1µF) to GND, also to VSYS    |
+| 24  | VDD           | Main power supply (4.1-22V)          | VBUS_IN + C1 (10µF) + C2 (100nF)  |
 
 ## Application Circuit
 
 ```
-USB-C Connector (6-pin):
-┌─────────────────────────────┐
-│  VBUS  ────────────────────┼──┬──→ VDD (pin 5)
-│                            │  │
-│  CC1   ────────────────────┼──┼──→ CC1 (pin 2), CC1DB (pin 23)
-│  CC2   ────────────────────┼──┼──→ CC2 (pin 3), CC2DB (pin 22)
-│                            │  │
-│  GND   ────────────────────┼──┼──→ GND (pins 6, 12, EPAD)
-└────────────────────────────┘  │
-                                │
-STUSB4500 Power Supply:         │
-                                │
-VBUS ───────────────────────────┼──→ VDD (pin 5)
-                                │        │
-                               C_VDD   100nF
-                                │        │
-                               GND      GND
+USB-C Connector (J1):
+┌───────────────────┐
+│  VBUS (A9,B9) ────┼───→ VBUS_IN ───→ VDD (pin 24)
+│                   │         │
+│  CC1 (A5) ────────┼───→ D4 (USBLC6-2SC6) ───→ CC1 (pin 2) ─┬─→ CC1DB (pin 1)
+│  CC2 (B5) ────────┼───→ D4 (USBLC6-2SC6) ───→ CC2 (pin 4) ─┴─→ CC2DB (pin 5)
+│                   │
+│  GND (A12,B12) ───┼───→ GND (pins 10, 25/EPAD)
+└───────────────────┘
+
+STUSB4500 Power Supply:
+VBUS_IN ───┬─── C1 (10µF) ─── GND
+           └─── C2 (100nF) ── GND
+           └───→ VDD (pin 24)
 
 Internal Regulators:
-VREG_2V7 (pin 7) ─── C1 (1µF) ─── GND
-VREG_1V2 (pin 24) ── C2 (1µF) ─── GND
+VREG_2V7 (pin 23) ─┬─ C30 (1µF) ─ GND
+                   └─→ VSYS (pin 22)
+VREG_1V2 (pin 21) ─── C34 (1µF) ─ GND
 
 Load Switch Control:
                                       VBUS_IN
                                          │
-                                        R1 (100kΩ)
+                                      R11 (100kΩ)
                                          │
-VBUS_EN_SNK (pin 10) ─── R2 (33kΩ) ──┬───┴─── Gate ─── Q1 (AO3401A)
-                                     │                 Source ─── VBUS_IN
-                                    C5 (100nF)         Drain ──── VBUS_OUT
-                                     │                            (to DC-DC)
-                                    GND
+VBUS_EN_SNK (pin 16) ─── R12 (56kΩ) ──┬──┴─── Gate ─── Q1 (AO3401A)
+                                      │                Source ─── VBUS_IN
+                                     C35 (100nF)       Drain ──── VBUS_OUT
+                                      │                           (to DC-DC)
+                                     GND
 
 VBUS Discharge:
-DISCH (pin 21) ─── R3 (470Ω) ─── VBUS_OUT
+DISCH (pin 9) ─── R13 (470Ω) ─── VBUS_OUT
 
 Configuration Pins:
-RESET (pin 15) ─── GND (or NC, has internal pull-down)
-ADDR0 (pin 16) ─── GND
-ADDR1 (pin 17) ─── GND (or 10kΩ to VDD)
-VSYS (pin 11) ──── VREG_2V7 (pin 7)
+RESET (pin 6) ──── GND (active-HIGH, GND = normal operation)
+ADDR0 (pin 12) ─── GND
+ADDR1 (pin 13) ─── GND
+VSYS (pin 22) ──── VREG_2V7 (pin 23)
 
-Optional CC Protection:
-CC1 (pin 2) ───┬─── TVS1 (ESDA25L) ─── GND
-CC2 (pin 3) ───┘
+CC Line ESD Protection (D4 - USBLC6-2SC6):
+USB-C CC1 (A5) ───→ Pin 1 (I/O1) ───→ Pin 6 (I/O1) ───→ STUSB4500 CC1/CC1DB
+USB-C CC2 (B5) ───→ Pin 3 (I/O2) ───→ Pin 4 (I/O2) ───→ STUSB4500 CC2/CC2DB
+                    Pin 2 (GND) ────→ GND
+                    Pin 5 (VBUS) ───→ VBUS_IN
 ```
 
 ### Connection List
 
 **Power Supply:**
 
-- `USB-C VBUS` → `STUSB4500 VDD (pin 5)` + `C_VDD (100nF)` → `GND`
-- `VREG_2V7 (pin 7)` → `C1 (1µF)` → `GND`
-- `VREG_1V2 (pin 24)` → `C2 (1µF)` → `GND`
-- `VSYS (pin 11)` → `VREG_2V7 (pin 7)`
+- `USB-C VBUS` → `VBUS_IN` → `STUSB4500 VDD (pin 24)`
+- `VBUS_IN` → `C1 (10µF)` → `GND`
+- `VBUS_IN` → `C2 (100nF)` → `GND`
+- `VREG_2V7 (pin 23)` → `C30 (1µF)` → `GND`
+- `VREG_1V2 (pin 21)` → `C34 (1µF)` → `GND`
+- `VSYS (pin 22)` → `VREG_2V7 (pin 23)`
 
-**CC Lines:**
+**CC Lines with ESD Protection (D4 - USBLC6-2SC6):**
 
-- `USB-C CC1` → `STUSB4500 CC1 (pin 2)` → `CC1DB (pin 23)`
-- `USB-C CC2` → `STUSB4500 CC2 (pin 3)` → `CC2DB (pin 22)`
-- Optional: `TVS1 (ESDA25L)` from CC1/CC2 to GND for ESD protection
+- `USB-C CC1 (A5)` → `D4 pin 1` → `D4 pin 6` → `STUSB4500 CC1 (pin 2)` + `CC1DB (pin 1)`
+- `USB-C CC2 (B5)` → `D4 pin 3` → `D4 pin 4` → `STUSB4500 CC2 (pin 4)` + `CC2DB (pin 5)`
+- `D4 pin 2 (GND)` → `GND`
+- `D4 pin 5 (VBUS)` → `VBUS_IN`
 
 **Load Switch (Power Path Control):**
 
-- `VBUS_EN_SNK (pin 10)` → `R2 (33kΩ)` → `Q1 Gate`
-- `VBUS_IN` → `R1 (100kΩ)` → `Q1 Gate` (pull-up)
-- `Q1 Gate` → `C5 (100nF)` → `GND` (soft-start)
+- `VBUS_EN_SNK (pin 16)` → `R12 (56kΩ)` → `Q1 Gate`
+- `VBUS_IN` → `R11 (100kΩ)` → `Q1 Gate` (pull-up)
+- `Q1 Gate` → `C35 (100nF)` → `GND` (soft-start)
 - `Q1 (AO3401A)`: Source=VBUS_IN, Drain=VBUS_OUT
 
 **Discharge Circuit:**
 
-- `DISCH (pin 21)` → `R3 (470Ω)` → `VBUS_OUT`
+- `DISCH (pin 9)` → `R13 (470Ω)` → `VBUS_OUT`
 
 **Configuration:**
 
-- `RESET (pin 15)` → `GND` (or NC, has internal pull-down)
-- `ADDR0 (pin 16)` → `GND`
-- `ADDR1 (pin 17)` → `GND`
+- `RESET (pin 6)` → `GND` (active-HIGH reset, GND = normal operation)
+- `ADDR0 (pin 12)` → `GND`
+- `ADDR1 (pin 13)` → `GND`
 
 ## Component Values
 
@@ -202,30 +204,46 @@ CC2 (pin 3) ───┘
 
 | Reference | Value | Type        | Voltage | Package | Purpose             |
 | --------- | ----- | ----------- | ------- | ------- | ------------------- |
-| C_VDD     | 100nF | Ceramic X7R | 25V     | 0603    | VDD decoupling      |
-| C1        | 1µF   | Ceramic X5R | 16V     | 0603    | VREG_2V7 decoupling |
-| C2        | 1µF   | Ceramic X5R | 16V     | 0603    | VREG_1V2 decoupling |
-| C5        | 100nF | Ceramic X7R | 25V     | 0603    | Gate soft-start     |
+| C1        | 10µF  | Ceramic X5R | 25V     | 0805    | VDD bulk decoupling |
+| C2        | 100nF | Ceramic X7R | 25V     | 0603    | VDD HF decoupling   |
+| C30       | 1µF   | Ceramic X5R | 16V     | 0603    | VREG_2V7 decoupling |
+| C34       | 1µF   | Ceramic X5R | 16V     | 0603    | VREG_1V2 decoupling |
+| C35       | 100nF | Ceramic X7R | 50V     | 0603    | Gate soft-start     |
 
 ### Resistors
 
-| Reference | Value | Tolerance | Package | Purpose              |
-| --------- | ----- | --------- | ------- | -------------------- |
-| R1        | 100kΩ | ±1%       | 0603    | Gate pull-up         |
-| R2        | 33kΩ  | ±1%       | 0603    | Gate voltage divider |
-| R3        | 470Ω  | ±1%       | 0603    | VBUS discharge       |
+| Reference | Value | Tolerance | Package | Purpose                           |
+| --------- | ----- | --------- | ------- | --------------------------------- |
+| R11       | 100kΩ | ±1%       | 0603    | Gate pull-up                      |
+| R12       | 56kΩ  | ±1%       | 0603    | Gate voltage divider (Vgs margin) |
+| R13       | 470Ω  | ±1%       | 0603    | VBUS discharge (31mA @ 15V)       |
+
+:::info R12 Value Selection
+R12 was changed from 33kΩ to 56kΩ to provide adequate Vgs margin for Q1:
+
+- With R12=56kΩ: Vgs = -15V × 100k/(100k+56k) = **-9.6V** (20% margin from ±12V max)
+- With R12=33kΩ: Vgs = -11.3V (only 6% margin - too close to limit)
+  :::
 
 ### Load Switch MOSFET
 
-| Reference | Part    | Type      | Vds  | Id  | Rds(on) | Package |
-| --------- | ------- | --------- | ---- | --- | ------- | ------- |
-| Q1        | AO3401A | P-Channel | -30V | -4A | 44mΩ    | SOT-23  |
+| Reference | Part    | Type      | Vds  | Id  | Rds(on) | Vgs(max) | Package |
+| --------- | ------- | --------- | ---- | --- | ------- | -------- | ------- |
+| Q1        | AO3401A | P-Channel | -30V | -4A | 44mΩ    | ±12V     | SOT-23  |
 
-### CC Protection (Optional but Recommended)
+### CC Line ESD Protection (Recommended)
 
-| Reference | Part    | Type      | Vwm | Package |
-| --------- | ------- | --------- | --- | ------- |
-| TVS1      | ESDA25L | TVS Diode | 25V | SOT-23  |
+| Reference | Part        | Type            | Vwm | Channels | Capacitance | Package  | LCSC  |
+| --------- | ----------- | --------------- | --- | -------- | ----------- | -------- | ----- |
+| D4        | USBLC6-2SC6 | TVS Diode Array | 5V  | 2 + VBUS | 3.5pF       | SOT-23-6 | C7519 |
+
+:::tip Why USBLC6-2SC6?
+
+- **Low clamping voltage** (~17V) - better protection for CC lines operating at ~1.7V
+- **Includes VBUS protection** - pin 5 can connect to VBUS_IN for additional transient protection
+- **USB-specific design** - optimized for USB-C applications
+- **Low capacitance** (3.5pF) - doesn't affect CC line signaling
+  :::
 
 ## NVM Configuration
 
