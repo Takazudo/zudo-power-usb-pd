@@ -1,0 +1,329 @@
+---
+title: Board A — USB-PD Core
+sidebar_position: 20
+description: The small, cheap, reusable USB-PD 15V sink board (STUSB4500 + USB-C + load switch + NVM/debug pads) — the fixed circuit per the board-split decision (#90).
+---
+
+Board A is the USB-PD front end split out of the single-board zudo-pd design (epic
+[#86](https://github.com/Takazudo/zudo-pd/issues/86)). It negotiates a 15 V/3 A USB-PD
+contract with a STUSB4500, load-switches it, and hands the switched rail to Board B (the
+synth power stage) over a 6-pin cable connector. This page documents the **fixed**
+circuit — the front end after the [board-split decision](../inbox/board-split-decision.md)
+(#90) fix list is applied — not the failed v4 circuit described in
+[v4 USB-PD Failure Diagnosis](../inbox/v4-pd-failure-diagnosis.md).
+
+## Purpose
+
+- **Cheap, re-orderable debug surface.** The STUSB4500 front end was the source of two
+  failed JLCPCB orders (v3's pin-18 bug, v4's CC-termination and D4-rating defects — see
+  the diagnosis page). Splitting it onto its own small board means a bring-up failure
+  only costs a re-spin of this board, not the whole multi-stage power supply.
+- **Reusable USB-PD 15 V sink module.** Nothing on Board A or its output connector is
+  synth-specific: it is a generic "negotiate 15 V over USB-PD, switch it, expose GND +
+  two status flags" module, usable in any other project that needs a PD-negotiated DC
+  rail.
+- **NVM-programmable.** The same board carries the I2C pogo pads used to write the
+  STUSB4500's PDO configuration — see [NVM Programming Setup](../inbox/nvm-programming.md).
+
+<Note>
+
+This is a documentation-only deliverable. No `.kicad_sch`/`.kicad_pcb` file was created or
+edited for this page — Board A's own KiCad project is a later task. Reference designators
+below (U1, Q1, J1-J4, R11-R20, C1/C2/C30/C34/C35, D5-D7, TP1/TP2/TP6) are inherited from the
+existing `usb-pd-input.kicad_sch` sheet, since Board A's schematic is that sheet plus the
+#90 fix list plus one new connector (J4).
+
+</Note>
+
+## Block diagram
+
+```mermaid
+flowchart TD
+  J1["J1 USB-C receptacle\nCC1/CC2 direct copper (D4 removed)"] -->|"CC1 / CC2"| U1["U1 STUSB4500\nPD sink controller"]
+  J1 -->|"VBUS_IN"| U1
+
+  RD["R17 / R18 5.1k ext Rd\nDNP (rework insurance)"] -.-> J1
+  DB["R19 / R20 (0 ohm)\nCC1DB<->CC1, CC2DB<->CC2"] --- U1
+  CCESD["D6 / D7 PESD24VS1UB\nDNP (production/enclosed builds only)"] -.-> U1
+
+  U1 -->|"VBUS_VS_DISCH via R14 470R"| P18["Pin-18 sense/discharge\n(unchanged from v0.4.0)"]
+  U1 -->|"VBEN (active-low OD)"| GATE["Q1 gate node\nR11 100k pull-up, R12 56k series, C35 100n softstart"]
+  GATE --> Q1["Q1 AO3401A P-FET\nload switch"]
+
+  D5["D5 SMAJ20A\n(new; replaces D4's VBUS-clamp role)"] --- U1
+  D5 --- J1
+
+  Q1 -->|"VBUS_OUT"| J4["J4 A<->B interface\nJST B6B-XH-A, 6-pin"]
+  U1 -->|"ATT (pin 11, open-drain)"| J4
+  U1 -->|"PDOK (pin 20, open-drain)"| J4
+
+  J2["J2 pogo pads (1x4)\nNVM I2C programming"] --- U1
+  J3["J3 pogo pads (1x8)\ndebug: CC1DB CC2DB VREG_2V7 VBUS_IN GND ATT PDOK VBEN"] --- U1
+
+  TP1["TP1 (VBUS_OUT)"] --- Q1
+  TP2["TP2 (GND)"] --- U1
+  TP6["TP6 (VBUS_VS_DISCH)"] --- P18
+
+  J4 -->|"VBUS_OUT, ATT, PDOK, GND"| BOARD_B["Board B\n(synth power stage)"]
+```
+
+## Net-connectivity table (fixed circuit)
+
+Per [Net-Table + Mermaid Convention](../how-to/net-table-convention.md). Derived from the
+2026-07-05 `kicad-cli sch export netlist` export of the current `usb-pd-input.kicad_sch`
+sheet, with the #90 fix-list deltas applied on paper (D4 removed; R17/R18 DNP; R19/R20
+rewired; D5-D7 added; J4 added as Board A's new A↔B interface connector — none of this was
+written back into the KiCad file).
+
+| Net | Connected pins (Ref.Pin) | Value/Note |
+|-----|--------------------------|------------|
+| `VBUS_IN` | `J1.A9 J1.B9 U1.24 C1.2 C2.2 R14.1 R11.2 Q1.2 J3.4 D5.1` | Receptacle VBUS (5 V pre-contract, 15 V post-contract). `U1.24` = VDD (direct, 4.1–22 V range). `C1` 10 µF + `C2` 100 nF decoupling. `D5.1` (cathode) = new SMAJ20A VBUS clamp — **replaces D4**, which sat here as a 6 V-rated zener (abs-max violation on a 15 V rail) |
+| `CC1` (merges the former `Net-(J1-CC1)` + `Net-(U1-CC1)`) | `J1.A5 U1.2 R17.1 R19.2 D6.1` | Connector CC1 to `U1.2` is now **plain copper** (D4's internal 1↔6 flow-through is gone). `R17` (5.1 kΩ) = **DNP** (footprint kept, excluded from BOM/CPL). `R19` (0 Ω, fitted) now lands its GND-side pin here — restores `CC1DB↔CC1`. `D6` = PESD24VS1UB, **DNP**, fit only for enclosed/production builds |
+| `CC2` (merges the former `Net-(J1-CC2)` + `Net-(U1-CC2)`) | `J1.B5 U1.4 R18.1 R20.2 D7.1` | Mirror of CC1. `R18` DNP. `R20` (0 Ω, fitted) restores `CC2DB↔CC2`. `D7` = PESD24VS1UB, DNP |
+| `CC1DB` | `U1.1 R19.1 J3.1` | Dead-battery pin. `R19` (0 Ω) now bridges this to the `CC1` net (was grounded pre-fix) — ST reference VBUS-only-sink topology (DS12499 §3.5) |
+| `CC2DB` | `U1.5 R20.1 J3.2` | Mirror; `R20` bridges to `CC2` |
+| `VBUS_VS_DISCH` | `U1.18 R14.2 TP6.1` | Pin-18 sense/discharge node. **Unchanged** — `R14` 470 Ω series from `VBUS_IN`; the v3 fix stays as-is (A3, locked, no divider) |
+| `VBEN` | `U1.16 R12.1 J3.8` | VBUS_EN_SNK, active-low open-drain. `R12` 56 kΩ series to the gate node |
+| `Net-(Q1-G)` | `Q1.1 R11.1 R12.2 C35.1` | Q1 gate. `R11` 100 kΩ pull-up to `VBUS_IN` (default OFF). `C35` 100 nF soft-start to GND (τ ≈ 56 kΩ × 100 nF ≈ 5.6 ms) |
+| `VBUS_OUT` (current netlist label `+15V -> +13.5V gen`; renamed for Board A since it now terminates at the interface connector instead of a DC-DC stage) | `Q1.3 R13.1 TP1.1 J4.1 J4.2` | Switched output of the load switch — Board A's reusable "switched 15 V sink" rail. Feeds `J4` pins 1–2 (paired for current sharing) instead of the DC-DC sheet |
+| `Net-(U1-DISCH)` | `U1.9 R13.2` | DISCH pin → `R13` 470 Ω → `VBUS_OUT` (system-side discharge). Unchanged |
+| `VREG_2V7` | `U1.23 C30.2 R15.2 R16.2 J3.3` | 2.7 V internal regulator / I2C pull-up rail. `C30` 1 µF decap |
+| `Net-(U1-VREG_1V2)` | `U1.21 C34.1` | 1.2 V internal digital-core regulator. `C34` 1 µF decap |
+| `SCL-pin1` | `U1.7 R15.1 J2.1` | NVM programming clock. `R15` 4.7 kΩ pull-up to `VREG_2V7`. `J2` pogo pad 1 |
+| `SDA-pin2` | `U1.8 R16.1 J2.2` | NVM programming data. `R16` 4.7 kΩ pull-up. `J2` pogo pad 2 |
+| `ATT` | `U1.11 J3.6 J4.3` | ATTACH flag, open-drain active-low, **no on-board pull-up**. Routed to debug pad `J3.6` and to the A↔B interface `J4` pin 3 |
+| `PDOK` | `U1.20 J3.7 J4.4` | POWER_OK2 flag (asserts on a live PDO2/15 V contract), open-drain active-low, no on-board pull-up. Debug pad `J3.7` and interface `J4` pin 4 |
+| `GND` (current netlist label `RST` — the RESET-pin label was absorbed as the whole ground net's name) | `U1.6 U1.10 U1.12 U1.13 U1.22 U1.25 J1.7 J1.A12 J1.B12 C1.1 C2.1 C30.1 C34.2 C35.2 R17.2 R18.2 TP2.1 J2.3 J3.5 D5.2 D6.2 D7.2 J4.5 J4.6` | Common ground. `U1.6` RESET (active-high, grounded = run), `U1.12/13` ADDR0/1 (→ I2C address `0x28`), `U1.22` VSYS (grounded, correct for VDD-only supply), `U1.25` EP (thermal/electrical ground). `D5.2` = SMAJ20A anode; `D6.2`/`D7.2` = DNP CC-ESD anodes; `J4.5/6` = interface connector's paired GND return |
+| Unused U1 pins (unchanged, intentionally floating/grounded) | `U1.3` NC, `U1.14` POWER_OK3 (float), `U1.15` GPIO (float), `U1.17` A_B_SIDE (float), `U1.19` ALERT (float) | See [STUSB4500 pinout guide](../inbox/stusb4500-pinout.md) for the per-pin rationale |
+| `J2` pad 4 | `J2.4` | Unconnected (NC), per [NVM Programming Setup](../inbox/nvm-programming.md) |
+
+<Warning>
+
+`D4` (USBLC6-2SC6, C7519) does **not** appear anywhere in this table — it is removed
+entirely (decision A2). Do not reintroduce it or relocate it elsewhere on Board A; its VBUS
+role is replaced by D5, and its CC-ESD role is covered by U1's own 22 V-rated integrated
+protection (with the D6/D7 DNP footprints as an opt-in upgrade).
+
+</Warning>
+
+## Deltas vs the current single-board circuit
+
+Board A's schematic is `usb-pd-input.kicad_sch` (the current single-board design) plus
+exactly these changes — the same list locked in
+[board-split-decision.md](../inbox/board-split-decision.md) §A6, items 1–5 (items 6–8 of
+that list are `linear-regulation.kicad_sch`/`dc-dc-conversion.kicad_sch` edits that belong
+to Board B, not Board A):
+
+**Removed**
+
+- `D4` (USBLC6-2SC6, C7519) — deleted entirely, not relocated. Its VBUS-clamp role was a
+  hard abs-max violation (6 V-rated zener on a 15 V rail); its CC-ESD role duplicated U1's
+  own integrated 22 V-rated protection while adding a silent-failure class (candidate 3:
+  CC continuity relying on a part-internal flow-through).
+
+**Set DNP (footprint kept, not populated, excluded from BOM/CPL)**
+
+- `R17` / `R18` (5.1 kΩ external Rd) — kept as rework insurance only. Fitting them in
+  parallel with U1's own always-on internal 5.1 kΩ Rd puts the CC termination out of the
+  USB Type-C sink window the moment U1 powers up (2.55 kΩ effective) — the v4 blocker.
+
+**Rewired**
+
+- `R19` pin 2: `GND` → `CC1` (restores `CC1DB↔CC1` dead-battery termination, ST's reference
+  topology for a VBUS-only sink).
+- `R20` pin 2: `GND` → `CC2` (restores `CC2DB↔CC2`).
+- CC1/CC2 connector-to-chip path: now direct copper (previously routed through D4's
+  internal pin 1↔6 / 3↔4 flow-through).
+
+**Added**
+
+- `D5` = SMAJ20A (SMA, unidirectional TVS), cathode on `VBUS_IN`, anode on `GND`. Clones
+  the existing `SMAJ15A_C571368` symbol/footprint pattern (used by TVS1/TVS3 on the
+  linear-regulation sheet) into a new `SMAJ20A_C571370` entry.
+- `D6` / `D7` = Nexperia PESD24VS1UB (SOD-523), **DNP**, one per CC line to GND. Layout
+  provision only — fit for enclosed/production builds, not the bring-up/debug build.
+- `J4` = the new Board A ↔ Board B interface connector (JST B6B-XH-A, 6-pin) — see below.
+  This did not exist on the single-board design (the front end fed the DC-DC sheet
+  directly through the shared `VBUS_OUT` net); Board A terminates that net at `J4` instead.
+
+**Unchanged (re-confirmed correct, do not touch)**
+
+- Pin-18 network: `VBUS_IN → R14 (470 Ω) → U1 pin 18` (the v3 fix).
+- Q1 gate network (`R11`/`R12`/`C35`).
+- VDD/VREG decoupling (`C1`/`C2`/`C30`/`C34`/`C35`).
+- I2C NVM programming path (`J2`, `R15`/`R16`).
+- Debug pogo block `J3`.
+- Test points `TP1`/`TP2`/`TP6`.
+
+## Component list, LCSC parts, and rough cost
+
+All LCSC part numbers below are read from the current schematic's netlist export (source
+of truth), not from the general [BOM](./bom.md) page, which has drifted on a few passive
+LCSC numbers since this front end was last exported. Prices are rough JLCPCB catalog
+estimates — re-verify at order time.
+
+| Ref | Part | LCSC | Package | Role | Approx. unit cost |
+|-----|------|------|---------|------|--------------------|
+| U1 | STUSB4500QTR | C2678061 | QFN-24 | PD sink controller | ~$2.50 |
+| Q1 | AO3401A | C347476 | SOT-23 | Load switch (P-FET) | ~$0.02 |
+| J1 | USB-C receptacle, 6P | C456012 | SMD | USB-PD input | ~$0.05 |
+| D5 | SMAJ20A (new) | C571370 (alt: C1973455) | SMA | VBUS TVS clamp | ~$0.15 (SMAJ-family estimate) |
+| C1 | 10 µF 50V | C13585 | 1206 | VDD bulk decouple | ~$0.02–0.03 |
+| C2 | 100 nF 50V | C1711 | 0805 | VDD HF decouple | ~$0.002 |
+| C30 | 1 µF 16V | C15849 | 0603 | VREG_2V7 decouple | ~$0.001 |
+| C34 | 1 µF 16V | C15849 | 0603 | VREG_1V2 decouple | ~$0.001 |
+| C35 | 100 nF 50V | C1711 | 0805 | Gate soft-start | ~$0.002 |
+| R11 | 100 kΩ | C25803 | 0603 | Gate pull-up | ~$0.0005 |
+| R12 | 56 kΩ | C23206 | 0603 | Gate divider | ~$0.0005 |
+| R13 | 470 Ω | C23179 | 0603 | DISCH resistor | ~$0.0005 |
+| R14 | 470 Ω | C23179 | 0603 | Pin-18 series R | ~$0.0005 |
+| R15 | 4.7 kΩ | C23162 | 0603 | I2C SCL pull-up | ~$0.0005 |
+| R16 | 4.7 kΩ | C23162 | 0603 | I2C SDA pull-up | ~$0.0005 |
+| R19 | 0 Ω | C21189 | 0603 | CC1DB↔CC1 link (fitted) | ~$0.0005 |
+| R20 | 0 Ω | C21189 | 0603 | CC2DB↔CC2 link (fitted) | ~$0.0005 |
+| J2 | Pogo pads, 1x4 | — (bare copper, no part) | Custom SMD | NVM I2C programming | $0 |
+| J3 | Pogo pads, 1x8 | — (bare copper, no part) | Custom SMD | Debug pads | $0 |
+| TP1, TP2, TP6 | Test point pads | — | `TestPoint_Pad_D1.5mm` | VBUS_OUT / GND / VBUS_VS_DISCH probes | ~$0.001 each |
+| J4 | JST B6B-XH-A(LF)(SN) | C144397 | THT, 2.5 mm pitch | A↔B interface connector | ~$0.08 (estimate; verify at order time) |
+
+**DNP (footprint only, not populated — no per-board cost):**
+
+| Ref | Part | LCSC | Package | Note |
+|-----|------|------|---------|------|
+| R17, R18 | 5.1 kΩ | C23186 | 0603 | External Rd, rework insurance |
+| D6, D7 | PESD24VS1UB | C85382 | SOD-523 | CC ESD, enclosed/production builds only |
+
+**Rough per-board total (fitted parts only): ~$2.85.** U1 alone is ~88% of that — this is
+an inherent cost of the STUSB4500, not something Board A's split-out changes. What the
+split *does* change: this board has roughly a quarter of the single-board design's unique
+Extended-part count (U1, J1, J4, D5 vs. the full board's ~20), so JLCPCB's per-unique-part
+setup/Extended fees amortize much faster on a small reorder batch — the actual point of
+"cheap, re-orderable." Fabrication, stencil, setup, and Extended-part fees are separate
+from the component total above; see [BOM](./bom.md) for the general JLCPCB fee structure
+(those figures describe the full single-board order, not Board A alone).
+
+## A↔B interface contract (LOCKED — copied verbatim from #90)
+
+<Note>
+
+Everything in this subsection is copied byte-for-byte from the
+[board-split decision](../inbox/board-split-decision.md) (#90). Do not edit the wording —
+the wave-4 confirm pass diff-checks this block against the same block in the Board B doc.
+
+</Note>
+
+**Connector (both boards):** JST **B6B-XH-A(LF)(SN)** — 6-pin top-entry shrouded THT header, 2.5 mm pitch, **LCSC C144397** (genuine JST; stock listed 2026-07-05, re-verify at order time). Rated 3 A/contact (AWG #22), 250 V. **Cable:** commodity pre-crimped 6-way XH↔XH, AWG 22, 80–150 mm (or JST XHP-6 housings + SXH-001T-P0.6 contacts — verify stock at order time; cable-side parts are not on the PCBA BOM).
+
+| Pin | Signal | Direction | Notes |
+|-----|--------|-----------|-------|
+| 1 | +15V | A → B | Board A `VBUS_OUT` (post Q1 load switch), PD-contract 15 V |
+| 2 | +15V | A → B | Paired with pin 1 (current sharing) |
+| 3 | ATT | A → B, open-drain, active-low | STUSB4500 pin 11 (ATTACH). No pull-up on Board A; consumer pulls up 10–100 kΩ to a local rail ≤5 V if used. May be left unconnected |
+| 4 | PDOK | A → B, open-drain, active-low | STUSB4500 pin 20 (POWER_OK2): asserts when the PDO2 (15 V) contract is live. Same pull-up rule as ATT. May be left unconnected |
+| 5 | GND | — | Paired return |
+| 6 | GND | — | Paired return |
+
+**Current-rating math:** worst case = PD contract cap **3.0 A @ 15 V** (computed steady draw ≈2.5 A at the rated 26.5 W output budget). XH contact nameplate 3.0 A; 80% continuous derate → 2.4 A/contact. 2 contacts per power rail → 4.8 A derated capacity; at 3.0 A each contact carries 1.5 A = 50% of nameplate → **1.6× derated margin (2.0× nameplate)**. GND identical (2 contacts, symmetric return). Cable drop ≈16 mV round trip at 3 A (2× AWG 22 per leg, 100 mm) — negligible.
+
+**Keying/foolproofing:** XH shrouded housing is mechanically polarized (reversed insertion blocked). Uniqueness rule: the 6-pin XH is the ONLY 6-position XH on either board. Pin 1 silkscreened on both boards.
+
+**Mechanical (LOCKED):** side-by-side, cable-linked. Stacking rejected: USB-C must reach the enclosure wall, Board A's J2 pogo pads need face access for the NVM rig, Board B's TO-263 regulators need top-side copper/airflow, and a stack fixes relative orientation (hurts reuse). Each board carries its own 4× M3 (3.2 mm) mounting holes; no shared hole pattern.
+
+**Genericity:** nothing synth-specific on the connector — 15 V power, GND, two generic open-drain status lines; a consumer that ignores pins 3–4 just gets switched 15 V.
+
+On Board A, this connector is designated **J4** (next free reference after J1 USB-C, J2 NVM
+pogo, J3 debug pogo) and carries `VBUS_OUT` (pins 1–2), `ATT` (pin 3), `PDOK` (pin 4), and
+`GND` (pins 5–6) per the net table above.
+
+## NVM programming interface, debug pads, and test points
+
+### J2 — NVM programming (pogo, 1×4, 2.54 mm)
+
+Bare-copper pogo pads (no BOM cost), used with a pogo-pin clip and a NUCLEO-F072RB acting
+as a USB-to-I2C bridge. Full procedure, wiring, GUI steps, and pitfall table in
+[NVM Programming Setup](../inbox/nvm-programming.md).
+
+| Pad | Signal | Note |
+|-----|--------|------|
+| 1 | SCL | I2C clock, 4.7 kΩ pull-up (R15) to VREG_2V7 |
+| 2 | SDA | I2C data, 4.7 kΩ pull-up (R16) to VREG_2V7 |
+| 3 | GND | Reference/return |
+| 4 | NC | Unconnected |
+
+### J3 — debug pads (pogo, 1×8, 2.54 mm)
+
+| Pad | Signal | Note |
+|-----|--------|------|
+| 1 | CC1DB | Dead-battery pin 1 (post-fix: bridged to CC1 via R19) |
+| 2 | CC2DB | Dead-battery pin 2 (post-fix: bridged to CC2 via R20) |
+| 3 | VREG_2V7 | "Is the chip alive?" probe — should read ≈2.7 V |
+| 4 | VBUS_IN / VDD | USB VBUS reaching U1 — ≈5 V pre-contract, ≈15 V post-contract |
+| 5 | GND | Reference/return |
+| 6 | ATT | ATTACH flag, open-drain, no on-board pull-up |
+| 7 | PDOK | POWER_OK2 flag, open-drain, no on-board pull-up |
+| 8 | VBEN | VBUS_EN_SNK (drives the Q1 gate network) |
+
+### Test points
+
+| Ref | Net | Note |
+|-----|-----|------|
+| TP1 | `VBUS_OUT` | Downstream of the Q1 load switch — reads 0 V until a PD contract enables VBUS_EN_SNK |
+| TP2 | `GND` | Reference |
+| TP6 | `VBUS_VS_DISCH` | Pin-18 sense node — should track `VBUS_IN` through R14 |
+
+<Tip title="Bring-up order">
+
+During NVM programming, `TP1` can legitimately read 0 V (Q1 is off until a valid contract).
+Use `J3` pad 4 (VBUS_IN) and pad 3 (VREG_2V7) instead to confirm the chip itself is powered
+— see the decision tree in [NVM Programming Setup](../inbox/nvm-programming.md).
+
+</Tip>
+
+## Reuse guidance for other projects
+
+Board A is designed to drop into any project that just needs a switched, PD-negotiated DC
+rail — not only this synth power supply.
+
+**Minimum wiring to reuse Board A standalone:**
+
+- Connect `J4` pins 1–2 (`VBUS_OUT`) and pins 5–6 (GND) to the consuming circuit. That
+  alone gives a plain switched-15 V sink module.
+- Pins 3 (`ATT`) and 4 (`PDOK`) may be left unconnected — Board A negotiates and switches
+  power on its own; nothing downstream needs to read these flags. If a consumer wants
+  sequencing/fault info, pull each up externally (10–100 kΩ to a local rail ≤5 V) per the
+  interface contract above.
+
+**NVM reconfiguration for other voltages:** the negotiated voltage/current live entirely in
+the STUSB4500's NVM (see [NVM Programming Setup](../inbox/nvm-programming.md)), not in the
+schematic. A reuse project can reprogram `J2` for a different PDO (e.g. 5 V, 9 V, 12 V, or
+20 V, subject to the connected charger actually advertising it) instead of 15 V/3 A,
+without any hardware change — as long as `D5`'s 20 V standoff and Q1's ratings (below)
+still cover the new target voltage. Reprogramming above 20 V nominal would need a
+higher-rated D5/Q1 and is out of scope for this board as documented.
+
+**Electrical limits to respect:**
+
+- `VBUS_IN`/VDD abs-max is 22 V (DS12499); `D5` (SMAJ20A) is chosen with a 20 V standoff /
+  22.2–24.5 V breakdown / ≤32.4 V clamp specifically to sit under that ceiling with margin
+  at the contracted 15 V, while still tolerating the 20 V-mis-contract edge case.
+- `Q1` (AO3401A) is rated −30 V/−4 A — comfortably above the 15 V/3 A design point.
+- `J4`'s 2 contacts per power rail give a 1.6× derated-current margin at the 3.0 A PD
+  contract cap (see the current-rating math above); do not exceed that per-board 3 A cap
+  when reusing Board A at higher currents without re-deriving the connector margin.
+- A downstream circuit connected to `VBUS_OUT` must tolerate the ≤32.4 V transient clamp
+  ceiling of D5 during a fault event, not just the nominal 15 V.
+
+**Mechanical:** Board A carries its own 4× M3 (3.2 mm) corner holes, independent of any
+host board's hole pattern. `J2` must stay at the board edge for pogo-clip access during
+NVM programming; `J1` (USB-C) needs an enclosure-wall cutout; keep `J2`/`J3`/`J4` and the
+test points accessible and silkscreened for bring-up on whatever host this ends up in.
+
+## References
+
+- [Board Split Decision — Fix List + A/B Interface Contract](../inbox/board-split-decision.md) (#90) — source of the fix list and the interface contract copied above
+- [v4 USB-PD Failure Diagnosis](../inbox/v4-pd-failure-diagnosis.md) (#87) — root-cause analysis behind the D4/CC-termination fixes
+- [NVM Programming Setup](../inbox/nvm-programming.md) — full NVM programming procedure, hardware, and pitfalls
+- [STUSB4500 Pin Cheat-Sheet](../inbox/stusb4500-pinout.md) — per-pin rationale for U1
+- [Net-Table + Mermaid Convention](../how-to/net-table-convention.md) — the documentation convention used above
+- [Bill of Materials](./bom.md) — general JLCPCB fee structure and the (currently full single-board) BOM
+- [STUSB4500](../components/stusb4500.md), [AO3401A](../components/ao3401a.md), [USB-C connector](../components/usb-c-connector.md), [SMAJ15A](../components/smaj15a.md) (cloned pattern for D5), [USBLC6-2SC6](../components/usblc6-2sc6.md) (D4, removed — background only) — component reference pages
