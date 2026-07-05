@@ -10,6 +10,11 @@
 /doc/build
 /doc/.cache-loader
 
+# Legacy husky artifacts (replaced by lefthook; local hooksPath overrides
+# from old installs may still generate these on disk)
+.husky/
+doc/.husky/
+
 # macOS
 .DS_Store
 .AppleDouble

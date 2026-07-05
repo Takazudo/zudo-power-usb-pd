@@ -1,0 +1,17 @@
+pre-commit:
+  commands:
+    format-mdx:
+      glob: 'doc/src/content/docs/**/*.{md,mdx}'
+      stage_fixed: true
+      run: ./scripts/mdx-format.sh --write {staged_files}
+
+pre-push:
+  commands:
+    check-doc:
+      run: |
+        BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null)
+        if [ "$BRANCH" = "main" ]; then
+          echo "Running doc quality checks before pushing to main..."
+          pnpm -C doc run check || exit 1
+          echo "Quality checks passed!"
+        fi
