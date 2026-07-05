@@ -8,16 +8,28 @@ This is a hardware project for designing a USB-PD powered modular synthesizer po
 
 ## Current Phase
 
-**v0.4.0 (4th JLCPCB order) — ordering.** The v3 (0.3.0) board failed USB-PD negotiation
-because STUSB4500 pin 18 (VBUS_VS_DISCH) was tied to GND instead of sensing VBUS. Fixed in
-0.4.0: `VBUS_IN → R14 (470 Ω) → pin 18`. Schematic + PCB updated, footprint mismatch resolved.
+**2-board split (diagnosis + design docs) — epic #86.** The v4 (0.4.0) PCBA — the 4th
+JLCPCB order, which included the v3 pin-18 fix (`VBUS_IN → R14 (470 Ω) → pin 18`) and a
+reprogrammed 15V NVM — **still failed** USB-PD negotiation. Rather than order a v5
+single-board respin, the project is splitting into a reusable **Board A** (USB-PD sink
+core: STUSB4500 + USB-C + load switch + NVM pads) and a **Board B** (synth power
+conversion: DC-DCs + LDOs + protection + outputs). Root-cause diagnosis and the fix
+list / A-B interface contract are locked; confirmed schematic fixes are being applied to
+the existing KiCad project (the source both new boards derive from). New KiCad
+projects, PCB layouts, and JLCPCB order files for Board A/B are **not** started yet —
+that's the next plan, gated on bench-confirming the root cause on the dead v4 boards.
 
-- For the versioning scheme (X.Y.Z), see `doc/docs/inbox/versioning.md`
-- For the v3 PD failure root cause + fix, see `doc/docs/inbox/v3-pd-failure-diagnosis.md`
-- For the bring-up/test procedure, see `doc/docs/inbox/v3-bringup-test-procedure.md`
-- For the STUSB4500 pin-by-pin guide, see `doc/docs/inbox/stusb4500-pinout.md`
-- For STUSB4500 NVM programming setup, see `doc/docs/inbox/nvm-programming.md`
-- For detailed current state, see `doc/docs/inbox/current-status.md`
+- For the versioning scheme (X.Y.Z), see `doc/src/content/docs/inbox/versioning.md`
+- For the v4 PD failure diagnosis (ranked root-cause candidates + bench procedure), see
+  `doc/src/content/docs/inbox/v4-pd-failure-diagnosis.md`
+- For the v4 as-built order/footprint audit, see
+  `doc/src/content/docs/inbox/v4-asbuilt-audit.md`
+- For the board-split decision (locked fix list + Board A/B interface contract), see
+  `doc/src/content/docs/inbox/board-split-decision.md`
+- For the bring-up/test procedure, see `doc/src/content/docs/inbox/v3-bringup-test-procedure.md`
+- For the STUSB4500 pin-by-pin guide, see `doc/src/content/docs/inbox/stusb4500-pinout.md`
+- For STUSB4500 NVM programming setup, see `doc/src/content/docs/inbox/nvm-programming.md`
+- For detailed current state, see `doc/src/content/docs/inbox/current-status.md`
 
 ## Versioning (X.Y.Z)
 
@@ -30,7 +42,7 @@ Custom scheme (not semver). Current version in the `VERSION` file at repo root.
 Old labels map onto Y: v1→0.1.0, v2→0.2.0, v3→0.3.0, v4→**0.4.0** (current). When older docs
 say "v2/v3/v4" they mean the JLCPCB order = the Y digit. Bump skills live in
 `.claude/skills/l-bump-version-*`; shared logic in `.claude/scripts/bump-version.sh`. Full
-details: `doc/docs/inbox/versioning.md`.
+details: `doc/src/content/docs/inbox/versioning.md`.
 
 ## Repository Structure
 

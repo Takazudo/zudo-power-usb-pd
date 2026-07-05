@@ -9,6 +9,22 @@ isolated pins. For the authoritative electrical detail see the ST datasheet (DS1
 and Figure 10; for the v3 pin-18 failure story see
 [v3 PD Failure Diagnosis](v3-pd-failure-diagnosis.md).
 
+<Note title="Superseded by the 2-board split / v4 diagnosis (2026-07)">
+
+This page's "v3 failed, v0.4.0 fixed pin 18" framing is incomplete: the v4 (0.4.0) board
+carried the pin-18 fix and still failed to negotiate PD. See the
+[v4 USB-PD Failure Diagnosis](v4-pd-failure-diagnosis.md) for the further root-cause
+candidates found in the CC termination and VBUS ESD strategy, and the
+[Board Split Decision](board-split-decision.md) for the locked fixes now going into
+[Board A: USB-PD Core](../overview/board-a-usb-pd-core.md). The pin-by-pin descriptions
+below (including pin 18 and pin 16) remain accurate — **except the CC-termination rows
+(pins 1 / 2 / 4 / 5), which describe the v4 as-built wiring**: the Board A fix sets
+R17/R18 to DNP and rewires R19/R20 as CC1DB↔CC1 / CC2DB↔CC2 (see the Board Split Decision
+linked above). Otherwise only the "this explains the whole failure history" framing is
+stale.
+
+</Note>
+
 ## The one-line mental model
 
 ```
@@ -28,10 +44,10 @@ v3 failed because **VBUS_VS_DISCH couldn't see VBUS** (it was tied to GND). Fixe
 
 | Pin | Name | Rough purpose | On this board |
 | --- | --- | --- | --- |
-| 2 | **CC1** | USB-C Configuration Channel. Detects attach + cable orientation, and carries the **PD negotiation messages** ("give me 15 V/3 A"). | External 5.1 kΩ Rd (R17) to GND |
-| 4 | **CC2** | Same as CC1, other orientation. | External 5.1 kΩ Rd (R18) to GND |
-| 1 | **CC1DB** | "Dead Battery" pin — lets the chip signal presence *before* it has power (battery-powered designs). | Not used (no battery). Tied to GND via **0 Ω R19** (jumper kept as a test/probe point) |
-| 5 | **CC2DB** | Same, for CC2. | Tied to GND via **0 Ω R20** |
+| 2 | **CC1** | USB-C Configuration Channel. Detects attach + cable orientation, and carries the **PD negotiation messages** ("give me 15 V/3 A"). | v4 as-built: external 5.1 kΩ Rd (R17) to GND. **Board A fix: R17 → DNP** (STUSB4500 internal Rd only) — see [Board Split Decision](board-split-decision.md) |
+| 4 | **CC2** | Same as CC1, other orientation. | v4 as-built: external 5.1 kΩ Rd (R18) to GND. **Board A fix: R18 → DNP** |
+| 1 | **CC1DB** | "Dead Battery" pin — lets the chip signal presence *before* it has power (battery-powered designs). | v4 as-built: tied to GND via 0 Ω R19. **Board A fix: R19 rewired to bridge CC1DB↔CC1** (dead-battery Rd per DS12499 §3.5) |
+| 5 | **CC2DB** | Same, for CC2. | v4 as-built: tied to GND via 0 Ω R20. **Board A fix: R20 rewired to bridge CC2DB↔CC2** |
 | 17 | **A_B_SIDE** | Output: tells you which orientation the cable was plugged in. Pure status/debug. | Not used |
 
 ## Power pins (supply + internal regulators)

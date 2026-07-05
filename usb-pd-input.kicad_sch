@@ -3408,6 +3408,140 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "zudo-pd:SMAJ20A_C571370"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "D"
+				(at 0 5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "SMAJ20A_C571370"
+				(at 0 -5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "zudo-pd:D-FLAT_L4.3-W2.6-LS5.3-RD"
+				(at 0 -7.62 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://lcsc.com/product-detail/TVS_High-Diode-SMAJ20A_C571370.html"
+				(at 0 -10.16 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "LCSC Part" "C571370"
+				(at 0 -12.7 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "SMAJ20A_C571370_0_1"
+				(polyline
+					(pts
+						(xy -2.29 2.29) (xy -1.27 1.27) (xy -1.27 -1.27) (xy -0.25 -2.29)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 -1.52) (xy -1.27 0) (xy 1.27 1.52) (xy 1.27 -1.52)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(pin unspecified line
+					(at -5.08 0 0)
+					(length 3.81)
+					(name "C"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin unspecified line
+					(at 5.08 0 180)
+					(length 3.81)
+					(name "A"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 	)
 	(junction
 		(at 233.68 16.51)
@@ -3882,16 +4016,6 @@
 			(type default)
 		)
 		(uuid "5aa53998-9d63-4e6e-b52e-eb3f9357e063")
-	)
-	(wire
-		(pts
-			(xy 87.63 59.69) (xy 86.36 59.69)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "5b5796b9-9080-497a-a142-9d678b5ca7da")
 	)
 	(wire
 		(pts
@@ -4485,16 +4609,6 @@
 	)
 	(wire
 		(pts
-			(xy 86.36 59.69) (xy 86.36 73.66)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f0cc6a61-0047-4a13-b8cc-fe1e69532ab0")
-	)
-	(wire
-		(pts
 			(xy 130.81 29.21) (xy 130.81 33.02)
 		)
 		(stroke
@@ -4965,7 +5079,7 @@
 	)
 	(global_label "VBUS_IN"
 		(shape input)
-		(at 120.65 59.69 0)
+		(at 104.14 92.71 90)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -4975,7 +5089,7 @@
 		)
 		(uuid "77343a79-a858-4df8-8acb-e69fd93bab71")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 131.4367 59.69 0)
+			(at 104.14 92.71 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6297,10 +6411,10 @@
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
-		(in_bom yes)
+		(in_bom no)
 		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
+		(in_pos_files no)
+		(dnp yes)
 		(fields_autoplaced yes)
 		(uuid "2b7861a1-a04c-4d51-b4cd-f200b0204f0e")
 		(property "Reference" "R18"
@@ -6379,84 +6493,6 @@
 			(project "zudo-pd"
 				(path "/c5ce32ac-bd6d-413c-bfb5-5e9e2f8848d1/89c28db7-f9d9-4adf-b951-b9bb069eac97"
 					(reference "R18")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 157.48 33.02 0)
-		(mirror y)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "32dbc359-4655-4333-a339-816bf9602ae9")
-		(property "Reference" "#PWR050"
-			(at 157.48 39.37 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "GND"
-			(at 157.48 36.83 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 157.48 33.02 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 157.48 33.02 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 157.48 33.02 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "955e5921-cd9c-4b53-994a-9561d17dc4c1")
-		)
-		(instances
-			(project "zudo-pd"
-				(path "/c5ce32ac-bd6d-413c-bfb5-5e9e2f8848d1/89c28db7-f9d9-4adf-b951-b9bb069eac97"
-					(reference "#PWR050")
 					(unit 1)
 				)
 			)
@@ -6807,10 +6843,10 @@
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
-		(in_bom yes)
+		(in_bom no)
 		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
+		(in_pos_files no)
+		(dnp yes)
 		(fields_autoplaced yes)
 		(uuid "62de9068-7b7a-40e3-a3a8-f82037bbc61c")
 		(property "Reference" "R17"
@@ -8178,161 +8214,6 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 143.51 33.02 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "b8441fbc-61f9-4aae-9ead-59debb21c8b8")
-		(property "Reference" "#PWR049"
-			(at 143.51 39.37 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "GND"
-			(at 143.51 36.83 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 143.51 33.02 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 143.51 33.02 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 143.51 33.02 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "3e874139-c1dd-4f05-bec4-39763c76e0e1")
-		)
-		(instances
-			(project "zudo-pd"
-				(path "/c5ce32ac-bd6d-413c-bfb5-5e9e2f8848d1/89c28db7-f9d9-4adf-b951-b9bb069eac97"
-					(reference "#PWR049")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 86.36 73.66 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "bc378285-445b-4531-8347-f4c55fd7a02e")
-		(property "Reference" "#PWR044"
-			(at 86.36 80.01 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "GND"
-			(at 86.36 78.74 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 86.36 73.66 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 86.36 73.66 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 86.36 73.66 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "75bb3eb2-2f15-4662-b656-689f51621ec1")
-		)
-		(instances
-			(project "zudo-pd"
-				(path "/c5ce32ac-bd6d-413c-bfb5-5e9e2f8848d1/89c28db7-f9d9-4adf-b951-b9bb069eac97"
-					(reference "#PWR044")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
 		(at 26.67 73.66 0)
 		(unit 1)
 		(body_style 1)
@@ -9485,9 +9366,145 @@
 			)
 		)
 	)
+	(wire
+		(pts
+			(xy 87.63 52.07) (xy 120.65 52.07)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7bae86fd-8d83-407d-8261-878590176cc6")
+	)
+	(wire
+		(pts
+			(xy 87.63 67.31) (xy 120.65 67.31)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c95eab5e-45f1-4c35-9d7c-69f0fb9cb85b")
+	)
+	(global_label "CC1"
+		(shape input)
+		(at 104.14 52.07 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "dfeb8522-a94e-4f85-822a-3ca509b56c83")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 104.14 52.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+	)
+	(global_label "CC2"
+		(shape input)
+		(at 104.14 67.31 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "e3741503-3c65-4f79-b5c0-5930af47bf3b")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 104.14 67.31 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+	)
+	(global_label "CC1"
+		(shape input)
+		(at 143.51 33.02 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "ab224b3f-d8d0-45d0-9f72-ab3f9590d307")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 143.51 33.02 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+	)
+	(global_label "CC2"
+		(shape input)
+		(at 157.48 33.02 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "3dc3cd82-c2bf-4a66-99b2-202734434fb7")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 157.48 33.02 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 104.14 92.71) (xy 104.14 95.25)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e9dec0ad-dbe8-4048-91f8-604b0247c7e6")
+	)
+	(wire
+		(pts
+			(xy 104.14 105.41) (xy 104.14 107.95)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6d15c5e1-d0a9-4da4-ac0b-09c2ae085c1e")
+	)
 	(symbol
-		(lib_id "zudo-pd:USBLC6-2SC6_C7519")
-		(at 104.14 59.69 0)
+		(lib_id "zudo-pd:SMAJ20A_C571370")
+		(at 104.14 100.33 270)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -9495,30 +9512,32 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "f3f8f7db-c287-4cd1-8a9a-3b758d8d1d1f")
-		(property "Reference" "D4"
-			(at 104.14 41.91 0)
+		(uuid "b8154265-6088-4b5e-a874-62c356b58c5b")
+		(property "Reference" "D5"
+			(at 99.568 101.092 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify right)
 			)
 		)
-		(property "Value" "USBLC6-2SC6"
-			(at 104.14 44.45 0)
+		(property "Value" "SMAJ20A_C571370"
+			(at 107.95 101.09 90)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
-		(property "Footprint" "zudo-pd:SOT-23-6_L2.9-W1.6-P0.95-LS2.8-BL"
-			(at 104.14 74.93 0)
+		(property "Footprint" "zudo-pd:D-FLAT_L4.3-W2.6-LS5.3-RD"
+			(at 96.52 100.33 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9528,8 +9547,8 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://lcsc.com/product-detail/Diodes-ESD_STMicroelectronics_USBLC6-2SC6_USBLC6-2SC6_C7519.html"
-			(at 104.14 77.47 0)
+		(property "Datasheet" "https://lcsc.com/product-detail/TVS_High-Diode-SMAJ20A_C571370.html"
+			(at 93.98 100.33 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9540,7 +9559,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 104.14 59.69 0)
+			(at 104.14 100.33 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9550,8 +9569,88 @@
 				)
 			)
 		)
-		(property "LCSC Part" "C7519"
-			(at 104.14 80.01 0)
+		(property "LCSC Part" "C571370"
+			(at 91.44 100.33 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "5f1b1770-9698-4221-b477-a72eda4fce97")
+		)
+		(pin "1"
+			(uuid "4d121b9c-e359-49a1-a1e4-d56a68c1e5db")
+		)
+		(instances
+			(project "zudo-pd"
+				(path "/c5ce32ac-bd6d-413c-bfb5-5e9e2f8848d1/89c28db7-f9d9-4adf-b951-b9bb069eac97"
+					(reference "D5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 104.14 107.95 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "7d05e8ec-fd0b-43b7-b0d0-7db67f9e99c8")
+		(property "Reference" "#PWR053"
+			(at 104.14 114.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 104.14 111.76 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 104.14 107.95 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 104.14 107.95 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 104.14 107.95 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9562,27 +9661,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "09417938-9d5b-4bf1-872d-196683caafb5")
-		)
-		(pin "2"
-			(uuid "59064a9c-7714-4acd-8bb8-d0e2b56008fa")
-		)
-		(pin "3"
-			(uuid "433492e9-7df2-45b5-84ee-e601fd804220")
-		)
-		(pin "6"
-			(uuid "5c50265e-6e60-4ab1-849d-92b7c3a6ef04")
-		)
-		(pin "5"
-			(uuid "10421bee-e756-4298-bdeb-19b324ce6042")
-		)
-		(pin "4"
-			(uuid "773e9747-a2ea-4507-b687-10fbf2af2188")
+			(uuid "f3ec76ee-7207-4df2-9697-1cef7071a5f9")
 		)
 		(instances
 			(project "zudo-pd"
 				(path "/c5ce32ac-bd6d-413c-bfb5-5e9e2f8848d1/89c28db7-f9d9-4adf-b951-b9bb069eac97"
-					(reference "D4")
+					(reference "#PWR053")
 					(unit 1)
 				)
 			)

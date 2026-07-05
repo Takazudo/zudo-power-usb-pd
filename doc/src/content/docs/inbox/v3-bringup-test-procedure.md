@@ -3,6 +3,20 @@ title: "v3 Bring-Up & Test Procedure"
 sidebar_position: 9
 ---
 
+<Note title="Superseded by the 2-board split / v4 diagnosis (2026-07)">
+
+This page's framing — "does the v3 CC-termination fix work?" — is stale: that fix
+(external Rd + CC1DB/CC2DB grounded) is the topology the
+[Board Split Decision](./board-split-decision.md) reverses (decision A1), and the v4
+board built on it still failed PD negotiation for further reasons documented in the
+[v4 USB-PD Failure Diagnosis](./v4-pd-failure-diagnosis.md). The general bring-up
+discipline below (stage gating, the 20V un-programmed-chip hazard, injecting 15V at TP1
+to de-risk the downstream power chain independently of PD) remains valid technique for
+bringing up **Board A** and **Board B** once those exist; only the specific "v3 CC fix"
+gamble it was originally written to de-risk is superseded.
+
+</Note>
+
 Staged bench procedure for a freshly assembled **PCBA v3** board. Every stage gates the
 next: if a stage fails its pass criteria, **stop and debug before powering further** — the
 downstream rails have never run on real hardware (v1 and v2 both died at the USB-PD front

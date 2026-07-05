@@ -3,6 +3,22 @@ title: PCBA v2 Debug Report — STUSB4500 CC1DB Failure
 sidebar_position: 7
 ---
 
+<Note title="Superseded by the 2-board split / v4 diagnosis (2026-07)">
+
+The "v3 design fix" documented on this page — external 5.1 kΩ Rd on CC1/CC2 plus
+CC1DB/CC2DB grounded (disabling dead-battery mode) — is the topology reversed by
+[decision A1](./board-split-decision.md) in the Board Split Decision. The
+[v4 USB-PD Failure Diagnosis](./v4-pd-failure-diagnosis.md) found this topology puts the
+CC line **out of the USB Type-C sink Rd spec the moment the chip powers up** (external Rd
+∥ the STUSB4500's own non-disableable internal Rd ≈ 2.55 kΩ, below the 5.1 kΩ ±20%
+window) — a design defect on every board, independent of whether any chip's CC1DB pin
+was ever actually shorted. Board A restores `CC1DB↔CC1` / `CC2DB↔CC2` (ST's reference
+dead-battery wiring) with the external Rd DNP'd. This page's diagnostic sequence and
+root-cause analysis for the specific v2 chip-internal-short symptom remain useful
+historical record; its *design recommendation* (the v3 fix) is superseded.
+
+</Note>
+
 Debug analysis of the second PCBA prototype (v2) for the USB-PD modular synthesizer power supply. The STUSB4500 was successfully programmed via NVM, but the chip's **CC1DB pin is internally shorted to GND on every assembled board**, preventing USB-C source detection and blocking PD negotiation entirely. This page documents the failure mode, diagnostic sequence, root cause analysis, and the v3 design fix.
 
 ## Symptoms

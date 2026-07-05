@@ -21,7 +21,7 @@ several **false** findings from guessing pin numbers by screen position; those a
 | 3 | NC | 156.21,54.61 | no_connect | ok |
 | 4 | CC2 | 156.21,57.15 | CC2 net (D4, R18 5.1k→GND, J1.B5) | ok |
 | 5 | CC2DB | 156.21,59.69 | → R20 (0 Ω) → GND, isolated from CC2 | ok |
-| 6 | RESET | 156.21,62.23 | → `RST` → GND (active-low idle = run) | ok |
+| 6 | RESET | 156.21,62.23 | → `RST` → GND (active-HIGH; grounded = deasserted = run) | ok |
 | 7 | SCL | 156.21,64.77 | → `SCL-pin1` (R15 4.7k pull-up, J2) | ok |
 | 8 | SDA | 156.21,67.31 | → `SDA-pin2` (R16 4.7k pull-up, J2) | ok |
 | 9 | DISCH | 156.21,69.85 | (internal discharge) | check |
@@ -105,7 +105,7 @@ If that single bodge brings PD up, pin 18 was the whole story.
 - **"VDD (pin 24) shorted to GND"** — FALSE. Pin 24 carries the `VDD` global label. The GND
   the agent saw was on **pin 13 ADDR1**, a correct address strap.
 - **"ADDR0→CC1DB / ADDR1→VDD mis-wired"** — FALSE. Both ADDR pins go to GND (addr 0x28).
-- **"RESET tied to GND is wrong"** — FALSE. Active-low idle; held low = normal run.
+- **"RESET tied to GND is wrong"** — FALSE. RESET is active-HIGH (DS12499 §2.2.3); held low = deasserted = normal run.
 - **"SCL shorted to RESET/GND"** — FALSE. SCL/SDA route correctly to their labels + pull-ups.
 - **"Pin 10 GND / pins floating"** — FALSE. Every U1 pin has a wire; pin 10 reaches GND.
 - **Q1 load switch** — schematic OK (source→VBUS_IN, drain→VBUS_OUT, gate via VBEN). Worth a
