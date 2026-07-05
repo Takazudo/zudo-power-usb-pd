@@ -4504,7 +4504,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "470uF 16V"
+		(property "Value" "470uF 10V"
 			(at 78.74 159.004 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5131,7 +5131,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "100uF"
+		(property "Value" "100uF 50V"
 			(at 213.36 68.3675 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5142,7 +5142,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "zudo-pd:CAP-SMD_BD6.3-L6.6-W6.6-LS7.3-FD"
+		(property "Footprint" "zudo-pd:CAP-SMD_BD8.0-L8.3-W8.3-LS9.0-FD"
 			(at 217.17 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -5153,7 +5153,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.lcsc.com/datasheet/C970687.pdf"
 			(at 209.55 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -5175,7 +5175,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" "C22383804"
+		(property "LCSC Part" "C970687"
 			(at 219.71 68.58 0)
 			(hide yes)
 			(show_name no)
