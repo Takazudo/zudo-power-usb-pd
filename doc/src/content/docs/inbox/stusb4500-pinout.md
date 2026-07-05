@@ -9,6 +9,19 @@ isolated pins. For the authoritative electrical detail see the ST datasheet (DS1
 and Figure 10; for the v3 pin-18 failure story see
 [v3 PD Failure Diagnosis](v3-pd-failure-diagnosis.md).
 
+<Note title="Superseded by the 2-board split / v4 diagnosis (2026-07)">
+
+This page's "v3 failed, v0.4.0 fixed pin 18" framing is incomplete: the v4 (0.4.0) board
+carried the pin-18 fix and still failed to negotiate PD. See the
+[v4 USB-PD Failure Diagnosis](v4-pd-failure-diagnosis.md) for the further root-cause
+candidates found in the CC termination and VBUS ESD strategy, and the
+[Board Split Decision](board-split-decision.md) for the locked fixes now going into
+[Board A: USB-PD Core](../overview/board-a-usb-pd-core.md). The pin-by-pin descriptions
+below (including pin 18 and pin 16) remain accurate; only the "this explains the whole
+failure history" framing is stale.
+
+</Note>
+
 ## The one-line mental model
 
 ```

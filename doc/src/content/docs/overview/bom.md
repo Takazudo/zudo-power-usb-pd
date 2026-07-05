@@ -77,7 +77,7 @@ This stage was upgraded from CH224D to **STUSB4500** for significantly improved 
 **Critical Notes:**
 
 - **Load switch (Q1)** controls power path - only enables after successful PD negotiation
-- **VBUS_EN_SNK** goes HIGH when negotiation succeeds, turning ON Q1
+- **VBUS_EN_SNK** (active-low, open-drain) pulls LOW when negotiation succeeds, turning ON Q1
 - **Soft-start** via C35 (100nF) limits inrush current (τ = 56kΩ × 100nF = 5.6ms)
 - **NVM programming** required to configure 15V PDO (one-time setup)
 

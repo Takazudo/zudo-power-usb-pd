@@ -8,6 +8,21 @@ TVS diode array for USB Type-C CC line and VBUS ESD protection. Replaces ESDA25L
 - [View on JLCPCB: C7519](https://jlcpcb.com/partdetail/C7519)
 - [Download Datasheet (PDF)](https://www.st.com/resource/en/datasheet/usblc6-2.pdf)
 
+<Note title="Superseded by the 2-board split / v4 diagnosis (2026-07)">
+
+**D4 is being removed entirely from Board A**, not kept or relocated. Per
+[decision A2](../inbox/board-split-decision.md) in the Board Split Decision, this part's
+VBUS pin (pin 5) is a 5.25V-rated zener to GND (breakdown ~6V min) sitting directly on a
+rail that reaches 15V by contract — an absolute-rating violation, and a leading v4
+root-cause candidate (see the
+[v4 USB-PD Failure Diagnosis](../inbox/v4-pd-failure-diagnosis.md)). Its VBUS-clamp role
+is replaced by a dedicated SMAJ20A on `VBUS_IN`; its CC-line ESD role is covered by the
+STUSB4500's own integrated 22V CC protection (ST's reference designs place nothing
+between the connector and the chip on CC). The content below documents the original
+(now superseded) v1–v4 design.
+
+</Note>
+
 ## Overview
 
 The USBLC6-2SC6 is a 6-pin TVS diode array specifically designed for USB ESD protection. It provides 2 bidirectional channels for data/CC lines plus a VBUS protection channel, making it ideal for USB Type-C applications.
