@@ -218,7 +218,7 @@ the wave-4 confirm pass diff-checks this block against the same block in the Boa
 |-----|--------|-----------|-------|
 | 1 | +15V | A → B | Board A `VBUS_OUT` (post Q1 load switch), PD-contract 15 V |
 | 2 | +15V | A → B | Paired with pin 1 (current sharing) |
-| 3 | ATT | A → B, open-drain, active-low | STUSB4500 pin 11 (ATTACH). No pull-up on Board A; consumer pulls up 10–100 kΩ to a local rail ≤5 V if used. May be left unconnected |
+| 3 | ATT | A → B, open-drain, active-low | STUSB4500 pin 11 (ATTACH). No pull-up on Board A; Board B (or any host) pulls up 10–100 kΩ to a local rail ≤5 V if used. May be left unconnected |
 | 4 | PDOK | A → B, open-drain, active-low | STUSB4500 pin 20 (POWER_OK2): asserts when the PDO2 (15 V) contract is live. Same pull-up rule as ATT. May be left unconnected |
 | 5 | GND | — | Paired return |
 | 6 | GND | — | Paired return |
