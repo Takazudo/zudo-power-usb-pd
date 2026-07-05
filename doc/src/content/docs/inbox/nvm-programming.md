@@ -326,7 +326,7 @@ Once detected, the "Read device NVM" and "Write device NVM" buttons appear in th
 2. Remove the pogo clip from the board
 3. Reconnect a real USB-C PD charger that supports 15V
 4. Measure VBUS_OUT with a multimeter — should read **15V** (or 5V if charger doesn't support 15V — fallback behavior)
-5. Verify VBUS_EN_SNK behavior (should stay LOW at 5V, go HIGH only after 15V negotiation completes)
+5. Verify VBUS_EN_SNK behavior — it's active-low, open-drain: with `POWER_ONLY_ABOVE_5V` set, it should stay Hi-Z (deasserted) at 5V, and pull LOW (asserted, turning the Q1 P-FET on) only after the 15V negotiation completes
 
 ### Verifying via the GUI's Dashboard tab
 

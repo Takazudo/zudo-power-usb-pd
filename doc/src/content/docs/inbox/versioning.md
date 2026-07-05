@@ -56,3 +56,47 @@ work should use the `0.Y.Z` form.
 | Placing the 5th JLCPCB order | `/l-bump-version-y` | `0.4.0 → 0.5.0`, tag + GitHub release |
 | Marking a local milestone mid-order | `/l-bump-version-z` | `0.4.0 → 0.4.1`, tag only |
 | First real product ship | `/l-bump-version-x` | `0.5.2 → 1.5.0`, tag + GitHub release (Y kept) |
+
+## 2-board era: one Y bump per JLCPCB order **event**
+
+Starting with the [2-board split](./board-split-decision.md) (epic #86), the project no
+longer orders a single PCBA — each JLCPCB order event now covers **both** Board A
+(USB-PD core) and Board B (synth power) at once. This does **not** change the meaning of
+Y.
+
+<Note title="One order event = one Y bump, regardless of board count">
+
+**Y counts order events, not physical PCBs.** Ordering Board A and Board B together at
+JLCPCB is still a single "Nth JLCPCB order" from this project's point of view, so it gets
+**one** `/l-bump-version-y` bump, not two. Bumping Y once per board would double-count
+and desync Y from the JLCPCB order history the versioning scheme is meant to track.
+
+</Note>
+
+So placing the 5th JLCPCB order under the 2-board split (Board A + Board B submitted
+together) is still `0.4.0 → 0.5.0` — the same single bump as the old single-board flow.
+
+### `jlcpcb-order-snapshots/` naming for a 2-board order
+
+The existing convention is one directory per order — `jlcpcb-order-snapshots/v0_Y_Z/`
+(e.g. `v0_4_0/`) — each containing `used-for-order/` (files actually submitted) and
+`from-order-detail/` (recovered post-order confirmation artifacts).
+
+For a 2-board order, Board A and Board B are physically separate PCBs with separate
+BOM/CPL/Gerber sets, so the snapshot splits into **two sibling directories sharing the
+same version prefix**, distinguished by a `-board-a` / `-board-b` suffix:
+
+```
+jlcpcb-order-snapshots/
+├── v0_5_0-board-a/
+│   ├── used-for-order/       ← Board A gerbers/BOM/CPL as submitted
+│   └── from-order-detail/    ← Board A recovered order-confirmation artifacts
+└── v0_5_0-board-b/
+    ├── used-for-order/       ← Board B gerbers/BOM/CPL as submitted
+    └── from-order-detail/    ← Board B recovered order-confirmation artifacts
+```
+
+Both directories share the `v0_5_0` prefix — same Y, because it is the same order event
+— with the `-board-a` / `-board-b` suffix carrying the per-board distinction. This keeps
+"Y = Nth JLCPCB order event" intact while giving each board's manufacturing files their
+own home, since Board A and Board B never share a BOM, CPL, or Gerber set.

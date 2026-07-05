@@ -149,7 +149,7 @@ When connected to a USB-PD charger:
 
 - Connector establishes physical connection
 - VBUS provides 5V default power
-- VBUS_EN_SNK remains LOW (load switch OFF)
+- VBUS_EN_SNK remains Hi-Z / deasserted (active-low, open-drain — load switch OFF)
 
 2. **Orientation Detection** (100-200ms):
 
@@ -170,7 +170,7 @@ When connected to a USB-PD charger:
 5. **Power Ready** (>1000ms):
 
 - VBUS stable at 15V
-- VBUS_EN_SNK goes HIGH (load switch ON)
+- VBUS_EN_SNK pulls LOW / asserted (load switch ON)
 - System can draw up to 45W (15V × 3A)
 
 ## Design Considerations

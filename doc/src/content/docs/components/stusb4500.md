@@ -8,6 +8,20 @@ USB-IF certified USB Power Delivery sink controller for reliable 15V/3A power ne
 - [View on JLCPCB: C2678061](https://jlcpcb.com/partdetail/C2678061)
 - [Download Datasheet (PDF)](https://www.st.com/resource/en/datasheet/stusb4500.pdf)
 
+<Note title="Superseded by the 2-board split / v4 diagnosis (2026-07)">
+
+This page describes the original single-board (v1–v4) front end. Two changes from the
+[Board Split Decision](../inbox/board-split-decision.md) are not yet reflected below:
+**D4 (USBLC6-2SC6) is being removed entirely** (decision A2 — its VBUS pin is a 5V-rated
+part on a 15V-contract rail) and **the external-Rd CC termination + grounded CC1DB/CC2DB
+topology shown here is being reversed** back to `CC1DB↔CC1` / `CC2DB↔CC2` with the
+external Rd DNP'd (decision A1). See [Board A: USB-PD Core](../overview/board-a-usb-pd-core.md)
+for the corrected topology. The **VBUS_EN_SNK is active-LOW, open-drain** (see the fixed
+pin table below) — this page previously said "active HIGH" in two places, which was
+wrong and has been corrected.
+
+</Note>
+
 <Tip title="Why STUSB4500 over CH224D?">
 
 **STUSB4500 is USB-IF certified** with significantly better charger compatibility:
@@ -104,7 +118,7 @@ Note: Pin 16 (VBUS_EN_SNK) is critical for load switch control
 | 13  | ADDR1         | I2C address bit 1                    | GND (I2C address 0x28)                |
 | 14  | POWER_OK3     | PDO3 selected indicator              | NC (optional LED/MCU)                 |
 | 15  | GPIO          | General purpose I/O                  | NC                                    |
-| 16  | VBUS_EN_SNK   | **Load switch enable (active HIGH)** | To P-MOSFET gate via R12 (56kΩ)       |
+| 16  | VBUS_EN_SNK   | **Load switch enable (active-LOW, open-drain)** | To P-MOSFET gate via R12 (56kΩ)       |
 | 17  | A_B_SIDE      | Cable orientation indicator          | NC                                    |
 | 18  | VBUS_VS_DISCH | VBUS voltage sense / discharge       | VBUS_IN via R14 (470ohm)              |
 | 19  | ALERT         | Interrupt output (open-drain)        | NC                                    |
@@ -317,13 +331,13 @@ Timeline:
 │      ▼                                                          │
 │   VBUS = 5V (default)                                           │
 │      │                                                          │
-│   VBUS_EN_SNK = LOW ← Load switch OFF                           │
+│   VBUS_EN_SNK = Hi-Z (deasserted) ← Load switch OFF             │
 │      │                                                          │
 │   PD Negotiation (retries if needed)                            │
 │      │                                                          │
 │   Negotiation SUCCESS → VBUS = 15V                              │
 │      │                                                          │
-│   VBUS_EN_SNK = HIGH ← Load switch ON                           │
+│   VBUS_EN_SNK pulled LOW (asserted) ← Load switch ON            │
 │      │                                                          │
 │   VBUS_OUT = 15V (stable, to DC-DC converters)                  │
 └─────────────────────────────────────────────────────────────────┘

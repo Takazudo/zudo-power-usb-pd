@@ -176,13 +176,13 @@ VBUS_EN_SNK ───┬── R12 (56kΩ) ──┴─── Gate ─── Q1 
               GND                                   ▼
                                               VBUS_OUT (to DC-DC)
 
-Load Switch Operation:
-┌────────────────────────────────────────────────────────────────────┐
-│ State              │ VBUS_EN_SNK │ Gate Voltage │ Q1 State │ Output│
-├────────────────────┼─────────────┼──────────────┼──────────┼───────┤
-│ No cable / PD fail │ LOW (0V)    │ HIGH (VBUS)  │ OFF      │ 0V    │
-│ PD negotiation OK  │ HIGH (~3V)  │ LOW (~2V)    │ ON       │ 15V   │
-└────────────────────────────────────────────────────────────────────┘
+Load Switch Operation (VBUS_EN_SNK is active-LOW, open-drain):
+┌──────────────────────────────────────────────────────────────────────────┐
+│ State              │ VBUS_EN_SNK       │ Gate Voltage │ Q1 State │ Output│
+├────────────────────┼───────────────────┼──────────────┼──────────┼───────┤
+│ No cable / PD fail │ Hi-Z (deasserted) │ HIGH (VBUS)  │ OFF      │ 0V    │
+│ PD negotiation OK  │ LOW (asserted)    │ LOW (~2V)    │ ON       │ 15V   │
+└──────────────────────────────────────────────────────────────────────────┘
 
 Why P-Channel MOSFET?
 - Simple high-side switch (no charge pump needed)
@@ -208,7 +208,7 @@ Step-by-step PD negotiation sequence:
                                   └───────────┘
    VBUS = 5V (default USB voltage)
    STUSB4500 presents Rd internally (no external 5.1kΩ needed)
-   VBUS_EN_SNK = LOW → Q1 OFF → VBUS_OUT = 0V
+   VBUS_EN_SNK = Hi-Z (deasserted, active-low open-drain) → Q1 OFF → VBUS_OUT = 0V
 
 2. Capability Discovery (100-200ms):
    STUSB4500 requests Source Capabilities via CC
@@ -225,7 +225,7 @@ Step-by-step PD negotiation sequence:
 
 5. Power Ready (>500ms):
    STUSB4500 confirms 15V stable
-   VBUS_EN_SNK goes HIGH → Q1 turns ON
+   VBUS_EN_SNK pulls LOW (asserted) → Q1 turns ON
    VBUS_OUT = 15V (power delivered to DC-DC stages)
 
 KEY DIFFERENCE from CH224D:
@@ -286,7 +286,7 @@ Critical Pin Connections:
 
 <Details title="Connection List">
 
-  **Power Supply:** - `USB-C VBUS (pins A9, B9)` → `VBUS_IN Rail` → `STUSB4500 VDD (pin 24)` - `C1 (10µF ceramic)`: `VBUS_IN` ⟷ `GND` (bulk filtering) - `C2 (100nF ceramic)`: `VDD (pin 24)` ⟷ `GND` (close to IC) **Internal Regulators:** - `VREG_2V7 (pin 23)` → `C30 (1µF)` → `GND` - `VREG_1V2 (pin 21)` → `C34 (1µF)` → `GND` - `VSYS (pin 22)` → `GND` (connect to ground when not used) **CC Lines:** - `USB-C CC1 (pin A5)` → `STUSB4500 CC1 (pin 2)` → `CC1DB (pin 1)` (tie CC1 and CC1DB together) - `USB-C CC2 (pin B5)` → `STUSB4500 CC2 (pin 4)` → `CC2DB (pin 5)` (tie CC2 and CC2DB together) - `D4 (USBLC6-2SC6)`: Pin 1 → USB-C CC1, Pin 6 → STUSB4500 CC1/CC1DB, Pin 3 → USB-C CC2, Pin 4 → STUSB4500 CC2/CC2DB, Pin 2 → GND, Pin 5 → VBUS_IN **Load Switch (Power Path Control):** - `VBUS_IN` → `R11 (100kΩ)` → `Q1 Gate` (pull-up, default OFF) - `VBUS_EN_SNK (pin 16)` → `R12 (56kΩ)` → `Q1 Gate` - `Q1 Gate` → `C35 (100nF)` → `GND` (soft-start) - `Q1 (AO3401A)`: Source = VBUS_IN, Drain = VBUS_OUT - **Result**: Q1 conducts when VBUS_EN_SNK goes HIGH after PD success **VBUS Discharge:** - `DISCH (pin 9)` → `R13 (470Ω)` → `VBUS_OUT` - Purpose: Quickly discharge VBUS when cable disconnected **VBUS Voltage Sense:** - `VBUS_IN` → `R14 (470Ω)` → `VBUS_VS_DISCH (pin 18)` - Purpose: VBUS voltage monitoring and secondary discharge path **Configuration:** - `RESET (pin 6)` → `GND` (or NC) - Active-HIGH, has internal pull-down - `ADDR0 (pin 12)` → `GND` - `ADDR1 (pin 13)` → `GND` - I2C address = 0x28 (for NVM programming) **Ground:** - `USB-C GND (pins A1, B12)` → `System GND` - `STUSB4500 GND (pin 10)` → `System GND` - `STUSB4500 EP (pin 25)` → `System GND` (thermal + ground) **NVM Programming (One-time Setup):** The STUSB4500 requires NVM programming to configure the 15V PDO: | PDO | Voltage | Current | Purpose | | ---- | ------- | ------- | ------------------ | | PDO1 | 5V | 1.5A | Fixed (mandatory) | | PDO2 | **15V** | **3A** | **Target voltage** | | PDO3 | 20V | 1.5A | Fallback option | Programming methods: 1. **STSW-STUSB002** GUI tool (requires STEVAL-ISC005V1 eval board) 2. **Arduino/MCU via I2C** using community libraries 3. **Pre-programmed parts** from some distributors
+  **Power Supply:** - `USB-C VBUS (pins A9, B9)` → `VBUS_IN Rail` → `STUSB4500 VDD (pin 24)` - `C1 (10µF ceramic)`: `VBUS_IN` ⟷ `GND` (bulk filtering) - `C2 (100nF ceramic)`: `VDD (pin 24)` ⟷ `GND` (close to IC) **Internal Regulators:** - `VREG_2V7 (pin 23)` → `C30 (1µF)` → `GND` - `VREG_1V2 (pin 21)` → `C34 (1µF)` → `GND` - `VSYS (pin 22)` → `GND` (connect to ground when not used) **CC Lines:** - `USB-C CC1 (pin A5)` → `STUSB4500 CC1 (pin 2)` → `CC1DB (pin 1)` (tie CC1 and CC1DB together) - `USB-C CC2 (pin B5)` → `STUSB4500 CC2 (pin 4)` → `CC2DB (pin 5)` (tie CC2 and CC2DB together) - `D4 (USBLC6-2SC6)`: Pin 1 → USB-C CC1, Pin 6 → STUSB4500 CC1/CC1DB, Pin 3 → USB-C CC2, Pin 4 → STUSB4500 CC2/CC2DB, Pin 2 → GND, Pin 5 → VBUS_IN **Load Switch (Power Path Control):** - `VBUS_IN` → `R11 (100kΩ)` → `Q1 Gate` (pull-up, default OFF) - `VBUS_EN_SNK (pin 16)` → `R12 (56kΩ)` → `Q1 Gate` - `Q1 Gate` → `C35 (100nF)` → `GND` (soft-start) - `Q1 (AO3401A)`: Source = VBUS_IN, Drain = VBUS_OUT - **Result**: Q1 conducts when VBUS_EN_SNK (active-low, open-drain) pulls LOW after PD success **VBUS Discharge:** - `DISCH (pin 9)` → `R13 (470Ω)` → `VBUS_OUT` - Purpose: Quickly discharge VBUS when cable disconnected **VBUS Voltage Sense:** - `VBUS_IN` → `R14 (470Ω)` → `VBUS_VS_DISCH (pin 18)` - Purpose: VBUS voltage monitoring and secondary discharge path **Configuration:** - `RESET (pin 6)` → `GND` (or NC) - Active-HIGH, has internal pull-down - `ADDR0 (pin 12)` → `GND` - `ADDR1 (pin 13)` → `GND` - I2C address = 0x28 (for NVM programming) **Ground:** - `USB-C GND (pins A1, B12)` → `System GND` - `STUSB4500 GND (pin 10)` → `System GND` - `STUSB4500 EP (pin 25)` → `System GND` (thermal + ground) **NVM Programming (One-time Setup):** The STUSB4500 requires NVM programming to configure the 15V PDO: | PDO | Voltage | Current | Purpose | | ---- | ------- | ------- | ------------------ | | PDO1 | 5V | 1.5A | Fixed (mandatory) | | PDO2 | **15V** | **3A** | **Target voltage** | | PDO3 | 20V | 1.5A | Fallback option | Programming methods: 1. **STSW-STUSB002** GUI tool (requires STEVAL-ISC005V1 eval board) 2. **Arduino/MCU via I2C** using community libraries 3. **Pre-programmed parts** from some distributors
 
 </Details>
 
