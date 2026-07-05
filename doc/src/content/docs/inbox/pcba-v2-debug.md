@@ -167,6 +167,7 @@ An earlier draft of this fix proposed 10 kΩ as a hedge in case a future chip ba
 The "good chip" parallel-resistance failure mode is **not** solved by picking a compromise external value — the proper fix is to **remove the external Rd entirely** (board respin, or a populate/DNP jumper) once you know the chip's internal Rd is healthy. So for v3 we use the spec value and don't try to compromise across two failure scenarios.
 
 **Sensitivity on 3 A USB-C sources:** sources advertising 3 A use Rp = 22 kΩ (tightest detection). The CC line voltage with Rp pull-up:
+
 - 5.1 kΩ Rd → 5 V × 5.1 / (5.1 + 22) ≈ **0.94 V** — comfortably below the ~1.7 V "sink connected" threshold
 - 10 kΩ Rd → 5 V × 10 / (10 + 22) ≈ **1.56 V** — borderline; some compliant sources will fail to detect
 
@@ -175,6 +176,7 @@ The "good chip" parallel-resistance failure mode is **not** solved by picking a 
 **This is the critical change.** If CC1DB stays on the CC1 net (v2 wiring), then a chip with internally-shorted CC1DB still drags the entire CC1 net to 0 Ω, and the external 5.1 kΩ is overpowered (a 0 Ω short wins against any finite resistor). The fault persists.
 
 By routing CC1DB and CC2DB to GND directly:
+
 - The broken pin's internal short is isolated to the GND net (harmless)
 - The CC1 / CC2 nets see only the external R_CC1 / R_CC2 and the chip's main CC pins (pin 2, pin 4) for termination
 

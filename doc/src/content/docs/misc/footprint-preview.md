@@ -11,7 +11,6 @@ Click on any footprint to view it in fullscreen.
 
 ### U1 - CH224D USB PD Controller
 
-
 ![CH224D QFN-20 Package](/footprints/QFN-20_L3.0-W3.0-P0.40-BL-EP1.7.svg)
 
 **Designator:** U1
@@ -21,7 +20,6 @@ Click on any footprint to view it in fullscreen.
 **Function:** Negotiates 15V from USB-C PD adapter
 
 ### J1 - USB Type-C Connector
-
 
 ![USB Type-C 6P Connector](/footprints/TYPE-C-SMD_TYPE-C-6P.svg)
 
@@ -37,7 +35,6 @@ Click on any footprint to view it in fullscreen.
 
 ### U2, U3, U4 - LM2596S-ADJ Buck Converter
 
-
 ![LM2596S TO-263-5 Package](/footprints/TO-263-5_L10.2-W8.9-P1.70-BR.svg)
 
 **Designators:** U2, U3, U4 (3× units)
@@ -47,7 +44,6 @@ Click on any footprint to view it in fullscreen.
 **Function:** DC-DC conversion (+13.5V, +7.5V, -13.5V outputs)
 
 ### L1, L2, L3 - 100µH Power Inductor
-
 
 ![100µH Power Inductor](/footprints/IND-SMD_L13.8-W12.8.svg)
 
@@ -63,7 +59,6 @@ Click on any footprint to view it in fullscreen.
 
 ### U6 - L7812CD2T-TR (+12V Linear Regulator)
 
-
 ![L7812CD2T TO-263-2 Package](/footprints/TO-263-2_L10.0-W9.1-P5.08-LS15.2-TL.svg)
 
 **Designator:** U6
@@ -74,7 +69,6 @@ Click on any footprint to view it in fullscreen.
 
 ### U7 - L7805ABD2T-TR (+5V Linear Regulator)
 
-
 ![L7805ABD2T TO-263-2 Package](/footprints/TO-263-2_L10.0-W9.2-P5.08-LS15.3-TL-CW.svg)
 
 **Designator:** U7
@@ -84,7 +78,6 @@ Click on any footprint to view it in fullscreen.
 **Function:** Regulates +7.5V to +5V with low noise
 
 ### U8 - CJ7912 (-12V Linear Regulator)
-
 
 ![CJ7912 TO-252-3 Package](/footprints/TO-252-3_L6.5-W5.8-P4.58-BL.svg)
 
@@ -102,7 +95,6 @@ Click on any footprint to view it in fullscreen.
 
 #### 0603 Ceramic Capacitor
 
-
 ![0603 Capacitor](/footprints/C0603.svg)
 
 **Package:** 0603 (1.6mm × 0.8mm)
@@ -115,7 +107,6 @@ Click on any footprint to view it in fullscreen.
 
 #### 0805 Ceramic Capacitor
 
-
 ![0805 Capacitor](/footprints/C0805.svg)
 
 **Package:** 0805 (2.0mm × 1.25mm)
@@ -127,7 +118,6 @@ Click on any footprint to view it in fullscreen.
   **Applications:** Bulk decoupling, output filtering
 
 #### D6.3mm Electrolytic Capacitor
-
 
 ![D6.3mm SMD Electrolytic Capacitor](/footprints/CAP-SMD_BD6.3-L6.6-W6.6-FD.svg)
 
@@ -142,7 +132,6 @@ Click on any footprint to view it in fullscreen.
 
 #### D10mm Electrolytic Capacitor
 
-
 ![D10mm SMD Electrolytic Capacitor](/footprints/CAP-SMD_BD10.0-L10.3-W10.3-LS11.0-FD.svg)
 
 **Package:** SMD Electrolytic (Ø10.0mm, 10.3mm × 10.3mm)
@@ -156,7 +145,6 @@ Click on any footprint to view it in fullscreen.
 
 #### 1206 Ceramic Capacitor
 
-
 ![1206 Capacitor](/footprints/C1206.svg)
 
 **Designator:** C1
@@ -168,7 +156,6 @@ Click on any footprint to view it in fullscreen.
 ### Resistors
 
 #### 0603 Resistor
-
 
 ![0603 Resistor](/footprints/R0603.svg)
 
@@ -184,7 +171,6 @@ Click on any footprint to view it in fullscreen.
 
 #### 0805 Resistor
 
-
 ![0805 Resistor](/footprints/R0805.svg)
 
 **Package:** 0805 (2.0mm × 1.25mm)
@@ -198,7 +184,6 @@ Click on any footprint to view it in fullscreen.
 ### LEDs
 
 #### 0603 LED
-
 
 ![0603 LED](/footprints/LED0603-RD.svg)
 
@@ -219,7 +204,6 @@ Click on any footprint to view it in fullscreen.
 
 #### PTC3 - F1206 (1.5A Hold, -12V Rail)
 
-
 ![1206 PTC Resettable Fuse](/footprints/F1206.svg)
 
 **Designator:** PTC3
@@ -230,7 +214,6 @@ Click on any footprint to view it in fullscreen.
 **Function:** -12V rail auto-reset overcurrent protection
 
 #### PTC1 - F1210 (2.0A Hold, +12V Rail)
-
 
 ![1210 PTC Resettable Fuse](/footprints/F1210.svg)
 
@@ -243,7 +226,6 @@ Click on any footprint to view it in fullscreen.
 
 #### PTC2 - F1812 (1.1A Hold, +5V Rail)
 
-
 ![1812 PTC Resettable Fuse](/footprints/F1812.svg)
 
 **Designator:** PTC2
@@ -254,7 +236,6 @@ Click on any footprint to view it in fullscreen.
 **Function:** +5V rail auto-reset overcurrent protection
 
 ### Schottky Diode (SMA)
-
 
 ![SMA Diode Package](/footprints/SMA_L4.3-W2.6-LS5.2-RD.svg)
 
@@ -268,7 +249,6 @@ Click on any footprint to view it in fullscreen.
 
 #### TVS1, TVS3 - SMAJ15A (±12V Overvoltage Protection)
 
-
 ![SMAJ15A SMA TVS Diode](/footprints/D-FLAT_L4.3-W2.6-LS5.3-RD.svg)
 
 **Designators:** TVS1, TVS3
@@ -279,7 +259,6 @@ Click on any footprint to view it in fullscreen.
 **Function:** Overvoltage protection for ±12V rails
 
 #### TVS2 - SD05 (+5V Overvoltage Protection)
-
 
 ![SD05 SOD-323 TVS Diode](/footprints/SOD-323_L1.8-W1.3-LS2.5-FD.svg)
 
@@ -295,7 +274,6 @@ Click on any footprint to view it in fullscreen.
 
 ### J10-J11 - Eurorack Power Connector (16-pin)
 
-
 ![16-pin 2.54mm Header (Eurorack)](/footprints/HDR-TH_16P-P2.54-H-M-R2-C8-S2.54.svg)
 
 **Designators:** J10, J11 (2× units)
@@ -307,7 +285,6 @@ Click on any footprint to view it in fullscreen.
 **Note:** Standard pin headers. For box/shrouded connectors (commonly used in Eurorack), source the mating connector separately from Tayda Electronics, Mouser, or Digikey.
 
 ### J6-J9 - FASTON 250 Power Terminals
-
 
 ![FASTON 250 PCB Terminal](/footprints/CONN-TH_1217754-1.svg)
 
