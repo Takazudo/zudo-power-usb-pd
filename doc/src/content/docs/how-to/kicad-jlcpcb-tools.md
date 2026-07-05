@@ -85,14 +85,14 @@ If you find a missing or wrong correction, use the plugin's **Corrections Manage
 1. In the JLCPCB Tools panel, click **Generate**.
 2. The plugin produces a `jlcpcb/` directory at the project root containing:
 
-```
-jlcpcb/
-├── gerber/                    ← Gerber files (one per layer)
-├── production_files/
-│   ├── BOM-zudo-pd.csv        ← BOM with LCSC numbers
-│   └── POS-zudo-pd.csv        ← Pick-and-place / CPL with corrected rotations
-└── project.db                 ← Plugin local cache (SQLite)
-```
+   ```
+   jlcpcb/
+   ├── gerber/                    ← Gerber files (one per layer)
+   ├── production_files/
+   │   ├── BOM-zudo-pd.csv        ← BOM with LCSC numbers
+   │   └── POS-zudo-pd.csv        ← Pick-and-place / CPL with corrected rotations
+   └── project.db                 ← Plugin local cache (SQLite)
+   ```
 
 3. Zip the contents of `jlcpcb/gerber/` for upload (JLCPCB expects a single `.zip` of Gerbers).
 4. Upload to the JLCPCB order page:

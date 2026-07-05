@@ -1,5 +1,5 @@
 ---
-title: "v3 Bring-Up & Test Procedure"
+title: v3 Bring-Up & Test Procedure
 sidebar_position: 9
 ---
 
@@ -182,6 +182,7 @@ Lift **R19** (or R20) to isolate the chip's CC1DB/CC2DB pin from GND — this is
 To test the power chain **without depending on PD**, you can feed a bench supply into **TP1 (+) / TP2 (GND)** at **15.0 V, limit ~200–300 mA**. TP1's net is the **`VBUS_OUT`** global label (downstream of the Q1 load switch), so this bypasses the USB-PD front end and drives the DC-DC + LDO chain directly. `VBUS_OUT` enters the DC-DC sheet as the `USB-PD-power IN` hierarchical pin and fans out to U2/U3/U4 VIN (local labels `+15V -> +13.5V gen`, `+15V -> +7.5V gen`, `+15V -> -13.5V gen`).
 
 **⚠️ Mandatory pre-check before injecting (unpowered, ohmmeter):** measure between **TP1** and **U1's VDD pin (J3 pad 4)**.
+
 - **Open / high resistance** → TP1 is isolated from the chip supply. **Safe to inject 15 V.**
 - **Continuous (~0 Ω)** → `VBUS_OUT` back-feeds the STUSB4500 supply. **Do NOT inject 15 V at TP1** — you'd put 15 V onto the chip. (The docs conflict: `test-points-v3.md` calls VDD "post-MOSFET load switch," which would mean exactly this back-feed; the netlist trace suggested VDD = VBUS_IN. Resolve it with this meter check before trusting TP1 injection.) In that case, drive the chain through the normal PD path (Stage 3) instead.
 
@@ -332,6 +333,7 @@ R19/R20 (C21189). Chip-side signals broken out on **J3** 1×8 pogo block
 (1:CC1DB 2:CC2DB 3:VREG_2V7 4:VDD 5:RESET 6:ATTACH 7:PD_OK 8:VBUS_EN_SNK).
 
 **Open flags to keep in mind:**
+
 - +12 V / −12 V LDO headroom is **1.5 V** — marginal; watch under load.
 - U4 negative-feedback exact value/sign unresolved from the file — **confirm at TP5 on the bench.**
 - TP6–TP9 (CC1/CC2/−15V/VBUS_DISCH individual pads) were **planned but not placed** — only

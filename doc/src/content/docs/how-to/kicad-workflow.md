@@ -225,7 +225,6 @@ zudo-pd/          ← Repository root
 - Or from PCB Editor: Preferences → Manage Footprint Libraries
 
 2. **Click "Project Specific Libraries" tab** (at bottom)
-
 3. **Add new library:**
 - Click folder icon (➕) to add library
 - Set values:

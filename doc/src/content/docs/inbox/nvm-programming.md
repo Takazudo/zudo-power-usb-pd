@@ -229,6 +229,7 @@ Symptom of wrong choice: GUI shows "STM32-Nucleo-board not Detected" even after 
 </Warning>
 
 Sources:
+
 - [STSW-STUSB002 quick start guide (PDF)](https://www.st.com/resource/en/product_presentation/stswstusb002_quick_start_v3_2.pdf) — explicit UART vs HID guidance
 - [NUCLEO-F072RB schematic (MB1136-C03)](https://www.st.com/resource/en/schematic_pack/mb1136-default-c03_schematic.pdf) — confirms CN1 is ST-Link only
 
@@ -307,14 +308,14 @@ Once detected, the "Read device NVM" and "Write device NVM" buttons appear in th
 2. The "SNK Parameters" tab will populate with the factory defaults — confirm they match the expected defaults (PDO1: 5V/1.5A, PDO2: 15V/1.5A, PDO3: 20V/1.0A)
 3. Configure target settings:
 
-| Field | New value | Reason |
-| --- | --- | --- |
-| **SNK_PDO_NUMB** | **`2`** | Only advertise PDO1 + PDO2. PDO3 (20V) never negotiated. |
-| **PDO2 Current** | **`3.00 A`** | Design needs 3A on the 15V rail |
-| **POWER_ONLY_ABOVE_5V** | **checked** | VBUS_EN_SNK only enables after 15V negotiated |
-| PDO1 (5V/1.5A) | keep | Mandatory USB-PD default |
-| PDO2 Voltage (15V) | keep | Target rail voltage |
-| Other settings | leave alone | Don't touch FLEX_I, UVLO/OVLO, GPIO, etc. |
+   | Field | New value | Reason |
+   | --- | --- | --- |
+   | **SNK_PDO_NUMB** | **`2`** | Only advertise PDO1 + PDO2. PDO3 (20V) never negotiated. |
+   | **PDO2 Current** | **`3.00 A`** | Design needs 3A on the 15V rail |
+   | **POWER_ONLY_ABOVE_5V** | **checked** | VBUS_EN_SNK only enables after 15V negotiated |
+   | PDO1 (5V/1.5A) | keep | Mandatory USB-PD default |
+   | PDO2 Voltage (15V) | keep | Target rail voltage |
+   | Other settings | leave alone | Don't touch FLEX_I, UVLO/OVLO, GPIO, etc. |
 
 4. Verify "**Verify after write**" checkbox at top-right is checked (default)
 5. Click **"Write device NVM"**

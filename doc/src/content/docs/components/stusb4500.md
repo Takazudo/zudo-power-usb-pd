@@ -276,7 +276,6 @@ R12 was changed from 33kΩ to 56kΩ to provide adequate Vgs margin for Q1:
 
 <Tip title="Why USBLC6-2SC6?">
 
-
 - **Low clamping voltage** (~17V) - better protection for CC lines operating at ~1.7V
 - **Includes VBUS protection** - pin 5 can connect to VBUS_IN for additional transient protection
 - **USB-specific design** - optimized for USB-C applications
@@ -372,9 +371,7 @@ This eliminates inrush current issues during PD negotiation.
 Three issues were found in the v1 PCBA that prevented STUSB4500 from operating correctly:
 
 1. **VBUS_VS_DISCH (pin 18) not connected**: Pin 18 was left as NC (no connection). The datasheet requires this pin to be connected to VBUS_IN through a 470ohm series resistor for VBUS voltage sensing and discharge. Fixed by adding R14 (470ohm) between VBUS_IN and pin 18.
-
 2. **VSYS (pin 22) shorted to VREG_2V7 (pin 23)**: A routing error connected pin 22 (VSYS input) to pin 23 (VREG_2V7 regulator output), overloading the internal 2.7V regulator. Fixed by cutting the trace and wiring VSYS to GND.
-
 3. **VSYS (pin 22) left floating**: After the trace cut fix above, VSYS was left floating instead of being connected to GND. The datasheet recommends grounding VSYS when not used. Fixed by adding a bodge wire from pin 22 to GND.
 
 For full details, see the [PCBA v1 Debug Report](../inbox/pcba-v1-debug.md).

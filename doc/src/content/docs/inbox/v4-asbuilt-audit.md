@@ -84,9 +84,7 @@ on/after 2026-06-05 for this board. If one exists:
 3. Re-run the D4/U1/R-value comparison in this doc against the confirmed BOM, not just the
    locally-generated one, since JLCPCB can silently substitute out-of-stock basic parts.
 
-If no such order exists, v0.4.0 has **not** been manufactured yet — the fix exists only in git
-+ the local `jlcpcb/` export, and the next actionable step is to actually place the order using
-the recovered files in `jlcpcb-order-snapshots/v0_4_0/used-for-order/` (below).
+If no such order exists, v0.4.0 has **not** been manufactured yet — the fix exists only in git and the local `jlcpcb/` export, and the next actionable step is to actually place the order using the recovered files in `jlcpcb-order-snapshots/v0_4_0/used-for-order/` (below).
 
 ### BOM comparison: front-end parts
 

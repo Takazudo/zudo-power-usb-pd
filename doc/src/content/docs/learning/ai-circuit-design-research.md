@@ -146,6 +146,7 @@ Full findings: `experiments/ai-circuit-design/circuit-synth-spike/FINDINGS.md`
 **What worked:** The review confirmed the v3 fix is present: `VBUS_IN → R14 (470 Ω) → U1.18` with no GND on the pin-18 net (F-1). Feedback-divider math recomputed from the actual resistors matched the target rails to within 0.22 % (F-7). Load-switch polarity, VDD decoupling, CC Rd pull-downs, and VREG decaps all checked out.
 
 **What was flagged:**
+
 - Both the +12V (L7812, F-11) and −12V (CJ7912, F-13) LDOs run at only ~1.5 V dropout against a ~2 V typical spec — marginal at rated current. The existing `components/l7812cv.md` doc already flags this.
 - Documentation discrepancy (F-9): `CLAUDE.md` and the architecture text describe the negative rail as "−15V (LM2586SX-ADJ inverted SEPIC)," but the actual schematic uses a third `LM2596S-ADJ` in an inverting buck-boost topology — a stale description that should be corrected.
 
