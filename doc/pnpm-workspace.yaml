@@ -1,9 +1,11 @@
 # pnpm 11+ reads build-script approval from here (pnpm 11 ignores the
 # package.json "pnpm" field; package.json keeps onlyBuiltDependencies for
 # pnpm 10 CI). esbuild is used by zfb's bundler; sharp backs image probing;
-# workerd backs the Cloudflare adapter build.
+# workerd backs the Cloudflare adapter build; lefthook's postinstall fetches
+# its platform binary.
 allowBuilds:
   esbuild: true
+  lefthook: true
   sharp: true
   workerd: true
 # pnpm 11.5.2's default minimumReleaseAge gate (~24h cooldown) rejects packages

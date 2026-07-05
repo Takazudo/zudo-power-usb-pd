@@ -9,7 +9,10 @@
     "preview": "zfb preview",
     "check": "zfb check",
     "check:html": "html-validate \"dist/**/*.html\"",
-    "b4push": "pnpm check && pnpm build"
+    "b4push": "pnpm check && pnpm build",
+    "format:md": "../scripts/mdx-format.sh --write \"src/content/docs/**/*.{md,mdx}\"",
+    "format:md:check": "../scripts/mdx-format.sh --check \"src/content/docs/**/*.{md,mdx}\"",
+    "prepare": "cd .. && [ -d .git ] && lefthook install || true"
   },
   "dependencies": {
     "@takazudo/zfb": "0.1.0-next.49",
@@ -38,6 +41,7 @@
     "@types/node": "^22.0.0",
     "@types/react": "^19.2.0",
     "html-validate": "^10.0.0",
+    "lefthook": "^2.1.9",
     "pagefind": "^1.4.0",
     "tsx": "^4.21.0"
   },

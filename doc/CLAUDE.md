@@ -24,11 +24,21 @@ deployed to **Cloudflare Workers**.
 ## Local Development
 
 ```bash
-pnpm dev        # dev server at http://localhost:4321
-pnpm build      # production build → dist/ (incl. dist/_worker.js)
-pnpm preview    # preview the built dist/
-pnpm check      # TypeScript typecheck
+pnpm dev             # dev server at http://localhost:4321
+pnpm build           # production build → dist/ (incl. dist/_worker.js)
+pnpm preview         # preview the built dist/
+pnpm check           # TypeScript typecheck
+pnpm format:md       # format src/content/docs/**/*.{md,mdx} in place
+pnpm format:md:check # check formatting without writing
 ```
+
+### Git Hooks (lefthook)
+
+Repo-root `lefthook.yml` wires a pre-commit hook that auto-formats staged
+`doc/src/content/docs/**/*.{md,mdx}` files via `@takazudo/mdx-formatter`
+(pinned in `scripts/mdx-format.sh`), and a pre-push hook that runs `pnpm
+check` when pushing to `main`. Hooks install automatically via the `doc`
+package's `prepare` script on `pnpm install`.
 
 ### URL Reference Guidelines
 
