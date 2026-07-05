@@ -4593,7 +4593,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "470uF 16V"
+		(property "Value" "470uF 10V"
 			(at 119.38 146.3039 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5278,7 +5278,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "470uF 16V"
+		(property "Value" "470uF 10V"
 			(at 55.88 146.3039 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7774,8 +7774,8 @@
 		)
 	)
 	(symbol
-		(lib_id "power:PWR_FLAG")
-		(at 176.53 116.84 180)
+		(lib_id "power:GND")
+		(at 219.71 116.84 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -7783,10 +7783,9 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "fe00da03-1049-4f9e-b06b-981eb351eb00")
-		(property "Reference" "#FLG08"
-			(at 176.53 118.745 0)
+		(uuid "061ae924-9141-4b33-bf05-6606b0d8c13c")
+		(property "Reference" "#PWR054"
+			(at 219.71 123.19 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7796,8 +7795,8 @@
 				)
 			)
 		)
-		(property "Value" "PWR_FLAG"
-			(at 176.53 121.92 0)
+		(property "Value" "GND"
+			(at 219.71 120.65 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -7807,7 +7806,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 176.53 116.84 0)
+			(at 219.71 116.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7818,7 +7817,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 176.53 116.84 0)
+			(at 219.71 116.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7828,8 +7827,8 @@
 				)
 			)
 		)
-		(property "Description" "Special symbol for telling ERC where power comes from"
-			(at 176.53 116.84 0)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 219.71 116.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7840,12 +7839,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "bb86a579-591f-48eb-8129-fd2760811c2e")
+			(uuid "a579d616-025f-4334-a39f-9eab34afde29")
 		)
 		(instances
 			(project "zudo-pd"
 				(path "/c5ce32ac-bd6d-413c-bfb5-5e9e2f8848d1/df8a312b-d6c9-4f81-85b3-c59053621460"
-					(reference "#FLG08")
+					(reference "#PWR054")
 					(unit 1)
 				)
 			)
