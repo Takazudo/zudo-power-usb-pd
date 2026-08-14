@@ -11,9 +11,15 @@ compatibility_date = "2024-12-01"
 # load the worker even when dist/_worker.js exists.
 compatibility_flags = ["nodejs_compat"]
 
-# Static docs site: do not serve on *.workers.dev for production; keep
-# version-preview URLs enabled for PR/branch previews.
-workers_dev = false
+# workers_dev exposes the default (non-`--env production`) worker on its
+# PUBLIC *.workers.dev subdomain. It must be true, even though production is
+# served from the custom domain below: `wrangler versions upload
+# --preview-alias` (pr-checks.yml) targets this same default environment, and
+# without workers_dev=true its pr-<N> preview URL returns "error code: 1042"
+# — preview_urls alone is not enough to make the alias route. This does not
+# expose production traffic on workers.dev; production is deployed with
+# `--env production`, which only ever answers on the custom domain route.
+workers_dev = true
 preview_urls = true
 
 # ---------------------------------------------------------------------------

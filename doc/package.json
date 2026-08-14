@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@11.5.2",
   "scripts": {
     "dev": "zfb dev",
     "build": "pnpm generate:models && pnpm generate:components && zfb build",

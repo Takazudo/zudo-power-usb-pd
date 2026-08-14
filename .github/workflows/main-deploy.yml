@@ -74,22 +74,36 @@ jobs:
       - name: Typecheck
         run: pnpm check
 
+      - name: Footprint previews are current and safe
+        run: pnpm check:footprint-previews
+
+      - name: Published package models are safe and up to date
+        run: pnpm check:models
+
       - name: Build (emits dist/_worker.js via the Cloudflare adapter)
         run: pnpm build
+
+      - name: Built component references are complete and minimal
+        run: pnpm check:built-component-references
 
       # THE drift authority for every committed generated file. `pnpm build`
       # rewrites doc/src/content/docs/components/ AND
       # doc/component-docs/preflight.json via generate:components; a source
       # edit under .claude/skills/, a CLAUDE.md, or the generator itself that
       # lands without a rebuild leaves the committed output stale, and this
-      # fails the deploy instead of publishing a stale site.
+      # fails the deploy instead of publishing a stale site. The preview-asset
+      # tree is included too — check:footprint-previews / check:models above
+      # verify hashes against the committed manifest, but nothing before this
+      # step proves the SVG/WRL bytes themselves are the ones actually
+      # committed, so a stale preview asset would otherwise reach the live
+      # site undetected.
       # `--intent-to-add` is required: a newly generated page arrives
       # UNTRACKED, and `git diff` cannot see untracked files on its own.
       - name: Generated output is committed and up to date
         working-directory: ${{ github.workspace }}
         run: |
-          git add --intent-to-add -A -- doc/src/content/docs doc/component-docs/preflight.json
-          git diff --exit-code -- doc/src/content/docs doc/component-docs/preflight.json
+          git add --intent-to-add -A -- doc/src/content/docs doc/component-docs/preflight.json doc/public/assets/component-previews
+          git diff --exit-code -- doc/src/content/docs doc/component-docs/preflight.json doc/public/assets/component-previews
 
       # The SECOND generation run: `build` projected and wrote the tree, this
       # re-projects from the evidence and proves the result byte-identical.
