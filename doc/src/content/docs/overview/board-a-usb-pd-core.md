@@ -112,6 +112,16 @@ entirely (decision A2). Do not reintroduce it or relocate it elsewhere on Board 
 role is replaced by D5, and its CC-ESD role is covered by U1's own 22 V-rated integrated
 protection (with the D6/D7 DNP footprints as an opt-in upgrade).
 
+The reason it cannot simply be moved: D4's **VBUS pin (pin 5)** is a zener to GND rated
+`VRM = 5 V` (later datasheet revisions list 5.25 V) with a breakdown minimum of only
+**6 V at 1 mA** — anywhere on this board that pin lands on a rail that reaches 15 V by
+contract, which is an absolute-rating violation the instant negotiation succeeds, not a
+fault-only exposure. Its other job, CC-line ESD, is one ST's own reference designs do not
+ask for: they place nothing between the receptacle and the chip on CC, because the
+STUSB4500 already integrates 22 V-rated CC protection. See
+[v4 USB-PD Failure Diagnosis](../inbox/v4-pd-failure-diagnosis.md) §2 for the full
+datasheet trail.
+
 </Warning>
 
 ## Deltas vs the current single-board circuit
@@ -176,6 +186,96 @@ to Board B, not Board A):
 - Debug pogo block `J3`.
 - Test points `TP1`/`TP2`/`TP6`.
 
+## Load switch: Q1 gate network and soft-start
+
+`Q1` (AO3401A, UMW LCSC C347476) is the high-side pass element between `VBUS_IN` and
+`VBUS_OUT`. Three parts shape its gate, all sitting on `Net-(Q1-G)` per
+`scripts/schgen/board_a_spec.py`:
+
+| Ref | Value | Purpose |
+|-----|-------|---------|
+| R11 | 100 kΩ | Gate pull-up to `VBUS_IN` — holds Q1 **off** by default |
+| R12 | 56 kΩ | Gate series resistor from `VBEN` (U1.16); with R11 it sets the driven Vgs |
+| C35 | 100 nF | Gate-to-GND soft-start capacitor |
+
+<Warning title="Refdes collision with Board B">
+
+On Board A these are `R11`/`R12`/`C35`. Older writing about this circuit calls them
+`R1`/`R2`/`C5`, which in this repository are **different components on a different
+board**: `R1`/`R2` are U2's +13.5 V feedback divider and `C5` is a U2 input electrolytic,
+all on Board B (`scripts/schgen/board_b_spec.py`). Never carry the `R1`/`R2`/`C5` naming
+into Board A work.
+
+</Warning>
+
+### Soft-start time constant
+
+τ = R12 × C35 = 56 kΩ × 100 nF = **5.6 ms**
+
+`C35` slows the gate's fall when U1 asserts `VBEN`, limiting dV/dt on `VBUS_OUT` at
+turn-on and so limiting inrush into Board B's input bulk capacitance (940 µF total after
+the wave-6 C5/C7 swap — see [Board B](./board-b-synth-power.md#dc-dc-conversion-stage)).
+
+### Conduction loss and the package ceiling
+
+| Quantity | Value | Source |
+|----------|-------|--------|
+| Rds(on), max at Vgs = −10 V, Id = −4.2 A | 50 mΩ | `fact-umw-ao3401a-rdson` |
+| Rds(on), max at Vgs = −4.5 V, Id = −4 A | 65 mΩ | `fact-umw-ao3401a-rdson` |
+| Driven gate-source magnitude at the 15 V contract | 9.62 V | R11/R12 divider: 15 V × 100 k / 156 k |
+| RθJA steady state / TJ max | 125 °C/W / 150 °C | `fact-umw-ao3401a-thermal` |
+
+At the PD contract's 3.0 A cap the conduction loss `P = I² × Rds(on)` lands between
+**0.45 W** (3² × 50 mΩ) and **0.59 W** (3² × 65 mΩ). The bracket is not a rounding
+detail: the driven gate sits at 9.62 V, just short of the datasheet's −10 V test point,
+so the 50 mΩ number is not guaranteed here and the −4.5 V point is the conservative
+bound. The steady-state package ceiling is (150 °C − 25 °C) / 125 °C/W ≈ **1.0 W** at
+25 °C ambient, leaving roughly 1.7× margin in the worst case — enough, but thin enough
+to be worth a thermal check once Board A's copper pour exists.
+
+<Warning title="Do not reuse the AOS-branded AO3401A figures">
+
+Figures of 44 mΩ Rds(on), a 0.4 W conduction loss, and a 1.4 W package limit circulate
+for the **AOS** AO3401A. The fitted part is UMW's AO3401A (LCSC C347476), whose evidence
+bundle (`.claude/skills/component-umw-ao3401a-c347476`) explicitly excludes AOS data as a
+same-name/different-manufacturer source. The 1.4 W figure is additionally the `t ≤ 10 s`
+thermal resistance (90 °C/W) read as though it were a steady-state limit.
+
+</Warning>
+
+### Why a P-channel high-side switch
+
+| Switch type | Position | Gate drive | Cost of that drive |
+|-------------|----------|------------|--------------------|
+| **P-channel** | High-side | Simple — gate referenced to `VBUS_IN` | Low |
+| N-channel | High-side | Needs a charge pump or bootstrap | High |
+| N-channel | Low-side | Simple | Breaks the ground path |
+
+P-channel is what lets U1's open-drain `VBEN` pin drive the gate directly through `R12`
+against the `R11` pull-up, with no charge pump anywhere on the board — and it keeps the
+A↔B ground return unbroken at `J4` pins 5–6, which a low-side switch would not.
+
+## Power sequencing (VBUS_EN_SNK)
+
+U1 sequences the load switch itself through `VBUS_EN_SNK` (pin 16, net `VBEN` —
+active-low open-drain), so `VBUS_OUT` only rises after a contract exists. This is what
+keeps Board B's input bulk capacitance from drawing inrush during negotiation, when the
+port is still at 5 V and the source is still deciding.
+
+```mermaid
+flowchart TD
+  A["Cable connect\nVBUS = 5V default"] --> B["VBEN Hi-Z (deasserted)\nR11 holds the gate at VBUS_IN -> Q1 OFF"]
+  B --> C["PD negotiation\n(retries if needed)"]
+  C -->|"no contract yet"| B
+  C -->|"contract accepted"| D["VBUS = 15V (PDO2)"]
+  D --> E["VBEN pulled LOW (asserted)\ngate falls through R12, slewed by C35 (5.6 ms)"]
+  E --> F["VBUS_OUT = 15V at J4 pins 1-2"]
+```
+
+Because Q1 stays off until `VBEN` asserts, `TP1` (`VBUS_OUT`) reads 0 V during NVM
+programming — that is correct behavior, not a fault. See the bring-up tip under
+[Test points](#test-points).
+
 ## Component list, LCSC parts, and rough cost
 
 All LCSC part numbers below are read from the current schematic's netlist export (source
@@ -214,6 +314,26 @@ estimates — re-verify at order time.
 |-----|------|------|---------|------|
 | R17, R18 | 5.1 kΩ | C23186 | 0603 | External Rd, rework insurance |
 | D6, D7 | PESD24VS1UB | C85382 | SOD-523 | CC ESD, enclosed/production builds only |
+
+### J1 substitution options
+
+If `C456012` is out of stock, these 6-pin power-only USB Type-C receptacles were screened
+as candidates:
+
+| LCSC | Part | Stock at screening |
+|------|------|--------------------|
+| C2927029 | USB-TYPE-C-009 (the part an earlier order used) | 22,140 |
+| C668623 | TYPE-C 6P(073) | 133,479 |
+| C5156600 | TYPE-C 6PLTH6.8-DJ | 43,224 |
+| C36936554 | UC17-0B06F68011 (3 A rated) | 38,214 |
+
+Stock figures are from that screening pass, not current — re-check at order time. **Verify
+the pad map before substituting.** Board A's footprint (`TYPE-C-SMD_TYPE-C-6P`) expects
+`A5` = CC1, `B5` = CC2, `A9`/`B9` = VBUS, and `A12`/`B12` plus the four shell tabs (all
+numbered `7`) = GND — see `fact-usb-type-c-009-cc-pins` and the net table above. Most
+6-pin power-only receptacles follow the same GND–VBUS–CC1 / CC2–VBUS–GND arrangement, but
+the pad numbering is what has to match, not the physical order. A full 24-pin receptacle
+works electrically too; the 6-pin part is chosen for cost on a power-only port.
 
 **Rough per-board total (fitted parts only): ~$2.90.** U1 alone is ~86% of that — this is
 an inherent cost of the STUSB4500, not something Board A's split-out changes. What the
@@ -272,6 +392,18 @@ as a USB-to-I2C bridge. Full procedure, wiring, GUI steps, and pitfall table in
 | 3 | GND | Reference/return |
 | 4 | NC | Unconnected |
 
+Three ways to get a programmed part, in the order this project considered them:
+
+1. **NUCLEO-F072RB as a USB-to-I2C bridge, driven by ST's STSW-STUSB002 GUI** — the flow
+   actually used here. Wiring, firmware choice (UART, not HID), and the pitfall table are
+   in [NVM Programming Setup](../inbox/nvm-programming.md); the STEVAL-ISC005V1 eval board
+   is **not** needed, since the STUSB4500 is already soldered to this board.
+2. **Any MCU over I2C** — community flasher code at
+   [usb-c/STUSB4500](https://github.com/usb-c/STUSB4500).
+3. **Distributor pre-programming** — some distributors will write the NVM before shipping,
+   which removes the `J2` step from assembly entirely. Not used here, because the PDO set
+   was still moving; it is the option that scales once the configuration is locked.
+
 ### J3 — debug pads (pogo, 1×8, 2.54 mm)
 
 | Pad | Signal | Note |
@@ -322,6 +454,22 @@ above) is a complementary **hardware** guard, not a substitute for the procedura
 it bounds the specific Q1 Vgs overage a 20 V contract or a D5 clamp event would otherwise
 cause, but the NVM itself must still be programmed and locked to ≤15 V before the board
 sees a charger that could offer more.
+
+## Bring-up troubleshooting
+
+Symptom-first table for Board A. Reference designators are Board A's, per
+`scripts/schgen/board_a_spec.py`; the deeper NVM-side decision tree ("is the chip even
+alive?") lives in [NVM Programming Setup](../inbox/nvm-programming.md).
+
+| Symptom | Likely cause | Check |
+|---------|--------------|-------|
+| No PD negotiation | NVM not programmed | Write the target PDO set (≤15 V, `SNK_PDO_NUMB = 2`) through `J2` |
+| Wrong output voltage | PDO configuration error | Read the NVM back over I2C and compare against the locked configuration |
+| Load switch never turns on | `VBEN` not reaching the gate network | Probe `J3` pad 8 (`VBEN`), then continuity through `R12` (56 kΩ) to `Net-(Q1-G)` |
+| Intermittent negotiation | Inadequate VDD decoupling | Check `C1` (10 µF) and `C2` (100 nF) values and their placement next to `U1.24` |
+| U1 overheating | Poor thermal/ground path | Improve via stitching under `U1.25` (EP) to the ground plane |
+| I2C not responding | Wrong device address | Confirm `U1.12`/`U1.13` (ADDR0/ADDR1) are grounded — address `0x28` |
+| No VBUS voltage sense | Pin-18 network open | Confirm `R14` (470 Ω) between `VBUS_IN` and `U1.18`; probe `TP6` against `J3` pad 4 |
 
 ## Reuse guidance for other projects
 
