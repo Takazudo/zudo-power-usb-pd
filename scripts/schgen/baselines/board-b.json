@@ -1,0 +1,63 @@
+{
+  "board": "board-b",
+  "source": "doc/src/content/docs/overview/board-b-synth-power.md (DC-DC Conversion Stage, Linear Regulator Stage net tables) cross-checked against doc/src/content/docs/inbox/board-split-decision.md (locked #90 fix list, item 6: Net-(C16-Pad2) -> GND merge)",
+  "notes": [
+    "Derived from the netlist-derived doc tables, NOT re-derived from .kicad_sch wire geometry.",
+    "Pin tokens strip parenthetical pin-name glosses from the doc (e.g. doc 'U6.1(IN)' -> baseline 'U6.1'); the token itself is always Ref.PinNumberOrName.",
+    "GND includes the #90/#93-locked fix: C16.2, C24.1, C19.2, C25.1 merged from the old isolated Net-(C16-Pad2) into GND (board-split-decision.md A6 item 6; board-b-synth-power.md Linear Regulator Stage 'Negative-rail decoupling' note).",
+    "Output Connectors (J6-J11), Protection-stage second pins (PTC1.2/PTC2.2/PTC3.2), and TVS1-3 are intentionally NOT included in nets below -- see unresolved."
+  ],
+  "nets": {
+    "+15V -> +13.5V gen": ["U2.1", "C5.1", "C6.1", "U3.1", "C7.1", "C8.1", "U4.1", "C9.1", "C10.1"],
+    "Net-(D1-K)": ["U2.2", "D1.1", "L1.1"],
+    "/DC-DC Conversion/+13.5V OUT": ["L1.2", "R1.2", "C3.1", "C31.2", "C14.1", "C20.1", "U6.1"],
+    "Net-(U2-Feedback)": ["U2.4", "R1.1", "R2.2", "C31.1"],
+    "Net-(D2-K)": ["U3.2", "D2.1", "L2.1"],
+    "/DC-DC Conversion/+7.5V OUT": ["L2.2", "R3.1", "C4.1", "C32.2", "C15.1", "C22.1", "U7.1"],
+    "Net-(U3-Feedback)": ["U3.4", "R3.2", "R4.1", "C32.1"],
+    "Net-(D3-K)": ["U4.2", "D3.1", "L3.1"],
+    "/DC-DC Conversion/-13.5V OUT": ["U4.3", "U4.5", "U4.6", "D3.2", "C9.2", "C10.2", "C11.2", "R6.2", "C16.1", "C24.2", "U8.2"],
+    "Net-(U4-Feedback)": ["U4.4", "R5.1", "R6.1", "C33.1"],
+    "GND": [
+      "U2.3", "U2.5", "U2.6", "R2.1", "C5.2", "C6.2",
+      "U3.3", "U3.5", "U3.6", "R4.2", "C7.2", "C8.2",
+      "L3.2",
+      "C14.2", "C15.2", "C17.1", "C18.2", "C20.2", "C21.2", "C22.2", "C23.2",
+      "U6.4", "U7.2", "U8.1",
+      "C16.2", "C24.1", "C19.2", "C25.1"
+    ],
+    "Net-(U6-OUT)": ["U6.3", "C17.2", "C21.1", "R7.1", "PTC1.1"],
+    "Net-(U7-OUT)": ["U7.3", "C18.1", "C23.1", "R8.1", "PTC2.1"],
+    "Net-(U8-OUT)": ["U8.3", "C19.1", "C25.2", "R9.1", "PTC3.1"]
+  },
+  "unresolved": [
+    {
+      "net": "+12V rail",
+      "reason": "board-b-synth-power.md Protection Stage / Output Connectors only give PTC1.1 in Ref.Pin form (see Net-(U6-OUT) above). PTC1.2, TVS1, J7 Faston tabs, and J10/J11 pins 7-8 are documented only via a Ref-only Faston table, a pin-range Eurorack table, and a mermaid block diagram -- no Ref.Pin net table entry exists to baseline without guessing pin numbers."
+    },
+    {
+      "net": "+5V rail",
+      "reason": "Same gap as +12V rail: PTC2.2, TVS2, J8, and J10/J11 pins 5-6 have no Ref.Pin net-table entry in board-b-synth-power.md, only Ref-only/pin-range tables and the mermaid block diagram."
+    },
+    {
+      "net": "-12V rail",
+      "reason": "Same gap as +12V rail: PTC3.2, TVS3, J6, and J10/J11 pins 15-16 have no Ref.Pin net-table entry in board-b-synth-power.md, only Ref-only/pin-range tables and the mermaid block diagram."
+    },
+    {
+      "net": "GATE rail",
+      "reason": "board-b-synth-power.md's J10/J11 table lists pins 1-2 as an isolated stub ('nothing else on this net') with no Ref.Pin data, and does not disambiguate J10 vs J11 physical-pin identity."
+    },
+    {
+      "net": "CV rail",
+      "reason": "Same as GATE rail: J10/J11 pins 3-4 documented only as an isolated stub, no Ref.Pin data, J10/J11 identity not disambiguated."
+    },
+    {
+      "net": "GND (output stage: J9 Faston GND, J10/J11 pins 9-14 GND moat)",
+      "reason": "board-b-synth-power.md gives J9/J10/J11 GND membership only via a Ref-only Faston table and a pin-range Eurorack table, not Ref.Pin tokens, and does not disambiguate J10 vs J11 pin numbering -- merging into the already-resolved GND net above would require guessing which physical pins are meant."
+    },
+    {
+      "net": "GND (DC-DC stage pins implied by prose, not enumerated in the Ref.Pin net tables: C3.2, C4.2, C11.1, R5.2, C33.2)",
+      "reason": "board-b-synth-power.md's 'Feedback dividers' table/formula states R5 (U4's bottom FB resistor) lands on GND, and standard bulk-decoupling-cap / feedforward-cap topology implies C3.2 (U2 output cap), C4.2 (U3 output cap), C11.1 (U4 output-side bulk cap, opposite plate from the already-listed C11.2 on the -13.5V OUT net), and C33.2 (mirrors R5.2, feedforward cap across R5) also land on GND -- but the DC-DC stage's own U2/U3/U4 Ref.Pin net tables never list these five pins explicitly. Adding them to the resolved GND net above would extrapolate beyond the literal doc table per the 'never guess connectivity' rule. A real complete spec module correctly wiring these five pins to GND will be flagged as 'extra pins' by check_baseline.py until this doc gap is closed or an --allow entry covers them; that is expected, not a spec bug."
+    }
+  ]
+}

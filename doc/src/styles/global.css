@@ -1171,3 +1171,135 @@ dialog.zd-enlarge-dialog::backdrop {
   }
 }
 
+/* ========================================
+ * Generated component-record pages (doc/component-docs)
+ *
+ * Styles for the three UI components component-record pages emit
+ * (`component-docs/ui/evidence-{anchor,details,table}.tsx`). Ported from
+ * zudo-led-lamp's equivalent rules, minus everything about the 3D-preview
+ * `ComponentReferences`/`PackageModelViewer` feature (`.zld-component-references*`,
+ * `.zld-preview-dialog*`) — zudo-pd has no 3D assets, so that feature is not
+ * ported and has no markup here to style.
+ * ======================================== */
+
+/* Generated component pages anchor on evidence IDs rather than heading text,
+ * so a reworded heading never breaks an external deep link. The target is an
+ * empty inline element; scroll-margin keeps it clear of the sticky header
+ * when a fragment URL lands on it. */
+.zld-evidence-anchor {
+  display: inline;
+  scroll-margin-top: 6rem;
+}
+
+/* Pin-assignment tables are reference data a reader looks up rather than
+ * reads, so they ship inside a native <details>. It opens with no
+ * JavaScript, and the rows sit in the generated HTML and in llms-full.txt
+ * whether it is open or closed. Only content that carries no claim is ever
+ * wrapped this way. */
+.zld-evidence-details > summary {
+  cursor: pointer;
+  /* The default line box is right at the 24px minimum target size (WCAG
+   * 2.5.8); this puts it clear of it without changing the rhythm noticeably. */
+  padding-block: 0.25rem;
+}
+
+.zld-evidence-details > summary:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* A fact keeps its value, unit, conditions, verdict, provenance and citation
+ * as separate columns because they are separate claims, so these tables stay
+ * wide at every viewport. The table scrolls inside this container; the page
+ * body never scrolls sideways. */
+.zld-evidence-table {
+  overflow-x: auto;
+  /* A sideways flick inside the table must not chain out to the page or to
+   * the browser's back gesture. */
+  overscroll-behavior-x: contain;
+}
+
+/* The package's markdown <table> renderer already wraps every table in its
+ * own `overflow-x-auto` div. Nested scroll boxes would put the scrollbar on
+ * the inner one — the one that has no tab stop — so the inner box is
+ * flattened and this element is the single scroll container. Written as
+ * `> div` so that if the package ever stops wrapping, the rule simply
+ * matches nothing. */
+.zld-evidence-table > div {
+  overflow: visible;
+}
+
+/* The container is focusable (see ui/evidence-table.tsx) precisely so it can
+ * be scrolled from the keyboard, which means it needs a focus ring.
+ * currentColor rather than an accent token: it is legible in both colour
+ * schemes by construction, and it carries no status meaning. */
+.zld-evidence-table:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* Without a min-width a `width: 100%` table never overflows its container —
+ * it crushes its columns instead, which at 375px turns every cell into a
+ * column of single letters. These widths are what makes the container
+ * actually scroll. */
+.zld-evidence-table table {
+  min-width: 30rem;
+}
+
+/* The seven-column tables: catalog index (part, record, function, fit,
+ * identity, sources, open domains) and the fact tables. */
+.zld-evidence-table--parts-index table,
+.zld-evidence-table--facts table {
+  min-width: 46rem;
+}
+
+/* The integration page's tables: a 5-column rules index and two narrower
+ * (3-column) tables. */
+.zld-evidence-table--rules-index table {
+  min-width: 40rem;
+}
+
+.zld-evidence-table--evidence-chain table {
+  min-width: 36rem;
+}
+
+.zld-evidence-table--calculation-results table {
+  min-width: 30rem;
+}
+
+/* `.zld-evidence-anchor` is emitted only by doc/component-docs, so it is an
+ * exact marker for a generated evidence page and scopes these rules to one.
+ *
+ * Sources publish their URL verbatim as their own link text, and a retained
+ * datasheet URL in this corpus can run past a hundred characters with no
+ * space in it. Left alone it pushes the whole page into horizontal scroll on
+ * a phone. `anywhere` rather than `break-word` because the URL also has to
+ * stop inflating the min-content width of the column it sits in. Nothing is
+ * injected into the string — no <wbr>, no U+200B — so what a reader copies is
+ * still byte-for-byte the recorded URL.
+ *
+ * Headings are in this list, `h1` included, because both the page title and
+ * the section headings are evidence strings published verbatim: a part
+ * number with no hyphen (e.g. `STUSB4500QTR`) is a single unbreakable token
+ * that can overflow a narrow sidebar column on its own. */
+.zd-content:has(.zld-evidence-anchor) :where(p, li, td, th, h1, h2, h3, h4, h5, h6) {
+  overflow-wrap: break-word;
+}
+
+.zd-content:has(.zld-evidence-anchor) :where(a, code) {
+  overflow-wrap: anywhere;
+}
+
+/* A wrapped fact ID still renders as one box per line — `clone` repeats the
+ * decoration per fragment, it cannot merge fragments, and no CSS property
+ * can. What it buys is that every fragment is fully formed: with the default
+ * `slice`, the padding and border-radius are applied once across the whole
+ * inline box, so the middle fragments of a long fact id come out visually
+ * cut off at both ends. `clone` gives each fragment its own padding and
+ * rounding, so the chips read as parts of one identifier rather than as
+ * damaged boxes. */
+.zd-content:has(.zld-evidence-anchor) code {
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+

@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "coverage": [
+    {
+      "coverage_id": "cov-usb-type-c-009-identity",
+      "record_id": "rec-usb-type-c-009-c456012",
+      "domain": "manufacturer and MPN identity",
+      "status": "OPEN",
+      "reason": "The project MPN label USB-TYPE-C-009 is not named by any manufacturer or distributor document (LCSC catalogs C456012 as SHOU HAN TYPE-C 6P), and no manufacturer-primary document was retrievable, so identity stays UNSOURCED at primary level.",
+      "fact_ids": [
+        "fact-usb-type-c-009-manufacturer",
+        "fact-usb-type-c-009-project-mpn-label",
+        "fact-usb-type-c-009-distributor-binding"
+      ],
+      "blocking_fact_ids": [
+        "fact-usb-type-c-009-manufacturer",
+        "fact-usb-type-c-009-project-mpn-label",
+        "fact-usb-type-c-009-distributor-binding"
+      ]
+    },
+    {
+      "coverage_id": "cov-usb-type-c-009-ratings",
+      "record_id": "rec-usb-type-c-009-c456012",
+      "domain": "electrical ratings versus the 15 V / 3 A PD sink contract",
+      "status": "OPEN",
+      "reason": "All electrical ratings come from the lower-authority LCSC-hosted mirror spec; the mirror-stated 5 V rating is exceeded by the negotiated 15 V PD contract and 3 A leaves zero current margin, with no manufacturer-primary confirmation.",
+      "fact_ids": [
+        "fact-usb-type-c-009-rating-voltage",
+        "fact-usb-type-c-009-rating-current",
+        "fact-usb-type-c-009-pd-contract-stress",
+        "fact-usb-type-c-009-dielectric",
+        "fact-usb-type-c-009-insulation",
+        "fact-usb-type-c-009-contact-resistance"
+      ],
+      "blocking_fact_ids": [
+        "fact-usb-type-c-009-rating-voltage",
+        "fact-usb-type-c-009-rating-current",
+        "fact-usb-type-c-009-pd-contract-stress",
+        "fact-usb-type-c-009-dielectric",
+        "fact-usb-type-c-009-insulation",
+        "fact-usb-type-c-009-contact-resistance"
+      ]
+    },
+    {
+      "coverage_id": "cov-usb-type-c-009-durability",
+      "record_id": "rec-usb-type-c-009-c456012",
+      "domain": "mating durability and operating temperature",
+      "status": "OPEN",
+      "reason": "Durability and temperature values are mirror-only and UNSOURCED at primary level; the distributor catalog claims a wider -40 to +85 C range that is not promoted.",
+      "fact_ids": [
+        "fact-usb-type-c-009-cycles",
+        "fact-usb-type-c-009-temperature"
+      ],
+      "blocking_fact_ids": [
+        "fact-usb-type-c-009-cycles",
+        "fact-usb-type-c-009-temperature"
+      ]
+    },
+    {
+      "coverage_id": "cov-usb-type-c-009-cc-pd",
+      "record_id": "rec-usb-type-c-009-c456012",
+      "domain": "CC pin presence and PD negotiation path",
+      "status": "OPEN",
+      "reason": "CC1/CC2 pad presence and the J1-to-U1 CC/VBUS topology are project-locked only; physical continuity through the receptacle is a ranked v4 PD-failure root-cause candidate awaiting bench confirmation on the dead v4 boards.",
+      "fact_ids": [
+        "fact-usb-type-c-009-cc-pins",
+        "fact-usb-type-c-009-cc-topology",
+        "fact-usb-type-c-009-vbus-topology"
+      ],
+      "blocking_fact_ids": [
+        "fact-usb-type-c-009-cc-pins",
+        "fact-usb-type-c-009-cc-topology",
+        "fact-usb-type-c-009-vbus-topology"
+      ]
+    },
+    {
+      "coverage_id": "cov-usb-type-c-009-package",
+      "record_id": "rec-usb-type-c-009-c456012",
+      "domain": "package/footprint identity and shell topology",
+      "status": "OPEN",
+      "reason": "The canonical pad set including the four shared-number shell tabs is project-locked; correspondence to the received part's physical contacts and shell needs incoming continuity mapping.",
+      "fact_ids": [
+        "fact-usb-type-c-009-pad-set"
+      ],
+      "blocking_fact_ids": [
+        "fact-usb-type-c-009-pad-set"
+      ]
+    }
+  ]
+}

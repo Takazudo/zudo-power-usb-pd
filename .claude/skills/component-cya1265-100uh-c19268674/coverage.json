@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "coverage": [
+    {
+      "coverage_id": "cov-cya1265-electrical-limits",
+      "record_id": "rec-cya1265-100uh-c19268674",
+      "domain": "electrical-limits",
+      "status": "COVERED",
+      "reason": "Inductance (100uH +/-20%), DC resistance (155/185 mOhm typ/max), Isat (8.5A), and Idc heat-rating current (4.5A) are all primary-source confirmed from the SHOU HAN CYA1265-101M electrical characteristics table row.",
+      "fact_ids": ["fact-cya1265-inductance", "fact-cya1265-isat", "fact-cya1265-idc-heat-rating", "fact-cya1265-rdc-typ", "fact-cya1265-rdc-max"],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-cya1265-ripple-current-margin",
+      "record_id": "rec-cya1265-100uh-c19268674",
+      "domain": "ripple-current-margin",
+      "status": "COVERED",
+      "reason": "Computed peak-to-peak ripple current for all three board-b rails (VIN=15V, VOUT=13.5V/7.5V/-13.5V, f=150kHz) stays well under both rated limits: +13.5V rail 0.09A (1.06% Isat / 2.00% Idc), +7.5V rail 0.25A (2.94% Isat / 5.56% Idc), -13.5V inverting rail 0.474A (5.57% Isat / 10.53% Idc, the largest of the three due to the higher duty ratio of the inverting topology). All three stay far below the 8.5A Isat and 4.5A Idc ratings.",
+      "fact_ids": ["fact-cya1265-ripple-13v5", "fact-cya1265-ripple-7v5", "fact-cya1265-ripple-neg13v5", "fact-cya1265-isat", "fact-cya1265-idc-heat-rating"],
+      "blocking_fact_ids": []
+    }
+  ]
+}

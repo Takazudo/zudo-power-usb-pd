@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "source_id": "src-cya1265-datasheet",
+      "record_id": "rec-cya1265-100uh-c19268674",
+      "document_title": "CYA1265-100UH Specification For Approval (CYA1265 Series)",
+      "document_number": "CYA1265-100UH",
+      "revision": "n/a (no revision letter printed; PDF modDate 2024-12-23)",
+      "document_date": "2024-12-23",
+      "authoritative_url": "https://datasheet.lcsc.com/datasheet/pdf/a6999c23fb11ed816e56e7de88bdbdc8.pdf",
+      "alternate_authoritative_url": "https://www.lcsc.com/datasheet/C19268674.pdf",
+      "retrieval_date": "2026-08-14",
+      "authority_class": "MANUFACTURER_PRIMARY",
+      "sha256": "b95a48d9143d6333e20392a3e5993865e4f8e2b3156d63b774f6efff65d71784",
+      "availability": "AVAILABLE",
+      "physical_pdf_page_index": 2,
+      "printed_page_label": "not printed (physical page 3 of 5)",
+      "locator": "Physical page 3, Electrical Characteristics table (CYA1265 Series), row CYA1265-101M",
+      "evidence_extract": "Manufacturer 'SPECIFICATION FOR APPROVAL' sheet from Shenzhen Shouhan Technology Co., Ltd (title block on physical page 1 confirms manufacturer identity and exact part number CYA1265-100UH; retrieved via LCSC's datasheet.lcsc.com PDF host). Electrical Characteristics table (physical page 3), row CYA1265-101M (Product Code CYA 1265 101 M decodes to L0=100uH, tolerance code M=+/-20%, matching this part): L0=100.00uH +/-20% at 0A, Rdc Typ=155.00mOhm / Max=185.00mOhm at 25C, Heat Rating Current Idc=4.50A, Saturation Current Isat=8.50A, test freq 100kHz/1.0V. Notes (physical page 4) define Idc as the DC current causing an approximate 40C temperature rise and Isat as the DC current causing an approximate 30% L0 drop, and state the rated current is whichever of the two is lower -- this datasheet does not separately label an 'Irms' rating.",
+      "refresh_policy": "HASH-LOCKED"
+    }
+  ]
+}

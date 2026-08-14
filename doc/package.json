@@ -5,13 +5,18 @@
   "type": "module",
   "scripts": {
     "dev": "zfb dev",
-    "build": "zfb build",
+    "build": "pnpm generate:components && zfb build",
     "preview": "zfb preview",
     "check": "zfb check",
     "check:html": "html-validate \"dist/**/*.html\"",
-    "b4push": "pnpm check && pnpm build",
-    "format:md": "../scripts/mdx-format.sh --write \"src/content/docs/**/*.{md,mdx}\"",
-    "format:md:check": "../scripts/mdx-format.sh --check \"src/content/docs/**/*.{md,mdx}\"",
+    "generate:components": "node --experimental-strip-types component-docs/cli/generate.ts",
+    "check:components": "node --experimental-strip-types component-docs/cli/check.ts",
+    "scan:components": "node --experimental-strip-types component-docs/cli/scan.ts",
+    "test:components": "node --experimental-strip-types --test \"component-docs/tests/*.test.ts\"",
+    "dev:components": "node --experimental-strip-types component-docs/cli/generate.ts --watch",
+    "b4push": "pnpm check && pnpm test:components && pnpm build && pnpm check:components && pnpm scan:components",
+    "format:md": "../scripts/mdx-format.sh --write \"src/content/docs/**/*.{md,mdx}\" --ignore \"node_modules/**,dist/**,build/**,.git/**,worktrees/**,src/content/docs/components/records/**\"",
+    "format:md:check": "../scripts/mdx-format.sh --check \"src/content/docs/**/*.{md,mdx}\" --ignore \"node_modules/**,dist/**,build/**,.git/**,worktrees/**,src/content/docs/components/records/**\"",
     "prepare": "cd .. && lefthook install --reset-hooks-path"
   },
   "dependencies": {
@@ -32,7 +37,10 @@
     "katex": "^0.16.38",
     "minisearch": "^7.2.0",
     "diff": "^8.0.3",
-    "@takazudo/zudo-doc-history-server": "^0.2.9"
+    "@takazudo/zudo-doc-history-server": "^0.2.9",
+    "mdast-util-to-markdown": "^2.1.2",
+    "mdast-util-mdx": "^3.0.0",
+    "mdast-util-gfm-table": "^2.0.0"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.2.0",
@@ -40,6 +48,7 @@
     "typescript": "^5.9.0",
     "@types/node": "^22.0.0",
     "@types/react": "^19.2.0",
+    "@types/mdast": "^4.0.4",
     "html-validate": "^10.0.0",
     "lefthook": "^2.1.9",
     "pagefind": "^1.4.0",

@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "interactions": [
+    {
+      "interaction_id": "int-c2289-r7-drive",
+      "record_ids": [
+        "rec-c17513",
+        "rec-c2289"
+      ],
+      "fact_ids": [
+        "fact-c17513-resistance",
+        "fact-c2289-drive-current"
+      ],
+      "conditions": "R7 (C17513, 1 kOhm) as the current-limit resistor for LED2 (KT-0603YG) on the 12V-magnitude rail: drive current = 9.9mA",
+      "verdict": "PASS - primary-source confirmed"
+    },
+    {
+      "interaction_id": "int-c2288-r8-drive",
+      "record_ids": [
+        "rec-c17513",
+        "rec-c2288"
+      ],
+      "fact_ids": [
+        "fact-c17513-resistance",
+        "fact-c2288-drive-current"
+      ],
+      "conditions": "R8 (C17513, 1 kOhm) as the current-limit resistor for LED3 (KT-0603B) on the 5V-magnitude rail: drive current = 1.9mA",
+      "verdict": "PASS - primary-source confirmed"
+    },
+    {
+      "interaction_id": "int-c2286-r9-drive",
+      "record_ids": [
+        "rec-c17513",
+        "rec-c2286"
+      ],
+      "fact_ids": [
+        "fact-c17513-resistance",
+        "fact-c2286-drive-current"
+      ],
+      "conditions": "R9 (C17513, 1 kOhm) as the current-limit resistor for LED4 (KT-0603R) on the 12V-magnitude rail: drive current = 9.9mA",
+      "verdict": "PASS - primary-source confirmed"
+    }
+  ]
+}

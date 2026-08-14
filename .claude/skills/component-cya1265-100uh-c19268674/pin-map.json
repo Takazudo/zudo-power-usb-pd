@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "pin_maps": [
+    {
+      "pin_map_id": "pinmap-cya1265-100uh-c19268674",
+      "record_id": "rec-cya1265-100uh-c19268674",
+      "symbol": "CYA1265-100UH",
+      "footprint": "IND-SMD_L13.8-W12.8",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "terminal (unpolarized, two-terminal inductor)"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "terminal (unpolarized, two-terminal inductor)"
+        }
+      ],
+      "reviewed_by": "ss34-ind foreground self-review against symbols/zudo-pd.kicad_sym CYA1265-100UH (pin 1, pin 2, generic names) and footprints/kicad/zudo-power.pretty/IND-SMD_L13.8-W12.8.kicad_mod (pad 1, pad 2); independent second-reviewer pass pending"
+    }
+  ]
+}

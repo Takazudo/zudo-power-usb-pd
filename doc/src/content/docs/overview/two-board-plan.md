@@ -57,24 +57,37 @@ ignore.
 
 ## Doc structure note
 
-Board A and Board B live as **flat pages under `overview/`** —
+Board A and Board B **design docs** live as **flat pages under `overview/`** —
 [`overview/board-a-usb-pd-core.md`](./board-a-usb-pd-core.md) and
 [`overview/board-b-synth-power.md`](./board-b-synth-power.md) — alongside this page,
-rather than under a new dedicated `boards/` section. This matches the doc-structure
+rather than under a new dedicated doc section. This matches the doc-structure
 assumption recorded in the
 [Board Split Decision](../inbox/board-split-decision.md#decision-set-c--doc-structure-note)
 (decision set (c)) and the default used by the parallel Board A / Board B design-doc
 tasks.
 
+<Info>
+
+This is a separate thing from the repository-root `boards/` directory (`boards/board-a/`,
+`boards/board-b/`), which holds the actual generated KiCad projects (`schgen` output) —
+that layout is unrelated to where the doc *pages* live, and was decided later, in the
+spec-architecture epic. See `boards/README.md` and root `CLAUDE.md`.
+
+</Info>
+
 ## Status
 
-Design docs for both boards are being written as part of this same wave (epic #86,
-wave 3). **Not started:** new KiCad projects, PCB layouts, or JLCPCB order files
+Design docs for both boards were written in epic #86's wave 3. Since then, the
+spec-architecture epic generated both boards' schematics for real:
+`boards/board-a/board-a.kicad_sch` and `boards/board-b/board-b.kicad_sch`, built by the
+`schgen` toolchain from Python spec modules
+(`scripts/schgen/board_a_spec.py`/`board_b_spec.py`), plus a locked wave-6 decision set
+of component-level fixes on top of the original board-split fix list — see
+[Spec-Architecture Review](../inbox/spec-architecture-review.md) and
+`scripts/schgen/decisions.json`. **Not started:** PCB layouts or JLCPCB order files
 (gerbers/BOM/CPL) for either board — that is a separate future plan, gated on the user
 bench-confirming the v4 root cause using the
 [bench discrimination procedure](../inbox/v4-pd-failure-diagnosis.md#bench-discrimination-procedure-dead-v4-boards-cheapest-first).
-A wave-4 confirm pass files the follow-up issue that will carry the pre-order checklist
-when that plan starts.
 
 ## References
 
@@ -84,4 +97,6 @@ when that plan starts.
   candidates + bench procedure
 - [v4 As-Built Order Verification &amp; Footprint Geometry Audit](../inbox/v4-asbuilt-audit.md)
 - [Board B Architecture Review](../inbox/board-b-architecture-review.md)
+- [Spec-Architecture Review](../inbox/spec-architecture-review.md) — the evidence review
+  and locked decision set behind both boards' generated schematics
 - [Project Status and Plan](../inbox/current-status.md)

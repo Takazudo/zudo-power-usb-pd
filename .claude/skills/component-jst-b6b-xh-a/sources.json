@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "source_id": "src-jst-xh-catalog",
+      "record_id": "rec-jst-b6b-xh-a",
+      "document_title": "XH CONNECTOR",
+      "document_number": "eXH",
+      "revision": "2025-06 hosted catalog",
+      "document_date": "2025-06",
+      "authoritative_url": "https://www.jst.com/wp-content/uploads/2025/06/eXH.pdf",
+      "alternate_authoritative_url": "",
+      "retrieval_date": "2026-08-02",
+      "authority_class": "MANUFACTURER_PRIMARY",
+      "sha256": "1128a1bdb747cf3da211ed85e11c542f2d310652d8188a69b2dc0e8c40115ef8",
+      "availability": "AVAILABLE",
+      "physical_pdf_page_index": 0,
+      "printed_page_label": "1",
+      "locator": "Page 1 general specifications table, rows Current rating through Applicable PC board thickness",
+      "evidence_extract": "JST XH is a 2.50 mm pitch wire-to-board family. Series rating conditions are tabulated for current, voltage, temperature, wire, and PCB thickness. Ported into zudo-pd from the zudo-led-lamp bundle component-jst-b6b-xh-a at led-lamp commit e4e2dfd39811ccfba2bb36fb78b0b74a80c6eb1e; bytes/hash unchanged from that port."
+    },
+    {
+      "source_id": "src-jst-xh-header",
+      "record_id": "rec-jst-b6b-xh-a",
+      "document_title": "XH CONNECTOR - header dimensions",
+      "document_number": "eXH",
+      "revision": "2025-06 hosted catalog",
+      "document_date": "2025-06",
+      "authoritative_url": "https://www.jst.com/wp-content/uploads/2025/06/eXH.pdf",
+      "alternate_authoritative_url": "",
+      "retrieval_date": "2026-08-02",
+      "authority_class": "MANUFACTURER_PRIMARY",
+      "sha256": "1128a1bdb747cf3da211ed85e11c542f2d310652d8188a69b2dc0e8c40115ef8",
+      "availability": "AVAILABLE",
+      "physical_pdf_page_index": 4,
+      "printed_page_label": "5",
+      "locator": "Page 5 Header table row 6 circuits B6B-XH-A; top-entry dimension figure and note 1",
+      "evidence_extract": "The six-circuit without-boss top-entry row is B6B-XH-A with A=12.5 mm and B=17.4 mm. Posts are square 0.64 mm. Note 1 says (LF)(SN) is displayed on a label. Ported into zudo-pd from the zudo-led-lamp bundle component-jst-b6b-xh-a at led-lamp commit e4e2dfd39811ccfba2bb36fb78b0b74a80c6eb1e; bytes/hash unchanged from that port."
+    },
+    {
+      "source_id": "src-jst-board-split-decision",
+      "record_id": "rec-jst-b6b-xh-a",
+      "document_title": "Board Split Decision - Fix List + A/B Interface Contract",
+      "document_number": "board-split-decision",
+      "revision": "078a7bf13bfba95bd92acdaab59cc4debcd26ce5",
+      "document_date": "2026-07-05",
+      "authoritative_url": "https://raw.githubusercontent.com/Takazudo/zudo-pd/078a7bf13bfba95bd92acdaab59cc4debcd26ce5/doc/src/content/docs/inbox/board-split-decision.md",
+      "alternate_authoritative_url": "",
+      "retrieval_date": "2026-08-14",
+      "authority_class": "PROJECT_GENERATOR",
+      "sha256": "03863c342cadc5e72e4f3ac55f5d364da802791cb2c87a4a42d16208b0f90480",
+      "availability": "AVAILABLE",
+      "physical_pdf_page_index": 0,
+      "printed_page_label": "source",
+      "locator": "Decision set (b) Board A <-> Board B interface contract: Connector, Pinout, Current-rating math and Keying/foolproofing sections",
+      "evidence_extract": "LOCKED: Board-side part (both boards) JST B6B-XH-A(LF)(SN), C144397, 6-pin top-entry shrouded through-hole header, 2.5 mm pitch, rated 3 A per contact with AWG #22 250 V. Pinout table: 1=+15V (A->B, Board A VBUS_OUT post Q1 load switch), 2=+15V (paired with pin 1, current sharing), 3=ATT (A->B open-drain active-low, STUSB4500 pin 11/ATTACH, no on-board pull-up), 4=PDOK (A->B open-drain active-low, STUSB4500 pin 20/POWER_OK2, asserts on a live PDO2 15V contract, same pull-up rule as ATT), 5=GND (paired return), 6=GND (paired return). Current-rating math: worst case is the PD contract cap of 3.0 A at 15 V; 2 contacts at 80% continuous derating = 4.8 A derated capacity (6.0 A nameplate) versus the 3.0 A worst-case load = 1.6x derated margin (2.0x nameplate); GND uses the identical 2-contact math. Keying: XH shrouded housing is mechanically polarized (reversed insertion blocked); the 6-pin XH is the only 6-position XH on either board so the cable cannot land on a wrong header; pin 1 is silkscreen-marked on both boards."
+    }
+  ]
+}

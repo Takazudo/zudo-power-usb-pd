@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "skill": "component-ptc-bsmd1206-150-16v-c883133",
+  "records": [
+    {
+      "record_id": "rec-ptc-bsmd1206-150-16v-c883133",
+      "line_id": "line-c883133",
+      "candidate_id": null,
+      "kind": "standalone",
+      "parent_record_id": null,
+      "mpn": "BSMD1206-150-16V",
+      "manufacturer": "BHFUSE",
+      "lcsc": "C883133",
+      "package": "F1206",
+      "source_ids": ["src-ptc3-bsmd1206-datasheet"],
+      "fact_ids": [
+        "fact-ptc3-manufacturer",
+        "fact-ptc3-ihold",
+        "fact-ptc3-itrip",
+        "fact-ptc3-vmax",
+        "fact-ptc3-imax",
+        "fact-ptc3-pd-typ",
+        "fact-ptc3-time-to-trip",
+        "fact-ptc3-rimin",
+        "fact-ptc3-r1max",
+        "fact-ptc3-temperature",
+        "fact-ptc3-surface-temperature",
+        "fact-ptc3-hold-85c",
+        "fact-ptc3-cycling",
+        "fact-ptc3-ihold-margin",
+        "fact-ptc3-vmax-margin"
+      ],
+      "interaction_ids": ["int-ptc3-neg12v-rail-protection"],
+      "open_domains": ["fault-current-ambient-and-cycling"]
+    }
+  ]
+}

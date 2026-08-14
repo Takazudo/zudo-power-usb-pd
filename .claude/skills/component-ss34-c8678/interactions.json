@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "interactions": [
+    {
+      "interaction_id": "int-ss34-d3-rail-reversal",
+      "record_ids": ["rec-ss34-c8678"],
+      "fact_ids": ["fact-ss34-d3-reverse-margin"],
+      "conditions": "D3 as the -13.5V LM2596S-ADJ inverting buck-boost rail catch diode: reverse-voltage margin against the SS34 VRRM rating",
+      "verdict": "PASS - primary-source confirmed"
+    }
+  ]
+}

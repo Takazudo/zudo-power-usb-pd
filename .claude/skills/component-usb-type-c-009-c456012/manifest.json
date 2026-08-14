@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "skill": "component-usb-type-c-009-c456012",
+  "records": [
+    {
+      "record_id": "rec-usb-type-c-009-c456012",
+      "line_id": "line-c456012",
+      "candidate_id": null,
+      "kind": "standalone",
+      "parent_record_id": null,
+      "mpn": "USB-TYPE-C-009",
+      "manufacturer": "SHOU HAN",
+      "lcsc": "C456012",
+      "package": "TYPE-C-SMD_TYPE-C-6P",
+      "source_ids": [
+        "src-usb-type-c-009-mirror-spec",
+        "src-usb-type-c-009-lcsc-catalog",
+        "src-usb-type-c-009-primary-attempt",
+        "src-usb-type-c-009-kicad-footprint",
+        "src-usb-type-c-009-kicad-symbol",
+        "src-usb-type-c-009-board-a-baseline",
+        "src-usb-type-c-009-bom-v040"
+      ],
+      "fact_ids": [
+        "fact-usb-type-c-009-manufacturer",
+        "fact-usb-type-c-009-project-mpn-label",
+        "fact-usb-type-c-009-distributor-binding",
+        "fact-usb-type-c-009-rating-voltage",
+        "fact-usb-type-c-009-rating-current",
+        "fact-usb-type-c-009-pd-contract-stress",
+        "fact-usb-type-c-009-cycles",
+        "fact-usb-type-c-009-temperature",
+        "fact-usb-type-c-009-dielectric",
+        "fact-usb-type-c-009-insulation",
+        "fact-usb-type-c-009-contact-resistance",
+        "fact-usb-type-c-009-pad-set",
+        "fact-usb-type-c-009-cc-pins",
+        "fact-usb-type-c-009-cc-topology",
+        "fact-usb-type-c-009-vbus-topology"
+      ],
+      "interaction_ids": [
+        "int-usb-type-c-009-cc-stusb4500",
+        "int-usb-type-c-009-vbus-in"
+      ],
+      "open_domains": [
+        "manufacturer and MPN identity",
+        "electrical ratings versus the 15 V / 3 A PD sink contract",
+        "mating durability and operating temperature",
+        "CC pin presence and PD negotiation path",
+        "package/footprint identity and shell topology"
+      ]
+    }
+  ]
+}

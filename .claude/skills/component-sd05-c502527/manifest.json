@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "skill": "component-sd05-c502527",
+  "records": [
+    {
+      "record_id": "rec-sd05-c502527",
+      "line_id": null,
+      "candidate_id": "cand-sd05-c502527",
+      "kind": "standalone",
+      "parent_record_id": null,
+      "mpn": "SD05",
+      "manufacturer": "MDD (Microdiode Semiconductor)",
+      "lcsc": "C502527",
+      "package": "SOD-323_L1.8-W1.3-LS2.5-FD",
+      "source_ids": [
+        "src-sd05-mdd-primary",
+        "src-sd05-lcsc-identity"
+      ],
+      "fact_ids": [
+        "fact-sd05-manufacturer",
+        "fact-sd05-identity",
+        "fact-sd05-standoff",
+        "fact-sd05-breakdown",
+        "fact-sd05-clamp-1a",
+        "fact-sd05-clamp-ipp",
+        "fact-sd05-pppm",
+        "fact-sd05-leakage",
+        "fact-sd05-capacitance",
+        "fact-sd05-plus5-margin",
+        "fact-sd05-plus5-margin-percent"
+      ],
+      "interaction_ids": [
+        "int-sd05-plus5-rail-blocker"
+      ],
+      "open_domains": []
+    },
+    {
+      "record_id": "rec-cand-smf6-0a-c123790",
+      "line_id": null,
+      "candidate_id": "cand-smf6-0a-c123790",
+      "kind": "standalone",
+      "parent_record_id": null,
+      "mpn": "SMF6.0A",
+      "manufacturer": "MDD (Microdiode Semiconductor)",
+      "lcsc": "C123790",
+      "package": "SOD-123FL",
+      "source_ids": [
+        "src-cand-smf6-0a-mdd-primary",
+        "src-cand-smf6-0a-lcsc-identity"
+      ],
+      "fact_ids": [
+        "fact-cand-smf6-0a-manufacturer",
+        "fact-cand-smf6-0a-identity",
+        "fact-cand-smf6-0a-standoff",
+        "fact-cand-smf6-0a-breakdown",
+        "fact-cand-smf6-0a-clamp",
+        "fact-cand-smf6-0a-pppm",
+        "fact-cand-smf6-0a-leakage",
+        "fact-cand-smf6-0a-package",
+        "fact-cand-smf6-0a-plus5-margin",
+        "fact-cand-smf6-0a-stock"
+      ],
+      "interaction_ids": [],
+      "open_domains": []
+    },
+    {
+      "record_id": "rec-cand-smaj6-5a-c87267",
+      "line_id": "line-c87267",
+      "candidate_id": null,
+      "kind": "standalone",
+      "parent_record_id": null,
+      "mpn": "SMAJ6.5A",
+      "manufacturer": "Brightking",
+      "lcsc": "C87267",
+      "package": "D-FLAT_L4.3-W2.6-LS5.3-RD",
+      "source_ids": [
+        "src-cand-smaj6-5a-brightking-primary",
+        "src-cand-smaj6-5a-lcsc-identity"
+      ],
+      "fact_ids": [
+        "fact-cand-smaj6-5a-manufacturer",
+        "fact-cand-smaj6-5a-identity",
+        "fact-cand-smaj6-5a-standoff",
+        "fact-cand-smaj6-5a-breakdown",
+        "fact-cand-smaj6-5a-clamp",
+        "fact-cand-smaj6-5a-pppm",
+        "fact-cand-smaj6-5a-leakage",
+        "fact-cand-smaj6-5a-package",
+        "fact-cand-smaj6-5a-plus5-margin",
+        "fact-cand-smaj6-5a-stock"
+      ],
+      "interaction_ids": [],
+      "open_domains": []
+    },
+    {
+      "record_id": "rec-cand-smaj6-0a-c5353156",
+      "line_id": null,
+      "candidate_id": "cand-smaj6-0a-c5353156",
+      "kind": "standalone",
+      "parent_record_id": null,
+      "mpn": "SMAJ6.0A",
+      "manufacturer": "FOSAN",
+      "lcsc": "C5353156",
+      "package": "SMA(DO-214AC)",
+      "source_ids": [
+        "src-cand-smaj6-0a-fosan-primary",
+        "src-cand-smaj6-0a-lcsc-identity"
+      ],
+      "fact_ids": [
+        "fact-cand-smaj6-0a-manufacturer",
+        "fact-cand-smaj6-0a-identity",
+        "fact-cand-smaj6-0a-standoff",
+        "fact-cand-smaj6-0a-breakdown",
+        "fact-cand-smaj6-0a-clamp",
+        "fact-cand-smaj6-0a-pppm",
+        "fact-cand-smaj6-0a-leakage",
+        "fact-cand-smaj6-0a-package",
+        "fact-cand-smaj6-0a-plus5-margin",
+        "fact-cand-smaj6-0a-stock"
+      ],
+      "interaction_ids": [],
+      "open_domains": []
+    }
+  ]
+}

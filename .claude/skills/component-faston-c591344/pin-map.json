@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "pin_maps": [
+    {
+      "pin_map_id": "pinmap-faston-c591344",
+      "record_id": "rec-faston-c591344",
+      "symbol": "1217754-1",
+      "footprint": "CONN-TH_1217754-1",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "FASTON tab terminal, THT solder leg 1 (electrically the same node as pin 2 per board-b-synth-power.md: 'each Faston terminal's two tabs are tied to the same net')"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "FASTON tab terminal, THT solder leg 2 (same net as pin 1)"
+        }
+      ],
+      "reviewed_by": "issue-116 worktree child (Claude Fable 5) review against symbols/zudo-pd.kicad_sym symbol '1217754-1' and footprint CONN-TH_1217754-1.kicad_mod; physical continuity/current-carrying equivalence of both legs NEEDS BENCH"
+    }
+  ]
+}

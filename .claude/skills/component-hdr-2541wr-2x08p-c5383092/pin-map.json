@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "pin_maps": [
+    {
+      "pin_map_id": "pinmap-hdr-2541wr-2x08p",
+      "record_id": "rec-hdr-2541wr-2x08p-c5383092",
+      "symbol": "2541WR-2X08P",
+      "footprint": "HDR-TH_16P-P2.54-H-M-R2-C8-S2.54",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "GATE rail (isolated stub; pin-pair 1-2)"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "GATE rail (isolated stub; pin-pair 1-2)"
+        },
+        {
+          "symbol_pin": "3",
+          "name": "3",
+          "footprint_pad": "3",
+          "function": "CV rail (isolated stub; pin-pair 3-4)"
+        },
+        {
+          "symbol_pin": "4",
+          "name": "4",
+          "footprint_pad": "4",
+          "function": "CV rail (isolated stub; pin-pair 3-4)"
+        },
+        {
+          "symbol_pin": "5",
+          "name": "5",
+          "footprint_pad": "5",
+          "function": "+5V rail (pin-pair 5-6)"
+        },
+        {
+          "symbol_pin": "6",
+          "name": "6",
+          "footprint_pad": "6",
+          "function": "+5V rail (pin-pair 5-6)"
+        },
+        {
+          "symbol_pin": "7",
+          "name": "7",
+          "footprint_pad": "7",
+          "function": "+12V rail (pin-pair 7-8)"
+        },
+        {
+          "symbol_pin": "8",
+          "name": "8",
+          "footprint_pad": "8",
+          "function": "+12V rail (pin-pair 7-8)"
+        },
+        {
+          "symbol_pin": "9",
+          "name": "9",
+          "footprint_pad": "9",
+          "function": "GND moat (pin-pair 9-10)"
+        },
+        {
+          "symbol_pin": "10",
+          "name": "10",
+          "footprint_pad": "10",
+          "function": "GND moat (pin-pair 9-10)"
+        },
+        {
+          "symbol_pin": "11",
+          "name": "11",
+          "footprint_pad": "11",
+          "function": "GND moat (pin-pair 11-12)"
+        },
+        {
+          "symbol_pin": "12",
+          "name": "12",
+          "footprint_pad": "12",
+          "function": "GND moat (pin-pair 11-12)"
+        },
+        {
+          "symbol_pin": "13",
+          "name": "13",
+          "footprint_pad": "13",
+          "function": "GND moat (pin-pair 13-14)"
+        },
+        {
+          "symbol_pin": "14",
+          "name": "14",
+          "footprint_pad": "14",
+          "function": "GND moat (pin-pair 13-14)"
+        },
+        {
+          "symbol_pin": "15",
+          "name": "15",
+          "footprint_pad": "15",
+          "function": "-12V rail (pin-pair 15-16)"
+        },
+        {
+          "symbol_pin": "16",
+          "name": "16",
+          "footprint_pad": "16",
+          "function": "-12V rail (pin-pair 15-16)"
+        }
+      ],
+      "reviewed_by": "issue-116 worktree child (Claude Fable 5) review against symbols/zudo-pd.kicad_sym symbol '2541WR-2X08P' and footprint HDR-TH_16P-P2.54-H-M-R2-C8-S2.54.kicad_mod; net-pair assignment per doc/src/content/docs/overview/board-b-synth-power.md pin table (doc-level only, NOT promoted into the board-b.json Ref.Pin baseline -- see facts); physical key/pin-1 orientation NEEDS BENCH"
+    }
+  ]
+}

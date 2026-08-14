@@ -1,0 +1,10 @@
+{
+  "comment": "Intentional deltas of scripts/schgen/board_a_spec.py against the netlist-derived board-a baseline. The baseline (updated by #121) already contains the J4 interface connector per the locked A-B contract, so the only allowed deltas are the wave-6 decision (e) additions: D8 BZT52C11-7-F gate-source zener clamp on Q1 (dec-e-q1-20v-gate-guard in scripts/schgen/decisions.json) — cathode D8.1 on VBUS_IN (Q1 source), anode D8.2 on Net-(Q1-G).",
+  "added_nets": [],
+  "removed_nets": [],
+  "added_pins": {
+    "VBUS_IN": ["D8.1"],
+    "Net-(Q1-G)": ["D8.2"]
+  },
+  "removed_pins": {}
+}

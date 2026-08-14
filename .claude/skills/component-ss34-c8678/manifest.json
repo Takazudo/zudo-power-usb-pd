@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "skill": "component-ss34-c8678",
+  "records": [
+    {
+      "record_id": "rec-ss34-c8678",
+      "line_id": "line-c8678",
+      "candidate_id": null,
+      "kind": "standalone",
+      "parent_record_id": null,
+      "mpn": "SS34",
+      "manufacturer": "MDD (Microdiode Semiconductor)",
+      "lcsc": "C8678",
+      "package": "SMA_L4.3-W2.6-LS5.2-RD",
+      "source_ids": ["src-ss34-datasheet"],
+      "fact_ids": [
+        "fact-ss34-manufacturer",
+        "fact-ss34-vrrm",
+        "fact-ss34-if-avg",
+        "fact-ss34-vf",
+        "fact-ss34-vf-temp-note",
+        "fact-ss34-ir-25c",
+        "fact-ss34-ir-125c",
+        "fact-ss34-d3-reverse-margin"
+      ],
+      "interaction_ids": ["int-ss34-d3-rail-reversal"],
+      "open_domains": ["vf-temperature-derating"]
+    }
+  ]
+}

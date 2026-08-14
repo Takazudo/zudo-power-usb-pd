@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "pin_maps": [
+    {
+      "pin_map_id": "pinmap-usb-type-c-009",
+      "record_id": "rec-usb-type-c-009-c456012",
+      "symbol": "USB-TYPE-C-009",
+      "footprint": "TYPE-C-SMD_TYPE-C-6P",
+      "pins": [
+        {
+          "symbol_pin": "7",
+          "name": "EH",
+          "footprint_pad": "7",
+          "function": "shell/earth, four physical mounting tabs share pad number 7, tied to GND"
+        },
+        {
+          "symbol_pin": "A5",
+          "name": "CC1",
+          "footprint_pad": "A5",
+          "function": "configuration channel 1, PD negotiation"
+        },
+        {
+          "symbol_pin": "A9",
+          "name": "VBUS",
+          "footprint_pad": "A9",
+          "function": "VBUS_IN, negotiated 15 V PD input"
+        },
+        {
+          "symbol_pin": "A12",
+          "name": "GND",
+          "footprint_pad": "A12",
+          "function": "ground return"
+        },
+        {
+          "symbol_pin": "B5",
+          "name": "CC2",
+          "footprint_pad": "B5",
+          "function": "configuration channel 2, PD negotiation"
+        },
+        {
+          "symbol_pin": "B9",
+          "name": "VBUS",
+          "footprint_pad": "B9",
+          "function": "VBUS_IN duplicate contact"
+        },
+        {
+          "symbol_pin": "B12",
+          "name": "GND",
+          "footprint_pad": "B12",
+          "function": "ground return duplicate contact"
+        }
+      ],
+      "reviewed_by": "project KiCad symbol/footprint lock (easyeda2kicad import); physical contact equivalence NEEDS BENCH"
+    }
+  ]
+}

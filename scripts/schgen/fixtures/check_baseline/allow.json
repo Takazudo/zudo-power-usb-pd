@@ -1,0 +1,6 @@
+{
+  "added_nets": ["STATUS"],
+  "removed_nets": [],
+  "added_pins": {"VCC": ["J5.1"]},
+  "removed_pins": {}
+}

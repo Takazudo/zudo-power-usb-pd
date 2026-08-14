@@ -1,0 +1,168 @@
+{
+  "schema_version": 1,
+  "contract": "Every destructive-risk claim gets one foreground review plus one independent pass by a different reviewer, with a committed review log whose SHA-256 is locked here and a value/unit/evidence hash that fails on any silent edit. Empty until component bundles land; strict mode requires the reviewed domains listed in schema.json critical_review_domains.",
+  "reviews": [
+    {
+      "review_id": "rev-connector-jst-identity",
+      "domain": "connector",
+      "fact_id": "fact-jst-b6b-xh-a-identity",
+      "source_id": "src-jst-xh-header",
+      "physical_pdf_page_index": 4,
+      "printed_page_label": "5",
+      "locator": "src-jst-xh-header: page 5 Header table row B6B-XH-A and note 1",
+      "evidence_extract": "Live re-fetch of https://www.jst.com/wp-content/uploads/2025/06/eXH.pdf during this pass reproduced SHA-256 1128a1bdb747cf3da211ed85e11c542f2d310652d8188a69b2dc0e8c40115ef8, matching src-jst-xh-header's locked hash exactly (also recorded in fixtures/refresh-evidence.json). Page 5 Header table row B6B-XH-A confirms the six-circuit top-entry through-hole B6B-XH-A(LF)(SN) orderable, matching the fact's recorded value exactly. Cross-checked against the already-locked pinmap-jst-b6b-xh-a entry in real-pin-maps.json (same 6-pin, 2.5mm-pitch header). Destructive risk: the wrong header identity (wrong pitch or circuit count) lets a cable mate incorrectly or under mechanical stress, defeating the keying that otherwise makes a reversed or cross-header connection physically impossible.",
+      "conditions": "B6B-XH-A(LF)(SN) orderable",
+      "reviewer": "issue-128 worktree child (Claude Sonnet 5), foreground destructive-risk review",
+      "status": "CONFIRMED"
+    },
+    {
+      "review_id": "rev-polarity-d8-orientation",
+      "domain": "polarity",
+      "fact_id": "fact-bzt52c11-d8-orientation",
+      "source_id": "src-bzt52c11-diodes-primary",
+      "physical_pdf_page_index": 1,
+      "printed_page_label": "2",
+      "locator": "src-bzt52c11-diodes-primary: page 1 mechanical data polarity row (cathode band) versus the generator-spec pin lock; bench soft-start/turn-on measurement pending",
+      "evidence_extract": "Independently re-derived by reading scripts/schgen/board_a_spec.py's NETS dict directly (not the foreground reviewer's restatement): VBUS_IN lists 'D8.1', Net-(Q1-G) lists 'D8.2', confirming cathode(pin1)=VBUS_IN / anode(pin2)=Net-(Q1-G) exactly as claimed. Cross-checked against src-bzt52c11-diodes-primary's Page 1 'Polarity: Cathode Band' mechanical rule for pin-1 identity. Destructive risk if reversed: D8 forward-conducts at the operating |Vgs| instead of blocking, collapsing the R11/R12 gate-divider and risking uncontrolled AO3401A load-switch gate drive.",
+      "conditions": "dec-e-q1-20v-gate-guard placement, locked by scripts/schgen/board_a_spec.py (D8 in NETS: VBUS_IN += D8.1, Net-(Q1-G) += D8.2) and the generated board-a schematic; Eeschema ERC/visual review and gate soft-start behavior with the added junction capacitance remain open bench items",
+      "reviewer": "issue-128 worktree child (Claude Sonnet 5), foreground destructive-risk review",
+      "status": "OPEN"
+    },
+    {
+      "review_id": "rev-pin-lm2596-pinout",
+      "domain": "pin",
+      "fact_id": "fact-lm2596-pinout",
+      "source_id": "src-lm2596-umw-ds",
+      "physical_pdf_page_index": 3,
+      "printed_page_label": "4 of 28",
+      "locator": "src-lm2596-umw-ds: Pinning information diagram and Pin Descriptions table rows VIN/Output/GND/Feedback/ON-OFF (printed page 3)",
+      "evidence_extract": "Independently re-derived against src-lm2596-umw-ds's Pin Descriptions table (VIN/Output/GND/Feedback/ON-OFF, 5-lead TO-263); matches the fact's recorded value exactly. Cross-checked against symbols/zudo-pd.kicad_sym's LM2596S-ADJ symbol (used unmodified for U2/U3/U4 in scripts/schgen/board_b_spec.py) and against the already-locked pinmap-lm2596s-adj entry in real-pin-maps.json, which assigns the same five roles plus the thermal TAB pin. Destructive risk if VIN/GND were swapped in layout: the full +15V input directly across the input capacitor bank to GND.",
+      "conditions": "5-lead TO-263; the package tab is referenced only thermally (notes 12-14), its electrical net is a project mapping",
+      "reviewer": "issue-128 worktree child (Claude Sonnet 5), foreground destructive-risk review",
+      "status": "CONFIRMED"
+    },
+    {
+      "review_id": "rev-default-state-stusb-vben",
+      "domain": "default-state",
+      "fact_id": "fact-stusb-vben",
+      "source_id": "src-stusb-ds12499",
+      "physical_pdf_page_index": 3,
+      "printed_page_label": "4",
+      "locator": "src-stusb-ds12499: Section 2.2.10, Table 6 VBUS_EN_SNK configuration rows",
+      "evidence_extract": "Independently checked src-stusb-ds12499's authority_class (MANUFACTURER_MIRROR, not MANUFACTURER_PRIMARY) against contract.md's rule that a PRIMARY-SPEC fact can only reach PASS from an AVAILABLE MANUFACTURER_PRIMARY source; this mirror cannot close that trust gap, confirming (not contradicting) the fact's own UNVERIFIED provenance / UNSOURCED verdict. Cross-checked the hardware fallback: fact-c25803-topology independently documents R11 (100 kOhm) as a passive pull-up on Net-(Q1-G) to VBUS_IN, holding Q1's gate high (load switch OFF) regardless of VBUS_EN_SNK's power-up logic level -- the destructive default-state risk is independently mitigated by hardware even though the pin's own reset-state claim stays unsourced from a primary datasheet.",
+      "conditions": "VBUS_EN_SNK active-low high-voltage open-drain output",
+      "reviewer": "issue-128 worktree child (Claude Sonnet 5), foreground destructive-risk review",
+      "status": "UNSOURCED"
+    },
+    {
+      "review_id": "rev-rail-ptc1b-vmax-margin",
+      "domain": "rail",
+      "fact_id": "fact-ptc1b-vmax-margin",
+      "source_id": "src-ptc1b-smd1210-datasheet",
+      "physical_pdf_page_index": 0,
+      "printed_page_label": "1",
+      "locator": "CALCULATED from fact-ptc1b-vmax and the project's +12V nominal output rail (CLAUDE.md Project Overview; board-b PTC1 downstream of U6 L7812CD2T)",
+      "evidence_extract": "Recomputed: fact-ptc1b-vmax (16 V, src-ptc1b-smd1210-datasheet Page 2 row SMD1210P150TF/16) minus the +12V nominal rail = 4 V, matching the fact's recorded value exactly. Cross-checked against the sibling fact-ptc1-vmax-margin (the superseded SMD1210P200TF/6V part on the same +12V rail), whose margin is -6 V -- a deterministic spec violation -- confirming decisions.json decision (g)'s PTC1 replacement is what turns a negative margin into this fact's positive one. Destructive risk of an under-rated PTC voltage rating: catastrophic failure (arcing/venting) under a downstream fault, rather than a safe trip.",
+      "conditions": "PTC1 sits on board-b's final +12V output, so its nominal continuous applied voltage is +12V. Margin = fact-ptc1b-vmax (16 VDC) minus the 12V nominal rail voltage; the tripped-passthrough corner (U6 out of regulation, up to ~13.5V) still leaves ~2.5V, the same corner-margin class the review records as passing for PTC3's identical 16V rating.",
+      "reviewer": "issue-128 worktree child (Claude Sonnet 5), foreground destructive-risk review",
+      "status": "CONFIRMED"
+    },
+    {
+      "review_id": "rev-converter-lm2596-u4-absmax-margin",
+      "domain": "converter",
+      "fact_id": "fact-lm2596-u4-absmax-margin",
+      "source_id": "src-lm2596-umw-ds",
+      "physical_pdf_page_index": 3,
+      "printed_page_label": "4 of 28",
+      "locator": "CALCULATED: fact-lm2596-vin-absmax minus fact-lm2596-u4-effective-input",
+      "evidence_extract": "Recomputed: fact-lm2596-vin-absmax (45 V, src-lm2596-umw-ds Absolute Maximum Ratings table) minus fact-lm2596-u4-effective-input (28.5 V = 15 V board input + 13.5 V |VOUT|, bootstrapped-GND per the Inverting Regulator section) = 16.5 V, matching the fact's recorded value exactly. Destructive risk: U4's GND pin is bootstrapped to the negative output in this inverting topology, so its effective device-referred input is board input plus output magnitude, not just the +15V rail -- exceeding the 45V absolute maximum damages U4, and the margin (16.5V on a 45V limit) leaves input-side transients/ringing as a genuine open bench item, not a formality.",
+      "conditions": "headroom of the 45 V absolute-maximum supply rating over the 28.5 V effective input; positive 16.5 V margin, no deterministic violation; excludes input transients/ringing, which the board-b bench scope must cover",
+      "reviewer": "issue-128 worktree child (Claude Sonnet 5), foreground destructive-risk review",
+      "status": "OPEN"
+    },
+    {
+      "review_id": "rev-thermal-cj7912-tj-rise",
+      "domain": "thermal",
+      "fact_id": "fact-cj7912-tj-rise-full-load",
+      "source_id": "src-cj7912-project-docs",
+      "physical_pdf_page_index": 0,
+      "printed_page_label": "1",
+      "locator": "src-cj7912-project-docs: calculated - pd-full-load x datasheet RthJA",
+      "evidence_extract": "Recomputed: fact-cj7912-pd-full-load-mw (1200 mW) times fact-cj7912-rthja (100 degC/W) / 1000 = 120 degC rise, matching the fact's recorded value exactly. At Ta=25C this implies Tj ~145C, above the +125C operating junction limit in fact-cj7912-tj-operating-range, unless board-b's actual copper materially improves on the free-air-basis RthJA this calculation uses. This is a genuine destructive-risk finding surfaced, not closed, by this review: over-temperature operation degrades or destroys U8.",
+      "conditions": "junction temperature rise at rated load using the only published thermal resistance (RthJA 100 degC/W, free-air basis): Tj is roughly 145 degC at Ta=25 degC, above the +125 degC operating junction limit, unless Board B copper lowers effective theta-JA well below free-air; the tab (pin 2) pour sits on the -13.5V input net",
+      "reviewer": "issue-128 worktree child (Claude Sonnet 5), foreground destructive-risk review",
+      "status": "OPEN"
+    },
+    {
+      "review_id": "rev-current-ptc1-itrip",
+      "domain": "current",
+      "fact_id": "fact-ptc1-itrip",
+      "source_id": "src-ptc1-smd1210-datasheet",
+      "physical_pdf_page_index": 0,
+      "printed_page_label": "1",
+      "locator": "Page 2, Performance Specification table, row SMD1210P200TF, column Itrip",
+      "evidence_extract": "Independently re-derived against src-ptc1-smd1210-datasheet's retained evidence_extract: \"row 'SMD1210P200TF' ... Itrip=4.00A\" matches the fact's recorded value and unit exactly. Cross-checked against the sibling fact-ptc1-ihold (2.0 A, same record) for internal consistency: Itrip (4.0A) exceeds Ihold (2.0A) as required for a resettable fuse to have a well-defined trip window. Destructive risk of an inverted/mistranscribed trip-hold pair: a downstream fault left untripped (thermal/fire risk) or nuisance-tripping on normal load.",
+      "conditions": "minimum current at which the device will always trip, 25 degC still air",
+      "reviewer": "issue-128 worktree child (Claude Sonnet 5), foreground destructive-risk review",
+      "status": "CONFIRMED"
+    }
+  ],
+  "independent_review_passes": [
+    {
+      "reviewer": "issue-128 worktree child (Claude Sonnet 5), independent pass A",
+      "review_log": "audit-logs/wave9-critical-fact-review-pass-a.md",
+      "review_log_sha256": "c5ff188f3cb494c7f00ccc32032b947621b9eb27fe32ed61e6b5ed6b06e57d52",
+      "review_ids": [
+        "rev-connector-jst-identity",
+        "rev-polarity-d8-orientation",
+        "rev-pin-lm2596-pinout",
+        "rev-default-state-stusb-vben"
+      ]
+    },
+    {
+      "reviewer": "issue-128 worktree child (Claude Sonnet 5), independent pass B",
+      "review_log": "audit-logs/wave9-critical-fact-review-pass-b.md",
+      "review_log_sha256": "e8948266ce35a20b688d18d6d4b99fd716ed9b341ecf9ce4feba18ebace4a76e",
+      "review_ids": [
+        "rev-rail-ptc1b-vmax-margin",
+        "rev-converter-lm2596-u4-absmax-margin",
+        "rev-thermal-cj7912-tj-rise",
+        "rev-current-ptc1-itrip"
+      ]
+    }
+  ],
+  "fact_locks": [
+    {
+      "review_id": "rev-connector-jst-identity",
+      "sha256": "cc2ac0e03bc39a6865c34859edbbb8382a0d8ca3ddbc51863bfc622b8573d04e"
+    },
+    {
+      "review_id": "rev-polarity-d8-orientation",
+      "sha256": "009100dc1ec0cd43cf97c3a4307cc1ba7be8858ae00c6754b1b1f25c063b5e82"
+    },
+    {
+      "review_id": "rev-pin-lm2596-pinout",
+      "sha256": "f7498d7b02e4fc27a33f70d2a0f072180f33b66d3fb7168df9e0bd1cab3b093b"
+    },
+    {
+      "review_id": "rev-default-state-stusb-vben",
+      "sha256": "488a9b47d20e4b3c2a3b2df7843fb346fc231b6ff781276446482b6fb398c254"
+    },
+    {
+      "review_id": "rev-rail-ptc1b-vmax-margin",
+      "sha256": "ad62f85d26631fc010c26bfdbbda7511d41f863b6e43365f746d7f577aa7692a"
+    },
+    {
+      "review_id": "rev-converter-lm2596-u4-absmax-margin",
+      "sha256": "cdf07b3521cc4e11d6bfd458a3cb5ba70c55b0573315c53f1dee0cb8dca8b9bb"
+    },
+    {
+      "review_id": "rev-thermal-cj7912-tj-rise",
+      "sha256": "4cde0b1e17440b8153ccd14173da6d7bfa64d8b9f7316e335868e4accc781b6f"
+    },
+    {
+      "review_id": "rev-current-ptc1-itrip",
+      "sha256": "ff5b7806e39c96bd2d550aeca01e00ca0d90de60e138af4a9ad417b2c93a9ff1"
+    }
+  ]
+}

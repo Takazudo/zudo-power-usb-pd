@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "routes": [
+    {
+      "route_id": "route-ptc1-smd1210p200tf",
+      "record_id": "rec-ptc-smd1210p200tf-c20808",
+      "aliases": {
+        "mpn": [
+          "SMD1210P200TF"
+        ],
+        "lcsc": [
+          "C20808"
+        ],
+        "manufacturer": [
+          "RUILON"
+        ],
+        "function": [
+          "+12V output overcurrent protection PTC"
+        ]
+      },
+      "positive": [
+        "check SMD1210P200TF pinout",
+        "audit C20808 voltage rating"
+      ],
+      "negative": [
+        "check SMD1210P150TF pinout"
+      ]
+    },
+    {
+      "route_id": "route-ptc1b-smd1210p150tf16",
+      "record_id": "rec-ptc-smd1210p150tf16-c7529589",
+      "aliases": {
+        "mpn": [
+          "SMD1210P150TF/16"
+        ],
+        "lcsc": [
+          "C7529589"
+        ],
+        "manufacturer": [
+          "RUILON"
+        ],
+        "function": [
+          "16V +12V output overcurrent protection PTC"
+        ]
+      },
+      "positive": [
+        "check SMD1210P150TF/16 pinout",
+        "audit C7529589 voltage rating"
+      ],
+      "negative": [
+        "check SMD1812P200TF16 pinout"
+      ]
+    }
+  ]
+}

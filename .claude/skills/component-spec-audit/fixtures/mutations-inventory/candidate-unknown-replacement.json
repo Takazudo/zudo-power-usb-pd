@@ -1,0 +1,9 @@
+{
+  "mutation": "candidate replaces unknown line",
+  "base": "candidates",
+  "note": "Replacement research must name the exact line it would replace, or it is not traceable to a design decision.",
+  "target": "candidates.cand-fixture-tvs-replacement.replaces_line_id",
+  "from": "line-c900002",
+  "to": "line-missing",
+  "expected_error": "unknown replaces_line_id"
+}

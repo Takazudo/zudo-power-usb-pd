@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "routes": [
+    {
+      "route_id": "route-l7812cd2t-c13456",
+      "record_id": "rec-l7812cd2t-c13456",
+      "aliases": {
+        "mpn": ["L7812CD2T", "L7812CD2T-TR", "L7812"],
+        "lcsc": ["C13456"],
+        "manufacturer": ["ST (STMicroelectronics)", "STMicroelectronics", "ST"],
+        "function": [
+          "+12V linear regulator, final +12V output stage",
+          "+12V LDO",
+          "12 V positive voltage regulator"
+        ]
+      },
+      "positive": [
+        "check L7812CD2T dropout headroom",
+        "audit C13456",
+        "board-b U6 +12V LDO L7812CD2T",
+        "L7812CD2T-TR thermal data"
+      ],
+      "negative": [
+        "L7812CV output voltage",
+        "L7812ABD2T",
+        "L7812ACD2T-TR",
+        "LM7812 pinout",
+        "L7805CD2T"
+      ]
+    }
+  ]
+}

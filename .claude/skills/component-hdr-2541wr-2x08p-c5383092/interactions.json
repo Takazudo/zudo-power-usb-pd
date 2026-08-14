@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "interactions": [
+    {
+      "interaction_id": "int-hdr-current-vs-rail",
+      "record_ids": [
+        "rec-hdr-2541wr-2x08p-c5383092"
+      ],
+      "fact_ids": [
+        "fact-hdr-current-rating-per-contact",
+        "fact-hdr-current-margin-plus12v",
+        "fact-hdr-current-margin-minus12v",
+        "fact-hdr-current-margin-plus5v"
+      ],
+      "conditions": "worst-case single-contact 3.0A rating vs the project's +12V/1.2A, +5V/0.5A, -12V/0.8A rail budgets (pins 7-8, 5-6, 15-16) gives large nominal margin even ignoring the second parallel pin in each pair, but the rating is UNSOURCED at primary-manufacturer level and comes from a generic-position-count drawing; contact resistance and thermal rise under sustained rail current needs a bench check",
+      "verdict": "NEEDS BENCH"
+    },
+    {
+      "interaction_id": "int-hdr-gnd-moat-key",
+      "record_ids": [
+        "rec-hdr-2541wr-2x08p-c5383092"
+      ],
+      "fact_ids": [
+        "fact-hdr-pin-pair-assignment",
+        "fact-hdr-gnd-moat-interactions",
+        "fact-hdr-keying-not-netlist-verifiable",
+        "fact-hdr-misalignment-safety-note"
+      ],
+      "conditions": "the six-pin GND moat (pins 9-14) separating +12V (7-8) from -12V (15-16) and the misalignment-safe pin ordering are doc-level design statements, not Ref.Pin-baselined; the key/polarization-slot orientation of the physical footprint is separately not netlist-verifiable at all -- both need bench/visual confirmation before Board B layout is finalized",
+      "verdict": "NEEDS BENCH"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "contract": "Dated proof that an AVAILABLE source still hashes to its locked SHA-256 under the browser-like retrieval profile. Empty until component bundles land; strict mode requires at least one PROJECT_GENERATOR and one MANUFACTURER_PRIMARY example.",
+  "evidence": [
+    {
+      "source_id": "src-bzt52c11-diodes-primary",
+      "authoritative_url": "https://www.diodes.com/assets/Datasheets/ds18004.pdf",
+      "sha256": "0fbd7d137524820f0160594065cbceb8c6b3188757c328416d08fceb7418202f",
+      "checked_at": "2026-08-14T14:13:31Z",
+      "result": "MATCH",
+      "retrieval_profile": "browser-like-v1"
+    },
+    {
+      "source_id": "src-lm2596-umw-ds",
+      "authoritative_url": "https://www.umw-ic.com/static/pdf/08a395a0d66ae7472f74e2947a1d8a0f.pdf",
+      "sha256": "26d031e9696524e9a99055635d15cf828d57d33cf08f12a4009f5e2c60aef27e",
+      "checked_at": "2026-08-14T14:15:02Z",
+      "result": "MATCH",
+      "retrieval_profile": "browser-like-v1"
+    },
+    {
+      "source_id": "src-jst-board-split-decision",
+      "authoritative_url": "https://raw.githubusercontent.com/Takazudo/zudo-pd/078a7bf13bfba95bd92acdaab59cc4debcd26ce5/doc/src/content/docs/inbox/board-split-decision.md",
+      "sha256": "03863c342cadc5e72e4f3ac55f5d364da802791cb2c87a4a42d16208b0f90480",
+      "checked_at": "2026-08-14T14:14:10Z",
+      "result": "MATCH",
+      "retrieval_profile": "browser-like-v1"
+    },
+    {
+      "source_id": "src-jst-xh-header",
+      "authoritative_url": "https://www.jst.com/wp-content/uploads/2025/06/eXH.pdf",
+      "sha256": "1128a1bdb747cf3da211ed85e11c542f2d310652d8188a69b2dc0e8c40115ef8",
+      "checked_at": "2026-08-14T14:16:45Z",
+      "result": "MATCH",
+      "retrieval_profile": "browser-like-v1"
+    }
+  ]
+}

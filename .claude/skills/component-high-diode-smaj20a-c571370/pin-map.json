@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "pin_maps": [
+    {
+      "pin_map_id": "pinmap-high-diode-smaj20a-c571370",
+      "record_id": "rec-high-diode-smaj20a-c571370",
+      "symbol": "SMAJ20A_C571370",
+      "footprint": "D-FLAT_L4.3-W2.6-LS5.3-RD",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "C",
+          "footprint_pad": "1",
+          "function": "cathode, D5.1 on VBUS_IN"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "A",
+          "footprint_pad": "2",
+          "function": "anode, D5.2 on GND"
+        }
+      ],
+      "reviewed_by": "issue-108 worktree child (Claude Fable 5) foreground review against symbols/zudo-pd.kicad_sym SMAJ20A_C571370 (pin 1=C, pin 2=A) and footprints/kicad/zudo-power.pretty/D-FLAT_L4.3-W2.6-LS5.3-RD.kicad_mod (pads 1,2); orientation confirmed consistent with the sibling SMAJ15A_C571368/TVS1/TVS3 pattern this symbol/footprint was cloned from (board-split-decision.md #93 item 5); independent second-reviewer pass pending"
+    }
+  ]
+}

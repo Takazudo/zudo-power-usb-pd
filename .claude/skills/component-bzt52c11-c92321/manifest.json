@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "skill": "component-bzt52c11-c92321",
+  "records": [
+    {
+      "record_id": "rec-bzt52c11-c92321",
+      "line_id": "line-c92321",
+      "candidate_id": null,
+      "kind": "standalone",
+      "parent_record_id": null,
+      "mpn": "BZT52C11-7-F",
+      "manufacturer": "Diodes Incorporated",
+      "lcsc": "C92321",
+      "package": "SOD-123_L2.8-W1.8-LS3.7-RD",
+      "source_ids": [
+        "src-bzt52c11-diodes-primary",
+        "src-bzt52c11-lcsc-identity"
+      ],
+      "fact_ids": [
+        "fact-bzt52c11-manufacturer",
+        "fact-bzt52c11-identity",
+        "fact-bzt52c11-vz-window",
+        "fact-bzt52c11-vz-min",
+        "fact-bzt52c11-ir-leakage",
+        "fact-bzt52c11-zzt",
+        "fact-bzt52c11-pd",
+        "fact-bzt52c11-polarity",
+        "fact-bzt52c11-knee-margin-15v",
+        "fact-bzt52c11-d8-orientation"
+      ],
+      "interaction_ids": [
+        "int-bzt52c11-gate-clamp"
+      ],
+      "open_domains": [
+        "gate-clamp-application"
+      ]
+    }
+  ]
+}

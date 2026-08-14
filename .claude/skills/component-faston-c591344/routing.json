@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "routes": [
+    {
+      "route_id": "route-faston-c591344",
+      "record_id": "rec-faston-c591344",
+      "aliases": {
+        "mpn": [
+          "63951-1"
+        ],
+        "lcsc": [
+          "C591344"
+        ],
+        "manufacturer": [
+          "TE Connectivity"
+        ],
+        "function": [
+          "FASTON 250 PCB tab terminal",
+          "board-b output rail power tab",
+          "J6-J9 Faston connector"
+        ]
+      },
+      "positive": [
+        "63951-1",
+        "C591344",
+        "TE Connectivity 63951-1",
+        "FASTON 250 PCB tab terminal 63951-1",
+        "audit C591344 rail assignment"
+      ],
+      "negative": [
+        "1217754-1",
+        "C305825",
+        "TME 1217754-1",
+        "2541WR-2X08P",
+        "C5383092",
+        "HanElectricity 2541WR-2X08P"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "pin_maps": [
+    {
+      "pin_map_id": "pinmap-pesd24vs1ub-c85382",
+      "record_id": "rec-pesd24vs1ub-c85382",
+      "symbol": "PESD24VS1UB_C85382",
+      "footprint": "SOD-523_L1.2-W0.8-LS1.6-RD",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "K",
+          "footprint_pad": "1",
+          "function": "cathode (marking bar indicates pin 1)"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "A",
+          "footprint_pad": "2",
+          "function": "anode"
+        }
+      ],
+      "reviewed_by": "child-114 foreground review against Nexperia Table 2 Pinning information (pin 1 = K cathode, marking bar indicates pin 1; pin 2 = A anode; SC-79/SOD523). No KiCad symbol or footprint exists in the project libraries yet for this DNP provision; symbol/footprint names here are the prospective import names, to be locked when board-a assets are generated"
+    }
+  ]
+}

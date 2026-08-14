@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "coverage": [
+    {
+      "coverage_id": "cov-lm2596-identity",
+      "record_id": "rec-lm2596s-adj-c347423",
+      "domain": "identity-package-pinout",
+      "status": "COVERED",
+      "reason": "fact-lm2596-manufacturer, fact-lm2596-ordering-package, and fact-lm2596-pinout are primary-source confirmed from the manufacturer datasheet",
+      "fact_ids": [
+        "fact-lm2596-manufacturer",
+        "fact-lm2596-ordering-package",
+        "fact-lm2596-pinout"
+      ],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-lm2596-input-envelope",
+      "record_id": "rec-lm2596s-adj-c347423",
+      "domain": "input-voltage-envelope",
+      "status": "COVERED",
+      "reason": "45 V absolute maximum and 4.75-40 V operating supply range are primary-source confirmed",
+      "fact_ids": [
+        "fact-lm2596-vin-absmax",
+        "fact-lm2596-vin-operating-max"
+      ],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-lm2596-feedback-reference",
+      "record_id": "rec-lm2596s-adj-c347423",
+      "domain": "feedback-reference",
+      "status": "COVERED",
+      "reason": "1.23 V typical feedback reference with guaranteed 1.193/1.267 V limits (1.180/1.280 over temperature), the +/-4% line/load tolerance, and the 1.2-37 V adjustable range are primary-source confirmed",
+      "fact_ids": [
+        "fact-lm2596-fb-vref",
+        "fact-lm2596-fb-vref-min",
+        "fact-lm2596-fb-vref-max",
+        "fact-lm2596-output-tolerance",
+        "fact-lm2596-vout-adjust-range"
+      ],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-lm2596-onoff",
+      "record_id": "rec-lm2596s-adj-c347423",
+      "domain": "on-off-control",
+      "status": "COVERED",
+      "reason": "ON/OFF thresholds, the -0.3 to +25 V pin limit, and the inverting-configuration ground-pin reference behavior are primary-source confirmed",
+      "fact_ids": [
+        "fact-lm2596-onoff-thresholds",
+        "fact-lm2596-onoff-absmax",
+        "fact-lm2596-onoff-inverting-note"
+      ],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-lm2596-power-stage",
+      "record_id": "rec-lm2596s-adj-c347423",
+      "domain": "switch-power-stage",
+      "status": "COVERED",
+      "reason": "4.5 A typical / 3.6 A minimum switch current limit and the 150 kHz oscillator are primary-source confirmed",
+      "fact_ids": [
+        "fact-lm2596-current-limit",
+        "fact-lm2596-oscillator-frequency"
+      ],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-lm2596-setpoints",
+      "record_id": "rec-lm2596s-adj-c347423",
+      "domain": "converter-setpoints",
+      "status": "OPEN",
+      "reason": "the +13.53 / +7.503 / -13.53 V setpoints are nominal calculations from the typical reference and nominal divider values; no board has ever regulated (v4 never negotiated input power), so the rails carry NEEDS BENCH until measured on board-b",
+      "fact_ids": [
+        "fact-lm2596-project-placements",
+        "fact-lm2596-u2-r1",
+        "fact-lm2596-u2-r2",
+        "fact-lm2596-u3-r3",
+        "fact-lm2596-u3-r4",
+        "fact-lm2596-u4-r5",
+        "fact-lm2596-u4-r6",
+        "fact-lm2596-u2-vout-setpoint",
+        "fact-lm2596-u3-vout-setpoint",
+        "fact-lm2596-u4-vout-setpoint-magnitude",
+        "fact-lm2596-u4-vout-setpoint"
+      ],
+      "blocking_fact_ids": [
+        "fact-lm2596-u2-vout-setpoint",
+        "fact-lm2596-u3-vout-setpoint",
+        "fact-lm2596-u4-vout-setpoint-magnitude",
+        "fact-lm2596-u4-vout-setpoint"
+      ]
+    },
+    {
+      "coverage_id": "cov-lm2596-u4-stress",
+      "record_id": "rec-lm2596s-adj-c347423",
+      "domain": "u4-inverting-stress",
+      "status": "OPEN",
+      "reason": "the 28.5 V effective-input chain and its 16.5 V / 11.5 V margins are arithmetic on design targets; actual VBUS, the inverting startup inrush against the current-limited USB-PD source, and switch-node transients need bench confirmation on the dead-v4 diagnosis and board-b bring-up",
+      "fact_ids": [
+        "fact-lm2596-inverting-topology-support",
+        "fact-lm2596-inverting-startup-current",
+        "fact-lm2596-u4-inverting-nets",
+        "fact-lm2596-vin-project",
+        "fact-lm2596-u4-vout-target",
+        "fact-lm2596-u4-effective-input",
+        "fact-lm2596-u4-effective-input-setpoint",
+        "fact-lm2596-u4-absmax-margin",
+        "fact-lm2596-u4-operating-margin"
+      ],
+      "blocking_fact_ids": [
+        "fact-lm2596-u4-effective-input",
+        "fact-lm2596-u4-effective-input-setpoint",
+        "fact-lm2596-u4-absmax-margin",
+        "fact-lm2596-u4-operating-margin"
+      ]
+    },
+    {
+      "coverage_id": "cov-lm2596-thermal",
+      "record_id": "rec-lm2596s-adj-c347423",
+      "domain": "thermal-on-project-pcb",
+      "status": "OPEN",
+      "reason": "datasheet thetaJA values assume specific 1 oz copper test areas; the board-b layout does not exist yet, so the real dissipation envelope for U2/U3/U4 needs layout data and bench thermals",
+      "fact_ids": [
+        "fact-lm2596-thermal"
+      ],
+      "blocking_fact_ids": [
+        "fact-lm2596-thermal"
+      ]
+    }
+  ]
+}

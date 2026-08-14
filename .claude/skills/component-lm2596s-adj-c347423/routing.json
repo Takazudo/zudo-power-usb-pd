@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "routes": [
+    {
+      "route_id": "route-lm2596s-adj",
+      "record_id": "rec-lm2596s-adj-c347423",
+      "aliases": {
+        "mpn": [
+          "LM2596S-ADJ"
+        ],
+        "lcsc": [
+          "C347423"
+        ],
+        "manufacturer": [
+          "UMW"
+        ],
+        "function": [
+          "adjustable step-down buck converter",
+          "inverting buck-boost converter"
+        ]
+      },
+      "positive": [
+        "LM2596S-ADJ inverting stress margin",
+        "audit C347423"
+      ],
+      "negative": [
+        "LM2576S-ADJ buck setpoint",
+        "audit C347447"
+      ]
+    }
+  ]
+}

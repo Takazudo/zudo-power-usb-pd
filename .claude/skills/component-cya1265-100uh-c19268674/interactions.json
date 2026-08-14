@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "interactions": [
+    {
+      "interaction_id": "int-cya1265-ripple-margins",
+      "record_ids": ["rec-cya1265-100uh-c19268674"],
+      "fact_ids": ["fact-cya1265-ripple-13v5", "fact-cya1265-ripple-7v5", "fact-cya1265-ripple-neg13v5"],
+      "conditions": "L1/L2/L3 as the three LM2596S-ADJ DC-DC converter inductors (+13.5V, +7.5V, -13.5V rails): computed ripple current margin against the Isat/Idc ratings",
+      "verdict": "PASS - primary-source confirmed"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "skill": "component-l7805abd2t-c86206",
+  "records": [
+    {
+      "record_id": "rec-l7805abd2t-c86206",
+      "line_id": "line-c86206",
+      "candidate_id": null,
+      "kind": "standalone",
+      "parent_record_id": null,
+      "mpn": "L7805ABD2T",
+      "manufacturer": "ST (STMicroelectronics)",
+      "lcsc": "C86206",
+      "package": "TO-263-2_L10.0-W9.2-P5.08-LS15.3-TL-CW",
+      "source_ids": [
+        "src-l7805abd2t-ds0422-identity",
+        "src-l7805abd2t-ds0422-pinout",
+        "src-l7805abd2t-ds0422-absmax",
+        "src-l7805abd2t-ds0422-thermal",
+        "src-l7805abd2t-ds0422-elec",
+        "src-l7805abd2t-ds0422-appinfo",
+        "src-l7805abd2t-project-rail",
+        "src-l7805abd2t-project-rating"
+      ],
+      "fact_ids": [
+        "fact-l7805abd2t-manufacturer",
+        "fact-l7805abd2t-order-code",
+        "fact-l7805abd2t-pinout",
+        "fact-l7805abd2t-vin-absmax",
+        "fact-l7805abd2t-tj-op-range",
+        "fact-l7805abd2t-rthjc",
+        "fact-l7805abd2t-rthja",
+        "fact-l7805abd2t-vout-25c",
+        "fact-l7805abd2t-vout-band",
+        "fact-l7805abd2t-dropout-typ-1a",
+        "fact-l7805abd2t-dropout-05a",
+        "fact-l7805abd2t-vin-rail",
+        "fact-l7805abd2t-iout-rating",
+        "fact-l7805abd2t-headroom",
+        "fact-l7805abd2t-cap-input",
+        "fact-l7805abd2t-cap-output"
+      ],
+      "interaction_ids": ["int-l7805abd2t-dropout-headroom"],
+      "open_domains": ["dropout-operating-point"]
+    }
+  ]
+}

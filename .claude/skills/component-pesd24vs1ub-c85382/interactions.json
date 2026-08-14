@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "interactions": [
+    {
+      "interaction_id": "int-pesd24vs1ub-cc-provision",
+      "record_ids": [
+        "rec-pesd24vs1ub-c85382"
+      ],
+      "fact_ids": [
+        "fact-pesd24vs1ub-dnp-provision"
+      ],
+      "conditions": "board-a D6/D7 CC-line ESD provision: the parts are registered and footprint-provisioned but DNP; the fitting decision, and the protection-effectiveness judgment of the 24 V standoff / 36 V at 1 A clamp against the CC pins, belong to the decision and bench waves",
+      "verdict": "NEEDS BENCH"
+    }
+  ]
+}

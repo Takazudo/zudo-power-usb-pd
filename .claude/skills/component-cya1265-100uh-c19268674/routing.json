@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "routes": [
+    {
+      "route_id": "route-cya1265-100uh-c19268674",
+      "record_id": "rec-cya1265-100uh-c19268674",
+      "aliases": {
+        "mpn": ["CYA1265-100UH"],
+        "lcsc": ["C19268674"],
+        "manufacturer": ["SHOU HAN"],
+        "function": ["power inductor"]
+      },
+      "positive": ["check CYA1265-100UH pinout", "audit C19268674"],
+      "negative": ["check CYA1250-10UH pinout"]
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "skill": "component-ptc-smd1210p200tf-c20808",
+  "records": [
+    {
+      "record_id": "rec-ptc-smd1210p200tf-c20808",
+      "line_id": null,
+      "candidate_id": "cand-ptc-smd1210p200tf-c20808",
+      "kind": "standalone",
+      "parent_record_id": null,
+      "mpn": "SMD1210P200TF",
+      "manufacturer": "RUILON",
+      "lcsc": "C20808",
+      "package": "F1210",
+      "source_ids": [
+        "src-ptc1-smd1210-datasheet"
+      ],
+      "fact_ids": [
+        "fact-ptc1-manufacturer",
+        "fact-ptc1-ihold",
+        "fact-ptc1-itrip",
+        "fact-ptc1-vmax",
+        "fact-ptc1-imax",
+        "fact-ptc1-pd-typ",
+        "fact-ptc1-time-to-trip",
+        "fact-ptc1-rimin",
+        "fact-ptc1-r1max",
+        "fact-ptc1-temperature",
+        "fact-ptc1-surface-temperature",
+        "fact-ptc1-hold-85c",
+        "fact-ptc1-cycling",
+        "fact-ptc1-ihold-margin",
+        "fact-ptc1-vmax-margin"
+      ],
+      "interaction_ids": [
+        "int-ptc1-12v-rail-protection"
+      ],
+      "open_domains": [
+        "fault-current-ambient-and-cycling"
+      ]
+    },
+    {
+      "record_id": "rec-ptc-smd1210p150tf16-c7529589",
+      "line_id": "line-c7529589",
+      "candidate_id": null,
+      "kind": "standalone",
+      "parent_record_id": null,
+      "mpn": "SMD1210P150TF/16",
+      "manufacturer": "RUILON",
+      "lcsc": "C7529589",
+      "package": "F1210",
+      "source_ids": [
+        "src-ptc1b-smd1210-datasheet"
+      ],
+      "fact_ids": [
+        "fact-ptc1b-manufacturer",
+        "fact-ptc1b-ihold",
+        "fact-ptc1b-itrip",
+        "fact-ptc1b-vmax",
+        "fact-ptc1b-ihold-margin",
+        "fact-ptc1b-vmax-margin",
+        "fact-ptc1b-hold-85c"
+      ],
+      "interaction_ids": [],
+      "open_domains": [
+        "hold-derating-and-fault-duty"
+      ]
+    }
+  ]
+}

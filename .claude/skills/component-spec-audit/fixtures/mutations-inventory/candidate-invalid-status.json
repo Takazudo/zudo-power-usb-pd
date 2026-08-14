@@ -1,0 +1,9 @@
+{
+  "mutation": "candidate invalid status",
+  "base": "candidates",
+  "note": "Candidate status vocabulary is closed, so an adopted-sounding free-text status cannot imply a design decision that never happened.",
+  "target": "candidates.cand-fixture-tvs-replacement.status",
+  "from": "SHORTLISTED",
+  "to": "ADOPTED",
+  "expected_error": "candidate status"
+}

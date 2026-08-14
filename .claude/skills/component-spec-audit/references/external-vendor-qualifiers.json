@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "contract": "Vendor names that a prompt may plausibly attach to one of this project's MPNs. A vendor-looking qualifier that does not match the resolved line's own manufacturer fails routing closed instead of silently answering about a same-name part from another vendor. Listing a name that is also a project manufacturer is harmless; omitting a plausible one is the risk, so extend this list whenever a new second-source vendor becomes plausible for a BOM line.",
+  "vendor_names": [
+    "Texas Instruments",
+    "onsemi",
+    "STMicroelectronics",
+    "Diodes Incorporated",
+    "Nexperia",
+    "Vishay",
+    "Toshiba",
+    "Infineon Technologies",
+    "Alpha and Omega Semiconductor (AOS)",
+    "Littelfuse",
+    "Bourns",
+    "Murata",
+    "DEALON"
+  ]
+}

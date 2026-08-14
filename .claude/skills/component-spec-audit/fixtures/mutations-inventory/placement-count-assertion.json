@@ -1,0 +1,9 @@
+{
+  "mutation": "placement count assertion",
+  "base": "inventory",
+  "note": "Placement-granular assertions are the staged-mode guard: with no generator specs present the reviewed fitted/DNP placement counts are the only thing that still catches a silent DNP edit.",
+  "target": "assertions.dnp_placements",
+  "from": 2,
+  "to": 3,
+  "expected_error": "DNP placement count differs from reviewed assertion"
+}

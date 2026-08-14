@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "coverage": [
+    {
+      "coverage_id": "cov-faston-identity",
+      "record_id": "rec-faston-c591344",
+      "domain": "orderable MPN identity (LCSC C591344 = TE 63951-1)",
+      "status": "COVERED",
+      "reason": "LCSC's own distributor catalog page names MPN 63951-1 for C591344, matching the schematic Value field and the v0.4.0 as-ordered BOM row exactly, so the CONFIRMED distributor-identity lane closes this domain",
+      "fact_ids": [
+        "fact-faston-lcsc-identity"
+      ],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-faston-alias",
+      "record_id": "rec-faston-c591344",
+      "domain": "KiCad symbol/footprint naming alias (1217754-1 / LCSC C305825)",
+      "status": "OPEN",
+      "reason": "the alias identity (1217754-1/C305825) rests on an LCSC distributor catalog page only; no manufacturer-primary source was retrievable for either MPN (te.com blocked, 403), so the mismatch is documented but stays UNSOURCED at primary level",
+      "fact_ids": [
+        "fact-faston-manufacturer",
+        "fact-faston-1217754-1-alias-identity",
+        "fact-faston-symbol-lcsc-mismatch"
+      ],
+      "blocking_fact_ids": [
+        "fact-faston-manufacturer",
+        "fact-faston-1217754-1-alias-identity",
+        "fact-faston-symbol-lcsc-mismatch"
+      ]
+    },
+    {
+      "coverage_id": "cov-faston-electrical",
+      "record_id": "rec-faston-c591344",
+      "domain": "electrical ratings vs the +12V/1.2A, +5V/0.5A, -12V/0.8A rail current budgets",
+      "status": "OPEN",
+      "reason": "the 20 A FASTON .250-series current rating is a mirror-hosted, series-level figure (not broken out per exact MPN) with no manufacturer-primary confirmation, so the J6/J7/J8 margin calculations stay nominal until a bench/thermal check",
+      "fact_ids": [
+        "fact-faston-current-rating-family",
+        "fact-faston-plus12v-rail-current",
+        "fact-faston-minus12v-rail-current",
+        "fact-faston-plus5v-rail-current",
+        "fact-faston-j7-plus12v-margin",
+        "fact-faston-j6-minus12v-margin",
+        "fact-faston-j8-plus5v-margin"
+      ],
+      "blocking_fact_ids": [
+        "fact-faston-current-rating-family",
+        "fact-faston-plus12v-rail-current",
+        "fact-faston-minus12v-rail-current",
+        "fact-faston-plus5v-rail-current",
+        "fact-faston-j7-plus12v-margin",
+        "fact-faston-j6-minus12v-margin",
+        "fact-faston-j8-plus5v-margin"
+      ]
+    },
+    {
+      "coverage_id": "cov-faston-mechanical",
+      "record_id": "rec-faston-c591344",
+      "domain": "mechanical form and THT retention",
+      "status": "OPEN",
+      "reason": "tab/hole dimensions come from the mirror-hosted spec only, and retention under repeated field-cable insertion force has no printed pull-out spec, so both need a bench pull-test before production use",
+      "fact_ids": [
+        "fact-faston-tab-dimensions",
+        "fact-faston-thru-hole-retention"
+      ],
+      "blocking_fact_ids": [
+        "fact-faston-tab-dimensions",
+        "fact-faston-thru-hole-retention"
+      ]
+    },
+    {
+      "coverage_id": "cov-faston-connectivity",
+      "record_id": "rec-faston-c591344",
+      "domain": "rail assignment and board-b baseline connectivity",
+      "status": "OPEN",
+      "reason": "the doc-level rail-assignment table is not promoted into the Ref.Pin-granularity board-b.json baseline, which explicitly lists J6-J9's nets as unresolved pending an exact net-table entry",
+      "fact_ids": [
+        "fact-faston-rail-assignment",
+        "fact-faston-baseline-unresolved"
+      ],
+      "blocking_fact_ids": [
+        "fact-faston-rail-assignment",
+        "fact-faston-baseline-unresolved"
+      ]
+    }
+  ]
+}

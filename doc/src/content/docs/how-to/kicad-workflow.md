@@ -5,6 +5,106 @@ sidebar_position: 2
 
 Complete workflow for creating a PCB design in KiCad, from schematic to manufacturing files.
 
+<Warning title="This page's Stage 1-2 hand-drawing workflow is for the legacy root project only">
+
+Board A and Board B (`boards/board-a/`, `boards/board-b/`) are **not** drawn by hand in
+KiCad's Schematic Editor — see [Spec-driven schematic generation](#spec-driven-schematic-generation-boards-board-a--board-b)
+directly below. The rest of this page (Stage 1: Symbol Management through Stage 2:
+Schematic Creation) describes the manual workflow used for the **legacy root project**
+(`zudo-pd.kicad_pro` / `zudo-pd.kicad_sch` and its sub-sheets) — the as-built v4
+reference, which stays hand-edited. Stage 3 onward (footprint assignment, PCB layout,
+manufacturing outputs, JLCPCB ordering) applies once a board has a schematic, regardless
+of whether that schematic was hand-drawn or generated, and is not yet exercised for
+Board A/B since neither has a PCB layout.
+
+</Warning>
+
+## Spec-driven schematic generation (`boards/board-a` / `boards/board-b`)
+
+Board A and Board B schematics are generated from a Python **spec module** by the
+`schgen` toolchain — the spec module (`scripts/schgen/board_a_spec.py` /
+`board_b_spec.py`) is the source of truth; the `.kicad_sch` file it produces is a build
+artifact. Never hand-edit `boards/board-a/board-a.kicad_sch` or
+`boards/board-b/board-b.kicad_sch` directly — edit the spec module and regenerate.
+
+### 1. Edit the spec module
+
+Each spec module defines three tables: `COMPONENTS` (ref → symbol/value/LCSC/footprint/
+DNP/position), `NETS` (net name → list of `Ref.Pin` tokens), and `NO_CONNECT` (pins
+explicitly left unconnected). Add/move a component, change a net, or add a no-connect by
+editing these tables — not the generated schematic.
+
+### 2. Regenerate the schematic
+
+```bash
+python3 scripts/schgen/gen_schematic.py board_a_spec   # or board_b_spec
+```
+
+The argument is an importable **module name** (`board_a_spec`), not a file path — there
+is no `--help`. This rewrites `boards/<board>/<board>.kicad_sch` in place. No KiCad
+install is required for this step; `gen_schematic.py` only depends on the
+dependency-free `sexp.py` s-expression parser.
+
+### 3. Verify against a real netlist export (requires local KiCad)
+
+```bash
+scripts/schgen/verify.sh board-a   # or board-b
+```
+
+This runs `kicad-cli sch export netlist` on the regenerated schematic, then diffs the
+result against the spec module's `NETS`/`NO_CONNECT` tables via `verify_netlist.py`,
+printing `PASS`/`FAIL`. It degrades gracefully (prints `SKIPPED`, exits 0) when
+`kicad-cli` is not on `PATH` — this is a local-only check; CI has no KiCad install.
+
+### 4. Check the decision lock and the connectivity baseline (offline, no KiCad needed)
+
+```bash
+python3 scripts/schgen/check_decisions.py    # validates scripts/schgen/decisions.json
+
+# diff each spec's NETS against its locked baseline (with the allow-list of
+# intentional deltas) — the same invocations CI runs:
+python3 scripts/schgen/check_baseline.py scripts/schgen/board_a_spec.py scripts/schgen/baselines/board-a.json --allow scripts/schgen/baselines/board-a-allowed-deltas.json
+python3 scripts/schgen/check_baseline.py scripts/schgen/board_b_spec.py scripts/schgen/baselines/board-b.json --allow scripts/schgen/baselines/board-b-allow.json
+```
+
+`decisions.json` is the machine-consumable record of every wave-6 component-level
+decision (part swaps, provisions, dispositions) the spec modules must implement, with
+rationale and fact-ID evidence per decision — see
+[Spec-Architecture Review](../inbox/spec-architecture-review.md) for the full findings
+these decisions resolve. `check_baseline.py` diffs a spec module's `NETS` table against
+its recorded connectivity baseline (`scripts/schgen/baselines/board-a.json` /
+`board-b.json`) plus an explicit allow-list of intentional deltas, so an accidental net
+change during a spec edit fails loudly instead of silently drifting.
+
+### 5. Open in KiCad and commit together
+
+Open the regenerated schematic in KiCad's Eeschema at least once (ERC, visual sanity)
+before committing. **Commit the spec module and the regenerated `.kicad_sch` together —
+never one without the other**, so a regen-from-clean leaves `boards/` unchanged (the
+regen-idempotency invariant CI enforces today on every PR — see
+`scripts/schgen/README.md`, "What CI checks").
+
+### Smoke-testing the generator itself
+
+After touching `schgen_core.py` or `sexp.py` (not a spec module), sanity-check the
+generator with:
+
+```bash
+bash scripts/schgen/run_smoke_test.sh
+```
+
+This regenerates a throwaway 3-component test spec into a temp directory (never touches
+the repo tree) and asserts the emitted net labels match the spec — no pip installs, no
+KiCad, stock `python3` only.
+
+Full reference: `scripts/schgen/README.md`.
+
+## Legacy manual workflow (root-level KiCad project only)
+
+The stages below describe hand-drawing the root project's schematic and PCB
+(`zudo-pd.kicad_pro` and its sub-sheets) directly in KiCad's GUI. This is how the v1–v4
+as-built boards were designed; it does not apply to `boards/board-a`/`boards/board-b`.
+
 ## Prerequisites
 
 **CRITICAL:** Before starting, ensure your KiCad project files are located at the repository root:
@@ -539,6 +639,10 @@ After completing the KiCad workflow:
 
 ## References
 
+- `scripts/schgen/README.md` — full spec-driven regen/verify workflow reference
+- [Spec-Architecture Review](../inbox/spec-architecture-review.md) and
+  `scripts/schgen/decisions.json` — the evidence review and locked decision set the
+  spec modules implement
 - [KiCad Documentation](https://docs.kicad.org/)
 - [KiCad Parts Download Guide](./kicad-parts-download.md)
 - [JLCPCB SMT Assembly](https://jlcpcb.com/smt-assembly)

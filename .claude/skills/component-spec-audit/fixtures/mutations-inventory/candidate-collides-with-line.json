@@ -1,0 +1,9 @@
+{
+  "mutation": "candidate collides with placed line",
+  "base": "candidates",
+  "note": "A candidate is by definition unplaced. Reusing a placed LCSC would put one orderable in two parity systems at once.",
+  "target": "candidates.cand-fixture-tvs-replacement.lcsc",
+  "from": "C900003",
+  "to": "C23186",
+  "expected_error": "duplicates a placed inventory line"
+}

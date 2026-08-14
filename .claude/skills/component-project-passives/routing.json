@@ -1,0 +1,580 @@
+{
+  "schema_version": 1,
+  "routes": [
+    {
+      "route_id": "route-c25803",
+      "record_id": "rec-c25803",
+      "aliases": {
+        "mpn": [
+          "0603WAF1003T5E"
+        ],
+        "lcsc": [
+          "C25803"
+        ],
+        "manufacturer": [
+          "UNI-ROYAL"
+        ],
+        "function": [
+          "resistor"
+        ]
+      },
+      "positive": [
+        "0603WAF1003T5E",
+        "C25803",
+        "UNI-ROYAL 0603WAF1003T5E",
+        "resistor 0603WAF1003T5E"
+      ],
+      "negative": "0603WAF1003T5E C999999"
+    },
+    {
+      "route_id": "route-c23206",
+      "record_id": "rec-c23206",
+      "aliases": {
+        "mpn": [
+          "0603WAF5602T5E"
+        ],
+        "lcsc": [
+          "C23206"
+        ],
+        "manufacturer": [
+          "UNI-ROYAL"
+        ],
+        "function": [
+          "resistor"
+        ]
+      },
+      "positive": [
+        "0603WAF5602T5E",
+        "C23206",
+        "UNI-ROYAL 0603WAF5602T5E",
+        "resistor 0603WAF5602T5E"
+      ],
+      "negative": "0603WAF5602T5E C999999"
+    },
+    {
+      "route_id": "route-c23179",
+      "record_id": "rec-c23179",
+      "aliases": {
+        "mpn": [
+          "0603WAF4700T5E"
+        ],
+        "lcsc": [
+          "C23179"
+        ],
+        "manufacturer": [
+          "UNI-ROYAL"
+        ],
+        "function": [
+          "resistor"
+        ]
+      },
+      "positive": [
+        "0603WAF4700T5E",
+        "C23179",
+        "UNI-ROYAL 0603WAF4700T5E",
+        "resistor 0603WAF4700T5E"
+      ],
+      "negative": "0603WAF4700T5E C999999"
+    },
+    {
+      "route_id": "route-c23162",
+      "record_id": "rec-c23162",
+      "aliases": {
+        "mpn": [
+          "0603WAF4701T5E"
+        ],
+        "lcsc": [
+          "C23162"
+        ],
+        "manufacturer": [
+          "UNI-ROYAL"
+        ],
+        "function": [
+          "resistor"
+        ]
+      },
+      "positive": [
+        "0603WAF4701T5E",
+        "C23162",
+        "UNI-ROYAL 0603WAF4701T5E",
+        "resistor 0603WAF4701T5E"
+      ],
+      "negative": "0603WAF4701T5E C999999"
+    },
+    {
+      "route_id": "route-c25804",
+      "record_id": "rec-c25804",
+      "aliases": {
+        "mpn": [
+          "0603WAF1002T5E"
+        ],
+        "lcsc": [
+          "C25804"
+        ],
+        "manufacturer": [
+          "UNI-ROYAL"
+        ],
+        "function": [
+          "resistor"
+        ]
+      },
+      "positive": [
+        "0603WAF1002T5E",
+        "C25804",
+        "UNI-ROYAL 0603WAF1002T5E",
+        "resistor 0603WAF1002T5E"
+      ],
+      "negative": "0603WAF1002T5E C999999"
+    },
+    {
+      "route_id": "route-c21190",
+      "record_id": "rec-c21190",
+      "aliases": {
+        "mpn": [
+          "0603WAF1001T5E"
+        ],
+        "lcsc": [
+          "C21190"
+        ],
+        "manufacturer": [
+          "UNI-ROYAL"
+        ],
+        "function": [
+          "resistor"
+        ]
+      },
+      "positive": [
+        "0603WAF1001T5E",
+        "C21190",
+        "UNI-ROYAL 0603WAF1001T5E",
+        "resistor 0603WAF1001T5E"
+      ],
+      "negative": "0603WAF1001T5E C999999"
+    },
+    {
+      "route_id": "route-c17513",
+      "record_id": "rec-c17513",
+      "aliases": {
+        "mpn": [
+          "0805W8F1001T5E"
+        ],
+        "lcsc": [
+          "C17513"
+        ],
+        "manufacturer": [
+          "UNI-ROYAL"
+        ],
+        "function": [
+          "resistor"
+        ]
+      },
+      "positive": [
+        "0805W8F1001T5E",
+        "C17513",
+        "UNI-ROYAL 0805W8F1001T5E",
+        "resistor 0805W8F1001T5E"
+      ],
+      "negative": "0805W8F1001T5E C999999"
+    },
+    {
+      "route_id": "route-c23186",
+      "record_id": "rec-c23186",
+      "aliases": {
+        "mpn": [
+          "0603WAF5101T5E"
+        ],
+        "lcsc": [
+          "C23186"
+        ],
+        "manufacturer": [
+          "UNI-ROYAL"
+        ],
+        "function": [
+          "resistor"
+        ]
+      },
+      "positive": [
+        "0603WAF5101T5E",
+        "C23186",
+        "UNI-ROYAL 0603WAF5101T5E",
+        "resistor 0603WAF5101T5E"
+      ],
+      "negative": "0603WAF5101T5E C999999"
+    },
+    {
+      "route_id": "route-c21189",
+      "record_id": "rec-c21189",
+      "aliases": {
+        "mpn": [
+          "0603WAF0000T5E"
+        ],
+        "lcsc": [
+          "C21189"
+        ],
+        "manufacturer": [
+          "UNI-ROYAL"
+        ],
+        "function": [
+          "jumper"
+        ]
+      },
+      "positive": [
+        "0603WAF0000T5E",
+        "C21189",
+        "UNI-ROYAL 0603WAF0000T5E",
+        "jumper 0603WAF0000T5E"
+      ],
+      "negative": "0603WAF0000T5E C999998"
+    },
+    {
+      "route_id": "route-c13585",
+      "record_id": "rec-c13585",
+      "aliases": {
+        "mpn": [
+          "CL31A106KBHNNNE"
+        ],
+        "lcsc": [
+          "C13585"
+        ],
+        "manufacturer": [
+          "Samsung Electro-Mechanics"
+        ],
+        "function": [
+          "ceramic capacitor"
+        ]
+      },
+      "positive": [
+        "CL31A106KBHNNNE",
+        "C13585",
+        "Samsung Electro-Mechanics CL31A106KBHNNNE",
+        "ceramic capacitor CL31A106KBHNNNE"
+      ],
+      "negative": "CL31A106KBHNNNE C999997"
+    },
+    {
+      "route_id": "route-c15849",
+      "record_id": "rec-c15849",
+      "aliases": {
+        "mpn": [
+          "CL10A105KB8NNNC"
+        ],
+        "lcsc": [
+          "C15849"
+        ],
+        "manufacturer": [
+          "Samsung Electro-Mechanics"
+        ],
+        "function": [
+          "ceramic capacitor"
+        ]
+      },
+      "positive": [
+        "CL10A105KB8NNNC",
+        "C15849",
+        "Samsung Electro-Mechanics CL10A105KB8NNNC",
+        "ceramic capacitor CL10A105KB8NNNC"
+      ],
+      "negative": "CL10A105KB8NNNC C999997"
+    },
+    {
+      "route_id": "route-c1711",
+      "record_id": "rec-c1711",
+      "aliases": {
+        "mpn": [
+          "CC0805KRX7R9BB104"
+        ],
+        "lcsc": [
+          "C1711"
+        ],
+        "manufacturer": [
+          "YAGEO"
+        ],
+        "function": [
+          "ceramic capacitor"
+        ]
+      },
+      "positive": [
+        "CC0805KRX7R9BB104",
+        "C1711",
+        "YAGEO CC0805KRX7R9BB104",
+        "ceramic capacitor CC0805KRX7R9BB104"
+      ],
+      "negative": "CC0805KRX7R9BB104 C999997"
+    },
+    {
+      "route_id": "route-c1623",
+      "record_id": "rec-c1623",
+      "aliases": {
+        "mpn": [
+          "CL10B474KA8NNNC"
+        ],
+        "lcsc": [
+          "C1623"
+        ],
+        "manufacturer": [
+          "Samsung Electro-Mechanics"
+        ],
+        "function": [
+          "ceramic capacitor"
+        ]
+      },
+      "positive": [
+        "CL10B474KA8NNNC",
+        "C1623",
+        "Samsung Electro-Mechanics CL10B474KA8NNNC",
+        "ceramic capacitor CL10B474KA8NNNC"
+      ],
+      "negative": "CL10B474KA8NNNC C999997"
+    },
+    {
+      "route_id": "route-c1729",
+      "record_id": "rec-c1729",
+      "aliases": {
+        "mpn": [
+          "CL21B223KBANNNC"
+        ],
+        "lcsc": [
+          "C1729"
+        ],
+        "manufacturer": [
+          "Samsung Electro-Mechanics"
+        ],
+        "function": [
+          "ceramic capacitor"
+        ]
+      },
+      "positive": [
+        "CL21B223KBANNNC",
+        "C1729",
+        "Samsung Electro-Mechanics CL21B223KBANNNC",
+        "ceramic capacitor CL21B223KBANNNC"
+      ],
+      "negative": "CL21B223KBANNNC C999997"
+    },
+    {
+      "route_id": "route-c2983319",
+      "record_id": "rec-c2983319",
+      "aliases": {
+        "mpn": [
+          "GVT1E477M0810CNVC"
+        ],
+        "lcsc": [
+          "C2983319"
+        ],
+        "manufacturer": [
+          "HRK"
+        ],
+        "function": [
+          "electrolytic capacitor"
+        ]
+      },
+      "positive": [
+        "GVT1E477M0810CNVC",
+        "C2983319",
+        "HRK GVT1E477M0810CNVC",
+        "electrolytic capacitor GVT1E477M0810CNVC"
+      ],
+      "negative": "GVT1E477M0810CNVC C999996"
+    },
+    {
+      "route_id": "route-c22383803",
+      "record_id": "rec-c22383803",
+      "aliases": {
+        "mpn": [
+          "RVT1C471M0607"
+        ],
+        "lcsc": [
+          "C22383803"
+        ],
+        "manufacturer": [
+          "ACMECON"
+        ],
+        "function": [
+          "electrolytic capacitor"
+        ]
+      },
+      "positive": [
+        "RVT1C471M0607",
+        "C22383803",
+        "ACMECON RVT1C471M0607",
+        "electrolytic capacitor RVT1C471M0607"
+      ],
+      "negative": "RVT1C471M0607 C999995"
+    },
+    {
+      "route_id": "route-c22383804",
+      "record_id": "rec-c22383804",
+      "aliases": {
+        "mpn": [
+          "RVT1E101M0607"
+        ],
+        "lcsc": [
+          "C22383804"
+        ],
+        "manufacturer": [
+          "ACMECON"
+        ],
+        "function": [
+          "electrolytic capacitor"
+        ]
+      },
+      "positive": [
+        "RVT1E101M0607",
+        "C22383804",
+        "ACMECON RVT1E101M0607",
+        "electrolytic capacitor RVT1E101M0607"
+      ],
+      "negative": "RVT1E101M0607 C999994"
+    },
+    {
+      "route_id": "route-c970687",
+      "record_id": "rec-c970687",
+      "aliases": {
+        "mpn": [
+          "RVT1H101M0810"
+        ],
+        "lcsc": [
+          "C970687"
+        ],
+        "manufacturer": [
+          "DMBJ"
+        ],
+        "function": [
+          "electrolytic capacitor"
+        ]
+      },
+      "positive": [
+        "RVT1H101M0810",
+        "C970687",
+        "DMBJ RVT1H101M0810",
+        "electrolytic capacitor RVT1H101M0810"
+      ],
+      "negative": "RVT1H101M0810 C999993"
+    },
+    {
+      "route_id": "route-c22387780",
+      "record_id": "rec-c22387780",
+      "aliases": {
+        "mpn": [
+          "EFVH035ADA471M10B0"
+        ],
+        "lcsc": [
+          "C22387780"
+        ],
+        "manufacturer": [
+          "FOLLON"
+        ],
+        "function": [
+          "electrolytic capacitor"
+        ]
+      },
+      "positive": [
+        "EFVH035ADA471M10B0",
+        "C22387780",
+        "FOLLON EFVH035ADA471M10B0",
+        "electrolytic capacitor EFVH035ADA471M10B0"
+      ],
+      "negative": "EFVH035ADA471M10B0 C999992"
+    },
+    {
+      "route_id": "route-c2289",
+      "record_id": "rec-c2289",
+      "aliases": {
+        "mpn": [
+          "KT-0603YG"
+        ],
+        "lcsc": [
+          "C2289"
+        ],
+        "manufacturer": [
+          "Hubei KENTO Elec"
+        ],
+        "function": [
+          "LED"
+        ]
+      },
+      "positive": [
+        "KT-0603YG",
+        "C2289",
+        "Hubei KENTO Elec KT-0603YG",
+        "LED KT-0603YG"
+      ],
+      "negative": "KT-0603YG C9999919"
+    },
+    {
+      "route_id": "route-c2288",
+      "record_id": "rec-c2288",
+      "aliases": {
+        "mpn": [
+          "KT-0603B"
+        ],
+        "lcsc": [
+          "C2288"
+        ],
+        "manufacturer": [
+          "Hubei KENTO Elec"
+        ],
+        "function": [
+          "LED"
+        ]
+      },
+      "positive": [
+        "KT-0603B",
+        "C2288",
+        "Hubei KENTO Elec KT-0603B",
+        "LED KT-0603B"
+      ],
+      "negative": "KT-0603B C9999918"
+    },
+    {
+      "route_id": "route-c2286",
+      "record_id": "rec-c2286",
+      "aliases": {
+        "mpn": [
+          "KT-0603R"
+        ],
+        "lcsc": [
+          "C2286"
+        ],
+        "manufacturer": [
+          "Hubei KENTO Elec"
+        ],
+        "function": [
+          "LED"
+        ]
+      },
+      "positive": [
+        "KT-0603R",
+        "C2286",
+        "Hubei KENTO Elec KT-0603R",
+        "LED KT-0603R"
+      ],
+      "negative": "KT-0603R C9999916"
+    },
+    {
+      "route_id": "route-c335982",
+      "record_id": "rec-c335982",
+      "aliases": {
+        "mpn": [
+          "RVT1A471M0607"
+        ],
+        "lcsc": [
+          "C335982"
+        ],
+        "manufacturer": [
+          "ROQANG"
+        ],
+        "function": [
+          "electrolytic capacitor"
+        ]
+      },
+      "positive": [
+        "RVT1A471M0607",
+        "C335982",
+        "ROQANG RVT1A471M0607",
+        "electrolytic capacitor RVT1A471M0607"
+      ],
+      "negative": "RVT1A471M0607 C999991"
+    }
+  ]
+}

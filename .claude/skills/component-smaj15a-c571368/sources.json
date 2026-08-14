@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "source_id": "src-smaj15a-hdiode-primary",
+      "record_id": "rec-smaj15a-c571368",
+      "document_title": "High Diode SMAJ series transient voltage suppressor diodes (SMAG plastic-encapsulate)",
+      "document_number": "SMAJ series",
+      "revision": "2025-06 site upload",
+      "document_date": "2025-06-10",
+      "authoritative_url": "http://www.h-diode.com/upload/202506/10/202506100145085933.pdf",
+      "alternate_authoritative_url": "https://datasheet.lcsc.com/datasheet/pdf/491c1abda5fbc387430efce58160a2e0.pdf",
+      "retrieval_date": "2026-08-14",
+      "authority_class": "MANUFACTURER_PRIMARY",
+      "sha256": "be81cafcbb6514e5bdd16cb45ebec1c7dea4f6f156063252d3f4fa3751b0e83f",
+      "availability": "AVAILABLE",
+      "physical_pdf_page_index": 1,
+      "printed_page_label": "2",
+      "locator": "Page 1 features/absolute-maximum table (PPPM 400 W at 10/1000 us, IFSM 40 A, TJ -55 to +150 C, 'Polarity: Color band denotes cathode end') and page 2 electrical characteristics table, exact SMAJ15A row",
+      "evidence_extract": "Official High Diode SMAJ-series PDF served from the manufacturer domain h-diode.com; the LCSC datasheet host mirrors the same family document (alternate URL). Page 2 electrical table, exact SMAJ15A row (columns Part/Part(C)/VBR min/VBR max/IT/IR/VWM/IPP/VC): VBR 16.7 to 18.5 V at IT 1.0 mA, IR 5.0 uA max at VWM, VWM (reverse standoff) 15.0 V, IPP 16.4 A, VC 24.4 V max on the 10/1000 us waveform. Page 1: PPPM 400 W at 10/1000 us, IFSM 40 A (8.3 ms single half sine, unidirectional only), TJ/TSTG -55 to +150 C, polarity color band denotes cathode end. SHA-256 equals the copy independently recorded by the zudo-led-lamp SMAJ20A owner bundle on 2026-08-02, cross-validating document integrity.",
+      "refresh_policy": "HASH-LOCKED"
+    },
+    {
+      "source_id": "src-smaj15a-lcsc-identity",
+      "record_id": "rec-smaj15a-c571368",
+      "document_title": "LCSC product page C571368 — SMAJ15A | TVS Diodes | High Diode | LCSC",
+      "document_number": "C571368",
+      "revision": "volatile web page (as retrieved)",
+      "document_date": "2026-08-14",
+      "authoritative_url": "https://www.lcsc.com/product-detail/C571368.html",
+      "alternate_authoritative_url": "https://datasheet.lcsc.com/datasheet/pdf/491c1abda5fbc387430efce58160a2e0.pdf",
+      "retrieval_date": "2026-08-14",
+      "authority_class": "DISTRIBUTOR_IDENTITY",
+      "sha256": "257d6eb600bdda083b0fb270c34ade2e67d7068b8d84f613dae5f08d395a6e1b",
+      "identity_extract_sha256": "f89785d60f4e9ee9cbcdc33ea0dcb72aa1f10d0f5e61a7d1f473a74414e73226",
+      "availability": "AVAILABLE",
+      "physical_pdf_page_index": 0,
+      "printed_page_label": "1",
+      "locator": "Product page title row 'SMAJ15A | TVS Diodes | High Diode | LCSC' and the stock row (1,980 in stock), retrieved 2026-08-14",
+      "evidence_extract": "LCSC product page binds exact orderable C571368 to High Diode SMAJ15A, package SMA, TVS diode category; listing reported 1,980 units in stock at the 2026-08-14 retrieval.",
+      "refresh_policy": "VOLATILE-HTML",
+      "refresh_note": "LCSC product page HTML is not deterministic (prices, stock, and page assets change per retrieval); only the canonical identity extract hash is locked. Stock counts are dated observations, not spec claims."
+    }
+  ]
+}

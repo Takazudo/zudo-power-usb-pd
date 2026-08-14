@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "interactions": [
+    {
+      "interaction_id": "int-ptc1-12v-rail-protection",
+      "record_ids": ["rec-ptc-smd1210p200tf-c20808"],
+      "fact_ids": ["fact-ptc1-ihold", "fact-ptc1-vmax", "fact-ptc1-ihold-margin"],
+      "conditions": "PTC1 as the board-b +12V output overcurrent-protection PPTC, downstream of U6 (L7812CD2T +12V LDO): current-hold margin against the +12V/1.2A rail budget is a healthy +0.8A (fact-ptc1-ihold-margin), but the part's own 6 VDC maximum voltage rating (fact-ptc1-vmax) is exceeded by the +12V nominal rail it sits on during ordinary, non-fault operation -- see fact-ptc1-vmax-margin for the calculated -6V deficit that drives this interaction's verdict.",
+      "verdict": "BLOCKER - deterministic spec violation"
+    }
+  ]
+}
