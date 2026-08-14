@@ -184,9 +184,10 @@ export const CIRCUIT_PUBLICATION_MATRIX: PublicationMatrix = {
   "reference.footprint.path": "PUBLISH",
 
   // Flipped from DENY, same precondition as `reference.footprint.path` above:
-  // `ui/component-references.tsx`'s `ModelCard`/`ResolvedModel` (a static
-  // "Open the VRML model" link, not the interactive WebGL viewer — that is a
-  // separate, later port) was already the emitter waiting on assets. Wave 7
+  // `ui/component-references.tsx`'s `ModelCard` was already the emitter waiting
+  // on assets — it now renders the interactive WebGL viewer
+  // (`ui/package-model-viewer.tsx`, wave 8) where it once rendered a static
+  // "Open the VRML model" link. Wave 7
   // (`footprints/kicad/zudo-pd.3dshapes/`) landed a reviewed `.wrl`/`.step`
   // pair for every package `easyeda2kicad` could supply against the central
   // inventory's LCSC ids (27 of 27 — see the wave-7 coverage manifest). A

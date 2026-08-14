@@ -35,13 +35,15 @@ import type { DocPageEntryProps, DocPageAutoIndexProps } from "../lib/doc-page-p
 import { buildDocRouteEntries } from "../lib/_doc-route-entries";
 import { renderDocPage } from "../lib/_doc-page-renderer";
 import { FootprintPreviewIsland } from "../../src/component-preview/footprint-preview-island.tsx";
+import { PackageModelViewerIsland } from "../../src/component-model-viewer/package-model-viewer-island.tsx";
 
 // zfb's island scanner follows this route's static import graph, not a
 // generated MDX record page's runtime component tree (`ComponentReferences`
-// -> `FootprintPreview` -> this island is reached only at render time).
-// Keeping the real client component reachable here registers the island the
-// generated record MDX renders.
+// -> `FootprintPreview` / `PackageModelViewer` -> these islands are reached
+// only at render time). Keeping the real client components reachable here
+// registers the islands the generated record MDX renders.
 void FootprintPreviewIsland;
+void PackageModelViewerIsland;
 
 export const frontmatter = { title: "Docs" };
 

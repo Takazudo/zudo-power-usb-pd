@@ -60,6 +60,7 @@ import { ComponentReferences } from "../component-docs/ui/component-references.t
 import { EvidenceAnchor } from "../component-docs/ui/evidence-anchor.tsx";
 import { EvidenceDetails } from "../component-docs/ui/evidence-details.tsx";
 import { EvidenceTable } from "../component-docs/ui/evidence-table.tsx";
+import { PackageModelViewer } from "../component-docs/ui/package-model-viewer.tsx";
 
 /**
  * MDX `<img>` override — rewrites root-relative src attributes to include the
@@ -325,6 +326,7 @@ export function createMdxComponents(lang: Locale | string = defaultLocale) {
     EvidenceAnchor,
     EvidenceDetails,
     EvidenceTable,
+    PackageModelViewer,
     // Admonitions — real typed Preact components (src/components/content/
     // content-admonition.tsx) emitting the `.admonition` / `data-admonition`
     // structure the design-system CSS targets. The `directives` map in

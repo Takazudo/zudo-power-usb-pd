@@ -13,12 +13,9 @@ export type FootprintPreviewProps = {
 /**
  * SSR-safe footprint preview with a static direct-link fallback.
  *
- * Ships without an enlarge dialog: led-lamp's `preview-enlarge-dialog.tsx`
- * imports `useModalDialog` / `ENLARGE_DIALOG_STYLE` / `AFTER_NAVIGATE_EVENT`
- * from `@takazudo/zudo-doc` subpaths that do not exist at the installed
- * `^0.2.9` here. A later sub-issue adds a hand-rolled native `<dialog>` for
- * both preview kinds; until then the figure plus the "Open SVG" link is the
- * whole affordance.
+ * The enlarge affordance is progressive: the SSR figure is a plain image
+ * inside a link to the SVG, and the hydrated island adds the enlarge trigger
+ * plus the shared `PreviewEnlargeDialog`.
  */
 export function FootprintPreview(props: FootprintPreviewProps) {
   return (

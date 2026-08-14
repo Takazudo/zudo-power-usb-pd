@@ -7,9 +7,11 @@
  * set covering a document, a footprint preview and a 3D model, so a record
  * missing any of the three cannot produce a valid descriptor at all.
  *
- * zudo-pd cannot meet that: `rec-c335982` has a single `DISTRIBUTOR_IDENTITY`
- * source and no manufacturer document, no footprint preview SVG has been
- * generated yet, and no reviewed `.wrl`/`.step` pair exists for any package.
+ * zudo-pd cannot meet that. `rec-c335982` has a single `DISTRIBUTOR_IDENTITY`
+ * source and no manufacturer document at all, and while waves 6 and 7 went on
+ * to resolve a footprint preview and a reviewed `.wrl`/`.step` pair for every
+ * package, that is a fact about today's corpus rather than a guarantee: a
+ * package `easyeda2kicad` cannot supply a model for still has to publish.
  * So each card here is `{ resolved: true, … }` or `{ resolved: false, reason }`
  * independently, and the exact-key-set discipline is kept per VARIANT rather
  * than dropped — an unresolved card still cannot smuggle in extra fields, and

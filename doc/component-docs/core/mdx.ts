@@ -50,6 +50,7 @@ export const ALLOWED_COMPONENT_ATTRIBUTES = {
   EvidenceDetails: ["label"],
   EvidenceTable: ["label"],
   ComponentReferences: ["descriptor"],
+  PackageModelViewer: ["descriptor"],
   CategoryNav: ["category"],
 } as const satisfies Record<string, readonly string[]>;
 

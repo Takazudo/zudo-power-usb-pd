@@ -152,7 +152,11 @@ describe("record page — structure", () => {
       const descriptor = decodeComponentReferencesDescriptor(tags[0]?.[1] ?? "");
       assert.equal(descriptor.footprint.name, String(record.reference.footprint.footprintName));
     }
-    // The viewer is a later port; nothing may emit its tag yet.
+    // The viewer reaches the page as a CHILD of `ComponentReferences`, never
+    // as its own MDX tag: the model descriptor travels inside the reference
+    // descriptor, so there is exactly one encoded payload per page. Its
+    // allow-list entry in `core/mdx.ts` is a guard against an emitter that
+    // ever changes that, not a licence for one to.
     assert.doesNotMatch(driverPage, /<PackageModelViewer\b/u);
   });
 
