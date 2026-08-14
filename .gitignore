@@ -45,6 +45,9 @@ env/
 # Temporary working directory (gitignored, use for working files)
 __inbox/
 
+# Source downloads for component-spec-audit --online refresh
+/tmp/
+
 # Git worktrees
 worktrees/
 

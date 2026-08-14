@@ -1,0 +1,9 @@
+{
+  "mutation": "line-level dnp",
+  "base": "inventory",
+  "note": "The pre-split shape put dnp on the line, which cannot represent a part that is DNP on one board and fitted on another. Reintroducing the key must fail outright.",
+  "target": "lines.line-c23186.dnp",
+  "from": null,
+  "to": true,
+  "expected_error": "line-level dnp"
+}

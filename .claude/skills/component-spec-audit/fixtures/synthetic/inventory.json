@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "note": "Synthetic inventory paired with the board_a_spec.py / board_b_spec.py fixtures. Not project evidence.",
+  "generator_specs": [
+    { "board": "board-a", "spec": "board_a_spec.py" },
+    { "board": "board-b", "spec": "board_b_spec.py" }
+  ],
+  "assertions": {
+    "orderable_lines": 3,
+    "fitted_lines": 3,
+    "dnp_or_hand_fit_lines": 1,
+    "fitted_placements": 4,
+    "dnp_placements": 2
+  },
+  "exclusions": [
+    {
+      "board": "board-a",
+      "refdes": "TP1",
+      "reason": "bare-copper test pad; no orderable/LCSC line"
+    }
+  ],
+  "lines": [
+    {
+      "line_id": "line-c23186",
+      "mpn": "0603WAF5101T5E",
+      "manufacturer": "UNI-ROYAL (Uniroyal Elec)",
+      "lcsc": "C23186",
+      "package": "R0603",
+      "owner_skill": "component-fixture-passives",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "5.1 kOhm resistor",
+      "placements": [
+        { "board": "board-a", "refdes": "R17", "dnp": true },
+        { "board": "board-a", "refdes": "R18", "dnp": true },
+        { "board": "board-b", "refdes": "R3", "dnp": false }
+      ]
+    },
+    {
+      "line_id": "line-c144397",
+      "mpn": "B6B-XH-A",
+      "manufacturer": "JST",
+      "lcsc": "C144397",
+      "package": "HDR-TH_6P-FIXTURE",
+      "owner_skill": "component-fixture-connector",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "board-to-board interface connector",
+      "placements": [
+        { "board": "board-a", "refdes": "J9", "dnp": false },
+        { "board": "board-b", "refdes": "J9", "dnp": false }
+      ]
+    },
+    {
+      "line_id": "line-c900002",
+      "mpn": "FIXTURE-TVS-20A",
+      "manufacturer": "Fixture Semiconductor",
+      "lcsc": "C900002",
+      "package": "SMA-FIXTURE",
+      "owner_skill": "component-fixture-tvs",
+      "identity_state": "UNRESOLVED",
+      "source_state": "SOURCE UNAVAILABLE",
+      "function": "synthetic TVS diode",
+      "placements": [{ "board": "board-b", "refdes": "D1", "dnp": false }]
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "note": "Synthetic replacement-candidate fixture paired with fixtures/synthetic/inventory.json. Not project evidence.",
+  "candidates": [
+    {
+      "candidate_id": "cand-fixture-tvs-replacement",
+      "mpn": "FIXTURE-TVS-24A",
+      "manufacturer": "Fixture Semiconductor",
+      "lcsc": "C900003",
+      "package": "SMA-FIXTURE",
+      "function": "synthetic TVS replacement candidate",
+      "owner_skill": "component-fixture-tvs",
+      "status": "SHORTLISTED",
+      "replaces_line_id": "line-c900002",
+      "rationale": "Synthetic shortlist entry proving an unplaced candidate carries evidence without joining the inventory."
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "mutation": "placement dnp fitted-to-dnp",
+  "base": "inventory",
+  "note": "The board-b R3 placement of C23186 is fitted while the board-a R17/R18 placements are DNP. Marking the fitted placement DNP must fail against the generator spec, which line-level DNP could not detect.",
+  "target": "lines.line-c23186.placements.2.dnp",
+  "from": false,
+  "to": true,
+  "expected_error": "board/refdes or DNP mismatch"
+}

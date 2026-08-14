@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "contract": "Every destructive-risk claim gets one foreground review plus one independent pass by a different reviewer, with a committed review log whose SHA-256 is locked here and a value/unit/evidence hash that fails on any silent edit. Empty until component bundles land; strict mode requires the reviewed domains listed in schema.json critical_review_domains.",
+  "reviews": [],
+  "independent_review_passes": [],
+  "fact_locks": []
+}

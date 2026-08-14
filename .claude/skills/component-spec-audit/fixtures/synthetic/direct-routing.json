@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "note": "Direct-routing fixture for the synthetic inventory. Not project evidence.",
+  "cases": [
+    { "line_id": "line-c23186", "negative": "0603WAF5100T5E C999011" },
+    { "line_id": "line-c144397", "negative": "B5B-XH-A C999014" },
+    { "line_id": "line-c900002", "negative": "FIXTURE-TVS-30A C999019" }
+  ]
+}

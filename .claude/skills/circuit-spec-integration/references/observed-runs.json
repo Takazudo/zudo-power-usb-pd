@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "provenance_note": "Observed Claude Code policy rendering/refusal after explicit /circuit-spec-integration invocation with a frozen evidence packet. Deterministic forward fixtures separately prove routing and evidence discovery; these runs do not claim independent model discovery of IDs.",
+  "runs": []
+}

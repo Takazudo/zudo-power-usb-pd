@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "contract": "One lock per committed pin map. canonical_sha256 locks the reviewed symbol/footprint/pin set, evidence_fact_ids cite same-record evidence, and trust_status must match that evidence: TRUSTED requires a primary-source-confirmed closure, UNSOURCED requires at least one UNSOURCED or unavailable-source fact. Empty until component bundles land; strict mode requires exact pin-map parity.",
+  "locks": []
+}

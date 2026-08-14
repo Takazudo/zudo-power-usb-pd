@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "contract": "Dated proof that an AVAILABLE source still hashes to its locked SHA-256 under the browser-like retrieval profile. Empty until component bundles land; strict mode requires at least one PROJECT_GENERATOR and one MANUFACTURER_PRIMARY example.",
+  "evidence": []
+}
