@@ -83,7 +83,7 @@
     {
       "case_id": "plus12-rail-power-on",
       "observed_run_id": "observed-plus12-rail-power-on",
-      "prompt": "Power on the +12 V output rail through the SMD1210P200TF C20808 polyfuse and certify the L7812CD2T C13456 and CJ7912 C94173 linear regulators deliver their rated output currents from the documented DC-DC intermediate rails.",
+      "prompt": "Power on the +12 V output rail through the SMD1210P150TF/16 C7529589 polyfuse and certify the L7812CD2T C13456 and CJ7912 C94173 linear regulators deliver their rated output currents from the documented DC-DC intermediate rails.",
       "expected_trigger_skill": "circuit-spec-integration",
       "expected_loaded_skills": [
         "component-spec-audit",
@@ -97,9 +97,9 @@
       ],
       "routing_queries": [
         {
-          "query": "SMD1210P200TF C20808",
+          "query": "SMD1210P150TF/16 C7529589",
           "expected_line_ids": [
-            "line-c20808"
+            "line-c7529589"
           ]
         },
         {
@@ -121,11 +121,11 @@
         "rec-l7812cd2t-c13456",
         "rec-ptc-bsmd1206-150-16v-c883133",
         "rec-ptc-msmd110-33v-c70119",
-        "rec-ptc-smd1210p200tf-c20808"
+        "rec-ptc-smd1210p150tf16-c7529589"
       ],
       "subordinate_record_ids": [],
       "required_source_ids": [
-        "src-ptc1-smd1210-datasheet",
+        "src-ptc1b-smd1210-datasheet",
         "src-ptc2-msmd110-datasheet",
         "src-ptc3-bsmd1206-datasheet",
         "src-l7812cd2t-ds0422-elec",
@@ -139,8 +139,10 @@
         "rule-ldo-dropout-chain"
       ],
       "required_fact_ids": [
-        "fact-ptc1-vmax",
-        "fact-ptc1-vmax-margin",
+        "fact-ptc1b-vmax",
+        "fact-ptc1b-vmax-margin",
+        "fact-ptc1b-ihold-margin",
+        "fact-ptc1b-hold-85c",
         "fact-ptc2-vmax-margin",
         "fact-ptc3-vmax-margin",
         "fact-l7812cd2t-vin-rail",
@@ -156,7 +158,7 @@
         "calc-ldo-cj7912-guarantee-shortfall"
       ],
       "expected_observed_conditions": [
-        "PTC1 6 VDC maximum on the +12 V rail is -6 V of margin, a deterministic primary-sourced BLOCKER whenever the fuse trips; PTC2/PTC3 voltage margins PASS",
+        "PTC1 (decision g replacement, SMD1210P150TF/16 C7529589) 16 VDC maximum on the +12 V rail is +4 V of margin, PASS; PTC2/PTC3 voltage margins also PASS; PTC1's 0.3 A hold margin has no retained 85 C derating row for the /16 variant",
         "L7812 headroom is 0.5 V short of its 2 V typical 1 A dropout and no 1.2 A dropout is specified",
         "CJ7912's -13.5 V input sits 1.0 V outside its -14.5 to -27 V guaranteed band; L7805 margin is typical-only"
       ],
@@ -169,7 +171,7 @@
     {
       "case_id": "q1-20v-nvm-mis-contract",
       "observed_run_id": "observed-q1-20v-nvm-mis-contract",
-      "prompt": "Reprogram the STUSB4500QTR C2678061 NVM to accept a 20 V PDO3 and prove the AO3401A C347476 load switch gate network and the SMAJ20A C571370 and SD05 C502527 protection chain keep every downstream absolute maximum safe.",
+      "prompt": "Reprogram the STUSB4500QTR C2678061 NVM to accept a 20 V PDO3 and prove the AO3401A C347476 load switch gate network and the SMAJ20A C571370 and SMAJ6.5A C87267 protection chain keep every downstream absolute maximum safe.",
       "expected_trigger_skill": "circuit-spec-integration",
       "expected_loaded_skills": [
         "component-spec-audit",
@@ -197,19 +199,19 @@
           ]
         },
         {
-          "query": "SD05 C502527",
+          "query": "SMAJ6.5A C87267",
           "expected_line_ids": [
-            "line-c502527"
+            "line-c87267"
           ]
         }
       ],
       "direct_record_ids": [
         "rec-c23206",
         "rec-c25803",
+        "rec-cand-smaj6-5a-c87267",
         "rec-high-diode-smaj20a-c571370",
         "rec-l7805abd2t-c86206",
         "rec-lm2596s-adj-c347423",
-        "rec-sd05-c502527",
         "rec-smaj15a-c571368",
         "rec-stusb4500qtr",
         "rec-umw-ao3401a-c347476"
@@ -222,7 +224,7 @@
         "src-stusb-ds12499-ratings",
         "src-smaj20a-c571370-primary",
         "src-smaj15a-hdiode-primary",
-        "src-sd05-mdd-primary",
+        "src-cand-smaj6-5a-brightking-primary",
         "src-l7805abd2t-ds0422-elec"
       ],
       "rule_ids": [
@@ -239,7 +241,8 @@
         "fact-high-diode-smaj20a-clamp",
         "fact-high-diode-smaj20a-standoff",
         "fact-smaj15a-margin-percent",
-        "fact-sd05-plus5-margin",
+        "fact-cand-smaj6-5a-plus5-margin",
+        "fact-cand-smaj6-5a-clamp",
         "fact-l7805abd2t-vout-band"
       ],
       "required_calculation_ids": [
@@ -248,12 +251,12 @@
         "calc-tvs-d5-clamp-vs-stusb-vdd",
         "calc-tvs-d5-clamp-vs-q1-vds",
         "calc-tvs-d5-standoff-vs-pdo",
-        "calc-tvs-sd05-standoff-vs-plus5"
+        "calc-tvs-smaj6-5a-standoff-vs-plus5"
       ],
       "expected_observed_conditions": [
         "ideal VBEN-low divider gives VGS -9.62 V at 15 V (2.38 V margin) and -12.82 V at 20 V, 0.82 V past the +/-12 V absolute maximum - the deterministic BLOCKER that feeds the 20 V contract decision",
         "SMAJ20A 32.4 V clamp table point sits 4.4 V above the mirror-only 28 V STUSB4500 absolute maxima and 2.4 V past the Q1 -30 V VDS rating with the switch off; the D5 20 V standoff has zero margin at a 20 V contract",
-        "SD05 standoff equals the +5 V rail with zero margin and goes negative at the L7805 5.2 V upper band; SMAJ15A holds 25 percent standoff margin"
+        "TVS2 (decision a replacement, SMAJ6.5A/C87267) standoff clears the +5 V rail by 1.5 V and the L7805 5.2 V upper band by 1.3 V; its 11.2 V clamp table point has no retained downstream +5 V absolute maximum to compare against; SMAJ15A holds 25 percent standoff margin"
       ],
       "expected_verdicts": [
         "NEEDS BENCH",
@@ -370,7 +373,7 @@
     },
     {
       "kind": "wrong-vendor-lowercase",
-      "query": "vishay SD05 C502527",
+      "query": "vishay SMAJ6.5A C87267",
       "expected_line_ids": []
     },
     {

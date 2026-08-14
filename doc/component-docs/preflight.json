@@ -6,7 +6,7 @@
   },
   "records": {
     "available": 41,
-    "selected": 41,
+    "selected": 40,
     "slugs": [
       "c13585",
       "c15849",
@@ -16,8 +16,6 @@
       "c17513",
       "c21189",
       "c21190",
-      "c22383803",
-      "c22383804",
       "c22387780",
       "c2286",
       "c2288",
@@ -29,7 +27,9 @@
       "c25803",
       "c25804",
       "c2983319",
+      "c335982",
       "c970687",
+      "cand-smaj6-5a-c87267",
       "cj7912-c94173",
       "cya1265-100uh-c19268674",
       "faston-c591344",
@@ -42,8 +42,7 @@
       "pesd24vs1ub-c85382",
       "ptc-bsmd1206-150-16v-c883133",
       "ptc-msmd110-33v-c70119",
-      "ptc-smd1210p200tf-c20808",
-      "sd05-c502527",
+      "ptc-smd1210p150tf16-c7529589",
       "smaj15a-c571368",
       "ss34-c8678",
       "stusb4500qtr",
@@ -52,9 +51,9 @@
     ]
   },
   "sources": {
-    "available": 128,
-    "selected": 128,
-    "linkable": 128,
+    "available": 126,
+    "selected": 124,
+    "linkable": 124,
     "ids": [
       "src-ao3401a-board-a-baseline",
       "src-ao3401a-usb-pd-input-sch",
@@ -78,11 +77,6 @@
       "src-c21189-uniroyal",
       "src-c21190-boardadoc",
       "src-c21190-uniroyal",
-      "src-c22383803-alias-lcsc",
-      "src-c22383803-boardbdoc",
-      "src-c22383803-datasheet",
-      "src-c22383804-boardbdoc",
-      "src-c22383804-datasheet",
       "src-c22387780-boardbdoc",
       "src-c22387780-datasheet",
       "src-c2286-boardbdoc",
@@ -105,8 +99,11 @@
       "src-c25804-uniroyal",
       "src-c2983319-boardbdoc",
       "src-c2983319-datasheet",
+      "src-c335982-identity",
       "src-c970687-boardbdoc",
       "src-c970687-datasheet",
+      "src-cand-smaj6-5a-brightking-primary",
+      "src-cand-smaj6-5a-lcsc-identity",
       "src-cj7912-ds-absmax",
       "src-cj7912-ds-application",
       "src-cj7912-ds-electrical",
@@ -157,11 +154,9 @@
       "src-lm2596-umw-ds",
       "src-pesd24vs1ub-lcsc-identity",
       "src-pesd24vs1ub-nexperia-primary",
-      "src-ptc1-smd1210-datasheet",
+      "src-ptc1b-smd1210-datasheet",
       "src-ptc2-msmd110-datasheet",
       "src-ptc3-bsmd1206-datasheet",
-      "src-sd05-lcsc-identity",
-      "src-sd05-mdd-primary",
       "src-smaj15a-hdiode-primary",
       "src-smaj15a-lcsc-identity",
       "src-smaj20a-board-a-baseline",
@@ -190,343 +185,343 @@
     {
       "key": "record.recordId",
       "decision": "PUBLISH",
-      "emitted": 41,
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "record.slug",
       "decision": "PUBLISH",
-      "emitted": 41,
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "record.kind",
       "decision": "PUBLISH",
-      "emitted": 41,
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "record.parentRecordId",
       "decision": "PUBLISH",
-      "emitted": 41,
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "record.lineId",
       "decision": "PUBLISH",
-      "emitted": 41,
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "record.ownerSkill",
       "decision": "DENY",
       "emitted": 0,
-      "withheld": 41
+      "withheld": 40
     },
     {
       "key": "record.mpn",
       "decision": "PUBLISH",
-      "emitted": 41,
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "record.manufacturer",
       "decision": "PUBLISH",
-      "emitted": 41,
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "record.lcsc",
       "decision": "PUBLISH",
-      "emitted": 41,
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "record.package",
       "decision": "PUBLISH",
-      "emitted": 41,
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "record.function",
       "decision": "PUBLISH",
-      "emitted": 41,
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "record.identityState",
       "decision": "PUBLISH",
-      "emitted": 41,
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "record.sourceState",
       "decision": "PUBLISH",
-      "emitted": 41,
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "record.dnp",
       "decision": "PUBLISH",
-      "emitted": 41,
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "record.placements",
       "decision": "PUBLISH",
-      "emitted": 41,
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "alias.mpn",
       "decision": "PUBLISH",
-      "emitted": 41,
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "alias.lcsc",
       "decision": "PUBLISH",
-      "emitted": 41,
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "alias.manufacturer",
       "decision": "PUBLISH",
-      "emitted": 41,
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "alias.function",
       "decision": "PUBLISH",
-      "emitted": 41,
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "routing.positivePrompts",
       "decision": "DENY",
       "emitted": 0,
-      "withheld": 41
+      "withheld": 40
     },
     {
       "key": "routing.negativePrompts",
       "decision": "DENY",
       "emitted": 0,
-      "withheld": 41
+      "withheld": 40
     },
     {
       "key": "source.sourceId",
       "decision": "PUBLISH",
-      "emitted": 128,
+      "emitted": 124,
       "withheld": 0
     },
     {
       "key": "source.documentTitle",
       "decision": "PUBLISH",
-      "emitted": 128,
+      "emitted": 124,
       "withheld": 0
     },
     {
       "key": "source.documentNumber",
       "decision": "PUBLISH",
-      "emitted": 128,
+      "emitted": 124,
       "withheld": 0
     },
     {
       "key": "source.revision",
       "decision": "PUBLISH",
-      "emitted": 128,
+      "emitted": 124,
       "withheld": 0
     },
     {
       "key": "source.documentDate",
       "decision": "PUBLISH",
-      "emitted": 128,
+      "emitted": 124,
       "withheld": 0
     },
     {
       "key": "source.retrievalDate",
       "decision": "PUBLISH",
-      "emitted": 128,
+      "emitted": 124,
       "withheld": 0
     },
     {
       "key": "source.authorityClass",
       "decision": "PUBLISH",
-      "emitted": 128,
+      "emitted": 124,
       "withheld": 0
     },
     {
       "key": "source.availability",
       "decision": "PUBLISH",
-      "emitted": 128,
+      "emitted": 124,
       "withheld": 0
     },
     {
       "key": "source.locator",
       "decision": "PUBLISH",
-      "emitted": 128,
+      "emitted": 124,
       "withheld": 0
     },
     {
       "key": "source.printedPageLabel",
       "decision": "PUBLISH",
-      "emitted": 128,
+      "emitted": 124,
       "withheld": 0
     },
     {
       "key": "source.physicalPdfPageIndex",
       "decision": "DENY",
       "emitted": 0,
-      "withheld": 128
+      "withheld": 124
     },
     {
       "key": "source.authoritativeUrl",
       "decision": "PUBLISH",
-      "emitted": 128,
+      "emitted": 124,
       "withheld": 0
     },
     {
       "key": "source.alternateAuthoritativeUrl",
       "decision": "DENY",
       "emitted": 0,
-      "withheld": 128
+      "withheld": 124
     },
     {
       "key": "source.sha256",
       "decision": "DENY",
       "emitted": 0,
-      "withheld": 128
+      "withheld": 124
     },
     {
       "key": "source.evidenceExtract",
       "decision": "DENY",
       "emitted": 0,
-      "withheld": 128
+      "withheld": 124
     },
     {
       "key": "fact.factId",
       "decision": "PUBLISH",
-      "emitted": 467,
+      "emitted": 444,
       "withheld": 0
     },
     {
       "key": "fact.class",
       "decision": "PUBLISH",
-      "emitted": 467,
+      "emitted": 444,
       "withheld": 0
     },
     {
       "key": "fact.value",
       "decision": "PUBLISH",
-      "emitted": 467,
+      "emitted": 444,
       "withheld": 0
     },
     {
       "key": "fact.unit",
       "decision": "PUBLISH",
-      "emitted": 467,
+      "emitted": 444,
       "withheld": 0
     },
     {
       "key": "fact.conditions",
       "decision": "PUBLISH",
-      "emitted": 467,
+      "emitted": 444,
       "withheld": 0
     },
     {
       "key": "fact.locator",
       "decision": "PUBLISH",
-      "emitted": 467,
+      "emitted": 444,
       "withheld": 0
     },
     {
       "key": "fact.provenance",
       "decision": "PUBLISH",
-      "emitted": 467,
+      "emitted": 444,
       "withheld": 0
     },
     {
       "key": "fact.verdict",
       "decision": "PUBLISH",
-      "emitted": 467,
+      "emitted": 444,
       "withheld": 0
     },
     {
       "key": "fact.dependsOn",
       "decision": "PUBLISH",
-      "emitted": 467,
+      "emitted": 444,
       "withheld": 0
     },
     {
       "key": "fact.expression",
       "decision": "PUBLISH",
-      "emitted": 467,
+      "emitted": 444,
       "withheld": 0
     },
     {
       "key": "coverage.coverageId",
       "decision": "PUBLISH",
-      "emitted": 145,
+      "emitted": 141,
       "withheld": 0
     },
     {
       "key": "coverage.domain",
       "decision": "PUBLISH",
-      "emitted": 145,
+      "emitted": 141,
       "withheld": 0
     },
     {
       "key": "coverage.status",
       "decision": "PUBLISH",
-      "emitted": 145,
+      "emitted": 141,
       "withheld": 0
     },
     {
       "key": "coverage.reason",
       "decision": "PUBLISH",
-      "emitted": 145,
+      "emitted": 141,
       "withheld": 0
     },
     {
       "key": "coverage.factIds",
       "decision": "PUBLISH",
-      "emitted": 145,
+      "emitted": 141,
       "withheld": 0
     },
     {
       "key": "coverage.blockingFactIds",
       "decision": "PUBLISH",
-      "emitted": 145,
+      "emitted": 141,
       "withheld": 0
     },
     {
       "key": "interaction.interactionId",
       "decision": "PUBLISH",
-      "emitted": 40,
+      "emitted": 38,
       "withheld": 0
     },
     {
       "key": "interaction.recordIds",
       "decision": "PUBLISH",
-      "emitted": 40,
+      "emitted": 38,
       "withheld": 0
     },
     {
       "key": "interaction.factIds",
       "decision": "PUBLISH",
-      "emitted": 40,
+      "emitted": 38,
       "withheld": 0
     },
     {
       "key": "interaction.conditions",
       "decision": "PUBLISH",
-      "emitted": 40,
+      "emitted": 38,
       "withheld": 0
     },
     {
       "key": "interaction.verdict",
       "decision": "PUBLISH",
-      "emitted": 40,
+      "emitted": 38,
       "withheld": 0
     },
     {
@@ -634,32 +629,32 @@
     {
       "key": "pinMap.pinMapId",
       "decision": "PUBLISH",
-      "emitted": 41,
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "pinMap.symbol",
       "decision": "PUBLISH",
-      "emitted": 41,
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "pinMap.footprint",
       "decision": "PUBLISH",
-      "emitted": 41,
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "pinMap.pins",
       "decision": "PUBLISH",
-      "emitted": 41,
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "pinMap.reviewedBy",
       "decision": "DENY",
       "emitted": 0,
-      "withheld": 41
+      "withheld": 40
     },
     {
       "key": "reference.document.sourceId",
@@ -916,36 +911,6 @@
       "reason": "ABSOLUTE_HTTP_URL"
     },
     {
-      "sourceId": "src-c22383803-alias-lcsc",
-      "url": "https://www.lcsc.com/product-detail/C335982.html",
-      "decision": "ALLOW",
-      "reason": "ABSOLUTE_HTTP_URL"
-    },
-    {
-      "sourceId": "src-c22383803-boardbdoc",
-      "url": "https://github.com/Takazudo/zudo-pd/blob/main/doc/src/content/docs/overview/board-b-synth-power.md",
-      "decision": "ALLOW",
-      "reason": "ABSOLUTE_HTTP_URL"
-    },
-    {
-      "sourceId": "src-c22383803-datasheet",
-      "url": "https://datasheet.lcsc.com/datasheet/pdf/058d43f0cab712ca094779f22933b5ca.pdf",
-      "decision": "ALLOW",
-      "reason": "ABSOLUTE_HTTP_URL"
-    },
-    {
-      "sourceId": "src-c22383804-boardbdoc",
-      "url": "https://github.com/Takazudo/zudo-pd/blob/main/doc/src/content/docs/overview/board-b-synth-power.md",
-      "decision": "ALLOW",
-      "reason": "ABSOLUTE_HTTP_URL"
-    },
-    {
-      "sourceId": "src-c22383804-datasheet",
-      "url": "https://datasheet.lcsc.com/datasheet/pdf/e0c5a6b0c5a87d861673e5b0402e02ae.pdf",
-      "decision": "ALLOW",
-      "reason": "ABSOLUTE_HTTP_URL"
-    },
-    {
       "sourceId": "src-c22387780-boardbdoc",
       "url": "https://github.com/Takazudo/zudo-pd/blob/main/doc/src/content/docs/overview/board-b-synth-power.md",
       "decision": "ALLOW",
@@ -1078,6 +1043,12 @@
       "reason": "ABSOLUTE_HTTP_URL"
     },
     {
+      "sourceId": "src-c335982-identity",
+      "url": "https://www.lcsc.com/product-detail/C335982.html",
+      "decision": "ALLOW",
+      "reason": "ABSOLUTE_HTTP_URL"
+    },
+    {
       "sourceId": "src-c970687-boardbdoc",
       "url": "https://github.com/Takazudo/zudo-pd/blob/main/doc/src/content/docs/overview/board-b-synth-power.md",
       "decision": "ALLOW",
@@ -1086,6 +1057,18 @@
     {
       "sourceId": "src-c970687-datasheet",
       "url": "https://datasheet.lcsc.com/datasheet/pdf/f0a865b841864fb1f67292a6eb3bf84a.pdf",
+      "decision": "ALLOW",
+      "reason": "ABSOLUTE_HTTP_URL"
+    },
+    {
+      "sourceId": "src-cand-smaj6-5a-brightking-primary",
+      "url": "https://datasheet.lcsc.com/datasheet/pdf/19d0bf098ced4b4fbeb7d738e7c6c181.pdf",
+      "decision": "ALLOW",
+      "reason": "ABSOLUTE_HTTP_URL"
+    },
+    {
+      "sourceId": "src-cand-smaj6-5a-lcsc-identity",
+      "url": "https://www.lcsc.com/product-detail/C87267.html",
       "decision": "ALLOW",
       "reason": "ABSOLUTE_HTTP_URL"
     },
@@ -1390,7 +1373,7 @@
       "reason": "ABSOLUTE_HTTP_URL"
     },
     {
-      "sourceId": "src-ptc1-smd1210-datasheet",
+      "sourceId": "src-ptc1b-smd1210-datasheet",
       "url": "https://datasheet.lcsc.com/datasheet/pdf/95664877074e59702390e7479561744e.pdf?productCode=C20808",
       "decision": "ALLOW",
       "reason": "ABSOLUTE_HTTP_URL"
@@ -1404,18 +1387,6 @@
     {
       "sourceId": "src-ptc3-bsmd1206-datasheet",
       "url": "https://datasheet.lcsc.com/datasheet/pdf/536516336d784fb8e1d4d3f7dabf668c.pdf?productCode=C883133",
-      "decision": "ALLOW",
-      "reason": "ABSOLUTE_HTTP_URL"
-    },
-    {
-      "sourceId": "src-sd05-lcsc-identity",
-      "url": "https://www.lcsc.com/product-detail/C502527.html",
-      "decision": "ALLOW",
-      "reason": "ABSOLUTE_HTTP_URL"
-    },
-    {
-      "sourceId": "src-sd05-mdd-primary",
-      "url": "https://datasheet.lcsc.com/datasheet/pdf/cbdb7ef28ae9390e671e54a8b92b1fa0.pdf",
       "decision": "ALLOW",
       "reason": "ABSOLUTE_HTTP_URL"
     },
@@ -1553,13 +1524,13 @@
     }
   ],
   "counts": {
-    "generatedPages": 45,
-    "publishedCoverageDomains": 145,
-    "publishedFacts": 467,
+    "generatedPages": 44,
+    "publishedCoverageDomains": 141,
+    "publishedFacts": 444,
     "publishedIntegrationRules": 9,
-    "publishedInteractions": 37,
-    "publishedPinMaps": 41,
-    "publishedRecords": 41,
-    "publishedSources": 128
+    "publishedInteractions": 35,
+    "publishedPinMaps": 40,
+    "publishedRecords": 40,
+    "publishedSources": 124
   }
 }

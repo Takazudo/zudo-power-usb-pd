@@ -23,13 +23,13 @@ A component record answers questions about one part. These rules answer the ones
   | Rule                                                                          | Domain                         | Records | Facts | Verdict     |
   | ----------------------------------------------------------------------------- | ------------------------------ | ------- | ----- | ----------- |
   | [`rule-rail-envelope`](#rule-rail-envelope)                                   | rail-envelope                  | 7       | 15    | NEEDS BENCH |
-  | [`rule-tvs-clamp-vs-absmax`](#rule-tvs-clamp-vs-absmax)                       | tvs-clamp-vs-absmax            | 7       | 15    | UNSOURCED   |
+  | [`rule-tvs-clamp-vs-absmax`](#rule-tvs-clamp-vs-absmax)                       | tvs-clamp-vs-absmax            | 7       | 16    | UNSOURCED   |
   | [`rule-u4-inverting-stress`](#rule-u4-inverting-stress)                       | u4-inverting-stress            | 3       | 13    | NEEDS BENCH |
   | [`rule-ldo-dropout-chain`](#rule-ldo-dropout-chain)                           | ldo-dropout-chain              | 3       | 19    | NEEDS BENCH |
   | [`rule-ab-interface-current`](#rule-ab-interface-current)                     | ab-interface-current           | 3       | 7     | NEEDS BENCH |
   | [`rule-q1-gate-drive-vs-contract`](#rule-q1-gate-drive-vs-contract)           | q1-gate-drive-vs-contract      | 4       | 7     | NEEDS BENCH |
   | [`rule-inverting-startup-vs-pd-source`](#rule-inverting-startup-vs-pd-source) | inverting-startup-vs-pd-source | 2       | 5     | NEEDS BENCH |
-  | [`rule-pptc-vmax-vs-rail`](#rule-pptc-vmax-vs-rail)                           | pptc-vmax-vs-rail              | 6       | 15    | NEEDS BENCH |
+  | [`rule-pptc-vmax-vs-rail`](#rule-pptc-vmax-vs-rail)                           | pptc-vmax-vs-rail              | 6       | 16    | NEEDS BENCH |
   | [`rule-evidence-chain`](#rule-evidence-chain)                                 | source-to-bench-chain          | 4       | 9     | NEEDS BENCH |
 </EvidenceTable>
 
@@ -139,15 +139,15 @@ Arithmetic across the facts above. The expression and every input are published 
 - **Domain:** tvs-clamp-vs-absmax
 - **Verdict:** UNSOURCED
 
-**This rule refuses to conclude:** Do not clear the TVS protection chain: the STUSB4500 absolute maxima are mirror-only, no installed clamp or surge waveform has been measured, a clamp event arithmetically exceeds the Q1 VDS rating, and the SD05 zero-margin standoff on the +5 V rail is a deterministic blocker that requires a part change, not more analysis.
+**This rule refuses to conclude:** Do not clear the TVS protection chain: the STUSB4500 absolute maxima are mirror-only, no installed clamp or surge waveform has been measured, and a clamp event arithmetically exceeds the Q1 VDS rating. TVS2's decision-a replacement (SMAJ6.5A/C87267) resolves the demoted SD05's zero-margin standoff BLOCKER, but the D5-side findings above remain open and the SMAJ6.5A 11.2 V clamp point cannot be cleared while no downstream +5 V absolute maximum is retained.
 
-**Conditions:** Compare each TVS clamp/standoff against its downstream absolute maxima: D5 SMAJ20A on VBUS\_IN clamps at the 32.4 V table point, 4.4 V above the mirror-only 28 V STUSB4500 VDD/VBUS-pin absolute maxima and 2.4 V past the Q1 -30 V VDS rating when the load switch is off with VBUS\_OUT near 0 V, but 12.6 V under the LM2596 45 V input rating; D5's 20 V standoff leaves 5 V of margin at the 15 V contract and zero at a 20 V contract; SMAJ15A holds a 3 V / 25 percent standoff margin on the +/-12 V rails while the TVS3 orientation on -12 V is not yet locked; SD05 standoff exactly equals the +5 V rail (zero margin, deterministic BLOCKER standoff fact) and sits 0.2 V below the L7805 5.2 V guaranteed upper output band. All clamp values are 10/1000 us table points, not the installed surge waveform.
+**Conditions:** Compare each TVS clamp/standoff against its downstream absolute maxima: D5 SMAJ20A on VBUS\_IN clamps at the 32.4 V table point, 4.4 V above the mirror-only 28 V STUSB4500 VDD/VBUS-pin absolute maxima and 2.4 V past the Q1 -30 V VDS rating when the load switch is off with VBUS\_OUT near 0 V, but 12.6 V under the LM2596 45 V input rating; D5's 20 V standoff leaves 5 V of margin at the 15 V contract and zero at a 20 V contract; SMAJ15A holds a 3 V / 25 percent standoff margin on the +/-12 V rails while the TVS3 orientation on -12 V is not yet locked; TVS2 (decision a replacement, Brightking SMAJ6.5A/C87267) holds a 1.5 V / 30 percent standoff margin over the +5 V rail, clears the L7805 5.2 V guaranteed upper output band by 1.3 V with its 7.22 V minimum breakdown 2.02 V above that band top, resolving the demoted SD05's zero-margin BLOCKER standoff fact; its 11.2 V maximum clamp at the 35.7 A 10/1000 us table point has no retained downstream +5 V absolute maximum to compare against (the L7805 bundle retains no output-pin absolute maximum, the coverage gap decision a records), so the TVS2 clamp exposure stays unverifiable rather than PASS. All clamp values are 10/1000 us table points, not the installed surge waveform.
 
 **Records this rule spans:**
 
 - [`rec-high-diode-smaj20a-c571370`](/docs/components/records/records/high-diode-smaj20a-c571370/) — SMAJ20A
 - [`rec-smaj15a-c571368`](/docs/components/records/records/smaj15a-c571368/) — SMAJ15A
-- [`rec-sd05-c502527`](/docs/components/records/records/sd05-c502527/) — SD05
+- [`rec-cand-smaj6-5a-c87267`](/docs/components/records/records/cand-smaj6-5a-c87267/) — SMAJ6.5A
 - [`rec-stusb4500qtr`](/docs/components/records/records/stusb4500qtr/) — STUSB4500QTR
 - [`rec-lm2596s-adj-c347423`](/docs/components/records/records/lm2596s-adj-c347423/) — LM2596S-ADJ
 - [`rec-umw-ao3401a-c347476`](/docs/components/records/records/umw-ao3401a-c347476/) — AO3401A
@@ -166,9 +166,10 @@ Arithmetic across the facts above. The expression and every input are published 
 - [`fact-smaj15a-margin-plus12`](/docs/components/records/records/smaj15a-c571368/#fact-smaj15a-margin-plus12) on SMAJ15A
 - [`fact-smaj15a-margin-percent`](/docs/components/records/records/smaj15a-c571368/#fact-smaj15a-margin-percent) on SMAJ15A
 - [`fact-smaj15a-tvs3-orientation`](/docs/components/records/records/smaj15a-c571368/#fact-smaj15a-tvs3-orientation) on SMAJ15A
-- [`fact-sd05-standoff`](/docs/components/records/records/sd05-c502527/#fact-sd05-standoff) on SD05
-- [`fact-sd05-plus5-margin`](/docs/components/records/records/sd05-c502527/#fact-sd05-plus5-margin) on SD05
-- [`fact-sd05-plus5-margin-percent`](/docs/components/records/records/sd05-c502527/#fact-sd05-plus5-margin-percent) on SD05
+- [`fact-cand-smaj6-5a-standoff`](/docs/components/records/records/cand-smaj6-5a-c87267/#fact-cand-smaj6-5a-standoff) on SMAJ6.5A
+- [`fact-cand-smaj6-5a-breakdown`](/docs/components/records/records/cand-smaj6-5a-c87267/#fact-cand-smaj6-5a-breakdown) on SMAJ6.5A
+- [`fact-cand-smaj6-5a-clamp`](/docs/components/records/records/cand-smaj6-5a-c87267/#fact-cand-smaj6-5a-clamp) on SMAJ6.5A
+- [`fact-cand-smaj6-5a-plus5-margin`](/docs/components/records/records/cand-smaj6-5a-c87267/#fact-cand-smaj6-5a-plus5-margin) on SMAJ6.5A
 - [`fact-l7805abd2t-vout-band`](/docs/components/records/records/l7805abd2t-c86206/#fact-l7805abd2t-vout-band) on L7805ABD2T
 
 ### Conditioned calculations
@@ -247,24 +248,24 @@ Arithmetic across the facts above. The expression and every input are published 
 | 15      | 5         |
 | 20      | 0         |
 
-#### calc-tvs-sd05-standoff-vs-plus5
+#### calc-tvs-smaj6-5a-standoff-vs-plus5
 
-<EvidenceAnchor id="calc-tvs-sd05-standoff-vs-plus5" />
+<EvidenceAnchor id="calc-tvs-smaj6-5a-standoff-vs-plus5" />
 
-- **Expression:** `fact_sd05_standoff - rail_v`
+- **Expression:** `fact_cand_smaj6_5a_standoff - rail_v`
 - **Result:** `margin_v`
 
-**Conditions:** SD05 5 V standoff minus the +5 V rail: zero margin at the 5.0 V nominal and negative at rail\_v 5.2, the guaranteed upper output band from fact-l7805abd2t-vout-band, so the TVS can conduct inside normal regulation; deterministic from primary-sourced values
+**Conditions:** TVS2 (decision a replacement, SMAJ6.5A/C87267) 6.5 V standoff minus the +5 V rail: 1.5 V margin at the 5.0 V nominal and 1.3 V at rail\_v 5.2, the guaranteed upper output band from fact-l7805abd2t-vout-band -- both positive, resolving the demoted SD05's zero/negative margin; deterministic from primary-sourced values
 
 **Inputs:**
 
-- [`fact-sd05-standoff`](/docs/components/records/records/sd05-c502527/#fact-sd05-standoff) on SD05
+- [`fact-cand-smaj6-5a-standoff`](/docs/components/records/records/cand-smaj6-5a-c87267/#fact-cand-smaj6-5a-standoff) on SMAJ6.5A
 - [`fact-l7805abd2t-vout-band`](/docs/components/records/records/l7805abd2t-c86206/#fact-l7805abd2t-vout-band) on L7805ABD2T
 
-| rail\_v | margin\_v            |
-| ------- | -------------------- |
-| 5       | 0                    |
-| 5.2     | -0.20000000000000018 |
+| rail\_v | margin\_v          |
+| ------- | ------------------ |
+| 5       | 1.5                |
+| 5.2     | 1.2999999999999998 |
 
 ## rule-u4-inverting-stress
 
@@ -649,13 +650,13 @@ Arithmetic across the facts above. The expression and every input are published 
 - **Domain:** pptc-vmax-vs-rail
 - **Verdict:** NEEDS BENCH
 
-**This rule refuses to conclude:** Replace PTC1 with a part rated at or above the +12 V rail before any rail power-on: its tripped state is a deterministic overvoltage violation, and the PASS margins on PTC2 and PTC3 clear nothing about it.
+**This rule refuses to conclude:** PTC1's decision-g replacement (SMD1210P150TF/16, C7529589) resolves the deterministic Vmax BLOCKER the demoted part carried, but do not treat this rail as bench-cleared: no 85 C hold-current figure is retained for the /16 variant, the family's derating curve estimates the 1.2 A rail budget could be crossed near ~48 C ambient (decisions.json dec-g-ptc1-replacement), and tripped-state behavior at the real fault waveform remains unmeasured for all three PPTCs.
 
-**Conditions:** A tripped PPTC absorbs its full rail voltage, so Vmax must cover the rail: PTC1's 6 VDC rating on the +12 V rail is -6 V of margin, a deterministic primary-sourced BLOCKER; PTC2 (33 V on +5 V, +28 V) and PTC3 (16 V on -12 V, +4 V) PASS on voltage. Hold-current margins of 0.8/0.6/0.7 A over the 1.2/0.5/0.8 A rail ratings PASS at 25 C but derate toward 85 C, and tripped-state behavior at the real fault waveform is unmeasured.
+**Conditions:** A tripped PPTC absorbs its full rail voltage, so Vmax must cover the rail: PTC1 (decision g replacement, RUILON SMD1210P150TF/16 C7529589, demoting the SMD1210P200TF/C20808) rates 16 VDC on the +12 V rail, +4 V of margin; PTC2 (33 V on +5 V, +28 V) and PTC3 (16 V on -12 V, +4 V) also PASS on voltage. Hold-current margins of 0.3/0.6/0.7 A over the 1.2/0.5/0.8 A rail ratings PASS at 25 C but derate toward 85 C -- PTC1's thinner 0.3 A margin (vs the demoted part's 0.8 A) has no retained 85 C hold figure for the /16 variant, and tripped-state behavior at the real fault waveform is unmeasured for all three.
 
 **Records this rule spans:**
 
-- [`rec-ptc-smd1210p200tf-c20808`](/docs/components/records/records/ptc-smd1210p200tf-c20808/) — SMD1210P200TF
+- [`rec-ptc-smd1210p150tf16-c7529589`](/docs/components/records/records/ptc-smd1210p150tf16-c7529589/) — SMD1210P150TF/16
 - [`rec-ptc-msmd110-33v-c70119`](/docs/components/records/records/ptc-msmd110-33v-c70119/) — mSMD110-33V
 - [`rec-ptc-bsmd1206-150-16v-c883133`](/docs/components/records/records/ptc-bsmd1206-150-16v-c883133/) — BSMD1206-150-16V
 - [`rec-l7812cd2t-c13456`](/docs/components/records/records/l7812cd2t-c13456/) — L7812CD2T
@@ -664,10 +665,11 @@ Arithmetic across the facts above. The expression and every input are published 
 
 **Facts this rule rests on:** each is published in full on the record page that owns it, at the anchor linked here.
 
-- [`fact-ptc1-vmax`](/docs/components/records/records/ptc-smd1210p200tf-c20808/#fact-ptc1-vmax) on SMD1210P200TF
-- [`fact-ptc1-vmax-margin`](/docs/components/records/records/ptc-smd1210p200tf-c20808/#fact-ptc1-vmax-margin) on SMD1210P200TF
-- [`fact-ptc1-ihold`](/docs/components/records/records/ptc-smd1210p200tf-c20808/#fact-ptc1-ihold) on SMD1210P200TF
-- [`fact-ptc1-ihold-margin`](/docs/components/records/records/ptc-smd1210p200tf-c20808/#fact-ptc1-ihold-margin) on SMD1210P200TF
+- [`fact-ptc1b-vmax`](/docs/components/records/records/ptc-smd1210p150tf16-c7529589/#fact-ptc1b-vmax) on SMD1210P150TF/16
+- [`fact-ptc1b-vmax-margin`](/docs/components/records/records/ptc-smd1210p150tf16-c7529589/#fact-ptc1b-vmax-margin) on SMD1210P150TF/16
+- [`fact-ptc1b-ihold`](/docs/components/records/records/ptc-smd1210p150tf16-c7529589/#fact-ptc1b-ihold) on SMD1210P150TF/16
+- [`fact-ptc1b-ihold-margin`](/docs/components/records/records/ptc-smd1210p150tf16-c7529589/#fact-ptc1b-ihold-margin) on SMD1210P150TF/16
+- [`fact-ptc1b-hold-85c`](/docs/components/records/records/ptc-smd1210p150tf16-c7529589/#fact-ptc1b-hold-85c) on SMD1210P150TF/16
 - [`fact-ptc2-vmax`](/docs/components/records/records/ptc-msmd110-33v-c70119/#fact-ptc2-vmax) on mSMD110-33V
 - [`fact-ptc2-vmax-margin`](/docs/components/records/records/ptc-msmd110-33v-c70119/#fact-ptc2-vmax-margin) on mSMD110-33V
 - [`fact-ptc2-ihold`](/docs/components/records/records/ptc-msmd110-33v-c70119/#fact-ptc2-ihold) on mSMD110-33V
@@ -688,19 +690,19 @@ Arithmetic across the facts above. The expression and every input are published 
 
 <EvidenceAnchor id="calc-pptc1-vmax-margin" />
 
-- **Expression:** `fact_ptc1_vmax - fact_l7812cd2t_vout_25c`
+- **Expression:** `fact_ptc1b_vmax - fact_l7812cd2t_vout_25c`
 - **Result:** `margin_v`
 
-**Conditions:** PTC1 rated maximum voltage minus the +12 V rail it protects: the negative result reproduces the bundle's BLOCKER margin fact and holds whenever the fuse trips
+**Conditions:** PTC1 rated maximum voltage (decision g replacement, SMD1210P150TF/16 C7529589) minus the +12 V rail it protects: the positive result reproduces the bundle's PASS margin fact and holds whenever the fuse trips
 
 **Inputs:**
 
-- [`fact-ptc1-vmax`](/docs/components/records/records/ptc-smd1210p200tf-c20808/#fact-ptc1-vmax) on SMD1210P200TF
+- [`fact-ptc1b-vmax`](/docs/components/records/records/ptc-smd1210p150tf16-c7529589/#fact-ptc1b-vmax) on SMD1210P150TF/16
 - [`fact-l7812cd2t-vout-25c`](/docs/components/records/records/l7812cd2t-c13456/#fact-l7812cd2t-vout-25c) on L7812CD2T
 
 | margin\_v |
 | --------- |
-| -6        |
+| 4         |
 
 #### calc-pptc2-vmax-margin
 
