@@ -3,11 +3,17 @@ name: Production Deploy (Cloudflare Workers)
 # Builds the zudo-doc site in /doc and deploys it to Cloudflare Workers
 # (static assets) on every push to main.
 #
+# Build -> generated-component drift check -> deploy gate -> publish. The
+# drift check pair (committed-and-up-to-date + deterministic) mirrors the
+# regen-idempotency contract component-spec-skills.yml enforces for the
+# boards/ schematics, so a stale doc/src/content/docs/components/ page can
+# never reach the live site.
+#
 # The deploy is GUARDED: it runs only when BOTH Cloudflare secrets are present
 # AND the wrangler.toml domain placeholder has been replaced. Until then the
-# job still builds + typechecks (so merges to main stay green) but skips the
-# actual publish. See doc/wrangler.toml and the Cloudflare go-live checklist
-# in doc/CLAUDE.md.
+# job still builds + typechecks + drift-checks (so merges to main stay green)
+# but skips the actual publish. See doc/wrangler.toml and the Cloudflare
+# go-live checklist in doc/CLAUDE.md.
 
 on:
   push:
@@ -50,6 +56,15 @@ jobs:
           cache: pnpm
           cache-dependency-path: doc/pnpm-lock.yaml
 
+      # `pnpm build` runs `generate:components` first, which shells out to the
+      # component-spec validator (python3). Pinned to the same 3.12 as
+      # component-spec-skills.yml so the two never disagree, rather than
+      # relying on whatever the runner image happens to ship.
+      - name: Setup Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.12'
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
@@ -58,6 +73,27 @@ jobs:
 
       - name: Build (emits dist/_worker.js via the Cloudflare adapter)
         run: pnpm build
+
+      # THE drift authority for every committed generated file. `pnpm build`
+      # rewrites doc/src/content/docs/components/ AND
+      # doc/component-docs/preflight.json via generate:components; a source
+      # edit under .claude/skills/, a CLAUDE.md, or the generator itself that
+      # lands without a rebuild leaves the committed output stale, and this
+      # fails the deploy instead of publishing a stale site.
+      # `--intent-to-add` is required: a newly generated page arrives
+      # UNTRACKED, and `git diff` cannot see untracked files on its own.
+      - name: Generated output is committed and up to date
+        working-directory: ${{ github.workspace }}
+        run: |
+          git add --intent-to-add -A -- doc/src/content/docs doc/component-docs/preflight.json
+          git diff --exit-code -- doc/src/content/docs doc/component-docs/preflight.json
+
+      # The SECOND generation run: `build` projected and wrote the tree, this
+      # re-projects from the evidence and proves the result byte-identical.
+      # Run-to-run nondeterminism would otherwise surface as an intermittent
+      # diff on some unrelated push; here it fails where it is caused.
+      - name: Component generation is deterministic
+        run: pnpm check:components
 
       - name: Evaluate deploy gate
         id: gate

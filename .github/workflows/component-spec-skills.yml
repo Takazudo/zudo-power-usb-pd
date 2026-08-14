@@ -1,0 +1,85 @@
+# Offline validation of the frozen component contract for the zudo-pd
+# board-a / board-b split: the canonical Python validator, its unit tests,
+# the cross-component routing/refusal forward tests, schematic
+# regen-idempotency for both boards, connectivity-baseline drift for both
+# boards, and the wave-6 decision-lock contract. No credentials, no
+# network, no KiCad.
+#
+# This is the source of truth for component evidence; main-deploy.yml's
+# build depends on the same validator (`pnpm generate:components` shells
+# out to validate.py), which is why both workflows pin the same Python
+# 3.12.
+
+name: Component spec skills
+
+on:
+  pull_request:
+    paths:
+      - 'CLAUDE.md'
+      - '.claude/skills/**'
+      - '.github/workflows/component-spec-skills.yml'
+      - 'scripts/schgen/**'
+      - 'boards/**'
+      - 'symbols/**'
+      - 'footprints/**'
+      - 'doc/**'
+  push:
+    paths:
+      - 'CLAUDE.md'
+      - '.claude/skills/**'
+      - '.github/workflows/component-spec-skills.yml'
+      - 'scripts/schgen/**'
+      - 'boards/**'
+      - 'symbols/**'
+      - 'footprints/**'
+      - 'doc/**'
+
+concurrency:
+  group: component-spec-skills-${{ github.ref }}
+  # Superseded runs on a topic branch or PR carry no information. On main they
+  # do — that run is the record for a commit that is already merged.
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+permissions:
+  contents: read
+
+env:
+  # staged (default) tolerates absent generator specs, owner skills, and
+  # forward-test cases while board-a and board-b are still being built.
+  # Flip this single line to `strict` once the wave-9 confirm task locks
+  # the full evidence corpus for both boards — validate.py and
+  # check_forward_tests.py both accept --staged/--strict directly, so no
+  # other line in this file needs to change.
+  MODE: staged
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # SHA-pinned to the same pins main-deploy.yml's Python setup uses — a
+      # mutable tag is a supply-chain hole, and two workflows on one runner
+      # image should not disagree about which checkout/Python they get.
+      # Both SHAs verified against the real tags (checkout v5.0.1,
+      # setup-python v5.6.0).
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.12'
+      - name: Validate frozen component contract (offline)
+        run: python3 .claude/skills/component-spec-audit/scripts/validate.py --${{ env.MODE }}
+      - name: Test validator and fixtures (offline)
+        run: python3 -m unittest discover -s .claude/skills/component-spec-audit/scripts -p 'test_*.py'
+      - name: Test cross-component routing and refusals (offline)
+        run: python3 .claude/skills/circuit-spec-integration/scripts/check_forward_tests.py --${{ env.MODE }}
+      - name: Regen-idempotency check — board A + board B (pure Python, no KiCad)
+        run: |
+          python3 scripts/schgen/gen_schematic.py board_a_spec
+          python3 scripts/schgen/gen_schematic.py board_b_spec
+          git diff --exit-code boards/
+      - name: Connectivity-baseline drift check — board A + board B
+        run: |
+          python3 scripts/schgen/check_baseline.py scripts/schgen/board_a_spec.py scripts/schgen/baselines/board-a.json --allow scripts/schgen/baselines/board-a-allowed-deltas.json
+          python3 scripts/schgen/check_baseline.py scripts/schgen/board_b_spec.py scripts/schgen/baselines/board-b.json --allow scripts/schgen/baselines/board-b-allow.json
+      - name: Validate wave-6 decision lock (decisions.json)
+        run: python3 scripts/schgen/check_decisions.py
