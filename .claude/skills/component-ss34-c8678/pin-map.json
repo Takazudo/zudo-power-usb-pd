@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "pin_maps": [
+    {
+      "pin_map_id": "pinmap-ss34-c8678",
+      "record_id": "rec-ss34-c8678",
+      "symbol": "SS34_C8678",
+      "footprint": "SMA_L4.3-W2.6-LS5.2-RD",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "K",
+          "footprint_pad": "1",
+          "function": "cathode"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "A",
+          "footprint_pad": "2",
+          "function": "anode"
+        }
+      ],
+      "reviewed_by": "ss34-ind foreground self-review against symbols/zudo-pd.kicad_sym SS34_C8678 (pin 1=K, pin 2=A) and footprints/kicad/zudo-power.pretty/SMA_L4.3-W2.6-LS5.2-RD.kicad_mod (pad 1, pad 2); independent second-reviewer pass pending"
+    }
+  ]
+}

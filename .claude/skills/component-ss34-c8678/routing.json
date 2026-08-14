@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "routes": [
+    {
+      "route_id": "route-ss34-c8678",
+      "record_id": "rec-ss34-c8678",
+      "aliases": {
+        "mpn": ["SS34"],
+        "lcsc": ["C8678"],
+        "manufacturer": ["MDD (Microdiode Semiconductor)"],
+        "function": ["Schottky diode"]
+      },
+      "positive": ["check SS34 pinout", "audit C8678"],
+      "negative": ["check 1N4148 pinout"]
+    }
+  ]
+}
