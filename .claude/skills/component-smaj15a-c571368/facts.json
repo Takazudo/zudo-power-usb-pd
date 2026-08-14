@@ -1,0 +1,182 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "fact-smaj15a-manufacturer",
+      "record_id": "rec-smaj15a-c571368",
+      "source_id": "src-smaj15a-hdiode-primary",
+      "class": "PROJECT_STATE",
+      "value": "High Diode",
+      "unit": "NONE",
+      "conditions": "exact orderable identity; document served from the manufacturer domain h-diode.com",
+      "locator": "src-smaj15a-hdiode-primary: page 1 title block (SMAJ SERIES, SMAG plastic-encapsulate) and manufacturer-domain hosting; page 2 exact SMAJ15A row",
+      "provenance": "PRIMARY-SPEC",
+      "verdict": "PASS - primary-source confirmed",
+      "depends_on": [],
+      "expression": ""
+    },
+    {
+      "fact_id": "fact-smaj15a-identity",
+      "record_id": "rec-smaj15a-c571368",
+      "source_id": "src-smaj15a-lcsc-identity",
+      "class": "PROJECT_STATE",
+      "value": {
+        "lcsc": "C571368",
+        "manufacturer": "High Diode",
+        "mpn": "SMAJ15A",
+        "variant": "unidirectional SMA (DO-214AC) tape/reel; LCSC listing stock 1980 units at 2026-08-14 retrieval"
+      },
+      "unit": "NONE",
+      "conditions": "stable distributor identity binding of the exact orderable; same-name cross-vendor substitution prohibited; supplies no electrical or thermal authority. LCSC displays the brand as 'High Diode'. Stock figure inside the variant string is a dated observation.",
+      "locator": "src-smaj15a-lcsc-identity: product page title row and stock row, retrieved 2026-08-14",
+      "provenance": "DISTRIBUTOR-IDENTITY",
+      "verdict": "CONFIRMED - distributor identity only",
+      "depends_on": [],
+      "expression": ""
+    },
+    {
+      "fact_id": "fact-smaj15a-standoff",
+      "record_id": "rec-smaj15a-c571368",
+      "source_id": "src-smaj15a-hdiode-primary",
+      "class": "PROTECTION_STANDOFF",
+      "value": 15,
+      "unit": "V",
+      "conditions": "maximum reverse standoff (working) voltage VWM, exact SMAJ15A row, TA=25 C",
+      "locator": "src-smaj15a-hdiode-primary: page 2 electrical characteristics table, SMAJ15A row, VWM column",
+      "provenance": "PRIMARY-SPEC",
+      "verdict": "PASS - primary-source confirmed",
+      "depends_on": [],
+      "expression": ""
+    },
+    {
+      "fact_id": "fact-smaj15a-breakdown",
+      "record_id": "rec-smaj15a-c571368",
+      "source_id": "src-smaj15a-hdiode-primary",
+      "class": "PROTECTION_BREAKDOWN",
+      "value": "16.7 to 18.5",
+      "unit": "V",
+      "conditions": "breakdown voltage VBR minimum/maximum at IT 1.0 mA, TA=25 C",
+      "locator": "src-smaj15a-hdiode-primary: page 2 electrical characteristics table, SMAJ15A row, VBR min/max and IT columns",
+      "provenance": "PRIMARY-SPEC",
+      "verdict": "PASS - primary-source confirmed",
+      "depends_on": [],
+      "expression": ""
+    },
+    {
+      "fact_id": "fact-smaj15a-clamp",
+      "record_id": "rec-smaj15a-c571368",
+      "source_id": "src-smaj15a-hdiode-primary",
+      "class": "PROTECTION_CLAMP",
+      "value": 24.4,
+      "unit": "V",
+      "conditions": "maximum clamping voltage VC at IPP 16.4 A, 10/1000 us waveform, TA=25 C; not a universal rail ceiling",
+      "locator": "src-smaj15a-hdiode-primary: page 2 electrical characteristics table, SMAJ15A row, VC and IPP columns",
+      "provenance": "PRIMARY-SPEC",
+      "verdict": "PASS - primary-source confirmed",
+      "depends_on": [],
+      "expression": ""
+    },
+    {
+      "fact_id": "fact-smaj15a-pppm",
+      "record_id": "rec-smaj15a-c571368",
+      "source_id": "src-smaj15a-hdiode-primary",
+      "class": "TRANSIENT",
+      "value": 400,
+      "unit": "W",
+      "conditions": "peak pulse power dissipation on the 10/1000 us waveform, TA=25 C, non-repetitive, derated above 25 C per the family derating figure",
+      "locator": "src-smaj15a-hdiode-primary: page 1 absolute maximum ratings table, PPPM row",
+      "provenance": "PRIMARY-SPEC",
+      "verdict": "PASS - primary-source confirmed",
+      "depends_on": [],
+      "expression": ""
+    },
+    {
+      "fact_id": "fact-smaj15a-ifsm",
+      "record_id": "rec-smaj15a-c571368",
+      "source_id": "src-smaj15a-hdiode-primary",
+      "class": "ABSOLUTE_MAXIMUM",
+      "value": 40,
+      "unit": "A",
+      "conditions": "peak forward surge current, 8.3 ms single half sine-wave, unidirectional devices only",
+      "locator": "src-smaj15a-hdiode-primary: page 1 absolute maximum ratings table, IFSM row",
+      "provenance": "PRIMARY-SPEC",
+      "verdict": "PASS - primary-source confirmed",
+      "depends_on": [],
+      "expression": ""
+    },
+    {
+      "fact_id": "fact-smaj15a-leakage",
+      "record_id": "rec-smaj15a-c571368",
+      "source_id": "src-smaj15a-hdiode-primary",
+      "class": "GUARANTEED_ELECTRICAL",
+      "value": 5.0,
+      "unit": "uA",
+      "conditions": "maximum reverse leakage IR at VWM 15.0 V, TA=25 C",
+      "locator": "src-smaj15a-hdiode-primary: page 2 electrical characteristics table, SMAJ15A row, IR and VWM columns",
+      "provenance": "PRIMARY-SPEC",
+      "verdict": "PASS - primary-source confirmed",
+      "depends_on": [],
+      "expression": ""
+    },
+    {
+      "fact_id": "fact-smaj15a-polarity",
+      "record_id": "rec-smaj15a-c571368",
+      "source_id": "src-smaj15a-hdiode-primary",
+      "class": "PROJECT_STATE",
+      "value": "color band denotes cathode end",
+      "unit": "NONE",
+      "conditions": "manufacturer marking rule for unidirectional devices; project pad mapping is recorded in the owner pin map",
+      "locator": "src-smaj15a-hdiode-primary: page 1 mechanical data, polarity statement row",
+      "provenance": "PRIMARY-SPEC",
+      "verdict": "PASS - primary-source confirmed",
+      "depends_on": [],
+      "expression": ""
+    },
+    {
+      "fact_id": "fact-smaj15a-margin-plus12",
+      "record_id": "rec-smaj15a-c571368",
+      "source_id": "src-smaj15a-hdiode-primary",
+      "class": "PROJECT_STATE",
+      "value": 3,
+      "unit": "V",
+      "conditions": "standoff margin at nominal rail voltage: TVS1 sits on the +12 V output rail and TVS3 on the -12 V output rail (reverse-biased at 12 V magnitude); margin = VWM 15 V minus the 12 V nominal rail magnitude. Rail tolerance/ripple stress and acceptability are judged by the review and decision tasks, not by this record.",
+      "locator": "Calculated from fact-smaj15a-standoff and the project +/-12 V output rail definition (board-b TVS1/TVS3 placements, CLAUDE.md output architecture)",
+      "provenance": "CALCULATED",
+      "verdict": "PASS - primary-source confirmed",
+      "depends_on": [
+        "fact-smaj15a-standoff"
+      ],
+      "expression": "fact_smaj15a_standoff - 12"
+    },
+    {
+      "fact_id": "fact-smaj15a-margin-percent",
+      "record_id": "rec-smaj15a-c571368",
+      "source_id": "src-smaj15a-hdiode-primary",
+      "class": "PROJECT_STATE",
+      "value": 25,
+      "unit": "%",
+      "conditions": "standoff margin as a percentage of the nominal 12 V rail magnitude, for both the +12 V (TVS1) and -12 V (TVS3) placements; 25% margin at nominal, before rail tolerance and ripple. Note: the epic sub-issue text described this as '12 V standoff = 0% margin'; the retained primary datasheet gives VWM 15 V for SMAJ15A, so the deterministic margin at nominal is 25%, recorded here as math only.",
+      "locator": "Calculated from fact-smaj15a-standoff versus the 12 V nominal rail magnitude (board-b TVS1/TVS3 placements)",
+      "provenance": "CALCULATED",
+      "verdict": "PASS - primary-source confirmed",
+      "depends_on": [
+        "fact-smaj15a-standoff"
+      ],
+      "expression": "(fact_smaj15a_standoff - 12) / 12 * 100"
+    },
+    {
+      "fact_id": "fact-smaj15a-tvs3-orientation",
+      "record_id": "rec-smaj15a-c571368",
+      "source_id": "src-smaj15a-hdiode-primary",
+      "class": "PROJECT_STATE",
+      "value": "TVS3 unidirectional orientation on the -12 V rail (cathode to 0 V, anode to -12 V) is not yet locked by a generator spec",
+      "unit": "NONE",
+      "conditions": "current project state: the board-b generator spec does not exist yet, so the -12 V rail orientation of the unidirectional TVS3 cannot be verified against a generated netlist or ERC; requires the schematic-generation wave plus visual/bench review",
+      "locator": "Calculated project state: page 1 polarity marking rule versus the absent board-b generator spec (scripts/schgen/board_b_spec.py)",
+      "provenance": "PROJECT-CHOICE",
+      "verdict": "NEEDS BENCH",
+      "depends_on": [],
+      "expression": ""
+    }
+  ]
+}
