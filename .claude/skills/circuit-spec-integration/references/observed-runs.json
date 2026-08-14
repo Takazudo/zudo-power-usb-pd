@@ -140,7 +140,7 @@
       "runner": "Claude Code CLI 2.1.232",
       "model": "claude-haiku-4-5-20251001",
       "run_date": "2026-08-14",
-      "cost_usd": 0.034522000000000004,
+      "cost_usd": 0.034522,
       "invocation": {
         "skill": "/circuit-spec-integration",
         "tools": "disabled",

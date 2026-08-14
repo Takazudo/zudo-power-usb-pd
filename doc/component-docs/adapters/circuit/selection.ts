@@ -9,13 +9,15 @@
  *
  * The `expect` counts are the other half of that guarantee, in the opposite
  * direction: if the provider corpus shrinks or grows, generation fails instead
- * of quietly publishing a different set. 41 records across the 20 wave-3
- * bundles (#107-#117) and the 9 cross-component rules (#118) are unchanged;
- * `sources` moved from 128 to 126 when the wave-6 part-swap decisions
- * (issue #132 repoint) swapped 4 demoted sources (SD05, the old PTC1, and
- * the C22383803/C22383804 passive aliases) for 3 replacement source sets
+ * of quietly publishing a different set. The provider corpus is the
+ * inventory's line-holder records (replacement-candidate records are
+ * excluded in `evidence.ts`): 41 records and 126 of their sources, plus
+ * the 9 cross-component rules (#118). The wave-3 figures were 41/128
+ * (#107-#117); the #132 repoint of the wave-6 part-swap decisions traded
+ * the 4 demoted records' 8 sources (SD05, the old PTC1, and the
+ * C22383803/C22383804 passive aliases) for the 3 replacement records' 4
  * (C335982, C7529589, C87267 -- the fitted C22387780 sources were already
- * selected).
+ * selected), and the wave-6 inventory itself swapped 4 lines for 4.
  *
  * `documentSelections` is deliberately omitted (empty): it is led-lamp's
  * curated single-document shortcut for the 3D-preview / reference feature,
