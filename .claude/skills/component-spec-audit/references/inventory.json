@@ -11,8 +11,8 @@
     }
   ],
   "assertions": {
-    "orderable_lines": 42,
-    "fitted_lines": 41,
+    "orderable_lines": 41,
+    "fitted_lines": 40,
     "dnp_or_hand_fit_lines": 2,
     "fitted_placements": 80,
     "dnp_placements": 4
@@ -61,7 +61,7 @@
     {
       "board": "board-b",
       "refdes": "P1",
-      "reason": "ATT/PDOK 2-pin provision, DNP/bare-copper; exact connector form pending the wave-6 decision task"
+      "reason": "ATT/PDOK provision, bare-copper PogoPad_1x04 per locked decision dec-p1-att-pdok-provision (pins: ATT/PDOK/GND/NC); no orderable/LCSC line"
     }
   ],
   "lines": [
@@ -536,15 +536,15 @@
       ]
     },
     {
-      "line_id": "line-c22383803",
-      "mpn": "RVT1C471M0607",
-      "manufacturer": "ACMECON",
-      "lcsc": "C22383803",
+      "line_id": "line-c335982",
+      "mpn": "RVT1A471M0607",
+      "manufacturer": "ROQANG",
+      "lcsc": "C335982",
       "package": "CAP-SMD_BD6.3-L6.6-W6.6-FD",
       "owner_skill": "component-project-passives",
       "identity_state": "VERIFIED",
       "source_state": "AVAILABLE",
-      "function": "470 uF 10V aluminum electrolytic capacitor, +7.5V DC-DC output bulk filter",
+      "function": "470 uF 10V aluminum electrolytic capacitor, +7.5V DC-DC output bulk filter (canonical LCSC per decision c)",
       "placements": [
         {
           "board": "board-b",
@@ -559,29 +559,6 @@
         {
           "board": "board-b",
           "refdes": "C23",
-          "dnp": false
-        }
-      ]
-    },
-    {
-      "line_id": "line-c22383804",
-      "mpn": "RVT1E101M0607",
-      "manufacturer": "ACMECON",
-      "lcsc": "C22383804",
-      "package": "CAP-SMD_BD6.3-L6.6-W6.6-LS7.3-FD",
-      "owner_skill": "component-project-passives",
-      "identity_state": "VERIFIED",
-      "source_state": "AVAILABLE",
-      "function": "100 uF aluminum electrolytic capacitor, DC-DC output filter",
-      "placements": [
-        {
-          "board": "board-b",
-          "refdes": "C5",
-          "dnp": false
-        },
-        {
-          "board": "board-b",
-          "refdes": "C7",
           "dnp": false
         }
       ]
@@ -738,15 +715,15 @@
       ]
     },
     {
-      "line_id": "line-c20808",
-      "mpn": "SMD1210P200TF",
+      "line_id": "line-c7529589",
+      "mpn": "SMD1210P150TF/16",
       "manufacturer": "RUILON",
-      "lcsc": "C20808",
+      "lcsc": "C7529589",
       "package": "F1210",
       "owner_skill": "component-ptc-smd1210p200tf-c20808",
       "identity_state": "VERIFIED",
       "source_state": "AVAILABLE",
-      "function": "2A-hold PTC resettable fuse, +12V output overcurrent protection",
+      "function": "1.5A-hold 16V PTC resettable fuse, +12V output overcurrent protection (decision g replacement)",
       "placements": [
         {
           "board": "board-b",
@@ -815,15 +792,15 @@
       ]
     },
     {
-      "line_id": "line-c502527",
-      "mpn": "SD05",
-      "manufacturer": "MDD (Microdiode Semiconductor)",
-      "lcsc": "C502527",
-      "package": "SOD-323_L1.8-W1.3-LS2.5-FD",
+      "line_id": "line-c87267",
+      "mpn": "SMAJ6.5A",
+      "manufacturer": "Brightking",
+      "lcsc": "C87267",
+      "package": "D-FLAT_L4.3-W2.6-LS5.3-RD",
       "owner_skill": "component-sd05-c502527",
       "identity_state": "VERIFIED",
       "source_state": "AVAILABLE",
-      "function": "TVS diode, +5V output overvoltage protection",
+      "function": "400W unidirectional TVS diode, +5V output overvoltage protection (decision a replacement for the SD05)",
       "placements": [
         {
           "board": "board-b",
@@ -841,8 +818,18 @@
       "owner_skill": "component-project-passives",
       "identity_state": "VERIFIED",
       "source_state": "AVAILABLE",
-      "function": "470 uF aluminum electrolytic capacitor, LDO output/protection-stage decoupling",
+      "function": "470 uF 35V aluminum electrolytic capacitor, +15V input-bus bulk and LDO output/protection-stage decoupling",
       "placements": [
+        {
+          "board": "board-b",
+          "refdes": "C5",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "C7",
+          "dnp": false
+        },
         {
           "board": "board-b",
           "refdes": "C14",

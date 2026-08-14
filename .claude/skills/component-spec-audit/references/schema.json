@@ -9,7 +9,8 @@
     "symbol_library": "symbols/zudo-pd.kicad_sym",
     "footprint_library_dir": "footprints/kicad/zudo-power.pretty",
     "mpn_from_value_lcsc": [
-      "C144397"
+      "C144397",
+      "C591344"
     ],
     "mpn_from_value_contract": "Generator entries whose symbol is a generic KiCad connector symbol carry the orderable MPN in the value field instead. Only the LCSC IDs listed here may resolve their MPN that way; every other line resolves its MPN from the symbol name."
   },

@@ -4,8 +4,8 @@
   "records": [
     {
       "record_id": "rec-sd05-c502527",
-      "line_id": "line-c502527",
-      "candidate_id": null,
+      "line_id": null,
+      "candidate_id": "cand-sd05-c502527",
       "kind": "standalone",
       "parent_record_id": null,
       "mpn": "SD05",
@@ -65,14 +65,14 @@
     },
     {
       "record_id": "rec-cand-smaj6-5a-c87267",
-      "line_id": null,
-      "candidate_id": "cand-smaj6-5a-c87267",
+      "line_id": "line-c87267",
+      "candidate_id": null,
       "kind": "standalone",
       "parent_record_id": null,
       "mpn": "SMAJ6.5A",
       "manufacturer": "Brightking",
       "lcsc": "C87267",
-      "package": "SMA(DO-214AC)",
+      "package": "D-FLAT_L4.3-W2.6-LS5.3-RD",
       "source_ids": [
         "src-cand-smaj6-5a-brightking-primary",
         "src-cand-smaj6-5a-lcsc-identity"

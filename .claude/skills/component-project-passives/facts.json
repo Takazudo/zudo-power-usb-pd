@@ -2534,6 +2534,39 @@
       "verdict": "NOT APPLICABLE",
       "depends_on": [],
       "expression": ""
+    },
+    {
+      "fact_id": "fact-c335982-manufacturer",
+      "record_id": "rec-c335982",
+      "source_id": "src-c335982-identity",
+      "class": "PROJECT_STATE",
+      "value": "ROQANG",
+      "unit": "NONE",
+      "conditions": "manufacturer attribution from the LCSC product listing only; no primary ROQANG datasheet retrieved in this pass",
+      "locator": "LCSC product-detail page JSON-LD block, manufacturer row",
+      "provenance": "UNVERIFIED",
+      "verdict": "UNSOURCED",
+      "depends_on": [],
+      "expression": ""
+    },
+    {
+      "fact_id": "fact-c335982-identity",
+      "record_id": "rec-c335982",
+      "source_id": "src-c335982-identity",
+      "class": "PROJECT_STATE",
+      "value": {
+        "lcsc": "C335982",
+        "manufacturer": "ROQANG",
+        "mpn": "RVT1A471M0607",
+        "variant": "470uF 20% 10V SMD aluminum electrolytic (RVT series, 6.3x7.7mm); canonical LCSC for the C4/C22/C23 positions per decisions.json dec-c-canonical-470uf-lcsc; LCSC JSON-LD stock 368560 units at 2026-08-14 retrieval"
+      },
+      "unit": "NONE",
+      "conditions": "stable distributor identity binding of the exact orderable; same-name cross-vendor substitution prohibited; supplies no electrical or thermal authority. Canonical LCSC for C4/C22/C23 per decisions.json dec-c-canonical-470uf-lcsc; C22383803 (ACMECON RVT1C471M0607) is the recorded alias and is not emitted by the generator.",
+      "locator": "src-c335982-identity: JSON-LD product block rows MPN/manufacturer/stockNumber, retrieved 2026-08-14",
+      "provenance": "DISTRIBUTOR-IDENTITY",
+      "verdict": "CONFIRMED - distributor identity only",
+      "depends_on": [],
+      "expression": ""
     }
   ]
 }

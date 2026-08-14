@@ -79,14 +79,6 @@
       "negative": "GVT1E477M0810CNVC C999019"
     },
     {
-      "line_id": "line-c22383803",
-      "negative": "RVT1C471M0607 C999020"
-    },
-    {
-      "line_id": "line-c22383804",
-      "negative": "RVT1E101M0607 C999021"
-    },
-    {
       "line_id": "line-c970687",
       "negative": "RVT1H101M0810 C999022"
     },
@@ -115,10 +107,6 @@
       "negative": "CJ7912 C999028"
     },
     {
-      "line_id": "line-c20808",
-      "negative": "SMD1210P200TF C999029"
-    },
-    {
       "line_id": "line-c70119",
       "negative": "mSMD110-33V C999030"
     },
@@ -129,10 +117,6 @@
     {
       "line_id": "line-c571368",
       "negative": "SMAJ15A C999032"
-    },
-    {
-      "line_id": "line-c502527",
-      "negative": "SD05 C999033"
     },
     {
       "line_id": "line-c22387780",
@@ -165,6 +149,18 @@
     {
       "line_id": "line-c5383092",
       "negative": "2541WR-2X08P C999041"
+    },
+    {
+      "line_id": "line-c87267",
+      "negative": "SMAJ6.5A C999042"
+    },
+    {
+      "line_id": "line-c7529589",
+      "negative": "SMD1210P150TF/16 C999043"
+    },
+    {
+      "line_id": "line-c335982",
+      "negative": "RVT1A471M0607 C999044"
     },
     {
       "line_id": "line-c92321",

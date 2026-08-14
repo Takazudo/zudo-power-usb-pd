@@ -19,6 +19,25 @@
       "locator": "Page 1 title block (RUILON ELECTRONICS logo, 'Please refer to http://www.ruilon.com for current information') and Page 2 Performance Specification table, row SMD1210P200TF",
       "evidence_extract": "Manufacturer datasheet (retrieved via LCSC's datasheet.lcsc.com PDF host; title block bears the RUILON ELECTRONICS logo and directs readers to ruilon.com; File Number SP-PTC-007, Version A4/2026-03-11 printed on every page footer). Page 2 Performance Specification table, row 'SMD1210P200TF' (marking RZ): Ihold=2.00A, Itrip=4.00A, Vmax=6 VDC, Max Time to Trip Current=8.00A/Tmax=1.00S, Imax=35A, Pd typ=0.8W, Rimin=0.015 ohm, R1max=0.07 ohm, Package=1210. This row carries no '/xx' voltage-suffix (the RUILON SMD1210 family encodes higher special-voltage variants as e.g. 'SMD1210P150TF/16' and 'SMD1210P110TF/16'; SMD1210P200TF has no such suffixed sibling in this table and is the exact orderable matching LCSC C20808). Page 1 Environmental Specifications table: passive aging +85C/1000hrs ~5% typical resistance change, humidity aging +85C/85%RH/168h ~5% typical, thermal shock +85C to -40C x20 ~33% typical, resistance to solvent/vibration per MIL-STD-202 no change; ambient operating conditions -40C to +85C; maximum device surface temperature in tripped state 125C. Page 3 Thermal Derating Chart-Ih(A) table, row SMD1210P200TF, 85C ambient column = 0.98A. LCSC's own C20808 product listing independently states 'Polymeric PTC Resettable Fuse 6V 2A Surface Mount 1210', corroborating the 6V Vmax rating read from this table.",
       "refresh_policy": "HASH-LOCKED"
+    },
+    {
+      "source_id": "src-ptc1b-smd1210-datasheet",
+      "record_id": "rec-ptc-smd1210p150tf16-c7529589",
+      "document_title": "Positive Thermal Coefficient (PTC) SMD1210 Series",
+      "document_number": "SP-PTC-007",
+      "revision": "A4",
+      "document_date": "2026-03-11",
+      "authoritative_url": "https://datasheet.lcsc.com/datasheet/pdf/95664877074e59702390e7479561744e.pdf?productCode=C20808",
+      "alternate_authoritative_url": "https://www.lcsc.com/datasheet/C20808.pdf",
+      "retrieval_date": "2026-08-14",
+      "authority_class": "MANUFACTURER_PRIMARY",
+      "sha256": "38488856afb31635c620c4e067f0e2a96f0c53f1cc128f06f899c8cf1406e0a2",
+      "availability": "AVAILABLE",
+      "physical_pdf_page_index": 0,
+      "printed_page_label": "1",
+      "locator": "Page 2 Performance Specification table, row SMD1210P150TF/16 (the 16V special-voltage suffixed sibling of the SMD1210P200TF row); Page 1 title block (RUILON ELECTRONICS logo)",
+      "evidence_extract": "Same retained RUILON SMD1210 Series family datasheet as src-ptc1-smd1210-datasheet (File Number SP-PTC-007, Version A4/2026-03-11; identical retained PDF, identical SHA-256). Its Page 2 Performance Specification table encodes higher special-voltage variants with a '/xx' suffix, including the row 'SMD1210P150TF/16': Ihold=1.50A, Itrip=3.00A, Vmax=16 VDC, Package=1210. These row values are independently corroborated by the LCSC C7529589 product listing ('PTC RESET FUSE 16V 1.5A 1210, RUILON', dated API observation 2026-08-14 recorded in scripts/schgen/decisions.json dec-g-ptc1-replacement) and by the project's components/ptc-12v.md page, which documents this exact orderable (C7529589) with the same 1.5A hold / 3.0A trip / 16V maximum voltage figures. The Page 3 Thermal Derating Chart-Ih(A) table has no retained row for the /16 suffixed variant, so no 85C derated hold figure is recorded for this part.",
+      "refresh_policy": "HASH-LOCKED"
     }
   ]
 }

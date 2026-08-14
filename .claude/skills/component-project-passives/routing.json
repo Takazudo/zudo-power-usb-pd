@@ -550,6 +550,31 @@
         "LED KT-0603R"
       ],
       "negative": "KT-0603R C9999916"
+    },
+    {
+      "route_id": "route-c335982",
+      "record_id": "rec-c335982",
+      "aliases": {
+        "mpn": [
+          "RVT1A471M0607"
+        ],
+        "lcsc": [
+          "C335982"
+        ],
+        "manufacturer": [
+          "ROQANG"
+        ],
+        "function": [
+          "electrolytic capacitor"
+        ]
+      },
+      "positive": [
+        "RVT1A471M0607",
+        "C335982",
+        "ROQANG RVT1A471M0607",
+        "electrolytic capacitor RVT1A471M0607"
+      ],
+      "negative": "RVT1A471M0607 C999991"
     }
   ]
 }

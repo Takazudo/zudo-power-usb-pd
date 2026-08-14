@@ -454,8 +454,8 @@
     },
     {
       "record_id": "rec-c22383803",
-      "line_id": "line-c22383803",
-      "candidate_id": null,
+      "line_id": null,
+      "candidate_id": "cand-c22383803",
       "kind": "standalone",
       "parent_record_id": null,
       "mpn": "RVT1C471M0607",
@@ -483,8 +483,8 @@
     },
     {
       "record_id": "rec-c22383804",
-      "line_id": "line-c22383804",
-      "candidate_id": null,
+      "line_id": null,
+      "candidate_id": "cand-c22383804",
       "kind": "standalone",
       "parent_record_id": null,
       "mpn": "RVT1E101M0607",
@@ -647,6 +647,28 @@
       ],
       "open_domains": [
         "luminous-intensity-at-installed-current"
+      ]
+    },
+    {
+      "record_id": "rec-c335982",
+      "line_id": "line-c335982",
+      "candidate_id": null,
+      "kind": "standalone",
+      "parent_record_id": null,
+      "mpn": "RVT1A471M0607",
+      "manufacturer": "ROQANG",
+      "lcsc": "C335982",
+      "package": "CAP-SMD_BD6.3-L6.6-W6.6-FD",
+      "source_ids": [
+        "src-c335982-identity"
+      ],
+      "fact_ids": [
+        "fact-c335982-manufacturer",
+        "fact-c335982-identity"
+      ],
+      "interaction_ids": [],
+      "open_domains": [
+        "manufacturer-primary-datasheet"
       ]
     }
   ]

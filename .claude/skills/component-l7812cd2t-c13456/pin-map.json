@@ -4,7 +4,7 @@
     {
       "pin_map_id": "pinmap-l7812cd2t-c13456",
       "record_id": "rec-l7812cd2t-c13456",
-      "symbol": "L7812CD2T-TR",
+      "symbol": "L7812CD2T",
       "footprint": "TO-263-2_L10.0-W9.1-P5.08-LS15.2-TL",
       "pins": [
         {
@@ -26,7 +26,7 @@
           "function": "ground tab (DS0422 Figure 2: tab = GND, middle lead position cut; this footprint numbers the 8.40 x 10.57 mm tab pad 4 and has no pad 2)"
         }
       ],
-      "reviewed_by": "child-112 (issue #112), against KiCad symbol L7812CD2T-TR, zudo-power.pretty footprint pads, and DS0422 Figure 2"
+      "reviewed_by": "child-112 (issue #112), against KiCad symbol L7812CD2T-TR, zudo-power.pretty footprint pads, and DS0422 Figure 2; symbol renamed to the bare-MPN generator symbol L7812CD2T (clone of L7812CD2T-TR, identical pins 1=IN/4=GND/3=OUT) by the issue-125 worktree child for generator/pin-map/MPN parity"
     }
   ]
 }

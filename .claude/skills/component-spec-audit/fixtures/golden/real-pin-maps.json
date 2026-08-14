@@ -146,7 +146,7 @@
     {
       "record_id": "rec-l7812cd2t-c13456",
       "pin_map_id": "pinmap-l7812cd2t-c13456",
-      "canonical_sha256": "f09a2459a6c3b1476f9930da1c0aedec7f3646173d96b2f5a2d249be76507cd5",
+      "canonical_sha256": "3d8885f55e343f8da8bd0844ffd0e23f863157ac3acb6d66df5cb51e70f76bf4",
       "evidence_fact_ids": [
         "fact-l7812cd2t-pinout"
       ],
@@ -176,7 +176,7 @@
     {
       "record_id": "rec-l7805abd2t-c86206",
       "pin_map_id": "pinmap-l7805abd2t-c86206",
-      "canonical_sha256": "47887f8ffcd40c629dfb728693381a20aa9be621c588b3555434430d3924e38c",
+      "canonical_sha256": "118cf0a7b4a2f283562d0a2ad84380ab0cc91d5a6195f5eb8153b1affe52b0df",
       "evidence_fact_ids": [
         "fact-l7805abd2t-pinout"
       ],
@@ -969,7 +969,7 @@
     {
       "record_id": "rec-c2289",
       "pin_map_id": "pinmap-c2289",
-      "canonical_sha256": "6b8fa19334e8c7406fc8778fe371cded5d652c3a08db1098460cfcf433b2d7a6",
+      "canonical_sha256": "0e92b23ee9806b29a20df72c6d8a14d6b04dab8901350174b642d50d2629ae0f",
       "evidence_fact_ids": [
         "fact-c2289-polarity-note"
       ],
@@ -993,7 +993,7 @@
     {
       "record_id": "rec-c2288",
       "pin_map_id": "pinmap-c2288",
-      "canonical_sha256": "fbe9f3119cb260cece39ef4101c88eef4dccd8cf37a531128feeec50c784ca22",
+      "canonical_sha256": "b4ea278eba07ece50de8cc3a0eda6ab4a5eec6fba3c73ec591a1b1c5b7e1d1dc",
       "evidence_fact_ids": [
         "fact-c2288-polarity-note"
       ],
@@ -1037,6 +1037,29 @@
         }
       ],
       "reviewer": "component-project-passives self-review against symbols/zudo-pd.kicad_sym 'KT-0603R' and the project footprint file; Pin numbering matches the blue LED (Bluelight0603/C2288): pin1=K(cathode)/pin2=A(anode)."
+    },
+    {
+      "record_id": "rec-ptc-smd1210p150tf16-c7529589",
+      "pin_map_id": "pinmap-ptc1b-smd1210p150tf16-c7529589",
+      "canonical_sha256": "fa1ecc61d3f20e80efaf0a7274b63f4515cd18cd5f24c47d79296e9f8f031241",
+      "evidence_fact_ids": [
+        "fact-ptc1b-manufacturer",
+        "fact-ptc1b-vmax"
+      ],
+      "trust_status": "TRUSTED",
+      "critical_pins": [],
+      "reviewer": "issue-125 worktree child (Claude Fable 5), foreground review of the unpolarized two-terminal map against the cloned SMD1210P150TF/16 symbol and the F1210 footprint"
+    },
+    {
+      "record_id": "rec-c335982",
+      "pin_map_id": "pinmap-c335982",
+      "canonical_sha256": "71321c5784d3ba3c6cac0f0f17253424a861d3880bbe372502bb6ab77234db11",
+      "evidence_fact_ids": [
+        "fact-c335982-identity"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [],
+      "reviewer": "issue-125 worktree child (Claude Fable 5), foreground review against the existing RVT1A471M0607_C335982 symbol and CAP-SMD_BD6.3-L6.6-W6.6-FD footprint"
     },
     {
       "record_id": "rec-bzt52c11-c92321",
