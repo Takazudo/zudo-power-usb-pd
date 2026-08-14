@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "skill": "component-ptc-msmd110-33v-c70119",
+  "records": [
+    {
+      "record_id": "rec-ptc-msmd110-33v-c70119",
+      "line_id": "line-c70119",
+      "candidate_id": null,
+      "kind": "standalone",
+      "parent_record_id": null,
+      "mpn": "mSMD110-33V",
+      "manufacturer": "TECHFUSE",
+      "lcsc": "C70119",
+      "package": "F1812",
+      "source_ids": ["src-ptc2-msmd110-datasheet"],
+      "fact_ids": [
+        "fact-ptc2-manufacturer",
+        "fact-ptc2-ihold",
+        "fact-ptc2-itrip",
+        "fact-ptc2-vmax",
+        "fact-ptc2-imax",
+        "fact-ptc2-pd-typ",
+        "fact-ptc2-time-to-trip",
+        "fact-ptc2-rimin",
+        "fact-ptc2-r1max",
+        "fact-ptc2-ihold-margin",
+        "fact-ptc2-vmax-margin"
+      ],
+      "interaction_ids": ["int-ptc2-5v-rail-protection"],
+      "open_domains": ["ambient-derating-fault-current-and-cycling"]
+    }
+  ]
+}

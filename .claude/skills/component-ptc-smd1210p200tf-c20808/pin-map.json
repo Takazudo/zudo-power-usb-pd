@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "pin_maps": [
+    {
+      "pin_map_id": "pinmap-ptc1-smd1210p200tf-c20808",
+      "record_id": "rec-ptc-smd1210p200tf-c20808",
+      "symbol": "SMD1210P200TF",
+      "footprint": "F1210",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "terminal (unpolarized, two-terminal PPTC)"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "terminal (unpolarized, two-terminal PPTC)"
+        }
+      ],
+      "reviewed_by": "issue-115 worktree child (Claude Sonnet 5) foreground self-review against symbols/zudo-pd.kicad_sym SMD1210P200TF (pin 1, pin 2, generic names) and footprints/kicad/zudo-power.pretty/F1210.kicad_mod (pad 1, pad 2); independent second-reviewer pass pending"
+    }
+  ]
+}

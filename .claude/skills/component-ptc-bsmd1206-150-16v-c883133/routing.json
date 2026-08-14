@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "routes": [
+    {
+      "route_id": "route-ptc3-bsmd1206-150-16v",
+      "record_id": "rec-ptc-bsmd1206-150-16v-c883133",
+      "aliases": {
+        "mpn": ["BSMD1206-150-16V"],
+        "lcsc": ["C883133"],
+        "manufacturer": ["BHFUSE"],
+        "function": ["-12V output overcurrent protection PTC"]
+      },
+      "positive": ["check BSMD1206-150-16V pinout", "audit C883133 voltage rating"],
+      "negative": ["check BSMD1206-100-16V pinout"]
+    }
+  ]
+}

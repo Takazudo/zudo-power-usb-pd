@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "pin_maps": [
+    {
+      "pin_map_id": "pinmap-ptc2-msmd110-33v-c70119",
+      "record_id": "rec-ptc-msmd110-33v-c70119",
+      "symbol": "mSMD110-33V",
+      "footprint": "F1812",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "terminal (unpolarized, two-terminal PPTC)"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "terminal (unpolarized, two-terminal PPTC)"
+        }
+      ],
+      "reviewed_by": "issue-115 worktree child (Claude Sonnet 5) foreground self-review against symbols/zudo-pd.kicad_sym mSMD110-33V (pin 1, pin 2, generic names) and footprints/kicad/zudo-power.pretty/F1812.kicad_mod (pad 1, pad 2); independent second-reviewer pass pending"
+    }
+  ]
+}
