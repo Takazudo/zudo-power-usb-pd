@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "routes": [
+    {
+      "route_id": "route-stusb4500qtr",
+      "record_id": "rec-stusb4500qtr",
+      "aliases": {
+        "mpn": ["STUSB4500QTR"],
+        "lcsc": ["C2678061"],
+        "manufacturer": ["ST (STMicroelectronics)", "STMicroelectronics", "ST"],
+        "function": [
+          "USB-PD sink controller",
+          "USB PD sink controller",
+          "PD sink controller"
+        ]
+      },
+      "positive": [
+        "STUSB4500QTR pin audit",
+        "C2678061 NVM",
+        "ST (STMicroelectronics) STUSB4500QTR",
+        "USB-PD sink controller STUSB4500QTR",
+        "board-a U1 STUSB4500QTR"
+      ],
+      "negative": ["STUSB4500L C2678062", "STUSB4700"]
+    }
+  ]
+}
