@@ -202,6 +202,168 @@
         }
       ],
       "reviewer": "child-112 (issue #112)"
+    },
+    {
+      "record_id": "rec-stusb4500qtr",
+      "pin_map_id": "pinmap-stusb4500qtr",
+      "canonical_sha256": "d3337ac911b24a312359737028faedcece369f55a6838818233fd9d923194908",
+      "evidence_fact_ids": [
+        "fact-stusb-pin-states"
+      ],
+      "trust_status": "UNSOURCED",
+      "critical_pins": [
+        {
+          "symbol_pin": "1",
+          "name": "CC1DB",
+          "footprint_pad": "1",
+          "function": "dead-battery enable CC1"
+        },
+        {
+          "symbol_pin": "10",
+          "name": "GND",
+          "footprint_pad": "10",
+          "function": "ground"
+        },
+        {
+          "symbol_pin": "11",
+          "name": "ATTACH",
+          "footprint_pad": "11",
+          "function": "active-low open-drain attach"
+        },
+        {
+          "symbol_pin": "12",
+          "name": "ADDR0",
+          "footprint_pad": "12",
+          "function": "I2C address"
+        },
+        {
+          "symbol_pin": "13",
+          "name": "ADDR1",
+          "footprint_pad": "13",
+          "function": "I2C address"
+        },
+        {
+          "symbol_pin": "14",
+          "name": "POWER_OK3",
+          "footprint_pad": "14",
+          "function": "active-low open-drain contract flag"
+        },
+        {
+          "symbol_pin": "15",
+          "name": "GPIO",
+          "footprint_pad": "15",
+          "function": "configurable active-low open-drain"
+        },
+        {
+          "symbol_pin": "16",
+          "name": "VBUS_EN_SNK",
+          "footprint_pad": "16",
+          "function": "active-low HV open-drain sink-path enable"
+        },
+        {
+          "symbol_pin": "17",
+          "name": "A_B_SIDE",
+          "footprint_pad": "17",
+          "function": "active-low open-drain orientation"
+        },
+        {
+          "symbol_pin": "18",
+          "name": "VBUS_VS_DISCH",
+          "footprint_pad": "18",
+          "function": "VBUS sense/monitor/internal discharge"
+        },
+        {
+          "symbol_pin": "19",
+          "name": "ALERT",
+          "footprint_pad": "19",
+          "function": "I2C interrupt active-low OD"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "CC1",
+          "footprint_pad": "2",
+          "function": "configuration channel 1"
+        },
+        {
+          "symbol_pin": "20",
+          "name": "POWER_OK2",
+          "footprint_pad": "20",
+          "function": "HV active-low OD contract flag"
+        },
+        {
+          "symbol_pin": "21",
+          "name": "VREG_1V2",
+          "footprint_pad": "21",
+          "function": "1.2 V regulator decoupling"
+        },
+        {
+          "symbol_pin": "22",
+          "name": "VSYS",
+          "footprint_pad": "22",
+          "function": "system supply or ground if unused"
+        },
+        {
+          "symbol_pin": "23",
+          "name": "VREG_2V7",
+          "footprint_pad": "23",
+          "function": "2.7 V regulator decoupling"
+        },
+        {
+          "symbol_pin": "24",
+          "name": "VDD",
+          "footprint_pad": "24",
+          "function": "VBUS-side supply"
+        },
+        {
+          "symbol_pin": "25",
+          "name": "EP",
+          "footprint_pad": "25",
+          "function": "exposed-pad ground"
+        },
+        {
+          "symbol_pin": "3",
+          "name": "NC",
+          "footprint_pad": "3",
+          "function": "no connect"
+        },
+        {
+          "symbol_pin": "4",
+          "name": "CC2",
+          "footprint_pad": "4",
+          "function": "configuration channel 2"
+        },
+        {
+          "symbol_pin": "5",
+          "name": "CC2DB",
+          "footprint_pad": "5",
+          "function": "dead-battery enable CC2"
+        },
+        {
+          "symbol_pin": "6",
+          "name": "RESET",
+          "footprint_pad": "6",
+          "function": "active-high reset"
+        },
+        {
+          "symbol_pin": "7",
+          "name": "SCL",
+          "footprint_pad": "7",
+          "function": "I2C clock"
+        },
+        {
+          "symbol_pin": "8",
+          "name": "SDA",
+          "footprint_pad": "8",
+          "function": "I2C data open drain"
+        },
+        {
+          "symbol_pin": "9",
+          "name": "DISCH",
+          "footprint_pad": "9",
+          "function": "internal discharge input or external discharge active-low OD"
+        }
+      ],
+      "reviewer": "issue-107 foreground port review against the retained DS12499 Rev 8 mirror pin table and the board-a baseline"
     }
   ]
 }
