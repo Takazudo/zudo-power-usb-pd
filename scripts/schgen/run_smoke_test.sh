@@ -3,8 +3,10 @@
 # zudo-pd symbols, without touching the repo tree or requiring KiCad.
 #
 # Generates into a throwaway temp dir, parses the emitted .kicad_sch back
-# via sexp.py, and asserts the emitted global net labels equal the smoke
-# spec's NETS.
+# via sexp.py, asserts the emitted global net labels equal the smoke spec's
+# NETS, and runs the verify_geometry.py endpoint/collision checks (every
+# label on a pin endpoint, no cross-net coordinate collisions, no_connect
+# markers matching NO_CONNECT) against the emitted file.
 #
 # Usage: bash scripts/schgen/run_smoke_test.sh
 # Exit codes: 0 PASS, 1 FAIL
@@ -22,6 +24,7 @@ script_dir = sys.argv[1]
 sys.path.insert(0, script_dir)
 
 import schgen_core
+import verify_geometry
 from sexp import load, atom, find_all
 
 spec = importlib.import_module('test_spec_smoke')
@@ -42,6 +45,29 @@ with tempfile.TemporaryDirectory() as tmp_dir:
               f'spec NETS {sorted(expected_nets)}')
         sys.exit(1)
 
+    problems = verify_geometry.run_check(spec, out_path)
+    if problems:
+        print(f'FAIL: verify_geometry found {len(problems)} problem(s):')
+        for problem in problems:
+            print(f'  - {problem}')
+        sys.exit(1)
+
+    # negative control: a corrupted label coordinate must be detected,
+    # proving the geometry check can actually fail
+    with open(out_path, encoding='utf-8') as f:
+        text = f.read()
+    needle = '(global_label "SMOKE_A"\n\t\t(shape passive)\n\t\t(at '
+    i = text.index(needle) + len(needle)
+    j = text.index(' ', i)
+    broken = text[:i] + str(float(text[i:j]) + 1.27) + text[j:]
+    broken_path = os.path.join(tmp_dir, 'smoke-broken.kicad_sch')
+    with open(broken_path, 'w', encoding='utf-8') as f:
+        f.write(broken)
+    if not verify_geometry.run_check(spec, broken_path):
+        print('FAIL: verify_geometry did not detect a corrupted label coordinate')
+        sys.exit(1)
+
     print(f'PASS: {out_path} regenerated, '
-          f'{len(emitted_nets)} global net labels match spec NETS')
+          f'{len(emitted_nets)} global net labels match spec NETS, '
+          f'geometry checks clean (and the negative control fails as it should)')
 PY
