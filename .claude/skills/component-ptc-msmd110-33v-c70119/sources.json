@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "source_id": "src-ptc2-msmd110-datasheet",
+      "record_id": "rec-ptc-msmd110-33v-c70119",
+      "document_title": "mSMD110-33V Techfuse PTC Devices Resettable Fuse Specification Sheet",
+      "document_number": "QR0429",
+      "revision": "2021-4-30",
+      "document_date": "2021-4-30",
+      "authoritative_url": "https://datasheet.lcsc.com/datasheet/pdf/83a52b00a3fb00da0260c29eb7f73d7d.pdf?productCode=C70119",
+      "alternate_authoritative_url": "https://www.lcsc.com/datasheet/C70119.pdf",
+      "retrieval_date": "2026-08-14",
+      "authority_class": "MANUFACTURER_PRIMARY",
+      "sha256": "9f11eea6dd5ca89ad88ff7e9916030dc7ed08ad25a57587ff4ab97922623ee34",
+      "availability": "AVAILABLE",
+      "physical_pdf_page_index": 0,
+      "printed_page_label": "1 of 1",
+      "locator": "Page 1 (only page) title block (SEA&LAND ELECTRONIC CORP., Taiwan; brand line 'Techfuse PTC Devices Resettable Fuse'; DOCUMENT QR0429, REV DATE 2021-4-30) and Table II. Performance Ratings, row mSMD110-33V",
+      "evidence_extract": "Manufacturer datasheet (retrieved via LCSC's datasheet.lcsc.com PDF host; title block bears SEA&LAND ELECTRONIC CORP.'s Taiwan address and the 'Techfuse PTC Devices Resettable Fuse' brand line; DOCUMENT QR0429, no REV LETTER printed, REV DATE 2021-4-30 is the only revision marker; PAGE NO. 1 of 1, a single-page specification sheet). Table II. Performance Ratings, row 'mSMD110-33V': Vmax=33.0V, Imax=100A, Ihold@25C=1.10A, Itrip@25C=2.20A, Pd typ=0.8W, Maximum Time To Trip Current=8.0A/Time=0.30 Sec, Rimin=0.050 ohm, R1max=0.250 ohm. Order Information block: 'mSMD1812 110-33v', Size 4532mm/1812 mils, Hold Current 1.10A, Max voltage 33V, confirming package/orderable identity matches LCSC C70119. Marking on the part body per Table figure: alpha logo over '110'. UL/TUV recognition E201504/E319079 and RoHS/Pb-free/EN14582 marks are printed but not extracted as electrical facts. This single-page sheet contains no ambient-temperature derating chart and no environmental/aging/cycling test table (unlike the RUILON SMD1210 and BHFUSE BSMD1206 series datasheets used for the other two board-b PTCs).",
+      "refresh_policy": "HASH-LOCKED"
+    }
+  ]
+}

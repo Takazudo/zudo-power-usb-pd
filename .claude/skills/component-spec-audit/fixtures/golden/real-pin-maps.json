@@ -649,6 +649,42 @@
         }
       ],
       "reviewer": "x-wt-teams manager, merge-time parity lock: 2-terminal TVS/ESD pin set re-reviewed against the bundle pin map and the KiCad symbol/footprint it names"
+    },
+    {
+      "record_id": "rec-ptc-smd1210p200tf-c20808",
+      "pin_map_id": "pinmap-ptc1-smd1210p200tf-c20808",
+      "canonical_sha256": "a149b5ac0ddec1087d1c83fd673e5bdacd9ba07f8f79dff4d5105055f36a20ea",
+      "evidence_fact_ids": [
+        "fact-ptc1-manufacturer",
+        "fact-ptc1-vmax"
+      ],
+      "trust_status": "TRUSTED",
+      "critical_pins": [],
+      "reviewer": "issue-115 worktree child (Claude Sonnet 5) foreground self-review against symbols/zudo-pd.kicad_sym SMD1210P200TF (pin 1, pin 2, generic names) and footprints/kicad/zudo-power.pretty/F1210.kicad_mod (pad 1, pad 2, 2-terminal unpolarized PPTC); independent second-reviewer pass pending"
+    },
+    {
+      "record_id": "rec-ptc-msmd110-33v-c70119",
+      "pin_map_id": "pinmap-ptc2-msmd110-33v-c70119",
+      "canonical_sha256": "1e102282d978e18f7f76afb93723586e0e87c58111a589219d6ba0f21da77952",
+      "evidence_fact_ids": [
+        "fact-ptc2-manufacturer",
+        "fact-ptc2-ihold"
+      ],
+      "trust_status": "TRUSTED",
+      "critical_pins": [],
+      "reviewer": "issue-115 worktree child (Claude Sonnet 5) foreground self-review against symbols/zudo-pd.kicad_sym mSMD110-33V (pin 1, pin 2, generic names) and footprints/kicad/zudo-power.pretty/F1812.kicad_mod (pad 1, pad 2, 2-terminal unpolarized PPTC); independent second-reviewer pass pending"
+    },
+    {
+      "record_id": "rec-ptc-bsmd1206-150-16v-c883133",
+      "pin_map_id": "pinmap-ptc3-bsmd1206-150-16v-c883133",
+      "canonical_sha256": "7a5b5062b5de2b3439da3e3e17bc92d1a3e11adbc85b1346b2062657f1706406",
+      "evidence_fact_ids": [
+        "fact-ptc3-manufacturer",
+        "fact-ptc3-ihold"
+      ],
+      "trust_status": "TRUSTED",
+      "critical_pins": [],
+      "reviewer": "issue-115 worktree child (Claude Sonnet 5) foreground self-review against symbols/zudo-pd.kicad_sym BSMD1206-150-16V (pin 1, pin 2, generic names) and footprints/kicad/zudo-power.pretty/F1206.kicad_mod (pad 1, pad 2, 2-terminal unpolarized PPTC); independent second-reviewer pass pending"
     }
   ]
 }
