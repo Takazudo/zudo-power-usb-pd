@@ -225,10 +225,32 @@ describe("the stylesheet declares what the components emit", () => {
     assert.match(stylesheet, /\.zld-evidence-table table\s*\{[^}]*min-width:/u);
   });
 
-  // led-lamp's `.zld-component-references*` / `.zld-preview-dialog*` rules
-  // (auto-fit preview grid, enlarge dialogs, 44px touch targets) style the
-  // `ComponentReferences`/`PackageModelViewer` 3D-preview feature, which is
-  // not ported here — zudo-pd has no 3D assets, so there is no such markup
-  // to style. See `core/render/record.ts` (no `componentReferencesSection`)
-  // and `core/mdx.ts`'s `ALLOWED_COMPONENT_ATTRIBUTES`.
+  it("gives component references an auto-fit grid and contained preview media", () => {
+    assert.match(
+      stylesheet,
+      /\.zld-component-references__grid\s*\{[^}]*grid-template-columns:\s*repeat\(auto-fit, minmax\(min\(18rem, 100%\), 1fr\)\)/u,
+    );
+    assert.match(
+      stylesheet,
+      /\.zld-component-references__footprint-frame > a\s*\{[^}]*aspect-ratio:\s*16 \/ 9/u,
+    );
+    assert.match(
+      stylesheet,
+      /\.zld-component-references__footprint img\s*\{[^}]*object-fit:\s*contain/u,
+    );
+  });
+
+  it("styles an unresolved card as a stated fact, not as an error", () => {
+    // Every card is unresolved today. If they read as failures the page looks
+    // broken rather than honest, so the rule must use the muted token the
+    // metadata it stands in for uses — never a danger/warning colour.
+    const rule = /\.zld-component-references__unresolved\s*\{([^}]*)\}/u.exec(stylesheet)?.[1] ?? "";
+    assert.match(rule, /color:\s*var\(--color-muted\)/u);
+    assert.doesNotMatch(rule, /--color-(?:danger|warning)/u);
+  });
+
+  // led-lamp's `.zld-preview-dialog*` / `.zld-model-viewer*` rules (enlarge
+  // dialogs, 44px touch targets, WebGL viewport) style features that are not
+  // ported here — neither the dialog nor the interactive viewer exists yet, so
+  // there is no such markup to style.
 });

@@ -184,6 +184,14 @@ export type InstanceSelection = {
      * a reviewed change rather than a diff nobody looked at.
      */
     readonly integrationRules: number;
+    /**
+     * Distinct KiCad footprints the selected records collapse to. Asserted
+     * for the same reason as the record count and derived from the same
+     * review: promoting a replacement candidate can leave the package count
+     * unchanged (a swap into an existing package) or bump it (a new one), and
+     * which of the two happened must be stated rather than discovered.
+     */
+    readonly footprintPackages: number;
   };
 };
 

@@ -3,6 +3,10 @@ import { describe, it } from "node:test";
 
 import { ALLOWED_COMPONENT_ATTRIBUTES } from "../core/mdx.ts";
 import { CATALOG_INDEX_ANCHOR, renderCatalog } from "../core/render/catalog.ts";
+import {
+  decodeComponentReferencesDescriptor,
+  type ComponentReferencesDescriptor,
+} from "../core/reference-descriptor.ts";
 import { renderRecord, renderRecordsIndex } from "../core/render/record.ts";
 import { buildRecordIndex } from "../core/render/shared.ts";
 import { ComponentDocsError } from "../core/errors.ts";
@@ -34,6 +38,12 @@ const driverPage = pageFor(model, FIXTURE_IDS.driverRecord);
 const sensePage = pageFor(model, FIXTURE_IDS.senseRecord);
 const hostilePage = pageFor(model, FIXTURE_IDS.hostileRecord);
 const catalogPage = renderCatalog(model).contents;
+
+function descriptorOn(page: string): ComponentReferencesDescriptor {
+  const encoded = /<ComponentReferences descriptor="([0-9a-f]+)" \/>/u.exec(page)?.[1];
+  assert.ok(encoded !== undefined, "page has no component-reference block");
+  return decodeComponentReferencesDescriptor(encoded);
+}
 
 describe("catalog", () => {
   it("keeps the catalog index free of reference islands and model viewers", () => {
@@ -131,18 +141,52 @@ describe("catalog", () => {
 });
 
 describe("record page — structure", () => {
-  it("never renders a component-reference block: zudo-pd has no 3D assets", () => {
-    // led-lamp's `ComponentReferences`/`PackageModelViewer` 3D-preview feature
-    // (`core/reference-descriptor.ts`, `core/model-descriptor.ts`,
-    // `ui/component-references.tsx`) is not ported here — there is no
-    // `.wrl`/`.step` audit pair to back it. `record.reference` is always
-    // `null` (see `core/view-model.ts`), and the "catalog" test above already
-    // proves neither tag ever appears; this proves the same for record pages.
+  it("renders exactly one component-reference block per record page", () => {
+    // The block is a single self-closing tag carrying a hex descriptor. A
+    // second one would mean two competing reference sections on one page; a
+    // missing one would silently drop the reader's shortcut to the document.
     for (const record of model.records) {
-      assert.equal(record.reference, null);
       const page = pageFor(model, record.identity.recordId);
-      assert.doesNotMatch(page, /<(?:ComponentReferences|PackageModelViewer)\b/u);
+      const tags = [...page.matchAll(/<ComponentReferences descriptor="([0-9a-f]+)" \/>/gu)];
+      assert.equal(tags.length, 1, `${record.identity.recordId} has ${tags.length} reference blocks`);
+      const descriptor = decodeComponentReferencesDescriptor(tags[0]?.[1] ?? "");
+      assert.equal(descriptor.footprint.name, String(record.reference.footprint.footprintName));
     }
+    // The viewer is a later port; nothing may emit its tag yet.
+    assert.doesNotMatch(driverPage, /<PackageModelViewer\b/u);
+  });
+
+  it("renders an explicit unresolved card rather than dropping one", () => {
+    // The whole point of the optional-card fork. `senseRecord` has no curated
+    // document and no reviewed 3D model — both cards must still be produced,
+    // each naming why it is unresolved.
+    const descriptor = descriptorOn(sensePage);
+    assert.equal(descriptor.document.resolved, false);
+    assert.equal(descriptor.model.resolved, false);
+    assert.equal(descriptor.footprint.resolved, false);
+    for (const card of [descriptor.document, descriptor.footprint, descriptor.model]) {
+      assert.ok(!card.resolved && card.reason.length > 0);
+    }
+  });
+
+  it("carries the reviewed document values through unchanged when one is curated", () => {
+    const descriptor = descriptorOn(driverPage);
+    assert.ok(descriptor.document.resolved);
+    assert.equal(descriptor.document.label, "Datasheet PDF");
+    assert.equal(descriptor.document.title, "FX8860MP-13 datasheet");
+    assert.equal(descriptor.document.authority, "MANUFACTURER_PRIMARY");
+    assert.equal(descriptor.document.url, "https://example.invalid/fx8860mp-13.pdf");
+  });
+
+  it("never lets hostile evidence text reach the descriptor as live markup", () => {
+    // The hostile record's every free-text field carries MDX-active
+    // punctuation. Hex encoding is what keeps any of it out of the attribute
+    // value, so the value itself can carry nothing MDX would interpret.
+    const encoded = /<ComponentReferences descriptor="([0-9a-f]+)" \/>/u.exec(hostilePage)?.[1];
+    assert.ok(encoded !== undefined);
+    assert.match(encoded, /^(?:[0-9a-f]{2})+$/u);
+    assert.ok(!hostilePage.includes(`descriptor="${HOSTILE_TEXT}`));
+    assert.doesNotThrow(() => decodeComponentReferencesDescriptor(encoded));
   });
 
   it("renders every section, in the locked reading order", () => {

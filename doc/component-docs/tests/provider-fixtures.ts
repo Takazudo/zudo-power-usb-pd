@@ -23,6 +23,10 @@ import type {
   ProviderSource,
 } from "../adapters/circuit/evidence.ts";
 import type { ProviderIntegrationRule } from "../adapters/circuit/integration.ts";
+import type {
+  CircuitPackageReference,
+  CircuitReferenceContract,
+} from "../adapters/circuit/references.ts";
 import type { InstanceSelection, PublicationMatrix } from "../core/publication.ts";
 import { CIRCUIT_PUBLICATION_MATRIX } from "../adapters/circuit/matrix.ts";
 
@@ -386,16 +390,51 @@ export const FIXTURE_SELECTION: InstanceSelection = {
     { recordId: "rec-sense", sourceId: "src-sense-primary", documentKind: "specification" },
     { recordId: "rec-handfit", sourceId: "src-handfit-distributor", documentKind: "drawing" },
   ],
-  expect: { records: 3, sources: 4, integrationRules: 3 },
+  expect: { records: 3, sources: 4, integrationRules: 3, footprintPackages: 3 },
 };
 
 /** The real committed decisions — the fixtures must clear the same matrix. */
 export const FIXTURE_MATRIX: PublicationMatrix = CIRCUIT_PUBLICATION_MATRIX;
 
-// No `withFixtureReferences()`: zudo-pd's `EvidenceIndex` has no `references`
-// field at all (`references.ts` is not ported — no 3D assets), and
-// `projectIndex()` never checks for one. Callers use `rawIndexEvidence(...)`
-// directly instead of wrapping it.
+/**
+ * Attach already-reviewed logical descriptors to pure projection fixtures.
+ *
+ * Every fixture package is model-UNRESOLVED, matching the real corpus: no
+ * `.wrl`/`.step` pair exists anywhere in this repository, and a fixture that
+ * claimed one would let the renderer's resolved-model branch pass a test the
+ * real build could never reach. The document half IS resolved for all three
+ * fixture records, so the resolved-document branch is covered.
+ */
+export function withFixtureReferences(index: EvidenceIndex): EvidenceIndex {
+  const documentsByRecordId = new Map();
+  for (const selected of FIXTURE_SELECTION.documentSelections) {
+    const source = index.recordById
+      .get(selected.recordId)
+      ?.sources.find((entry) => entry.source_id === selected.sourceId);
+    if (source !== undefined) {
+      documentsByRecordId.set(selected.recordId, {
+        recordId: selected.recordId,
+        source,
+        documentKind: selected.documentKind,
+      });
+    }
+  }
+  const packages: CircuitPackageReference[] = index.records.map((entry) => {
+    const footprintName = entry.pinMaps[0]?.footprint ?? `fixture-${entry.record.record_id}`;
+    return {
+      packageId: footprintName,
+      footprintName,
+      footprintPath: `footprints/${footprintName}.kicad_mod`,
+      modelUnresolvedReason: "The KiCad footprint names no 3D model.",
+      recordIds: [entry.record.record_id],
+    };
+  });
+  const packageByRecordId = new Map(
+    packages.map((entry) => [entry.recordIds[0] as string, entry]),
+  );
+  const references: CircuitReferenceContract = { documentsByRecordId, packages, packageByRecordId };
+  return { ...index, references };
+}
 
 /** The seven bundle files as `parseBundle` expects them, from one bundle. */
 export function bundleFiles(bundle: ProviderBundle, schemaVersion = 1) {

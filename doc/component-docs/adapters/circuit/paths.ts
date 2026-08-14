@@ -64,10 +64,23 @@ export const PREFLIGHT_FILE = join(DOC_ROOT, "component-docs", "preflight.json")
  */
 export const DIST_ROOT = join(DOC_ROOT, "dist");
 
-// No `FOOTPRINT_MASTER_ROOT` / `FOOTPRINT_ROOT` / `MODEL_ROOT`: those back
-// led-lamp's footprint-preview / 3D-model feature (`references.ts`,
-// `model-assets.ts`), which is not ported. zudo-pd has no 3D assets at all —
-// `find` for `*.3dshapes` / `*.wrl` / `*.step` returns nothing.
+/**
+ * The KiCad footprint library, and the 3D-model directory that does not exist
+ * yet.
+ *
+ * `FOOTPRINT_ROOT` is the library `fp-lib-table` registers as `zudo-pd`
+ * (`${KIPRJMOD}/footprints/kicad/zudo-power.pretty`) — the name is a leftover
+ * from an earlier project name and is load-bearing, so it is spelled out here
+ * rather than derived from the repository name.
+ *
+ * `MODEL_ROOT` is where reviewed `.wrl`/`.step` pairs WILL live. Today the
+ * directory does not exist: every footprint either has no `(model …)` line at
+ * all or points at `${EASYEDA2KICAD}` / a stale `tmp/` path, none of which
+ * resolves to a committed asset. `readPackage()` treats that as an unresolved
+ * model with a stated reason rather than as a failure — see `references.ts`.
+ */
+export const FOOTPRINT_ROOT = join(REPO_ROOT, "footprints", "kicad", "zudo-power.pretty");
+export const MODEL_ROOT = join(REPO_ROOT, "footprints", "kicad", "zudo-pd.3dshapes");
 
 /** Per-record bundle files, in the order a record page consumes them. */
 export const BUNDLE_FILES = [

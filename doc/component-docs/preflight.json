@@ -661,56 +661,56 @@
     },
     {
       "key": "reference.document.sourceId",
-      "decision": "DENY",
+      "decision": "PUBLISH",
       "emitted": 0,
       "withheld": 0
     },
     {
       "key": "reference.document.documentTitle",
-      "decision": "DENY",
+      "decision": "PUBLISH",
       "emitted": 0,
       "withheld": 0
     },
     {
       "key": "reference.document.label",
-      "decision": "DENY",
+      "decision": "PUBLISH",
       "emitted": 0,
       "withheld": 0
     },
     {
       "key": "reference.document.authorityClass",
-      "decision": "DENY",
+      "decision": "PUBLISH",
       "emitted": 0,
       "withheld": 0
     },
     {
       "key": "reference.document.url",
-      "decision": "DENY",
+      "decision": "PUBLISH",
       "emitted": 0,
       "withheld": 0
     },
     {
       "key": "reference.document.availability",
-      "decision": "DENY",
+      "decision": "PUBLISH",
       "emitted": 0,
       "withheld": 0
     },
     {
       "key": "reference.document.documentKind",
-      "decision": "DENY",
+      "decision": "PUBLISH",
       "emitted": 0,
       "withheld": 0
     },
     {
       "key": "reference.footprint.packageId",
-      "decision": "DENY",
-      "emitted": 0,
+      "decision": "PUBLISH",
+      "emitted": 41,
       "withheld": 0
     },
     {
       "key": "reference.footprint.name",
-      "decision": "DENY",
-      "emitted": 0,
+      "decision": "PUBLISH",
+      "emitted": 41,
       "withheld": 0
     },
     {
@@ -757,7 +757,7 @@
     },
     {
       "key": "asset.datasheetPdf",
-      "decision": "DENY",
+      "decision": "PUBLISH",
       "emitted": 0,
       "withheld": 0
     },

@@ -19,14 +19,15 @@
  * (C335982, C7529589, C87267 -- the fitted C22387780 sources were already
  * selected), and the wave-6 inventory itself swapped 4 lines for 4.
  *
- * `documentSelections` is deliberately omitted (empty): it is led-lamp's
- * curated single-document shortcut for the 3D-preview / reference feature,
- * and zudo-pd has no 3D assets at all — every `reference.*` field is DENY in
- * `matrix.ts`, so nothing would ever read a document selection. See
- * `core/publication.ts`'s `PublicationPolicy` constructor: the "every
- * selected record needs exactly one document selection" completeness check
- * is conditioned on `documentSelections` being non-empty for exactly this
- * reason.
+ * `documentSelections` is empty pending curation: the reference machinery IS
+ * ported and reads it, but choosing the one PDF-representing source per record
+ * is a human audit that has not been done here yet. Every record therefore
+ * renders an explicitly unresolved "Selected document" card naming that
+ * reason, rather than a guessed shortcut or a missing section. See
+ * `core/publication.ts`'s `PublicationPolicy` constructor: the "every selected
+ * record needs exactly one document selection" completeness check is
+ * conditioned on `documentSelections` being non-empty, so a PARTIAL curation
+ * still fails closed — it is all-or-nothing, not opt-in per record.
  *
  * `linkableSourceIds` is a SEPARATE, narrower opt-in: selecting a source
  * publishes its title, revision, locator and availability; it does not by
@@ -414,5 +415,10 @@ export const CIRCUIT_SELECTION: InstanceSelection = {
     records: 41,
     sources: 126,
     integrationRules: 9,
+    // The 41 selected records collapse onto 27 distinct KiCad footprints —
+    // `R0603` alone carries 8 of them. Read by `references.ts` instead of a
+    // literal in that file, so a promotion that changes the package set has
+    // to be acknowledged in the same reviewed place as the record list.
+    footprintPackages: 27,
   },
 };
