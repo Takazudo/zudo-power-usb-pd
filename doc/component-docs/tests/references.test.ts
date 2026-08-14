@@ -2,10 +2,12 @@
  * The reference contract against the REAL corpus.
  *
  * led-lamp's version of this file asserts a curated document for every record
- * and a resolved WRL for every package. Neither holds here yet, so the same
- * questions are asked in the opposite direction: every record must reach an
- * explicitly unresolved state that names its reason, and the collapse figure
- * is retargeted from led-lamp's 32 records → 22 packages to zudo-pd's 41 → 27.
+ * and a resolved WRL for every package. Only the first half holds here, and
+ * only for 40 of 41 records, so the same questions are asked in both
+ * directions: a curated record must produce the reviewed label and its
+ * source's own URL, an excepted or model-less one must reach an explicitly
+ * unresolved state that names its reason, and the collapse figure is
+ * retargeted from led-lamp's 32 records → 22 packages to zudo-pd's 41 → 27.
  */
 
 import assert from "node:assert/strict";
@@ -15,12 +17,13 @@ import { ComponentDocsError } from "../core/errors.ts";
 import { PublicationPolicy } from "../core/publication.ts";
 import { projectIndex, readEvidenceIndex } from "../adapters/circuit/index.ts";
 import { CIRCUIT_PUBLICATION_MATRIX } from "../adapters/circuit/matrix.ts";
-import { CIRCUIT_SELECTION } from "../adapters/circuit/selection.ts";
+import { CIRCUIT_DOCUMENT_VERIFICATION, CIRCUIT_SELECTION } from "../adapters/circuit/selection.ts";
 import {
   REFERENCE_LIMITS,
   assertReferenceSize,
   assertSafePreviewAssetName,
   assertSameBasenamePair,
+  selectDocumentExceptions,
   selectDocuments,
   validateVrml,
   type CircuitReferenceContract,
@@ -39,32 +42,176 @@ before(async () => {
 });
 
 describe("reviewed document shortcuts", () => {
-  it("selects no document yet, and says so on every one of the 41 records", () => {
-    assert.equal(CIRCUIT_SELECTION.documentSelections.length, 0);
+  it("partitions all 41 records into 40 curated and 1 excepted", () => {
+    assert.equal(CIRCUIT_SELECTION.documentSelections.length, 40);
+    assert.equal(CIRCUIT_SELECTION.documentExceptions.length, 1);
     assert.equal(model.records.length, 41);
-    for (const record of model.records) {
-      assert.equal(record.reference.document, null);
-      const reason = record.reference.documentUnresolvedReason;
-      assert.notEqual(reason, null, `${record.identity.recordId} is unresolved with no reason`);
-      assert.ok(String(reason).length > 0);
+    const curated = new Set(CIRCUIT_SELECTION.documentSelections.map((entry) => entry.recordId));
+    const excepted = new Set(CIRCUIT_SELECTION.documentExceptions.map((entry) => entry.recordId));
+    assert.equal(curated.size, 40);
+    assert.equal(excepted.size, 1);
+    for (const recordId of CIRCUIT_SELECTION.recordIds) {
+      assert.equal(
+        Number(curated.has(recordId)) + Number(excepted.has(recordId)),
+        1,
+        `${recordId} must be in exactly one of the two lists`,
+      );
     }
   });
 
-  it("keeps the curated path live for the records that will get one", () => {
-    // Not a hypothetical: this is the code #143 turns on. A selection that
-    // resolves must produce the reviewed label and the source's own URL.
-    const record = index.recordById.get("rec-stusb4500qtr");
-    const source = record?.sources.find((entry) => entry.source_id === "src-stusb-ds12499");
-    assert.ok(source !== undefined);
-    const selected = selectDocuments(index, {
-      ...CIRCUIT_SELECTION,
-      documentSelections: [
-        { recordId: "rec-stusb4500qtr", sourceId: "src-stusb-ds12499", documentKind: "datasheet" },
+  it("gives every curated record a reviewed label and its source's own URL", () => {
+    for (const record of model.records) {
+      const document = record.reference.document;
+      if (document === null) continue;
+      assert.match(String(document.url), /^https?:\/\//u);
+      assert.ok(
+        ["Datasheet PDF", "Specification PDF", "Mechanical drawing PDF"].includes(String(document.label)),
+        `${record.identity.recordId} has label ${String(document.label)}`,
+      );
+      assert.ok(String(document.sourceId).length > 0);
+      assert.ok(String(document.documentTitle).length > 0);
+      assert.ok(String(document.authorityClass).length > 0);
+      assert.ok(String(document.availability).length > 0);
+      // The published URL is the selected source's own, never derived.
+      const source = index.recordById
+        .get(record.identity.recordId)
+        ?.sources.find((entry) => entry.source_id === String(document.sourceId));
+      assert.equal(String(document.url), source?.authoritative_url);
+      assert.equal(record.reference.documentUnresolvedReason, null);
+    }
+    assert.equal(model.records.filter((record) => record.reference.document !== null).length, 40);
+  });
+
+  it("leaves rec-c335982 unresolved with a reason naming the missing document", () => {
+    // The audit's one honest gap: a single DISTRIBUTOR_IDENTITY source and no
+    // manufacturer document behind it. The page must say that rather than
+    // present the LCSC listing as a datasheet.
+    const record = model.records.find((entry) => entry.identity.recordId === "rec-c335982");
+    assert.ok(record !== undefined);
+    assert.equal(record.reference.document, null);
+    const reason = String(record.reference.documentUnresolvedReason ?? "");
+    assert.match(reason, /No manufacturer document exists/u);
+    assert.match(reason, /distributor product listing/u);
+    // And the LCSC page it does have stays visible, with its class printed.
+    const listing = record.sources.find((entry) => String(entry.sourceId) === "src-c335982-identity");
+    assert.equal(String(listing?.authorityClass), "DISTRIBUTOR_IDENTITY");
+  });
+
+  it("does not infer kind from the source ID's suffix", () => {
+    // Both of these are named `-datasheet` and are not datasheets. The kind
+    // follows the document's own self-description.
+    for (const [recordId, expected] of [
+      ["rec-cya1265-100uh-c19268674", "Specification PDF"],
+      ["rec-ptc-msmd110-33v-c70119", "Specification PDF"],
+      ["rec-ss34-c8678", "Datasheet PDF"],
+    ] as const) {
+      const record = model.records.find((entry) => entry.identity.recordId === recordId);
+      assert.equal(String(record?.reference.document?.label), expected, recordId);
+      assert.match(String(record?.reference.document?.sourceId), /-datasheet$/u);
+    }
+    const drawing = model.records.find(
+      (entry) => entry.identity.recordId === "rec-hdr-2541wr-2x08p-c5383092",
+    );
+    assert.equal(String(drawing?.reference.document?.label), "Mechanical drawing PDF");
+  });
+
+  it("publishes the four mirror selections as mirrors, not as primaries", () => {
+    // Each of these is the best document that exists for its part, and the
+    // card has to keep saying so — silently reading as MANUFACTURER_PRIMARY
+    // would overstate the evidence.
+    assert.equal(CIRCUIT_DOCUMENT_VERIFICATION.mirrorSourceIds.length, 4);
+    for (const sourceId of CIRCUIT_DOCUMENT_VERIFICATION.mirrorSourceIds) {
+      const record = model.records.find(
+        (entry) => String(entry.reference.document?.sourceId) === sourceId,
+      );
+      assert.ok(record !== undefined, `${sourceId} is not a selected document`);
+      assert.equal(String(record.reference.document?.authorityClass), "MANUFACTURER_MIRROR");
+      assert.equal(String(record.reference.document?.availability), "AVAILABLE");
+    }
+    const mirrors = model.records.filter(
+      (entry) => String(entry.reference.document?.authorityClass) === "MANUFACTURER_MIRROR",
+    );
+    assert.equal(mirrors.length, 4);
+  });
+
+  it("records how the document audit was performed, at its real strength", () => {
+    // led-lamp downloaded and parsed every PDF. This audit read the evidence
+    // bundles' recorded metadata instead, and the constant must not be
+    // mistakable for the stronger check.
+    assert.equal(CIRCUIT_DOCUMENT_VERIFICATION.checkedOn, "2026-08-15");
+    assert.equal(CIRCUIT_DOCUMENT_VERIFICATION.expectedContent, "PDF");
+    assert.equal(CIRCUIT_DOCUMENT_VERIFICATION.method, "EVIDENCE_BUNDLE_METADATA");
+    assert.deepEqual(
+      [...CIRCUIT_DOCUMENT_VERIFICATION.unresolvedRecordIds],
+      CIRCUIT_SELECTION.documentExceptions.map((entry) => entry.recordId),
+    );
+    // What the audit could check offline, checked here too: no selected
+    // document is one the evidence itself records as unreachable. (The
+    // hash-lock half of the audit reads `sha256`/`refresh_policy`, which
+    // `ProviderSource` deliberately does not expose — `component-spec-audit`'s
+    // validator owns that contract and this file must not restate it.)
+    for (const selected of CIRCUIT_SELECTION.documentSelections) {
+      const source = index.recordById
+        .get(selected.recordId)
+        ?.sources.find((entry) => entry.source_id === selected.sourceId);
+      assert.ok(source !== undefined, selected.sourceId);
+      assert.equal(source.availability, "AVAILABLE", selected.sourceId);
+      assert.match(source.authoritative_url, /^https?:\/\//u, selected.sourceId);
+    }
+  });
+
+  it("refuses a document exception that does not resolve to a record", () => {
+    assert.throws(
+      () => selectDocumentExceptions(index, {
+        ...CIRCUIT_SELECTION,
+        documentExceptions: [{ recordId: "rec-does-not-exist", reason: "because" }],
+      }),
+      (error: unknown) =>
+        error instanceof ComponentDocsError && error.code === "STALE_SELECTION",
+    );
+  });
+
+  it("refuses a record that is neither curated nor excepted", () => {
+    assert.throws(
+      () => new PublicationPolicy(CIRCUIT_PUBLICATION_MATRIX, {
+        ...CIRCUIT_SELECTION,
+        documentSelections: CIRCUIT_SELECTION.documentSelections.slice(1),
+      }),
+      (error: unknown) =>
+        error instanceof ComponentDocsError && error.code === "PUBLICATION_POLICY",
+    );
+  });
+
+  it("refuses a record listed twice, which one covering entry would satisfy", () => {
+    // The uncovered-list filter alone cannot see this: both occurrences of the
+    // duplicate resolve to the same covering entry.
+    assert.throws(
+      () => new PublicationPolicy(CIRCUIT_PUBLICATION_MATRIX, {
+        ...CIRCUIT_SELECTION,
+        recordIds: [...CIRCUIT_SELECTION.recordIds, "rec-ss34-c8678"],
+      }),
+      (error: unknown) =>
+        error instanceof ComponentDocsError && error.code === "PUBLICATION_POLICY",
+    );
+  });
+
+  it("refuses an exception that states no reason, and one that doubles a selection", () => {
+    for (const documentExceptions of [
+      [{ recordId: "rec-c335982", reason: "   " }],
+      [
+        ...CIRCUIT_SELECTION.documentExceptions,
+        { recordId: "rec-ss34-c8678", reason: "contradicts its own curated entry" },
       ],
-    });
-    assert.equal(selected.size, 1);
-    assert.equal(selected.get("rec-stusb4500qtr")?.documentKind, "datasheet");
-    assert.match(selected.get("rec-stusb4500qtr")?.source.authoritative_url ?? "", /^https?:\/\//u);
+    ]) {
+      assert.throws(
+        () => new PublicationPolicy(CIRCUIT_PUBLICATION_MATRIX, {
+          ...CIRCUIT_SELECTION,
+          documentExceptions,
+        }),
+        (error: unknown) =>
+          error instanceof ComponentDocsError && error.code === "PUBLICATION_POLICY",
+      );
+    }
   });
 
   it("refuses a document selection that does not resolve inside its record", () => {

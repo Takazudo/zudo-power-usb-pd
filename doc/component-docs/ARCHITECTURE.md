@@ -187,15 +187,18 @@ corpus once shipped a record (`rec-bzt52c11-c92321`) whose bundle validated
 and whose counts were bumped while the ID list was left behind — the record
 silently had no page. Either direction failing is a `STALE_SELECTION`.
 
-zudo-pd's `DENY` set is 26 of 97 keys: led-lamp's seven content denials
+zudo-pd's `DENY` set is 16 of 97 keys: led-lamp's seven content denials
 (`source.sha256`, `source.evidenceExtract`,
 `source.alternateAuthoritativeUrl`, `source.physicalPdfPageIndex`,
 `routing.positivePrompts`, `routing.negativePrompts`, `pinMap.reviewedBy`),
-`asset.datasheetPdf` / `asset.binary`, both `ownerSkill` keys
-(`claudeResources: false`), and every `reference.*` key (the single-document
-shortcut feature is unused here: `documentSelections` is deliberately empty).
-URL policy, the preflight report contract, and the emitted-vs-withheld
-accounting are ported unchanged from led-lamp §6.
+`asset.binary`, both `ownerSkill` keys (`claudeResources: false`), and the
+`reference.*` keys whose consumer does not exist yet — `reference.model.*`
+(no reviewed `.wrl`/`.step` pair is committed anywhere), plus
+`reference.footprint.path` and `reference.package.recordIds`. The document
+half of `reference.*` publishes: `documentSelections` names one reviewed
+source for 40 of the 41 records, and `documentExceptions` names why the
+41st has none. URL policy, the preflight report contract, and the
+emitted-vs-withheld accounting are ported unchanged from led-lamp §6.
 
 ### 6.1 Artifact-level proof (`pnpm scan:components`)
 

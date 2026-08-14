@@ -241,7 +241,8 @@ describe("the stylesheet declares what the components emit", () => {
   });
 
   it("styles an unresolved card as a stated fact, not as an error", () => {
-    // Every card is unresolved today. If they read as failures the page looks
+    // Every footprint-preview and model card is unresolved today, and one
+    // record's document card is too. If they read as failures the page looks
     // broken rather than honest, so the rule must use the muted token the
     // metadata it stands in for uses — never a danger/warning colour.
     const rule = /\.zld-component-references__unresolved\s*\{([^}]*)\}/u.exec(stylesheet)?.[1] ?? "";
