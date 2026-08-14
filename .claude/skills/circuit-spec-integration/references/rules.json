@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "contract": "One rule per cross-component domain, naming the exact records and facts it reasons over, its conditions, a conditioned refusal, and a verdict limited to NEEDS BENCH or UNSOURCED. Conditioned calculations recompute from raw fact values on every run. Empty scaffold: the domains listed in component-spec-audit/references/schema.json integration_domains must match this file exactly.",
+  "rules": []
+}

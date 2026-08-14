@@ -1,0 +1,9 @@
+{
+  "mutation": "candidate blank rationale",
+  "base": "candidates",
+  "note": "A shortlist entry with no stated reason is not research.",
+  "target": "candidates.cand-fixture-tvs-replacement.rationale",
+  "from": "Synthetic shortlist entry proving an unplaced candidate carries evidence without joining the inventory.",
+  "to": "",
+  "expected_error": "blank"
+}

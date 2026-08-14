@@ -1,0 +1,172 @@
+{
+  "schema_version": 1,
+  "project": {
+    "boards": ["board-a", "board-b"],
+    "library_nickname": "zudo-pd",
+    "symbol_library": "symbols/zudo-pd.kicad_sym",
+    "footprint_library_dir": "footprints/kicad/zudo-power.pretty",
+    "mpn_from_value_lcsc": ["C144397"],
+    "mpn_from_value_contract": "Generator entries whose symbol is a generic KiCad connector symbol carry the orderable MPN in the value field instead. Only the LCSC IDs listed here may resolve their MPN that way; every other line resolves its MPN from the symbol name."
+  },
+  "required_skill_files": [
+    "SKILL.md",
+    "manifest.json",
+    "sources.json",
+    "facts.json",
+    "coverage.json",
+    "routing.json",
+    "interactions.json",
+    "pin-map.json"
+  ],
+  "record_required": [
+    "record_id",
+    "line_id",
+    "candidate_id",
+    "kind",
+    "parent_record_id",
+    "mpn",
+    "manufacturer",
+    "lcsc",
+    "package",
+    "source_ids",
+    "fact_ids",
+    "interaction_ids",
+    "open_domains"
+  ],
+  "source_required": [
+    "source_id",
+    "document_title",
+    "document_number",
+    "revision",
+    "document_date",
+    "authoritative_url",
+    "alternate_authoritative_url",
+    "retrieval_date",
+    "authority_class",
+    "sha256",
+    "availability",
+    "physical_pdf_page_index",
+    "printed_page_label",
+    "locator",
+    "evidence_extract"
+  ],
+  "fact_required": [
+    "fact_id",
+    "record_id",
+    "source_id",
+    "class",
+    "value",
+    "unit",
+    "conditions",
+    "locator",
+    "provenance",
+    "verdict",
+    "depends_on",
+    "expression"
+  ],
+  "coverage_required": [
+    "coverage_id",
+    "record_id",
+    "domain",
+    "status",
+    "reason",
+    "fact_ids",
+    "blocking_fact_ids"
+  ],
+  "interaction_required": [
+    "interaction_id",
+    "record_ids",
+    "fact_ids",
+    "conditions",
+    "verdict"
+  ],
+  "line_required": [
+    "line_id",
+    "mpn",
+    "manufacturer",
+    "lcsc",
+    "package",
+    "owner_skill",
+    "identity_state",
+    "source_state",
+    "function",
+    "placements"
+  ],
+  "placement_required": ["board", "refdes", "dnp"],
+  "candidate_required": [
+    "candidate_id",
+    "mpn",
+    "manufacturer",
+    "lcsc",
+    "package",
+    "function",
+    "owner_skill",
+    "status",
+    "replaces_line_id",
+    "rationale"
+  ],
+  "candidate_states": ["SHORTLISTED", "REJECTED", "NEEDS EVIDENCE"],
+  "inventory_assertions": [
+    "orderable_lines",
+    "fitted_lines",
+    "dnp_or_hand_fit_lines",
+    "fitted_placements",
+    "dnp_placements"
+  ],
+  "placement_dnp_contract": "DNP is a property of one placement, never of a line. The same orderable can be DNP on one board or refdes and fitted on another, so each placement carries its own reviewed dnp flag and the generator spec is the identity lock for every one of them. A line-level dnp key is rejected outright so the pre-split shape cannot silently reappear. fitted_lines counts lines with at least one fitted placement and dnp_or_hand_fit_lines counts lines with at least one DNP placement; the two overlap for a mixed line, so placement-granular counts are asserted separately.",
+  "candidate_contract": "A candidate is a researched replacement part that no generator spec places. It is therefore never an inventory line and never counts toward inventory assertions, which keeps manifest-to-inventory parity exact while replacement research is open. A candidate LCSC may not collide with a placed inventory line or with any generator placement. An owner skill records candidate evidence in the same bundle files under the same contract, in a record whose line_id is null and whose candidate_id names the candidate. Every record sets exactly one of line_id and candidate_id.",
+  "open_domain_contract": "Each item is a nonblank domain string with exactly one matching OPEN coverage domain and an explicit reason. COVERED domains require explicit same-record fact IDs whose complete evidence closure is AVAILABLE and not UNSOURCED.",
+  "blocking_fact_ids_contract": "Every coverage entry carries blocking_fact_ids, a same-record subset of fact_ids. For an OPEN entry it names the exact facts whose non-PASS verdicts keep the domain open; each member must carry a verdict of UNSOURCED or NEEDS BENCH, or cite a SOURCE UNAVAILABLE source. The converse is enforced too: whenever any fact listed in fact_ids meets that same blocking test, blocking_fact_ids must name at least one of them. It may be empty only when no listed fact addresses the domain in that sense; a NOT APPLICABLE fact never blocks, so an OPEN entry whose only evidence is NOT APPLICABLE correctly keeps the array empty. Independently, any OPEN reason whose text claims evidence is unavailable, lower-authority, or UNSOURCED must cite the blocking facts instead of leaving the array empty.",
+  "pass_trust_contract": "PRIMARY-SPEC PASS requires AVAILABLE MANUFACTURER_PRIMARY; CALCULATED PASS requires only trusted raw leaves through the full dependency closure.",
+  "source_availability": ["AVAILABLE", "SOURCE UNAVAILABLE"],
+  "authority_classes": [
+    "MANUFACTURER_PRIMARY",
+    "MANUFACTURER_MIRROR",
+    "REFERENCE_DESIGN",
+    "DISTRIBUTOR_IDENTITY",
+    "PROJECT_GENERATOR",
+    "BENCH_RECORD"
+  ],
+  "fact_classes": [
+    "ABSOLUTE_MAXIMUM",
+    "RECOMMENDED_OPERATION",
+    "GUARANTEED_ELECTRICAL",
+    "TYPICAL_CURVE",
+    "TRANSIENT",
+    "PROTECTION_STANDOFF",
+    "PROTECTION_BREAKDOWN",
+    "PROTECTION_CLAMP",
+    "THERMAL_SOA",
+    "PROJECT_STATE"
+  ],
+  "provenance": [
+    "PRIMARY-SPEC",
+    "DISTRIBUTOR-IDENTITY",
+    "REFERENCE-DESIGN",
+    "CALCULATED",
+    "PROJECT-CHOICE",
+    "BENCH-OBSERVED",
+    "UNVERIFIED"
+  ],
+  "verdicts": [
+    "PASS - primary-source confirmed",
+    "CONFIRMED - distributor identity only",
+    "BLOCKER - deterministic spec violation",
+    "NEEDS BENCH",
+    "UNSOURCED",
+    "NOT APPLICABLE"
+  ],
+  "pin_trust_states": ["TRUSTED", "PROJECT-LOCKED", "NEEDS BENCH", "UNSOURCED"],
+  "critical_review_domains": [
+    "connector",
+    "polarity",
+    "pin",
+    "default-state",
+    "rail",
+    "converter",
+    "thermal",
+    "current"
+  ],
+  "integration_domains": [],
+  "integration_domains_contract": "Exact cross-component rule domains required by circuit-spec-integration/references/rules.json. Empty while the scaffold is staged; the cross-component rules sub-issue fills this list and strict mode then enforces exact parity."
+}

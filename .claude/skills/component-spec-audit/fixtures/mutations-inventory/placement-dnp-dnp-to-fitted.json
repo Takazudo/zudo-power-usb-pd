@@ -1,0 +1,9 @@
+{
+  "mutation": "placement dnp dnp-to-fitted",
+  "base": "inventory",
+  "note": "The opposite direction: silently promoting a DNP board-a placement to fitted would order and assemble a part the generator marks do-not-populate.",
+  "target": "lines.line-c23186.placements.0.dnp",
+  "from": true,
+  "to": false,
+  "expected_error": "board/refdes or DNP mismatch"
+}

@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "contract": "For each line, validator constructs literal positive queries for exact MPN, exact LCSC, manufacturer plus MPN, and function plus MPN; every query must resolve directly and uniquely. The negative query must resolve no line. Exactly one case per inventory line, in both staged and strict mode.",
+  "cases": []
+}

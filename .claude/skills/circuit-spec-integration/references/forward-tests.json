@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "contract": "Deterministic forward fixtures: each case names the rules a realistic prompt must select, the records and facts that must be loaded, the routing queries that must resolve exactly, and the observed run it is locked against. negative_routes prove that near-miss identifiers resolve nothing.",
+  "cases": [],
+  "negative_routes": []
+}

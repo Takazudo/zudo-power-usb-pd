@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "generator_specs": [
+    { "board": "board-a", "spec": "scripts/schgen/board_a_spec.py" },
+    { "board": "board-b", "spec": "scripts/schgen/board_b_spec.py" }
+  ],
+  "assertions": {
+    "orderable_lines": 0,
+    "fitted_lines": 0,
+    "dnp_or_hand_fit_lines": 0,
+    "fitted_placements": 0,
+    "dnp_placements": 0
+  },
+  "exclusions": [],
+  "lines": []
+}
