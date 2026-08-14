@@ -36,18 +36,16 @@ mismatch fails the build.
 | Path | Owner | Rule |
 |---|---|---|
 | `doc/component-docs/` | this feature | all generator code, tests, this document |
-| `doc/src/content/docs/components/records/` | **generator, exclusively** | committed; never hand-edit; every file is rewritten from evidence |
+| `doc/src/content/docs/components/` | **generator, exclusively** | committed; never hand-edit; every file is rewritten from evidence |
 | `doc/component-docs/preflight.json` | generator | committed, deterministic, reviewable |
 | `doc/pages/_mdx-components.ts` | site | carries the three evidence-component registrations; must stay in sync with `core/mdx.ts` `ALLOWED_COMPONENT_ATTRIBUTES` (guarded by `tests/presentation.test.ts`) |
 | `doc/src/styles/global.css` | site | an appended presentation block for the generated pages (`.zld-evidence-*`) |
 | `.claude/skills/**` | evidence owners | **read-only** to this feature |
 
-**Re-rooting difference vs led-lamp.** led-lamp's generator owns
-`doc/src/content/docs/components/` outright. In zudo-pd that directory already
-holds 17 hand-written component pages, so the exclusively-owned generated tree
-is re-rooted one level down at `components/records/` (`GENERATED_ROOT` in
-`adapters/circuit/paths.ts`). The public URLs therefore read
-`/docs/components/records/{catalog,integration,records/<slug>}/`.
+**Matches led-lamp.** The exclusively-owned generated tree is rooted directly
+at `doc/src/content/docs/components/` (`GENERATED_ROOT` in
+`adapters/circuit/paths.ts`), identical to led-lamp's shape. The public URLs
+read `/docs/components/{catalog,integration,records,records/<slug>}/`.
 
 ### Module layout under `doc/component-docs/`
 
@@ -65,11 +63,11 @@ core/                       provider-neutral; no Python, no `.claude`, no fs pat
   adapter.ts                ComponentDataAdapter + ValidationRunner interfaces
   pipeline.ts               the one generation path
   scan.ts                   denied-value artifact scanning (wired by cli/scan.ts)
-  render/landing.ts         /docs/components/records/            (landing)
-  render/catalog.ts         /docs/components/records/catalog/
-  render/record.ts          /docs/components/records/records/<slug>/
+  render/landing.ts         /docs/components/                    (landing)
+  render/catalog.ts         /docs/components/catalog/
+  render/record.ts          /docs/components/records/<slug>/
   render/shared.ts          routes, glosses and orderings the pages share
-  render/integration.ts     /docs/components/records/integration/
+  render/integration.ts     /docs/components/integration/
 adapters/circuit/           this repository's evidence provider
   paths.ts                  every path the adapter may touch
   validate.ts               python3 validate.py --strict subprocess
@@ -241,7 +239,7 @@ is a publication decision, not a refactor.
 
 ## 8. Generated-tree ownership and cleanup
 
-`doc/src/content/docs/components/records/` is written by `core/emit.ts` and
+`doc/src/content/docs/components/` is written by `core/emit.ts` and
 nothing else. Every write path is `assertContained` (segment-wise); emit
 never `rm -rf`s — it prunes only marker-carrying `.mdx` leftovers under the
 owned root; a file there without the generated marker is a fatal
@@ -252,15 +250,13 @@ evidence-read side; emit is idempotent (a second run reports `0 written`).
 
 | Route | Source |
 |---|---|
-| `/docs/components/records/` | `render/landing.ts` |
-| `/docs/components/records/catalog/` | `render/catalog.ts` |
-| `/docs/components/records/integration/` | `render/integration.ts` |
-| `/docs/components/records/records/<slug>/` | `render/record.ts` |
+| `/docs/components/` | `render/landing.ts` |
+| `/docs/components/catalog/` | `render/catalog.ts` |
+| `/docs/components/integration/` | `render/integration.ts` |
+| `/docs/components/records/` | `render/record.ts` (records index) |
+| `/docs/components/records/<slug>/` | `render/record.ts` (per-record pages) |
 
-The doubled `records/records/` segment is a consequence of the re-rooting
-(§2): the owned generated root sits below the hand-written `components/`
-section, and record pages live in a `records/` directory inside it. The
-landing page's `CategoryNav` targets `components/records` — this project's
+The landing page's `CategoryNav` targets `components` — this project's
 wrapper resolves `category` as a slug path. The three evidence components
 (`EvidenceAnchor`, `EvidenceDetails`, `EvidenceTable`) are registered in
 `doc/pages/_mdx-components.ts`; that registry and

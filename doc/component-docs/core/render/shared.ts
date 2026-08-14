@@ -46,31 +46,28 @@ import type {
 
 // --- routes ----------------------------------------------------------------
 
-// zudo-pd re-roots the generated tree one level down, under
-// `components/records/`, to keep clear of the 17 hand-written pages that
-// already live directly under `components/` (see `paths.ts` GENERATED_ROOT).
-// Every route below inherits that extra `/records` segment, including a
-// second, literal `records` segment for the records sub-index and each record
-// page — the mechanical result of `buildPage()`'s existing relative paths
-// resolving under the shifted root, not a fresh design choice.
-export const COMPONENTS_ROUTE: Route = route("/docs/components/records/");
-export const CATALOG_ROUTE: Route = route("/docs/components/records/catalog/");
-export const RECORDS_ROUTE: Route = route("/docs/components/records/records/");
-export const INTEGRATION_ROUTE: Route = route("/docs/components/records/integration/");
+// Matches led-lamp's route shape exactly: the generated tree is rooted
+// directly at `/docs/components/` (see `paths.ts` GENERATED_ROOT), with
+// `catalog/`, `integration/` and `records/` as siblings. `records/` also
+// holds the record pages themselves, one directory per slug.
+export const COMPONENTS_ROUTE: Route = route("/docs/components/");
+export const CATALOG_ROUTE: Route = route("/docs/components/catalog/");
+export const RECORDS_ROUTE: Route = route("/docs/components/records/");
+export const INTEGRATION_ROUTE: Route = route("/docs/components/integration/");
 
-/** `/docs/components/records/records/<slug>/`, optionally at one anchor inside it. */
+/** `/docs/components/records/<slug>/`, optionally at one anchor inside it. */
 export function recordRoute(slug: Slug, fragment?: Anchor): Route {
-  return route(`/docs/components/records/records/${slug}/`, fragment);
+  return route(`/docs/components/records/${slug}/`, fragment);
 }
 
 /** One rule's, or one conditioned calculation's, place on the integration page. */
 export function integrationRoute(fragment: Anchor): Route {
-  return route("/docs/components/records/integration/", fragment);
+  return route("/docs/components/integration/", fragment);
 }
 
 /** The record's entry on the catalog page. */
 export function catalogEntryRoute(fragment: Anchor): Route {
-  return route("/docs/components/records/catalog/", fragment);
+  return route("/docs/components/catalog/", fragment);
 }
 
 /**

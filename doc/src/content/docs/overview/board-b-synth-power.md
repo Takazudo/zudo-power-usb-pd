@@ -678,7 +678,7 @@ carried into this doc, with its locked disposition from
 - `scripts/schgen/decisions.json` and `scripts/schgen/board_b_spec.py` — the locked
   wave-6 decision record and the spec module that generates
   `boards/board-b/board-b.kicad_sch`
-- [generated component records](/docs/components/records/) — validated evidence for every
+- [generated component records](/docs/components/) — validated evidence for every
   part on both boards, projected from the component skill bundles
 - [Bill of Materials](./bom.md) — full single-board parts list, prices, and
   the JLCPCB Extended-parts fee structure referenced in the cost split above
