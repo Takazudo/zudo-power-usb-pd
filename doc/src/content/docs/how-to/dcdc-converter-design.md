@@ -11,7 +11,7 @@ U4 (+15V to -13.5V, inverting buck-boost).
 Reference designators, values and nets on this page are read from the Board B spec
 module `scripts/schgen/board_b_spec.py`, which is the source of truth for the
 generated schematic. The part record is
-[LM2596S-ADJ](../components/records/records/lm2596s-adj-c347423/index.mdx).
+[LM2596S-ADJ](../components/records/lm2596s-adj-c347423/index.mdx).
 
 <Note>
 Board B PCB layout has not started. The layout and thermal guidance below is design
@@ -208,7 +208,7 @@ Reference: LM2596 datasheet, typical application circuit (CFF in Figure 1, page 
 Selected: **CYA1265-100UH**, LCSC **C19268674**, 100 µH. Its 4.5A figure is the
 datasheet *heat rating current* (Idc, the DC current for a 40 °C rise at 25 °C
 ambient), per `fact-cya1265-idc-heat-rating` - see the
-[CYA1265-100UH record](../components/records/records/cya1265-100uh-c19268674/index.mdx)
+[CYA1265-100UH record](../components/records/cya1265-100uh-c19268674/index.mdx)
 before treating it as a saturation figure.
 
 ## Diode selection
@@ -221,7 +221,7 @@ A Schottky catch diode is required:
 - Reverse voltage at or above the input voltage (40V or better here)
 
 Selected: **SS34**, 3A / 40V, LCSC **C8678** - see the
-[SS34 record](../components/records/records/ss34-c8678/index.mdx).
+[SS34 record](../components/records/ss34-c8678/index.mdx).
 
 ## Capacitor selection
 
