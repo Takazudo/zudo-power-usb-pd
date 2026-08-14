@@ -56,6 +56,9 @@ import { PresetGeneratorFallback } from "./lib/_preset-generator";
 import { MathBlock } from "./lib/_math-block";
 import { CodeGroup } from "@/components/content/code-group";
 import { makeAdmonition } from "@/components/content/content-admonition";
+import { EvidenceAnchor } from "../component-docs/ui/evidence-anchor.tsx";
+import { EvidenceDetails } from "../component-docs/ui/evidence-details.tsx";
+import { EvidenceTable } from "../component-docs/ui/evidence-table.tsx";
 
 /**
  * MDX `<img>` override — rewrites root-relative src attributes to include the
@@ -312,6 +315,15 @@ export function createMdxComponents(lang: Locale | string = defaultLocale) {
     // Must come AFTER the ...htmlOverrides spread to override ContentParagraph.
     p: EnlargeableParagraph,
     HtmlPreview: HtmlPreviewWrapper,
+    // Component-docs evidence bindings (`doc/component-docs/`) — the three
+    // components generated component-record pages under
+    // `/docs/components/records/` reference. `core/mdx.ts`'s
+    // `ALLOWED_COMPONENT_ATTRIBUTES` must stay in sync with this map: a name
+    // in one and not the other renders as literal text and silently
+    // swallows what it wraps.
+    EvidenceAnchor,
+    EvidenceDetails,
+    EvidenceTable,
     // Admonitions — real typed Preact components (src/components/content/
     // content-admonition.tsx) emitting the `.admonition` / `data-admonition`
     // structure the design-system CSS targets. The `directives` map in
