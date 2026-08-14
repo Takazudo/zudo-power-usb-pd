@@ -12,7 +12,6 @@ import importlib.util
 import copy
 import hashlib
 import json
-import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[4]
@@ -123,7 +122,7 @@ def main():
             else:
                 raise AssertionError(f"observed-run mutation unexpectedly passed: {mutation}")
     else:
-        print("STAGED-SKIP: no forward-test case is committed; this run proves nothing about cross-component behavior", file=sys.stdout)
+        print("STAGED-SKIP: no forward-test case is committed; this run proves nothing about cross-component behavior")
     mode = "strict" if args.strict else "staged"
     print(f"PASS: mode={mode}; {len(tests['cases'])} integration cases; {len(tests['negative_routes'])} negative routes")
     return 0

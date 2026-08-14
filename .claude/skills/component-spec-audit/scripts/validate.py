@@ -261,10 +261,13 @@ def validate_inventory(data, schema, *, staged=True, root=None):
     required_keys(assertions, schema["inventory_assertions"], "inventory assertions")
     require(all(isinstance(assertions[key], int) and assertions[key] >= 0 for key in assertions), "inventory assertions: counts must be non-negative integers")
     lines = data["lines"]
-    require(len(lines) == assertions["orderable_lines"], "inventory: orderable line count differs from reviewed assertion")
-    require(len({line["line_id"] for line in lines}) == len(lines), "inventory: duplicate line_id ownership")
-    require(len({line["lcsc"] for line in lines}) == len(lines), "inventory: duplicate LCSC ownership")
 
+    # Structural checks run before every cross-entry check, so a hand-written line with
+    # a missing key reports its own contract failure instead of a KeyError traceback.
+    for item in data["exclusions"]:
+        required_keys(item, ("board", "refdes", "reason"), "inventory exclusion")
+        require(item["board"] in boards, f"exclusion {item['refdes']}: unknown board {item['board']}")
+        require(isinstance(item["reason"], str) and item["reason"].strip(), f"exclusion {item['refdes']}: blank reason")
     seen_placements = {(item["board"], item["refdes"]) for item in data["exclusions"]}
     for line in lines:
         context = line.get("line_id", "line")
@@ -285,6 +288,9 @@ def validate_inventory(data, schema, *, staged=True, root=None):
             key = (placement["board"], placement["refdes"])
             require(key not in seen_placements, f"{context}: duplicate placement {key[0]}/{key[1]}")
             seen_placements.add(key)
+    require(len(lines) == assertions["orderable_lines"], "inventory: orderable line count differs from reviewed assertion")
+    require(len({line["line_id"] for line in lines}) == len(lines), "inventory: duplicate line_id ownership")
+    require(len({line["lcsc"] for line in lines}) == len(lines), "inventory: duplicate LCSC ownership")
 
     if pairs is not None:
         generated, blank = generator_inventory(pairs, schema)
@@ -308,10 +314,6 @@ def validate_inventory(data, schema, *, staged=True, root=None):
     require(dnp_lines == assertions["dnp_or_hand_fit_lines"], "inventory: DNP/hand-fit line count differs from reviewed assertion")
     require(sum(not item["dnp"] for item in placements) == assertions["fitted_placements"], "inventory: fitted placement count differs from reviewed assertion")
     require(sum(item["dnp"] for item in placements) == assertions["dnp_placements"], "inventory: DNP placement count differs from reviewed assertion")
-    for item in data["exclusions"]:
-        required_keys(item, ("board", "refdes", "reason"), "inventory exclusion")
-        require(item["board"] in boards, f"exclusion {item['refdes']}: unknown board {item['board']}")
-        require(isinstance(item["reason"], str) and item["reason"].strip(), f"exclusion {item['refdes']}: blank reason")
     return lines, generated
 
 
@@ -320,8 +322,6 @@ def validate_candidates(data, schema, lines, generated):
     required_keys(data, ("schema_version", "candidates"), "candidates")
     candidates = data["candidates"]
     require(isinstance(candidates, list), "candidates: candidates must be a list")
-    require(len({item["candidate_id"] for item in candidates}) == len(candidates), "candidates: duplicate candidate_id")
-    require(len({item["lcsc"] for item in candidates}) == len(candidates), "candidates: duplicate candidate LCSC")
     line_ids = {line["line_id"] for line in lines}
     placed = {line["lcsc"] for line in lines}
     for candidate in candidates:
@@ -336,6 +336,8 @@ def validate_candidates(data, schema, lines, generated):
         require(generated is None or candidate["lcsc"] not in generated, f"{context}: candidate LCSC is placed by a generator spec and belongs in the inventory")
         replaces = candidate["replaces_line_id"]
         require(replaces is None or replaces in line_ids, f"{context}: unknown replaces_line_id {replaces}")
+    require(len({item["candidate_id"] for item in candidates}) == len(candidates), "candidates: duplicate candidate_id")
+    require(len({item["lcsc"] for item in candidates}) == len(candidates), "candidates: duplicate candidate LCSC")
     return candidates
 
 

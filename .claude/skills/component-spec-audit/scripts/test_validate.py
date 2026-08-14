@@ -131,6 +131,25 @@ class ComponentSpecValidatorTests(unittest.TestCase):
         with self.assertRaisesRegex(validator.ContractError, "must declare exactly"):
             validator.validate_inventory(changed, self.schema, staged=True, root=validator.SYNTHETIC)
 
+    def test_a_hand_written_entry_missing_a_key_reports_a_contract_error(self):
+        # These files are written by hand, so a missing key must fail as a contract
+        # error the runner prints as FAIL, not as a KeyError traceback.
+        for key in ("line_id", "lcsc", "placements"):
+            changed = copy.deepcopy(self.synthetic_data)
+            del changed["lines"][0][key]
+            with self.subTest(key=key), self.assertRaisesRegex(validator.ContractError, "missing keys"):
+                validator.validate_inventory(changed, self.schema, staged=True, root=validator.SYNTHETIC)
+        for key in ("board", "refdes", "reason"):
+            changed = copy.deepcopy(self.synthetic_data)
+            del changed["exclusions"][0][key]
+            with self.subTest(exclusion_key=key), self.assertRaisesRegex(validator.ContractError, "missing keys"):
+                validator.validate_inventory(changed, self.schema, staged=True, root=validator.SYNTHETIC)
+        for key in ("candidate_id", "lcsc", "status"):
+            changed = copy.deepcopy(self.candidates_data)
+            del changed["candidates"][0][key]
+            with self.subTest(candidate_key=key), self.assertRaisesRegex(validator.ContractError, "missing keys"):
+                validator.validate_candidates(changed, self.schema, self.lines, self.generated)
+
     def test_duplicate_placement_across_lines_is_rejected(self):
         changed = copy.deepcopy(self.synthetic_data)
         validator.set_target(changed, "lines.line-c900002.placements.0.refdes", "R3")
