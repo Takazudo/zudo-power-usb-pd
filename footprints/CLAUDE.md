@@ -17,7 +17,7 @@ This project uses [easyeda2kicad.py](https://github.com/uPesy/easyeda2kicad.py) 
 ## Downloading Footprints and Symbols
 
 **For detailed instructions, see:**
-- **[Download KiCad Footprints and Symbols Guide](/doc/docs/how-to/kicad-parts-download.md)**
+- **[Download KiCad Footprints and Symbols Guide](/doc/src/content/docs/how-to/kicad-parts-download.md)**
 
 **Quick reference:**
 ```bash
@@ -104,5 +104,5 @@ Then run the SVG export workflow above so documentation stays up to date.
 
 The following footprints in this library were created by hand (not downloaded from LCSC/EasyEDA):
 
-- `PogoPad_1x04_P2.54mm` — 4P 2.54 mm pogo pad array for STUSB4500 NVM I2C programming (see `doc/docs/inbox/nvm-programming.md`)
-- `PogoPad_1x08_P2.54mm` — 8P 2.54 mm pogo pad array for STUSB4500 chip-side debug signals (CC1DB, CC2DB, VREG_2V7, VDD, RESET, ATTACH, PD_OK, VBUS_EN_SNK; see `doc/docs/inbox/test-points-v3.md`)
+- `PogoPad_1x04_P2.54mm` — 4P 2.54 mm pogo pad array for STUSB4500 NVM I2C programming (see `doc/src/content/docs/inbox/nvm-programming.md`)
+- `PogoPad_1x08_P2.54mm` — 8P 2.54 mm pogo pad array for STUSB4500 chip-side debug signals (CC1DB, CC2DB, VREG_2V7, VDD, RESET, ATTACH, PD_OK, VBUS_EN_SNK; see `doc/src/content/docs/overview/board-a-usb-pd-core.md`)

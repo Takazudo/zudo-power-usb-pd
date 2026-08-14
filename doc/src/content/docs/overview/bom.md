@@ -459,8 +459,10 @@ supply its own pull-up to its own logic rail.
 
 Full height table and enclosure implications: **[Mechanical Design](./mechanical-design.md)**.
 
-The tallest parts are the D10 470 µF electrolytics at **10.2 mm**, then the FASTON
-terminals at 8.89 mm. Total board height is ~12 mm including the 1.6 mm PCB. Note that
+The tallest parts are the 470 µF electrolytics, then the FASTON terminals at 8.89 mm.
+Total board height is ~12 mm including the 1.6 mm PCB. The exact can height is stated
+once, in [Mechanical Design](./mechanical-design.md) — do not restate it here, so the
+two pages cannot drift apart again. Note that
 decision (d)'s C5/C7 swap moved those two positions from a D6.3 can to a D10 can, so
 Board B now carries **nine** D10 electrolytics (C3, C5, C7, C11, C14, C20, C21, C24, C25
 are D10; C4, C22, C23 are D6.3; C9 is D8).

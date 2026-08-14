@@ -16,10 +16,12 @@ Open http://localhost:3000 in your browser to view the documentation.
 
 ### Key Documents
 
-- **[Project Overview](doc/docs/overview/overview.md)** - Design goals, architecture, features
-- **[Circuit Diagrams](doc/docs/overview/circuit-diagrams.mdx)** - Complete circuit configuration
-- **[Bill of Materials](doc/docs/overview/bom.md)** - JLCPCB-compatible BOM
-- **[Quick Reference](doc/docs/inbox/quick-reference.md)** - Common specs, formulas, FAQ
+- **[Project Overview](doc/src/content/docs/overview/overview.md)** - Design goals, architecture, features
+- **[Board A — USB-PD Sink Core](doc/src/content/docs/overview/board-a-usb-pd-core.md)** - PD negotiation, load switch, A↔B interface
+- **[Board B — Synth Power Conversion](doc/src/content/docs/overview/board-b-synth-power.md)** - DC-DCs, LDOs, protection, outputs
+- **[Circuit Diagrams](doc/src/content/docs/overview/circuit-diagrams.mdx)** - Complete circuit configuration
+- **[Bill of Materials](doc/src/content/docs/overview/bom.md)** - JLCPCB-compatible BOM
+- **[Component Records](doc/src/content/docs/components/index.mdx)** - Generated per-component evidence pages
 
 ## Project Overview
 
