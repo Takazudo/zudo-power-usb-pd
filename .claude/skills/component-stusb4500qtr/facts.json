@@ -356,7 +356,7 @@
       "record_id": "rec-stusb4500qtr",
       "source_id": "src-stusb-board-a-baseline",
       "class": "PROJECT_STATE",
-      "value": "VBUS_EN_SNK (U1.16) drives the Q1 gate through R12 56k; R11 100k pulls the gate to VBUS_IN for default-off; C35 100n to GND gives about 5.6 ms soft-start",
+      "value": "VBUS_EN_SNK (U1.16) drives the Q1 gate through R12 56k; R11 100k pulls the gate to VBUS_IN for default-off; C35 100n to GND provides RC soft-start (settling through R11 in parallel with R12 while VBEN is asserted, through R11 alone when released)",
       "unit": "NONE",
       "conditions": "board-a fixed circuit; Q1 (AO3401A load switch) is audited in its own owner bundle",
       "locator": "src-stusb-board-a-baseline: nets rows VBEN and Net-(Q1-G)",
