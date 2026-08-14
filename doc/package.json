@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "zfb dev",
-    "build": "pnpm generate:components && zfb build",
+    "build": "pnpm generate:models && pnpm generate:components && zfb build",
     "preview": "zfb preview",
     "check": "zfb check",
     "check:html": "html-validate \"dist/**/*.html\"",
@@ -16,47 +16,57 @@
     "dev:components": "node --experimental-strip-types component-docs/cli/generate.ts --watch",
     "generate:footprint-previews": "node --experimental-strip-types component-docs/footprint-previews/generate.ts",
     "check:footprint-previews": "node --experimental-strip-types component-docs/footprint-previews/check.ts",
-    "b4push": "pnpm check && pnpm test:components && pnpm check:footprint-previews && pnpm build && pnpm check:components && pnpm scan:components",
+    "generate:models": "node --experimental-strip-types component-docs/cli/models.ts",
+    "check:models": "node --experimental-strip-types component-docs/cli/models.ts --check",
+    "test:model-viewer:browser": "node component-docs/scripts/model-viewer-browser-smoke.mjs",
+    "b4push": "pnpm check && pnpm test:components && pnpm check:footprint-previews && pnpm check:models && pnpm build && pnpm check:components && pnpm scan:components",
     "format:md": "../scripts/mdx-format.sh --write \"src/content/docs/**/*.{md,mdx}\" --ignore \"node_modules/**,dist/**,build/**,.git/**,worktrees/**,src/content/docs/components/**\"",
     "format:md:check": "../scripts/mdx-format.sh --check \"src/content/docs/**/*.{md,mdx}\" --ignore \"node_modules/**,dist/**,build/**,.git/**,worktrees/**,src/content/docs/components/**\"",
     "prepare": "cd .. && lefthook install --reset-hooks-path"
   },
   "dependencies": {
+    "@shikijs/transformers": "^4.0.0",
     "@takazudo/zfb": "0.1.0-next.49",
-    "@takazudo/zfb-runtime": "0.1.0-next.49",
     "@takazudo/zfb-adapter-cloudflare": "0.1.0-next.49",
+    "@takazudo/zfb-runtime": "0.1.0-next.49",
     "@takazudo/zudo-doc": "^0.2.9",
-    "zod": "^4.0.0",
+    "@takazudo/zudo-doc-history-server": "^0.2.9",
+    "clsx": "^2.1.0",
+    "diff": "^8.0.3",
+    "gray-matter": "^4.0.0",
+    "katex": "^0.16.38",
+    "mdast-util-gfm-table": "^2.0.0",
+    "mdast-util-mdx": "^3.0.0",
+    "mdast-util-to-markdown": "^2.1.2",
+    "mermaid": "^11.12.3",
+    "minisearch": "^7.2.0",
     "preact": "^10.29.1",
     "preact-render-to-string": "^6.6.6",
-    "shiki": "^4.0.2",
-    "@shikijs/transformers": "^4.0.0",
-    "clsx": "^2.1.0",
-    "gray-matter": "^4.0.0",
-    "mermaid": "^11.12.3",
     "remark-cjk-friendly": "^2.0.1",
     "remark-directive": "^3.0.0",
-    "katex": "^0.16.38",
-    "minisearch": "^7.2.0",
-    "diff": "^8.0.3",
-    "@takazudo/zudo-doc-history-server": "^0.2.9",
-    "mdast-util-to-markdown": "^2.1.2",
-    "mdast-util-mdx": "^3.0.0",
-    "mdast-util-gfm-table": "^2.0.0"
+    "shiki": "^4.0.2",
+    "three": "0.185.1",
+    "zod": "^4.0.0"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.2.0",
-    "tailwindcss": "^4.2.0",
-    "typescript": "^5.9.0",
+    "@types/mdast": "^4.0.4",
     "@types/node": "^22.0.0",
     "@types/react": "^19.2.0",
-    "@types/mdast": "^4.0.4",
+    "@types/three": "0.185.3",
     "html-validate": "^10.0.0",
     "lefthook": "^2.1.9",
     "pagefind": "^1.4.0",
-    "tsx": "^4.21.0"
+    "tailwindcss": "^4.2.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.0"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["esbuild", "lefthook", "sharp", "workerd"]
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "lefthook",
+      "sharp",
+      "workerd"
+    ]
   }
 }
