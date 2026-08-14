@@ -36,8 +36,11 @@ jobs:
       run:
         working-directory: doc
     steps:
+      # SHA-pinned like component-spec-skills.yml (same checkout pin) — a
+      # mutable tag is a supply-chain hole. Verified against the real tags:
+      # checkout v5.0.1, pnpm/action-setup v4.4.0, setup-node v4.4.0.
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
         with:
           # Full history so the doc-history plugin's preBuild can populate the
           # Created/Updated/Author meta block (and, in CI, the per-page history
@@ -45,12 +48,12 @@ jobs:
           fetch-depth: 0
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
         with:
           version: 11.5.2
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 22
           cache: pnpm
@@ -94,6 +97,13 @@ jobs:
       # diff on some unrelated push; here it fails where it is caused.
       - name: Component generation is deterministic
         run: pnpm check:components
+
+      # Artifact-level denied-value scan over dist/: everything upstream
+      # proves the view model is clean, but the MDX compiler, minifier and
+      # indexers between the model and these bytes are framework-owned. This
+      # is the wiring for component-docs/core/scan.ts.
+      - name: No denied evidence value reaches the built site
+        run: pnpm scan:components
 
       - name: Evaluate deploy gate
         id: gate
