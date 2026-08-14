@@ -53,9 +53,10 @@ carried as leads BA-1/BA-4 for the wave-6 decision task.
 
 ### Clamp-event stress topology
 
-The single highest-leverage net on Board A is `VBUS_IN`: one D5 clamp event at the
-32.4 V table point reaches every STUSB4500 high-voltage pin and the Q1 gate divider
-simultaneously. This diagram is the net-level view behind findings BA-1/BA-2.
+The single highest-leverage net on Board A is `VBUS_IN`: a D5 clamp event at the
+32.4 V table point reaches the STUSB4500's high-voltage pins and the Q1 gate divider
+through the paths below (which pins are exposed depends on the Q1/VBEN state — see
+BA-2). This diagram is the net-level view behind findings BA-1/BA-2.
 
 ```mermaid
 flowchart TD
@@ -72,10 +73,10 @@ flowchart TD
 
 ### Findings — leads ranked by severity
 
-#### BA-1 — Q1 gate divider exceeds Vgs abs-max at any VBUS above ~14.7 V margin point; the factory-NVM 20 V window is unguarded in hardware (BLOCKER-class lead)
+#### BA-1 — Q1 gate divider exceeds the Vgs abs-max at a 20 V contract (crossover ≈18.7 V); the factory-NVM 20 V window is unguarded in hardware (BLOCKER-class lead)
 
 With VBEN asserted low, the R11/R12 divider sets `Vgs = -VBUS x R11/(R11+R12)` =
-−VBUS × 0.641:
+−VBUS × 0.641, crossing the ±12 V abs-max at VBUS ≈ 18.7 V (12 × 156/100):
 
 - 15 V contract: **−9.62 V**, 2.38 V of margin to the ±12 V abs-max — legal.
 - 20 V contract: **−12.82 V**, **0.82 V past the abs-max** — the deterministic
@@ -104,15 +105,16 @@ spec violation"), `rule-q1-gate-drive-vs-contract` / `calc-q1-vgs-margin-vben-lo
 (reproduces −0.8205 at 20 V, +2.3846 at 15 V), `fact-high-diode-smaj20a-clamp` (32.4 V
 table point), `fact-stusb-gate-network` (network topology).
 
-#### BA-2 — one D5 clamp event stresses four STUSB4500 high-voltage pins past the 28 V mirror-only abs-max, plus Q1 VDS (HIGH lead, mirror-conditioned)
+#### BA-2 — a D5 clamp event reaches four distinct STUSB4500 high-voltage pins past the 28 V mirror-only abs-max (three at a time, by Q1 state), plus Q1 VDS (HIGH lead, mirror-conditioned)
 
 `calc-tvs-d5-clamp-vs-stusb-vdd` records the 32.4 − 28 = **4.4 V overage** against VDD.
-The net-level extension this pass adds: `VBUS_IN` reaches **U1.24 (VDD) directly**,
-**U1.18 via R14** (high-impedance sense — no meaningful drop), and **U1.16 via
-R11+R12** (Hi-Z open-drain when off — no current, so the pin floats to the clamp
-voltage); with Q1 on, `VBUS_OUT` tracks `VBUS_IN` and reaches **U1.9 via R13**. All
-four pins share the same 28 V grouped abs-max row, so a single clamp event is a
-four-pin excursion, not a one-pin one. The off-state Q1 VDS overage (32.4 V vs −30 V,
+The net-level extension this pass adds: `VBUS_IN` reaches **U1.24 (VDD) directly** and
+**U1.18 via R14** (high-impedance sense — no meaningful drop) in every state. The other
+two exposures are state-dependent: with Q1 **off** (VBEN Hi-Z), **U1.16** floats to the
+clamp voltage through R11+R12 (open-drain, no current); with Q1 **on** (VBEN actively
+driven low — U1.16 itself safe), `VBUS_OUT` tracks `VBUS_IN` and reaches **U1.9 via
+R13**. So each clamp event stresses three pins past the shared 28 V grouped abs-max
+row, and four distinct pins are exposed across the two states. The off-state Q1 VDS overage (32.4 V vs −30 V,
 2.4 V past) is `calc-tvs-d5-clamp-vs-q1-vds` and was **acknowledged as an accepted
 residual in #90 A2 — but only for Q1**; the #90 residual text does not mention the
 STUSB4500 28 V family at all. Downstream, the LM2596 keeps 12.6 V of margin at the
