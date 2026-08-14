@@ -1335,8 +1335,7 @@ dialog.zd-enlarge-dialog::backdrop {
 .zld-component-references__document-label,
 .zld-component-references__document-title,
 .zld-component-references__footprint,
-.zld-component-references__metadata,
-.zld-component-references__unresolved {
+.zld-component-references__metadata {
   margin: 0;
 }
 
@@ -1350,6 +1349,7 @@ dialog.zd-enlarge-dialog::backdrop {
    muted register as the metadata it stands in for, so a page full of them
    does not look like a page full of failures. */
 .zld-component-references__unresolved {
+  margin: 0;
   color: var(--color-muted);
   font-size: var(--text-caption);
 }

@@ -39,7 +39,7 @@ const unresolved = createComponentReferencesDescriptor({
   document: { unresolvedReason: "No single document has been reviewed yet." },
   footprintName: "PKG-FIXTURE",
   footprintPreview: { unresolvedReason: "No footprint preview image is generated yet." },
-  model: { unresolvedReason: "the KiCad footprint names no 3D model" },
+  model: { unresolvedReason: "The KiCad footprint names no 3D model." },
 });
 
 describe("component references descriptor", () => {

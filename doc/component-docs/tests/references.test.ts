@@ -138,7 +138,7 @@ describe("the 3D model is optional, and says why", () => {
   it("distinguishes a missing model line from one pointing outside the repo", () => {
     // The two real cases, kept apart so the page says which one applies.
     const reasons = new Set(references.packages.map((entry) => entry.modelUnresolvedReason));
-    assert.ok([...reasons].some((reason) => reason === "the KiCad footprint names no 3D model"));
+    assert.ok([...reasons].some((reason) => reason === "The KiCad footprint names no 3D model."));
     assert.ok([...reasons].some((reason) => reason?.includes("EASYEDA2KICAD")));
   });
 });

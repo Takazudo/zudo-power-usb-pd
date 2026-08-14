@@ -246,7 +246,7 @@ function referenceFor(
       packageId: t(footprintName),
       footprintName: t(footprintName),
       model: null,
-      modelUnresolvedReason: t("the KiCad footprint names no 3D model"),
+      modelUnresolvedReason: t("The KiCad footprint names no 3D model."),
     },
   };
 }

@@ -425,7 +425,7 @@ export function withFixtureReferences(index: EvidenceIndex): EvidenceIndex {
       packageId: footprintName,
       footprintName,
       footprintPath: `footprints/${footprintName}.kicad_mod`,
-      modelUnresolvedReason: "the KiCad footprint names no 3D model",
+      modelUnresolvedReason: "The KiCad footprint names no 3D model.",
       recordIds: [entry.record.record_id],
     };
   });

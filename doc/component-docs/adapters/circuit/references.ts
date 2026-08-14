@@ -221,7 +221,7 @@ async function readPackage(footprintName: string, recordId: string): Promise<Cir
     });
   }
   if (models.length === 0) {
-    return unresolved("the KiCad footprint names no 3D model");
+    return unresolved("The KiCad footprint names no 3D model.");
   }
   const modelLocator = models[0]?.[1] ?? "";
   if (!modelLocator.startsWith(MODEL_PREFIX)) {
@@ -229,7 +229,7 @@ async function readPackage(footprintName: string, recordId: string): Promise<Cir
     // asset this repository does not carry, so the model is unresolved rather
     // than unsafe — but the reason repeats the locator so the page says what
     // it would take to resolve it.
-    return unresolved(`the footprint's 3D model is not a reviewed local asset (${modelLocator})`);
+    return unresolved(`The footprint's 3D model is not a reviewed local asset: ${modelLocator}`);
   }
   const modelName = modelLocator.slice(MODEL_PREFIX.length);
   if (!SAFE_BASENAME.test(modelName) || extname(modelName).toLowerCase() !== ".wrl") {
