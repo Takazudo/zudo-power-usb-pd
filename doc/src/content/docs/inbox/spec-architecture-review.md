@@ -632,7 +632,8 @@ is silently incomplete, which `check_baseline.py` will surface as "extra pins" t
 first time a real Board B spec wires them correctly.
 
 Evidence: board-b-synth-power.md U2/U3 net tables; `board-b.json` `GND` array +
-`unresolved` note 7; `fact-ss34-manufacturer` bundle placement rows (D1/D2/D3).
+`unresolved` note 7; `inventory.json` line-c8678 placements (D1/D2/D3, fitted);
+sch property reads D1/D2 (`SS34`/C8678).
 
 #### BB-12 — the C11 rail discrepancy resolves toward the −13.5 V rail on three independent reads; inventory.json's function text is the outlier (LOW lead)
 
