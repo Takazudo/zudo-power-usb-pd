@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "source_id": "src-lm2596-umw-ds",
+      "record_id": "rec-lm2596s-adj-c347423",
+      "document_title": "UMW LM2596/LM2596HV 3A Step-Down Voltage Regulator",
+      "document_number": "not stated",
+      "revision": "Jun.2025",
+      "document_date": "2025-06",
+      "authoritative_url": "https://www.umw-ic.com/static/pdf/08a395a0d66ae7472f74e2947a1d8a0f.pdf",
+      "alternate_authoritative_url": "https://www.umw-ic.com/en/product_details/UMW+LM2596S-ADJ",
+      "retrieval_date": "2026-08-14",
+      "authority_class": "MANUFACTURER_PRIMARY",
+      "sha256": "26d031e9696524e9a99055635d15cf828d57d33cf08f12a4009f5e2c60aef27e",
+      "availability": "AVAILABLE",
+      "physical_pdf_page_index": 3,
+      "printed_page_label": "4 of 28",
+      "locator": "Pin Descriptions and Ordering information tables (printed page 3); Absolute Maximum Ratings and Operating Conditions tables (printed page 4); Electrical Characteristics 10.1/10.2 tables (printed pages 5-7) with thermal notes 11-14 (printed page 8); Application Information Inverting Regulator sections (printed pages 20-23)",
+      "evidence_extract": "Retrieved from the manufacturer's own site umw-ic.com (title block: UTD Semiconductor Co.,Limited, UMW branding, Jun.2025, 28 pages). LM2596S-ADJ is the ADJ-output TO-263 orderable. Abs max supply 45 V (LM2596, non-HV); operating supply 4.75-40 V; ON/OFF and Feedback pin abs max -0.3 to +25 V. ADJ feedback voltage 1.23 V typ, 1.193/1.267 V limits (1.180/1.280 over temp). Current limit 4.5 A typ, 3.6 A min. Oscillator 150 kHz (117-183). thetaJC 2 C/W; TO-263 thetaJA 50/30/20 C/W per notes 12-14 copper areas. Inverting Regulator section bootstraps the GND pin to the negative output and grounds the feedback pin; startup can draw current-limit-level input current (approx 4.5 A) for 2 ms or more and current-limited sources may not work correctly."
+    },
+    {
+      "source_id": "src-lm2596-schematic-dcdc",
+      "record_id": "rec-lm2596s-adj-c347423",
+      "document_title": "zudo-pd KiCad schematic, DC-DC conversion sheet",
+      "document_number": "dc-dc-conversion.kicad_sch",
+      "revision": "1e053e1ae1b943ac9539e0d5f79a180e4dceabe1",
+      "document_date": "2026-07-05",
+      "authoritative_url": "https://raw.githubusercontent.com/Takazudo/zudo-pd/1e053e1ae1b943ac9539e0d5f79a180e4dceabe1/dc-dc-conversion.kicad_sch",
+      "alternate_authoritative_url": "",
+      "retrieval_date": "2026-08-14",
+      "authority_class": "PROJECT_GENERATOR",
+      "sha256": "0683e1034cc18cb3a3cc9a3dbc8718d880efef4cdb3cc181bb388cb0efe080a1",
+      "availability": "AVAILABLE",
+      "physical_pdf_page_index": 0,
+      "printed_page_label": "source file",
+      "locator": "symbol instance property rows Reference/Value for U2/U3/U4 (LM2596S-ADJ) and R1=10k R2=1k R3=5.1k R4=1k R5=10k R6=1k",
+      "evidence_extract": "U2, U3, U4 all carry value LM2596S-ADJ. Feedback dividers: U2 R1 10k / R2 1k; U3 R3 5.1k / R4 1k; U4 R5 10k / R6 1k."
+    },
+    {
+      "source_id": "src-lm2596-board-b-baseline",
+      "record_id": "rec-lm2596s-adj-c347423",
+      "document_title": "board-b netlist baseline (schgen)",
+      "document_number": "scripts/schgen/baselines/board-b.json",
+      "revision": "c89c1541fbd6315c9d41fd4f55737368ebcb7bbf",
+      "document_date": "2026-08-14",
+      "authoritative_url": "https://raw.githubusercontent.com/Takazudo/zudo-pd/c89c1541fbd6315c9d41fd4f55737368ebcb7bbf/scripts/schgen/baselines/board-b.json",
+      "alternate_authoritative_url": "",
+      "retrieval_date": "2026-08-14",
+      "authority_class": "PROJECT_GENERATOR",
+      "sha256": "5cced6e03c370bd87991a309f1329463e9913e1132179ff8564d8cd7f51edd2c",
+      "availability": "AVAILABLE",
+      "physical_pdf_page_index": 0,
+      "printed_page_label": "source file",
+      "locator": "nets table rows '+15V gen', 'Net-(D1-K)', 'Net-(D2-K)', 'Net-(D3-K)', '+13.5V OUT', '+7.5V OUT', '-13.5V OUT', 'Net-(U2-Feedback)', 'Net-(U3-Feedback)', 'Net-(U4-Feedback)', 'GND'",
+      "evidence_extract": "+15V feeds U2.1/U3.1/U4.1. U2/U3: pins 3/5/6 on GND (buck, ON/OFF grounded = enabled). U4: pins 3/5/6 on '-13.5V OUT' with switch node U4.2 to D3.1/L3.1 and L3.2 to GND - inverting buck-boost, device ground rides at the negative output. FB nets: U2.4-R1.1-R2.2, U3.4-R3.2-R4.1, U4.4-R5.1-R6.1."
+    }
+  ]
+}

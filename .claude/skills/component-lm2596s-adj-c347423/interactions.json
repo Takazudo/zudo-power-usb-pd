@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "interactions": [
+    {
+      "interaction_id": "int-lm2596-u4-inverting-stress",
+      "record_ids": [
+        "rec-lm2596s-adj-c347423"
+      ],
+      "fact_ids": [
+        "fact-lm2596-u4-inverting-nets",
+        "fact-lm2596-u4-effective-input",
+        "fact-lm2596-u4-absmax-margin",
+        "fact-lm2596-u4-operating-margin",
+        "fact-lm2596-inverting-startup-current"
+      ],
+      "conditions": "actual negotiated VBUS, inverting startup inrush against the current-limited USB-PD source, and switch-node ringing across the full load range",
+      "verdict": "NEEDS BENCH"
+    },
+    {
+      "interaction_id": "int-lm2596-rail-setpoints",
+      "record_ids": [
+        "rec-lm2596s-adj-c347423"
+      ],
+      "fact_ids": [
+        "fact-lm2596-project-placements",
+        "fact-lm2596-u2-vout-setpoint",
+        "fact-lm2596-u3-vout-setpoint",
+        "fact-lm2596-u4-vout-setpoint"
+      ],
+      "conditions": "divider tolerance stack, feedback reference spread over temperature, and downstream LDO dropout requirements on the +13.5/+7.5/-13.5 rails",
+      "verdict": "NEEDS BENCH"
+    }
+  ]
+}

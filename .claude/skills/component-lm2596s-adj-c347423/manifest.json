@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "skill": "component-lm2596s-adj-c347423",
+  "records": [
+    {
+      "record_id": "rec-lm2596s-adj-c347423",
+      "line_id": "line-c347423",
+      "candidate_id": null,
+      "kind": "standalone",
+      "parent_record_id": null,
+      "mpn": "LM2596S-ADJ",
+      "manufacturer": "UMW",
+      "lcsc": "C347423",
+      "package": "TO-263-5_L10.2-W8.9-P1.70-BR",
+      "source_ids": [
+        "src-lm2596-umw-ds",
+        "src-lm2596-schematic-dcdc",
+        "src-lm2596-board-b-baseline"
+      ],
+      "fact_ids": [
+        "fact-lm2596-manufacturer",
+        "fact-lm2596-ordering-package",
+        "fact-lm2596-pinout",
+        "fact-lm2596-vin-absmax",
+        "fact-lm2596-vin-operating-max",
+        "fact-lm2596-fb-vref",
+        "fact-lm2596-fb-vref-min",
+        "fact-lm2596-fb-vref-max",
+        "fact-lm2596-output-tolerance",
+        "fact-lm2596-vout-adjust-range",
+        "fact-lm2596-onoff-thresholds",
+        "fact-lm2596-onoff-absmax",
+        "fact-lm2596-onoff-inverting-note",
+        "fact-lm2596-current-limit",
+        "fact-lm2596-oscillator-frequency",
+        "fact-lm2596-inverting-topology-support",
+        "fact-lm2596-inverting-startup-current",
+        "fact-lm2596-thermal",
+        "fact-lm2596-project-placements",
+        "fact-lm2596-u4-inverting-nets",
+        "fact-lm2596-u2-r1",
+        "fact-lm2596-u2-r2",
+        "fact-lm2596-u3-r3",
+        "fact-lm2596-u3-r4",
+        "fact-lm2596-u4-r5",
+        "fact-lm2596-u4-r6",
+        "fact-lm2596-vin-project",
+        "fact-lm2596-u4-vout-target",
+        "fact-lm2596-u2-vout-setpoint",
+        "fact-lm2596-u3-vout-setpoint",
+        "fact-lm2596-u4-vout-setpoint-magnitude",
+        "fact-lm2596-u4-vout-setpoint",
+        "fact-lm2596-u4-effective-input",
+        "fact-lm2596-u4-effective-input-setpoint",
+        "fact-lm2596-u4-absmax-margin",
+        "fact-lm2596-u4-operating-margin"
+      ],
+      "interaction_ids": [
+        "int-lm2596-u4-inverting-stress",
+        "int-lm2596-rail-setpoints"
+      ],
+      "open_domains": [
+        "converter-setpoints",
+        "u4-inverting-stress",
+        "thermal-on-project-pcb"
+      ]
+    }
+  ]
+}

@@ -1,17 +1,12 @@
 {
   "schema_version": 1,
-  "contract": "One lock per committed pin map. canonical_sha256 locks the reviewed symbol/footprint/pin set, evidence_fact_ids cite same-record evidence, and trust_status must match that evidence: TRUSTED requires a primary-source-confirmed closure, UNSOURCED requires at least one UNSOURCED or unavailable-source fact. Empty until component bundles land; strict mode requires exact pin-map parity.",
-  "locks": [
+  "pin_maps": [
     {
-      "record_id": "rec-lm2596s-adj-c347423",
       "pin_map_id": "pinmap-lm2596s-adj",
-      "canonical_sha256": "b6b4af62d5dbd2cd7007e92d1732c7be7562bd2f7e1011873f683ef88df899c7",
-      "evidence_fact_ids": [
-        "fact-lm2596-pinout",
-        "fact-lm2596-u4-inverting-nets"
-      ],
-      "trust_status": "PROJECT-LOCKED",
-      "critical_pins": [
+      "record_id": "rec-lm2596s-adj-c347423",
+      "symbol": "LM2596S-ADJ",
+      "footprint": "TO-263-5_L10.2-W8.9-P1.70-BR",
+      "pins": [
         {
           "symbol_pin": "1",
           "name": "VIN",
@@ -49,7 +44,7 @@
           "function": "package tab, thermally specified only; project nets tie it to the device GND node (system GND on U2/U3, -13.5V rail on U4)"
         }
       ],
-      "reviewer": "issue-110 author review; independent manager review pending"
+      "reviewed_by": "issue-110 author review; independent manager review pending"
     }
   ]
 }
