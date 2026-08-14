@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "skill": "component-cya1265-100uh-c19268674",
+  "records": [
+    {
+      "record_id": "rec-cya1265-100uh-c19268674",
+      "line_id": "line-c19268674",
+      "candidate_id": null,
+      "kind": "standalone",
+      "parent_record_id": null,
+      "mpn": "CYA1265-100UH",
+      "manufacturer": "SHOU HAN",
+      "lcsc": "C19268674",
+      "package": "IND-SMD_L13.8-W12.8",
+      "source_ids": ["src-cya1265-datasheet"],
+      "fact_ids": [
+        "fact-cya1265-manufacturer",
+        "fact-cya1265-inductance",
+        "fact-cya1265-isat",
+        "fact-cya1265-idc-heat-rating",
+        "fact-cya1265-rdc-typ",
+        "fact-cya1265-rdc-max",
+        "fact-cya1265-ripple-13v5",
+        "fact-cya1265-ripple-7v5",
+        "fact-cya1265-ripple-neg13v5"
+      ],
+      "interaction_ids": ["int-cya1265-ripple-margins"],
+      "open_domains": []
+    }
+  ]
+}
