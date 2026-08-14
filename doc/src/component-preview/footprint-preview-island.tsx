@@ -5,6 +5,8 @@
 
 import { useEffect, useRef, useState } from "preact/hooks";
 
+import { PreviewEnlargeDialog } from "./preview-enlarge-dialog.tsx";
+
 export type FootprintPreviewIslandProps = {
   readonly assetUrl: string;
   readonly footprintName: string;
@@ -12,25 +14,17 @@ export type FootprintPreviewIslandProps = {
 };
 
 /**
- * Fork from led-lamp: no enlarge dialog.
- *
- * led-lamp's island also renders a `PreviewEnlargeDialog` trigger button. That
- * dialog needs `useModalDialog` / `ENLARGE_DIALOG_STYLE` / `AFTER_NAVIGATE_EVENT`
- * from `@takazudo/zudo-doc` subpaths this project's installed `^0.2.9` does not
- * export, so it is deliberately not ported here — a later sub-issue adds a
- * hand-rolled native `<dialog>` for both this and the 3D-model preview. The
- * `<img>` link plus the caption's "Open SVG" link is the whole affordance
- * until then.
- *
- * `data-footprint-preview-state` still flips "no-js" -> "ready" once the
- * image has actually decoded, matching led-lamp's contract — nothing in this
- * fork's CSS currently depends on that state, but it stays because it is the
- * truthful signal a reader (or a check script) can read regardless of what
- * consumes it.
+ * `data-footprint-preview-state` flips "no-js" -> "ready" once the image has
+ * actually decoded, matching led-lamp's contract. The enlarge trigger is
+ * scoped to the "ready" state in CSS, so a reader whose JavaScript never runs
+ * is never offered a control that cannot work — the `<img>` link and the
+ * caption's "Open SVG" link remain their whole affordance.
  */
 export function FootprintPreviewIsland({ assetUrl, footprintName, footprintPath }: FootprintPreviewIslandProps) {
   const imageRef = useRef<HTMLImageElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const [isImageReady, setImageReady] = useState(false);
+  const [isDialogOpen, setDialogOpen] = useState(false);
   const alt = `Footprint preview for ${footprintName}`;
 
   useEffect(() => {
@@ -51,12 +45,35 @@ export function FootprintPreviewIsland({ assetUrl, footprintName, footprintPath 
         <a href={assetUrl} aria-label={`Open footprint SVG for ${footprintName}`}>
           <img ref={imageRef} src={assetUrl} alt={alt} onLoad={() => setImageReady(true)} />
         </a>
+        <button
+          ref={triggerRef}
+          type="button"
+          className="zld-preview-enlarge-button"
+          data-component-preview-enlarge="footprint"
+          aria-label={`Enlarge footprint preview for ${footprintName}`}
+          title={`Enlarge footprint preview for ${footprintName}`}
+          onClick={() => setDialogOpen(true)}
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" focusable="false">
+            <path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6" />
+          </svg>
+        </button>
       </div>
       <figcaption>
         Shared footprint package: <code>{footprintName}</code>. <a href={assetUrl}>Open SVG</a>
         <br />
         Source: <code>{footprintPath}</code>
       </figcaption>
+      <PreviewEnlargeDialog
+        isOpen={isDialogOpen}
+        onClose={() => setDialogOpen(false)}
+        returnFocusRef={triggerRef}
+        labelId="zld-footprint-preview-dialog-title"
+        title={alt}
+        variant="footprint"
+      >
+        {isDialogOpen && <img src={assetUrl} alt={alt} />}
+      </PreviewEnlargeDialog>
     </figure>
   );
 }
