@@ -505,10 +505,9 @@
       "pin_map_id": "pinmap-smaj15a-c571368",
       "canonical_sha256": "9b5387bac8d9af7c5c7daf7e7208af40c46a458c2dc66a8d53c4c06dcc888855",
       "evidence_fact_ids": [
-        "fact-smaj15a-manufacturer",
-        "fact-smaj15a-identity"
+        "fact-smaj15a-polarity"
       ],
-      "trust_status": "PROJECT-LOCKED",
+      "trust_status": "TRUSTED",
       "critical_pins": [
         {
           "symbol_pin": "1",
@@ -523,7 +522,7 @@
           "function": "anode"
         }
       ],
-      "reviewer": "x-wt-teams manager, merge-time parity lock: 2-terminal TVS/ESD pin set re-reviewed against the bundle pin map and the KiCad symbol/footprint it names"
+      "reviewer": "x-wt-teams manager, merge-time parity lock: 2-terminal TVS/ESD pin set re-reviewed against the bundle pin map and the KiCad symbol/footprint it names; upgraded to TRUSTED on child-114's suggestion (primary-PASS polarity fact)"
     },
     {
       "record_id": "rec-sd05-c502527",
