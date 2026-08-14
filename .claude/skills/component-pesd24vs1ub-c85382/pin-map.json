@@ -5,7 +5,7 @@
       "pin_map_id": "pinmap-pesd24vs1ub-c85382",
       "record_id": "rec-pesd24vs1ub-c85382",
       "symbol": "PESD24VS1UB_C85382",
-      "footprint": "SOD-523",
+      "footprint": "SOD-523_L1.2-W0.8-LS1.6-RD",
       "pins": [
         {
           "symbol_pin": "1",

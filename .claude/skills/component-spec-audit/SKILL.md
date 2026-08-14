@@ -20,7 +20,7 @@ Protect the design from plausible-looking but wrong component claims. Treat the 
 
 ## Staged and strict modes
 
-`--staged` is the default while board-a and board-b are being built. It tolerates exactly two forms of incompleteness — an inventory owner whose skill directory does not exist yet, and absent `scripts/schgen/board_*_spec.py` generator specs — and prints every gate it skipped. It never relaxes a rule about data that is present. `--strict` restores generator identity parity, KiCad pin-asset parity, exact owner parity, and the non-empty pin-lock, critical-review, refresh-evidence, and cross-component-rule requirements.
+`--staged` is the default while board-a and board-b are being built. It tolerates exactly two forms of incompleteness — an inventory owner whose skill directory does not exist yet, and absent `scripts/schgen/board_*_spec.py` generator specs (per board: a present board is checked in full while the absent board's placements are skipped with a printed note) — and prints every gate it skipped. It never relaxes a rule about data that is present. `--strict` restores generator identity parity, KiCad pin-asset parity, exact owner parity, and the non-empty pin-lock, critical-review, refresh-evidence, and cross-component-rule requirements.
 
 ## Replacement candidates
 

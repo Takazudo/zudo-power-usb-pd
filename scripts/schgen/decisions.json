@@ -135,7 +135,22 @@
         "fact-umw-ao3401a-gate-resistor-values",
         "fact-stusb-gate-network",
         "fact-high-diode-smaj20a-clamp",
-        "calc-tvs-d5-standoff-vs-pdo"
+        "calc-tvs-d5-standoff-vs-pdo",
+        "fact-bzt52c11-vz-window",
+        "fact-bzt52c11-knee-margin-15v",
+        "fact-bzt52c11-d8-orientation"
+      ],
+      "winner": {
+        "mpn": "BZT52C11-7-F",
+        "manufacturer": "Diodes Incorporated",
+        "lcsc": "C92321",
+        "package": "SOD-123_L2.8-W1.8-LS3.7-RD"
+      },
+      "dated_observations": [
+        {
+          "date": "2026-08-14",
+          "observation": "LCSC product page C92321: BZT52C11-7-F, Diodes Incorporated, SOD-123 zener 11V (10.4-11.6V at 5mA), stock 2,540 units, min-buy 20, USD 0.0536 @ 20pcs; selection made by #124 under dec-e's evidence discipline (owner bundle component-bzt52c11-c92321, primary datasheet DS18004 Rev. 38-2 hash-locked)"
+        }
       ]
     },
     {
