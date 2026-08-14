@@ -76,7 +76,7 @@
       "record_ids": [
         "rec-high-diode-smaj20a-c571370",
         "rec-smaj15a-c571368",
-        "rec-sd05-c502527",
+        "rec-cand-smaj6-5a-c87267",
         "rec-stusb4500qtr",
         "rec-lm2596s-adj-c347423",
         "rec-umw-ao3401a-c347476",
@@ -94,14 +94,16 @@
         "fact-smaj15a-margin-plus12",
         "fact-smaj15a-margin-percent",
         "fact-smaj15a-tvs3-orientation",
-        "fact-sd05-standoff",
-        "fact-sd05-plus5-margin",
-        "fact-sd05-plus5-margin-percent",
+        "fact-cand-smaj6-5a-standoff",
+        "fact-cand-smaj6-5a-breakdown",
+        "fact-cand-smaj6-5a-clamp",
+        "fact-cand-smaj6-5a-plus5-margin",
         "fact-l7805abd2t-vout-band"
       ],
-      "conditions": "Compare each TVS clamp/standoff against its downstream absolute maxima: D5 SMAJ20A on VBUS_IN clamps at the 32.4 V table point, 4.4 V above the mirror-only 28 V STUSB4500 VDD/VBUS-pin absolute maxima and 2.4 V past the Q1 -30 V VDS rating when the load switch is off with VBUS_OUT near 0 V, but 12.6 V under the LM2596 45 V input rating; D5's 20 V standoff leaves 5 V of margin at the 15 V contract and zero at a 20 V contract; SMAJ15A holds a 3 V / 25 percent standoff margin on the +/-12 V rails while the TVS3 orientation on -12 V is not yet locked; SD05 standoff exactly equals the +5 V rail (zero margin, deterministic BLOCKER standoff fact) and sits 0.2 V below the L7805 5.2 V guaranteed upper output band. All clamp values are 10/1000 us table points, not the installed surge waveform.",
+      "conditions": "Compare each TVS clamp/standoff against its downstream absolute maxima: D5 SMAJ20A on VBUS_IN clamps at the 32.4 V table point, 4.4 V above the mirror-only 28 V STUSB4500 VDD/VBUS-pin absolute maxima and 2.4 V past the Q1 -30 V VDS rating when the load switch is off with VBUS_OUT near 0 V, but 12.6 V under the LM2596 45 V input rating; D5's 20 V standoff leaves 5 V of margin at the 15 V contract and zero at a 20 V contract; SMAJ15A holds a 3 V / 25 percent standoff margin on the +/-12 V rails while the TVS3 orientation on -12 V is not yet locked; TVS2 (decision a replacement, Brightking SMAJ6.5A/C87267) holds a 1.5 V / 30 percent standoff margin over the +5 V rail, clears the L7805 5.2 V guaranteed upper output band by 1.3 V with its 7.22 V minimum breakdown 2.02 V above that band top, resolving the demoted SD05's zero-margin BLOCKER standoff fact; its 11.2 V maximum clamp at the 35.7 A 10/1000 us table point has no retained downstream +5 V absolute maximum to compare against (the L7805 bundle retains no output-pin absolute maximum, the coverage gap decision a records), so the TVS2 clamp exposure stays unverifiable rather than PASS. All clamp values are 10/1000 us table points, not the installed surge waveform.",
       "verdict": "UNSOURCED",
-      "refusal": "Do not clear the TVS protection chain: the STUSB4500 absolute maxima are mirror-only, no installed clamp or surge waveform has been measured, a clamp event arithmetically exceeds the Q1 VDS rating, and the SD05 zero-margin standoff on the +5 V rail is a deterministic blocker that requires a part change, not more analysis.",
+      "refusal": "Do not clear the TVS protection chain: the STUSB4500 absolute maxima are mirror-only, no installed clamp or surge waveform has been measured, and a clamp event arithmetically exceeds the Q1 VDS rating. TVS2's decision-a replacement (SMAJ6.5A/C87267) resolves the demoted SD05's zero-margin standoff BLOCKER, but the D5-side findings above remain open and the SMAJ6.5A 11.2 V clamp point cannot be cleared while no downstream +5 V absolute maximum is retained.",
+      "notes": "Resolved-BLOCKER history: the TVS2 slot previously held MDD SD05 (C502527), whose 5 V standoff exactly equaled the +5 V rail - zero margin at nominal and -0.2 V at the L7805 5.2 V band (BLOCKER facts fact-sd05-plus5-margin and fact-sd05-plus5-margin-percent, retained on the demoted rec-sd05-c502527 in component-sd05-c502527). Wave-6 decision dec-a-tvs2-replacement fitted Brightking SMAJ6.5A (C87267). The superseded_calculations entry below preserves the original SD05 computation verbatim because locked decisions.json dec-a cites calc-tvs-sd05-standoff-vs-plus5 as evidence of why the swap happened; the live calculation for the fitted part is calc-tvs-smaj6-5a-standoff-vs-plus5.",
       "conditioned_calculations": [
         {
           "calculation_id": "calc-tvs-d5-clamp-vs-stusb-vdd",
@@ -156,6 +158,28 @@
           ]
         },
         {
+          "calculation_id": "calc-tvs-smaj6-5a-standoff-vs-plus5",
+          "fact_ids": [
+            "fact-cand-smaj6-5a-standoff",
+            "fact-l7805abd2t-vout-band"
+          ],
+          "expression": "fact_cand_smaj6_5a_standoff - rail_v",
+          "result_key": "margin_v",
+          "conditions": "TVS2 (decision a replacement, SMAJ6.5A/C87267) 6.5 V standoff minus the +5 V rail: 1.5 V margin at the 5.0 V nominal and 1.3 V at rail_v 5.2, the guaranteed upper output band from fact-l7805abd2t-vout-band -- both positive, resolving the demoted SD05's zero/negative margin; deterministic from primary-sourced values",
+          "results": [
+            {
+              "rail_v": 5,
+              "margin_v": 1.5
+            },
+            {
+              "rail_v": 5.2,
+              "margin_v": 1.2999999999999998
+            }
+          ]
+        }
+      ],
+      "superseded_calculations": [
+        {
           "calculation_id": "calc-tvs-sd05-standoff-vs-plus5",
           "fact_ids": [
             "fact-sd05-standoff",
@@ -173,7 +197,8 @@
               "rail_v": 5.2,
               "margin_v": -0.20000000000000018
             }
-          ]
+          ],
+          "superseded": "Tombstone, not a live calculation: the SD05 (C502527) it computes over was demoted by wave-6 decision dec-a-tvs2-replacement and its record is no longer named by this rule. Kept verbatim so the locked decisions.json evidence ref calc-tvs-sd05-standoff-vs-plus5 still resolves in the fact base; fact-sd05-standoff lives on in component-sd05-c502527. Successor: calc-tvs-smaj6-5a-standoff-vs-plus5."
         }
       ]
     },
@@ -493,7 +518,7 @@
       "rule_id": "rule-pptc-vmax-vs-rail",
       "domain": "pptc-vmax-vs-rail",
       "record_ids": [
-        "rec-ptc-smd1210p200tf-c20808",
+        "rec-ptc-smd1210p150tf16-c7529589",
         "rec-ptc-msmd110-33v-c70119",
         "rec-ptc-bsmd1206-150-16v-c883133",
         "rec-l7812cd2t-c13456",
@@ -501,10 +526,11 @@
         "rec-cj7912-c94173"
       ],
       "fact_ids": [
-        "fact-ptc1-vmax",
-        "fact-ptc1-vmax-margin",
-        "fact-ptc1-ihold",
-        "fact-ptc1-ihold-margin",
+        "fact-ptc1b-vmax",
+        "fact-ptc1b-vmax-margin",
+        "fact-ptc1b-ihold",
+        "fact-ptc1b-ihold-margin",
+        "fact-ptc1b-hold-85c",
         "fact-ptc2-vmax",
         "fact-ptc2-vmax-margin",
         "fact-ptc2-ihold",
@@ -517,20 +543,21 @@
         "fact-l7805abd2t-vout-25c",
         "fact-cj7912-vout-nominal"
       ],
-      "conditions": "A tripped PPTC absorbs its full rail voltage, so Vmax must cover the rail: PTC1's 6 VDC rating on the +12 V rail is -6 V of margin, a deterministic primary-sourced BLOCKER; PTC2 (33 V on +5 V, +28 V) and PTC3 (16 V on -12 V, +4 V) PASS on voltage. Hold-current margins of 0.8/0.6/0.7 A over the 1.2/0.5/0.8 A rail ratings PASS at 25 C but derate toward 85 C, and tripped-state behavior at the real fault waveform is unmeasured.",
+      "conditions": "A tripped PPTC absorbs its full rail voltage, so Vmax must cover the rail: PTC1 (decision g replacement, RUILON SMD1210P150TF/16 C7529589, demoting the SMD1210P200TF/C20808) rates 16 VDC on the +12 V rail, +4 V of margin; PTC2 (33 V on +5 V, +28 V) and PTC3 (16 V on -12 V, +4 V) also PASS on voltage. Hold-current margins of 0.3/0.6/0.7 A over the 1.2/0.5/0.8 A rail ratings PASS at 25 C but derate toward 85 C -- PTC1's thinner 0.3 A margin (vs the demoted part's 0.8 A) has no retained 85 C hold figure for the /16 variant, and tripped-state behavior at the real fault waveform is unmeasured for all three.",
       "verdict": "NEEDS BENCH",
-      "refusal": "Replace PTC1 with a part rated at or above the +12 V rail before any rail power-on: its tripped state is a deterministic overvoltage violation, and the PASS margins on PTC2 and PTC3 clear nothing about it.",
+      "refusal": "PTC1's decision-g replacement (SMD1210P150TF/16, C7529589) resolves the deterministic Vmax BLOCKER the demoted part carried, but do not treat this rail as bench-cleared: no 85 C hold-current figure is retained for the /16 variant, the family's derating curve estimates the 1.2 A rail budget could be crossed near ~48 C ambient (decisions.json dec-g-ptc1-replacement), and tripped-state behavior at the real fault waveform remains unmeasured for all three PPTCs.",
+      "notes": "Resolved-BLOCKER history: the PTC1 slot previously held RUILON SMD1210P200TF (C20808), whose 6 VDC maximum voltage on the +12 V rail was -6 V of margin, a deterministic primary-sourced BLOCKER (fact-ptc1-vmax-margin, retained on the demoted rec-ptc-smd1210p200tf-c20808 in component-ptc-smd1210p200tf-c20808, whose earlier refusal here demanded a part change before any rail power-on). Wave-6 decision dec-g-ptc1-replacement fitted RUILON SMD1210P150TF/16 (C7529589). calc-pptc1-vmax-margin is slot-scoped, so it recomputes from the fitted part's facts and is the same calculation ID the locked decisions.json dec-g cites.",
       "conditioned_calculations": [
         {
           "calculation_id": "calc-pptc1-vmax-margin",
           "fact_ids": [
-            "fact-ptc1-vmax",
+            "fact-ptc1b-vmax",
             "fact-l7812cd2t-vout-25c"
           ],
-          "expression": "fact_ptc1_vmax - fact_l7812cd2t_vout_25c",
+          "expression": "fact_ptc1b_vmax - fact_l7812cd2t_vout_25c",
           "result_key": "margin_v",
-          "conditions": "PTC1 rated maximum voltage minus the +12 V rail it protects: the negative result reproduces the bundle's BLOCKER margin fact and holds whenever the fuse trips",
-          "margin_v": -6
+          "conditions": "PTC1 rated maximum voltage (decision g replacement, SMD1210P150TF/16 C7529589) minus the +12 V rail it protects: the positive result reproduces the bundle's PASS margin fact and holds whenever the fuse trips",
+          "margin_v": 4
         },
         {
           "calculation_id": "calc-pptc2-vmax-margin",

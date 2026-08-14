@@ -9,9 +9,15 @@
  *
  * The `expect` counts are the other half of that guarantee, in the opposite
  * direction: if the provider corpus shrinks or grows, generation fails instead
- * of quietly publishing a different set. 41 records across the 20 wave-3
- * bundles (#107-#117), 128 sources, and the 9 cross-component rules (#118)
- * are the figures asserted below.
+ * of quietly publishing a different set. The provider corpus is the
+ * inventory's line-holder records (replacement-candidate records are
+ * excluded in `evidence.ts`): 41 records and 126 of their sources, plus
+ * the 9 cross-component rules (#118). The wave-3 figures were 41/128
+ * (#107-#117); the #132 repoint of the wave-6 part-swap decisions traded
+ * the 4 demoted records' 8 sources (SD05, the old PTC1, and the
+ * C22383803/C22383804 passive aliases) for the 3 replacement records' 4
+ * (C335982, C7529589, C87267 -- the fitted C22387780 sources were already
+ * selected), and the wave-6 inventory itself swapped 4 lines for 4.
  *
  * `documentSelections` is deliberately omitted (empty): it is led-lamp's
  * curated single-document shortcut for the 3D-preview / reference feature,
@@ -58,8 +64,7 @@ export const CIRCUIT_SELECTION: InstanceSelection = {
     "rec-c1623",
     "rec-c1729",
     "rec-c2983319",
-    "rec-c22383803",
-    "rec-c22383804",
+    "rec-c335982",
     "rec-c970687",
     "rec-c22387780",
     "rec-c2289",
@@ -81,16 +86,16 @@ export const CIRCUIT_SELECTION: InstanceSelection = {
     "rec-l7805abd2t-c86206",
     // component-cj7912-c94173
     "rec-cj7912-c94173",
-    // component-ptc-smd1210p200tf-c20808
-    "rec-ptc-smd1210p200tf-c20808",
+    // component-ptc-smd1210p200tf-c20808 (decision g replacement: RUILON SMD1210P150TF/16, C7529589)
+    "rec-ptc-smd1210p150tf16-c7529589",
     // component-ptc-msmd110-33v-c70119
     "rec-ptc-msmd110-33v-c70119",
     // component-ptc-bsmd1206-150-16v-c883133
     "rec-ptc-bsmd1206-150-16v-c883133",
     // component-smaj15a-c571368
     "rec-smaj15a-c571368",
-    // component-sd05-c502527
-    "rec-sd05-c502527",
+    // component-sd05-c502527 (decision a replacement: Brightking SMAJ6.5A, C87267)
+    "rec-cand-smaj6-5a-c87267",
     // component-faston-c591344
     "rec-faston-c591344",
     // component-hdr-2541wr-2x08p-c5383092
@@ -158,11 +163,7 @@ export const CIRCUIT_SELECTION: InstanceSelection = {
     "src-c1729-boardbdoc", // rec-c1729
     "src-c2983319-datasheet", // rec-c2983319
     "src-c2983319-boardbdoc", // rec-c2983319
-    "src-c22383803-datasheet", // rec-c22383803
-    "src-c22383803-alias-lcsc", // rec-c22383803
-    "src-c22383803-boardbdoc", // rec-c22383803
-    "src-c22383804-datasheet", // rec-c22383804
-    "src-c22383804-boardbdoc", // rec-c22383804
+    "src-c335982-identity", // rec-c335982
     "src-c970687-datasheet", // rec-c970687
     "src-c970687-boardbdoc", // rec-c970687
     "src-c22387780-datasheet", // rec-c22387780
@@ -215,8 +216,8 @@ export const CIRCUIT_SELECTION: InstanceSelection = {
     "src-cj7912-project-baseline", // rec-cj7912-c94173
     "src-cj7912-project-docs", // rec-cj7912-c94173
     "src-cj7912-schematic", // rec-cj7912-c94173
-    // component-ptc-smd1210p200tf-c20808
-    "src-ptc1-smd1210-datasheet", // rec-ptc-smd1210p200tf-c20808
+    // component-ptc-smd1210p200tf-c20808 (decision g replacement)
+    "src-ptc1b-smd1210-datasheet", // rec-ptc-smd1210p150tf16-c7529589
     // component-ptc-msmd110-33v-c70119
     "src-ptc2-msmd110-datasheet", // rec-ptc-msmd110-33v-c70119
     // component-ptc-bsmd1206-150-16v-c883133
@@ -224,9 +225,9 @@ export const CIRCUIT_SELECTION: InstanceSelection = {
     // component-smaj15a-c571368
     "src-smaj15a-hdiode-primary", // rec-smaj15a-c571368
     "src-smaj15a-lcsc-identity", // rec-smaj15a-c571368
-    // component-sd05-c502527
-    "src-sd05-mdd-primary", // rec-sd05-c502527
-    "src-sd05-lcsc-identity", // rec-sd05-c502527
+    // component-sd05-c502527 (decision a replacement)
+    "src-cand-smaj6-5a-brightking-primary", // rec-cand-smaj6-5a-c87267
+    "src-cand-smaj6-5a-lcsc-identity", // rec-cand-smaj6-5a-c87267
     // component-faston-c591344
     "src-faston-te-mirror-spec", // rec-faston-c591344
     "src-faston-lcsc-catalog", // rec-faston-c591344
@@ -313,11 +314,7 @@ export const CIRCUIT_SELECTION: InstanceSelection = {
     "src-c1729-boardbdoc",
     "src-c2983319-datasheet",
     "src-c2983319-boardbdoc",
-    "src-c22383803-datasheet",
-    "src-c22383803-alias-lcsc",
-    "src-c22383803-boardbdoc",
-    "src-c22383804-datasheet",
-    "src-c22383804-boardbdoc",
+    "src-c335982-identity",
     "src-c970687-datasheet",
     "src-c970687-boardbdoc",
     "src-c22387780-datasheet",
@@ -370,8 +367,8 @@ export const CIRCUIT_SELECTION: InstanceSelection = {
     "src-cj7912-project-baseline",
     "src-cj7912-project-docs",
     "src-cj7912-schematic",
-    // component-ptc-smd1210p200tf-c20808
-    "src-ptc1-smd1210-datasheet",
+    // component-ptc-smd1210p200tf-c20808 (decision g replacement)
+    "src-ptc1b-smd1210-datasheet",
     // component-ptc-msmd110-33v-c70119
     "src-ptc2-msmd110-datasheet",
     // component-ptc-bsmd1206-150-16v-c883133
@@ -379,9 +376,9 @@ export const CIRCUIT_SELECTION: InstanceSelection = {
     // component-smaj15a-c571368
     "src-smaj15a-hdiode-primary",
     "src-smaj15a-lcsc-identity",
-    // component-sd05-c502527
-    "src-sd05-mdd-primary",
-    "src-sd05-lcsc-identity",
+    // component-sd05-c502527 (decision a replacement)
+    "src-cand-smaj6-5a-brightking-primary",
+    "src-cand-smaj6-5a-lcsc-identity",
     // component-faston-c591344
     "src-faston-te-mirror-spec",
     "src-faston-lcsc-catalog",
@@ -407,7 +404,7 @@ export const CIRCUIT_SELECTION: InstanceSelection = {
 
   expect: {
     records: 41,
-    sources: 128,
+    sources: 126,
     integrationRules: 9,
   },
 };
