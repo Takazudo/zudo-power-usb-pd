@@ -1,6 +1,6 @@
 ---
 name: component-ptc-smd1210p200tf-c20808
-description: Resolve exact RUILON SMD1210P200TF (LCSC C20808) PPTC resettable-fuse limits and application constraints. Use whenever SMD1210P200TF, C20808, RUILON, or the board-b PTC1 +12V output overcurrent-protection function is relevant, including the part's maximum-voltage rating against the +12V rail.
+description: Resolve exact RUILON SMD1210-family PPTC evidence for the board-b PTC1 slot - the fitted SMD1210P150TF/16 (LCSC C7529589, 16V decision-g pick) and the removed SMD1210P200TF (C20808, 6V Vmax BLOCKER). Use whenever SMD1210P150TF/16, C7529589, SMD1210P200TF, C20808, RUILON, or the board-b PTC1 +12V output overcurrent-protection function is relevant.
 ---
 
 # Exact component record

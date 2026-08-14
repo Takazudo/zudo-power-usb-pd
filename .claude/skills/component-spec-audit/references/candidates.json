@@ -73,5 +73,12 @@
       "replaces_line_id": "line-c22387780",
       "rationale": "Removed from C5/C7 by wave-6 decision (d) (decisions.json dec-d-c5-c7-swap, review finding BB-6): the 25V rating is exceeded by 7.4V at the D5 32.4V clamp table point and holds only 5V of margin at the 20V mis-contract edge. Replaced by the 470uF/35V FOLLON line (C22387780) already fitted at five positions. Demoted to candidate record so the retained evidence stays auditable."
     }
+  ],
+  "promoted_candidates": [
+    {
+      "candidate_id": "cand-smaj6-5a-c87267",
+      "promoted_to_line_id": "line-c87267",
+      "note": "Promoted to inventory line-c87267 (TVS2) by wave-6 decision dec-a-tvs2-replacement (locked by #123, implemented by #125). This tombstone keeps the locked decisions.json evidence ref 'cand-smaj6-5a-c87267' resolvable in the fact base after promotion; the record's full evidence lives on in component-sd05-c502527 as rec-cand-smaj6-5a-c87267."
+    }
   ]
 }

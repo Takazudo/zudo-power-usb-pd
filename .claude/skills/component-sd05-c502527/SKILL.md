@@ -1,6 +1,6 @@
 ---
 name: component-sd05-c502527
-description: Resolve exact MDD SD05 (LCSC C502527) TVS limits, the +5V-rail 0% standoff-margin BLOCKER, and the TVS2 replacement-candidate evidence. Use whenever SD05, C502527, board-b TVS2, the +5V output overvoltage clamp, or the SMF6.0A/SMAJ6.5A/SMAJ6.0A replacement candidates are relevant.
+description: Resolve exact evidence for the board-b TVS2 slot - the fitted Brightking SMAJ6.5A (LCSC C87267, decision-a pick), the removed MDD SD05 (C502527) with its +5V-rail 0% standoff-margin BLOCKER, and the SMF6.0A/SMAJ6.0A runner-up candidates. Use whenever SMAJ6.5A, C87267, SD05, C502527, board-b TVS2, or the +5V output overvoltage clamp is relevant.
 ---
 
 # Exact component record

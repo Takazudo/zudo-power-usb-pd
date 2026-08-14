@@ -278,14 +278,14 @@
       "class": "PROJECT_STATE",
       "value": 0.3,
       "unit": "A",
-      "conditions": "PTC1 protects board-b's final +12V output (downstream of U6 L7812CD2T), whose rail current budget is 1.2A per CLAUDE.md Project Overview ('+12V/1.2A'). Margin = fact-ptc1b-ihold (1.50A) minus the 1.2A rail current budget. The thinner margin vs the removed SMD1210P200TF (0.8A) is weighed and accepted in decisions.json dec-g-ptc1-replacement.",
+      "conditions": "PTC1 protects board-b's final +12V output (downstream of U6 L7812CD2T), whose rail current budget is 1.2A per CLAUDE.md Project Overview ('+12V/1.2A'). Margin = fact-ptc1b-ihold (1.50A) minus the 1.2A rail current budget (expression scaled by 10 to stay exact in binary floating point). The thinner margin vs the removed SMD1210P200TF (0.8A) is weighed and accepted in decisions.json dec-g-ptc1-replacement.",
       "locator": "CALCULATED from fact-ptc1b-ihold and the project's +12V/1.2A rail current budget (CLAUDE.md Project Overview)",
       "provenance": "CALCULATED",
       "verdict": "PASS - primary-source confirmed",
       "depends_on": [
         "fact-ptc1b-ihold"
       ],
-      "expression": "fact_ptc1b_ihold - 1.2"
+      "expression": "(fact_ptc1b_ihold * 10 - 12) / 10"
     },
     {
       "fact_id": "fact-ptc1b-vmax-margin",
