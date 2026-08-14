@@ -882,6 +882,25 @@
       "printed_page_label": "source",
       "locator": "Net tables section (DC-DC and LDO sheets), rows for the cited net names",
       "evidence_extract": "Netlist-derived net-connectivity tables (per this project's documented net-table convention) for board-b DC-DC/LDO/protection stages."
+    },
+    {
+      "source_id": "src-c335982-identity",
+      "record_id": "rec-c335982",
+      "document_title": "LCSC product listing: RVT1A471M0607 (ROQANG), C335982",
+      "document_number": "RVT1A471M0607",
+      "revision": "retrieved 2026-08-14",
+      "document_date": "2026-08-14",
+      "authoritative_url": "https://www.lcsc.com/product-detail/C335982.html",
+      "alternate_authoritative_url": "",
+      "retrieval_date": "2026-08-14",
+      "authority_class": "DISTRIBUTOR_IDENTITY",
+      "sha256": "a8c2263183a765648a30eba8ebde1ebf4e2579c01b5f6c0806a896c533a3a13e",
+      "availability": "AVAILABLE",
+      "physical_pdf_page_index": 0,
+      "printed_page_label": "1",
+      "locator": "LCSC product-detail page for C335982 (raw retained HTML, JSON-LD product block), rows MPN/manufacturer/stockNumber and 'Voltage Rating' -- this record's own distributor identity source",
+      "evidence_extract": "Same retained raw HTML as src-c22383803-alias-lcsc (retrieved 2026-08-14, identical SHA-256). JSON-LD product data: MPN=RVT1A471M0607, manufacturer=ROQANG, Voltage Rating=10V, stockNumber=368560. Cited here as the distributor identity for inventory line-c335982 (canonical LCSC for C4/C22/C23 per decisions.json dec-c-canonical-470uf-lcsc); the 10V rating matches the drawn symbol RVT1A471M0607_C335982 and the #93-fixed '470uF 10V' Value fields.",
+      "identity_extract_sha256": "c8d0c47dd52fd64082ee537fd50411790fed6fc6dc1fe2f8533baf3db1ad752c"
     }
   ]
 }

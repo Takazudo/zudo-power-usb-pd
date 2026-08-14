@@ -9,21 +9,9 @@
       "package": "SOD-123FL",
       "function": "200 W unidirectional TVS diode, TVS2 (+5 V output rail) replacement candidate",
       "owner_skill": "component-sd05-c502527",
-      "status": "SHORTLISTED",
-      "replaces_line_id": "line-c502527",
-      "rationale": "Meets every deterministic TVS2 replacement criterion at the 2026-08-14 research date: VRWM 6 V (>= 6.0 V, 20% standoff margin over the nominal +5 V rail), VC 10.3 V max at IPP 19.4 A (10/1000 us), SOD-123FL two-pad package (hand-reworkable, JLCPCB-assemblable, repository already carries the footprint), LCSC in stock (148,360 units, dated fact). Same manufacturer as the incumbent SD05 and the project SS34 diodes. Selection is deferred to the wave-6 decision task."
-    },
-    {
-      "candidate_id": "cand-smaj6-5a-c87267",
-      "mpn": "SMAJ6.5A",
-      "manufacturer": "Brightking",
-      "lcsc": "C87267",
-      "package": "SMA(DO-214AC)",
-      "function": "400 W unidirectional TVS diode, TVS2 (+5 V output rail) replacement candidate",
-      "owner_skill": "component-sd05-c502527",
-      "status": "SHORTLISTED",
-      "replaces_line_id": "line-c502527",
-      "rationale": "Meets every deterministic TVS2 replacement criterion at the 2026-08-14 research date: VRWM 6.5 V (>= 6.0 V, 30% standoff margin over the nominal +5 V rail — the largest of the shortlist), VC 11.2 V max at IPP 35.7 A (10/1000 us, 400 W minimum), SMA/DO-214AC package in the same D-FLAT footprint family already used for TVS1/TVS3/D5 (hand-reworkable, JLCPCB-assemblable), LCSC in stock (8,450 units, dated fact). LCSC orderable model SMAJ6.5A/TR13. Selection is deferred to the wave-6 decision task."
+      "status": "REJECTED",
+      "replaces_line_id": "line-c87267",
+      "rationale": "Meets every deterministic TVS2 replacement criterion at the 2026-08-14 research date: VRWM 6 V (>= 6.0 V, 20% standoff margin over the nominal +5 V rail), VC 10.3 V max at IPP 19.4 A (10/1000 us), SOD-123FL two-pad package (hand-reworkable, JLCPCB-assemblable, repository already carries the footprint), LCSC in stock (148,360 units, dated fact). Same manufacturer as the incumbent SD05 and the project SS34 diodes. Selection is deferred to the wave-6 decision task. Wave-6 decision (a) selected the Brightking SMAJ6.5A (C87267, now inventory line-c87267) over this candidate; retained as the runner-up record per decisions.json dec-a-tvs2-replacement."
     },
     {
       "candidate_id": "cand-smaj6-0a-c5353156",
@@ -33,9 +21,57 @@
       "package": "SMA(DO-214AC)",
       "function": "400 W unidirectional TVS diode, TVS2 (+5 V output rail) replacement candidate",
       "owner_skill": "component-sd05-c502527",
-      "status": "SHORTLISTED",
-      "replaces_line_id": "line-c502527",
-      "rationale": "Meets the deterministic TVS2 replacement criteria at the 2026-08-14 research date: VRWM 6.0 V (>= 6.0 V, 20% standoff margin over the nominal +5 V rail), VC 10.3 V max at IPP 38.8 A (400 W; the FOSAN document does not explicitly state the pulse waveform — recorded as-is in the fact conditions), SMA/DO-214AC package in the same D-FLAT footprint family already used for TVS1/TVS3/D5, LCSC in stock (6,400 units, dated fact). Note: the Littelfuse SMAJ6.0A listing (C223993) was evaluated first but rejected for sourcing: LCSC attaches Slkor- and Brightking-authored PDFs to that listing and littelfuse.com blocks direct retrieval, so no genuine Littelfuse primary datasheet could be retained. Selection is deferred to the wave-6 decision task."
+      "status": "REJECTED",
+      "replaces_line_id": "line-c87267",
+      "rationale": "Meets the deterministic TVS2 replacement criteria at the 2026-08-14 research date: VRWM 6.0 V (>= 6.0 V, 20% standoff margin over the nominal +5 V rail), VC 10.3 V max at IPP 38.8 A (400 W; the FOSAN document does not explicitly state the pulse waveform \u2014 recorded as-is in the fact conditions), SMA/DO-214AC package in the same D-FLAT footprint family already used for TVS1/TVS3/D5, LCSC in stock (6,400 units, dated fact). Note: the Littelfuse SMAJ6.0A listing (C223993) was evaluated first but rejected for sourcing: LCSC attaches Slkor- and Brightking-authored PDFs to that listing and littelfuse.com blocks direct retrieval, so no genuine Littelfuse primary datasheet could be retained. Selection is deferred to the wave-6 decision task. Wave-6 decision (a) selected the Brightking SMAJ6.5A (C87267, now inventory line-c87267) over this candidate; retained as the runner-up record per decisions.json dec-a-tvs2-replacement."
+    },
+    {
+      "candidate_id": "cand-sd05-c502527",
+      "mpn": "SD05",
+      "manufacturer": "MDD (Microdiode Semiconductor)",
+      "lcsc": "C502527",
+      "package": "SOD-323_L1.8-W1.3-LS2.5-FD",
+      "function": "unidirectional TVS diode, former TVS2 (+5 V output rail) fitted part",
+      "owner_skill": "component-sd05-c502527",
+      "status": "REJECTED",
+      "replaces_line_id": "line-c87267",
+      "rationale": "Removed from TVS2 by wave-6 decision (a) (decisions.json dec-a-tvs2-replacement, review finding BB-2): VRWM 5V sits at the +5V rail nominal (0V standoff margin) and -0.2V under the L7805's guaranteed 5.2V band top, so the part can conduct inside normal regulation. Demoted from inventory line to candidate record so its retained primary evidence (standoff, breakdown, leakage, margin facts) stays auditable."
+    },
+    {
+      "candidate_id": "cand-ptc-smd1210p200tf-c20808",
+      "mpn": "SMD1210P200TF",
+      "manufacturer": "RUILON",
+      "lcsc": "C20808",
+      "package": "F1210",
+      "function": "2A-hold PTC resettable fuse, former PTC1 (+12 V output rail) fitted part",
+      "owner_skill": "component-ptc-smd1210p200tf-c20808",
+      "status": "REJECTED",
+      "replaces_line_id": "line-c7529589",
+      "rationale": "Removed from PTC1 by wave-6 decision (g) (decisions.json dec-g-ptc1-replacement, review finding BB-1): Vmax 6 VDC on the +12V rail is a -6V margin under normal operation, a deterministic BLOCKER (rule-pptc-vmax-vs-rail). Replaced by RUILON SMD1210P150TF/16 (C7529589, 16V, now inventory line-c7529589). Demoted to candidate record so the retained primary evidence stays auditable."
+    },
+    {
+      "candidate_id": "cand-c22383803",
+      "mpn": "RVT1C471M0607",
+      "manufacturer": "ACMECON",
+      "lcsc": "C22383803",
+      "package": "CAP-SMD_BD6.3-L6.6-W6.6-FD",
+      "function": "470 uF electrolytic capacitor, recorded alias listing for the C4/C22/C23 positions",
+      "owner_skill": "component-project-passives",
+      "status": "REJECTED",
+      "replaces_line_id": "line-c335982",
+      "rationale": "Wave-6 decision (c) (decisions.json dec-c-canonical-470uf-lcsc): C335982 (ROQANG RVT1A471M0607, 10V, matching the drawn symbol and the fixed '470uF 10V' Value fields) is the canonical LCSC for C4/C22/C23; this ACMECON listing is the recorded alias and must not be emitted by the generator. Per the dated 2026-08-14 listings it is actually a 16V-rated part with two orders of magnitude less stock."
+    },
+    {
+      "candidate_id": "cand-c22383804",
+      "mpn": "RVT1E101M0607",
+      "manufacturer": "ACMECON",
+      "lcsc": "C22383804",
+      "package": "CAP-SMD_BD6.3-L6.6-W6.6-LS7.3-FD",
+      "function": "100 uF 25V electrolytic capacitor, former C5/C7 (+15V input bus) fitted part",
+      "owner_skill": "component-project-passives",
+      "status": "REJECTED",
+      "replaces_line_id": "line-c22387780",
+      "rationale": "Removed from C5/C7 by wave-6 decision (d) (decisions.json dec-d-c5-c7-swap, review finding BB-6): the 25V rating is exceeded by 7.4V at the D5 32.4V clamp table point and holds only 5V of margin at the 20V mis-contract edge. Replaced by the 470uF/35V FOLLON line (C22387780) already fitted at five positions. Demoted to candidate record so the retained evidence stays auditable."
     }
   ]
 }

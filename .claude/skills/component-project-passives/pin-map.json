@@ -403,7 +403,7 @@
     {
       "pin_map_id": "pinmap-c2289",
       "record_id": "rec-c2289",
-      "symbol": "YLED0603YG",
+      "symbol": "KT-0603YG",
       "footprint": "LED0603-RD",
       "pins": [
         {
@@ -419,12 +419,12 @@
           "function": "cathode"
         }
       ],
-      "reviewed_by": "self-review against symbols/zudo-pd.kicad_sym symbol 'YLED0603YG' (pin 1=1, pin 2=2) and footprints/kicad/zudo-power.pretty/LED0603-RD.kicad_mod (pad 1, pad 2); NOTE: this symbol's pin numbering is REVERSED relative to the blue (Bluelight0603/C2288) and red (KT-0603R/C2286) LED symbols in this same library, which both use pin1=K(cathode)/pin2=A(anode). Worth a physical/silkscreen check before assuming uniform LED2/LED3/LED4 orientation on the board. Separately, this symbol's own Footprint property reads 'easyeda2kicad:LED0603-FD', a footprint file that does not exist in footprints/kicad/zudo-power.pretty/ (only LED0603-FD_BLUE.kicad_mod exists there) -- inventory.json's package field ('LED0603-RD') is used for this record's identity instead, matching LED3/LED4. independent second-reviewer pass pending"
+      "reviewed_by": "self-review against symbols/zudo-pd.kicad_sym symbol 'YLED0603YG' (pin 1=1, pin 2=2) and footprints/kicad/zudo-power.pretty/LED0603-RD.kicad_mod (pad 1, pad 2); NOTE: this symbol's pin numbering is REVERSED relative to the blue (Bluelight0603/C2288) and red (KT-0603R/C2286) LED symbols in this same library, which both use pin1=K(cathode)/pin2=A(anode). Worth a physical/silkscreen check before assuming uniform LED2/LED3/LED4 orientation on the board. Separately, this symbol's own Footprint property reads 'easyeda2kicad:LED0603-FD', a footprint file that does not exist in footprints/kicad/zudo-power.pretty/ (only LED0603-FD_BLUE.kicad_mod exists there) -- inventory.json's package field ('LED0603-RD') is used for this record's identity instead, matching LED3/LED4. independent second-reviewer pass pending; symbol renamed to the bare-MPN generator symbol KT-0603YG (clone of YLED0603YG, identical pins 1=A/2=K) by the issue-125 worktree child for generator/pin-map/MPN parity"
     },
     {
       "pin_map_id": "pinmap-c2288",
       "record_id": "rec-c2288",
-      "symbol": "Bluelight0603",
+      "symbol": "KT-0603B",
       "footprint": "LED0603-RD",
       "pins": [
         {
@@ -440,7 +440,7 @@
           "function": "anode"
         }
       ],
-      "reviewed_by": "self-review against symbols/zudo-pd.kicad_sym symbol 'Bluelight0603' (pin 1=1, pin 2=2) and footprints/kicad/zudo-power.pretty/LED0603-RD.kicad_mod (pad 1, pad 2); Pin numbering matches the red LED (KT-0603R/C2286): pin1=K(cathode)/pin2=A(anode). independent second-reviewer pass pending"
+      "reviewed_by": "self-review against symbols/zudo-pd.kicad_sym symbol 'Bluelight0603' (pin 1=1, pin 2=2) and footprints/kicad/zudo-power.pretty/LED0603-RD.kicad_mod (pad 1, pad 2); Pin numbering matches the red LED (KT-0603R/C2286): pin1=K(cathode)/pin2=A(anode). independent second-reviewer pass pending; symbol renamed to the bare-MPN generator symbol KT-0603B (clone of Bluelight0603, identical pins 1=K/2=A) by the issue-125 worktree child for generator/pin-map/MPN parity"
     },
     {
       "pin_map_id": "pinmap-c2286",
@@ -462,6 +462,27 @@
         }
       ],
       "reviewed_by": "self-review against symbols/zudo-pd.kicad_sym symbol 'KT-0603R' (pin 1=1, pin 2=2) and footprints/kicad/zudo-power.pretty/LED0603-RD.kicad_mod (pad 1, pad 2); Pin numbering matches the blue LED (Bluelight0603/C2288): pin1=K(cathode)/pin2=A(anode). independent second-reviewer pass pending"
+    },
+    {
+      "pin_map_id": "pinmap-c335982",
+      "record_id": "rec-c335982",
+      "symbol": "RVT1A471M0607_C335982",
+      "footprint": "CAP-SMD_BD6.3-L6.6-W6.6-FD",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "terminal 1 (polarity not independently confirmed by a primary ROQANG datasheet; positive plate to the higher-potential net per the project's electrolytic convention)"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "terminal 2 (polarity not independently confirmed by a primary ROQANG datasheet)"
+        }
+      ],
+      "reviewed_by": "issue-125 worktree child (Claude Fable 5) foreground review against symbols/zudo-pd.kicad_sym RVT1A471M0607_C335982 (pin 1, pin 2) and footprints/kicad/zudo-power.pretty/CAP-SMD_BD6.3-L6.6-W6.6-FD.kicad_mod (pad 1, pad 2)"
     }
   ]
 }

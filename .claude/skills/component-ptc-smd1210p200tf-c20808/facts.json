@@ -194,7 +194,9 @@
       "locator": "CALCULATED from fact-ptc1-ihold and the project's +12V/1.2A rail current budget (CLAUDE.md Project Overview)",
       "provenance": "CALCULATED",
       "verdict": "PASS - primary-source confirmed",
-      "depends_on": ["fact-ptc1-ihold"],
+      "depends_on": [
+        "fact-ptc1-ihold"
+      ],
       "expression": "fact_ptc1_ihold - 1.2"
     },
     {
@@ -208,8 +210,112 @@
       "locator": "CALCULATED from fact-ptc1-vmax and the project's +12V nominal output rail (CLAUDE.md Project Overview and Technical Architecture; board-b PTC1 downstream of U6 L7812CD2T)",
       "provenance": "CALCULATED",
       "verdict": "BLOCKER - deterministic spec violation",
-      "depends_on": ["fact-ptc1-vmax"],
+      "depends_on": [
+        "fact-ptc1-vmax"
+      ],
       "expression": "fact_ptc1_vmax - 12"
+    },
+    {
+      "fact_id": "fact-ptc1b-manufacturer",
+      "record_id": "rec-ptc-smd1210p150tf16-c7529589",
+      "source_id": "src-ptc1b-smd1210-datasheet",
+      "class": "PROJECT_STATE",
+      "value": "RUILON",
+      "unit": "NONE",
+      "conditions": "exact orderable identity (LCSC C7529589, RUILON SMD1210 family)",
+      "locator": "Page 1, title block RUILON ELECTRONICS logo and http://www.ruilon.com reference",
+      "provenance": "PRIMARY-SPEC",
+      "verdict": "PASS - primary-source confirmed",
+      "depends_on": [],
+      "expression": ""
+    },
+    {
+      "fact_id": "fact-ptc1b-ihold",
+      "record_id": "rec-ptc-smd1210p150tf16-c7529589",
+      "source_id": "src-ptc1b-smd1210-datasheet",
+      "class": "GUARANTEED_ELECTRICAL",
+      "value": 1.5,
+      "unit": "A",
+      "conditions": "maximum current the device will not trip, 25 degC still air",
+      "locator": "Page 2, Performance Specification table, row SMD1210P150TF/16, column Ihold",
+      "provenance": "PRIMARY-SPEC",
+      "verdict": "PASS - primary-source confirmed",
+      "depends_on": [],
+      "expression": ""
+    },
+    {
+      "fact_id": "fact-ptc1b-itrip",
+      "record_id": "rec-ptc-smd1210p150tf16-c7529589",
+      "source_id": "src-ptc1b-smd1210-datasheet",
+      "class": "GUARANTEED_ELECTRICAL",
+      "value": 3.0,
+      "unit": "A",
+      "conditions": "minimum current at which the device will always trip, 25 degC still air",
+      "locator": "Page 2, Performance Specification table, row SMD1210P150TF/16, column Itrip",
+      "provenance": "PRIMARY-SPEC",
+      "verdict": "PASS - primary-source confirmed",
+      "depends_on": [],
+      "expression": ""
+    },
+    {
+      "fact_id": "fact-ptc1b-vmax",
+      "record_id": "rec-ptc-smd1210p150tf16-c7529589",
+      "source_id": "src-ptc1b-smd1210-datasheet",
+      "class": "ABSOLUTE_MAXIMUM",
+      "value": 16,
+      "unit": "VDC",
+      "conditions": "maximum operating voltage the device can withstand without damage at rated Imax; exceeding it may arc or flame per the datasheet's own SMD PTC use cautions",
+      "locator": "Page 2, Performance Specification table, row SMD1210P150TF/16, column Vmax; corroborated by LCSC's C7529589 listing text 'PTC RESET FUSE 16V 1.5A 1210' (dated 2026-08-14, decisions.json dec-g-ptc1-replacement)",
+      "provenance": "PRIMARY-SPEC",
+      "verdict": "PASS - primary-source confirmed",
+      "depends_on": [],
+      "expression": ""
+    },
+    {
+      "fact_id": "fact-ptc1b-ihold-margin",
+      "record_id": "rec-ptc-smd1210p150tf16-c7529589",
+      "source_id": "src-ptc1b-smd1210-datasheet",
+      "class": "PROJECT_STATE",
+      "value": 0.3,
+      "unit": "A",
+      "conditions": "PTC1 protects board-b's final +12V output (downstream of U6 L7812CD2T), whose rail current budget is 1.2A per CLAUDE.md Project Overview ('+12V/1.2A'). Margin = fact-ptc1b-ihold (1.50A) minus the 1.2A rail current budget. The thinner margin vs the removed SMD1210P200TF (0.8A) is weighed and accepted in decisions.json dec-g-ptc1-replacement.",
+      "locator": "CALCULATED from fact-ptc1b-ihold and the project's +12V/1.2A rail current budget (CLAUDE.md Project Overview)",
+      "provenance": "CALCULATED",
+      "verdict": "PASS - primary-source confirmed",
+      "depends_on": [
+        "fact-ptc1b-ihold"
+      ],
+      "expression": "fact_ptc1b_ihold - 1.2"
+    },
+    {
+      "fact_id": "fact-ptc1b-vmax-margin",
+      "record_id": "rec-ptc-smd1210p150tf16-c7529589",
+      "source_id": "src-ptc1b-smd1210-datasheet",
+      "class": "PROJECT_STATE",
+      "value": 4,
+      "unit": "V",
+      "conditions": "PTC1 sits on board-b's final +12V output, so its nominal continuous applied voltage is +12V. Margin = fact-ptc1b-vmax (16 VDC) minus the 12V nominal rail voltage; the tripped-passthrough corner (U6 out of regulation, up to ~13.5V) still leaves ~2.5V, the same corner-margin class the review records as passing for PTC3's identical 16V rating.",
+      "locator": "CALCULATED from fact-ptc1b-vmax and the project's +12V nominal output rail (CLAUDE.md Project Overview; board-b PTC1 downstream of U6 L7812CD2T)",
+      "provenance": "CALCULATED",
+      "verdict": "PASS - primary-source confirmed",
+      "depends_on": [
+        "fact-ptc1b-vmax"
+      ],
+      "expression": "fact_ptc1b_vmax - 12"
+    },
+    {
+      "fact_id": "fact-ptc1b-hold-85c",
+      "record_id": "rec-ptc-smd1210p150tf16-c7529589",
+      "source_id": "src-ptc1b-smd1210-datasheet",
+      "class": "THERMAL_SOA",
+      "value": "no 85C derated hold figure is retained for the /16 suffixed variant; scaling the family's published derating (SMD1210P200TF 2.00A -> 0.98A at 85C, 49%) estimates ~0.74A with the 1.2A rail crossing near ~48C ambient (decisions.json dec-g-ptc1-replacement rationale) \u2014 estimate only, not a datasheet row",
+      "unit": "NONE",
+      "conditions": "85 degC ambient hold-current derating; the retained family datasheet's Thermal Derating Chart-Ih(A) table has no row for the /16 variant",
+      "locator": "Page 3, Thermal Derating Chart-Ih(A) table (no SMD1210P150TF/16 row present)",
+      "provenance": "UNVERIFIED",
+      "verdict": "UNSOURCED",
+      "depends_on": [],
+      "expression": ""
     }
   ]
 }

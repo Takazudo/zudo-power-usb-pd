@@ -7,7 +7,16 @@
       "domain": "electrical-limits",
       "status": "COVERED",
       "reason": "Ihold (2.00A), Itrip (4.00A), Vmax (6 VDC), Imax (35A), Pd typ (0.8W), time-to-trip (1.00s at 8.00A), Rimin (0.015 ohm), and R1max (0.07 ohm) are all primary-source confirmed from the RUILON SMD1210 Series Performance Specification table, row SMD1210P200TF.",
-      "fact_ids": ["fact-ptc1-ihold", "fact-ptc1-itrip", "fact-ptc1-vmax", "fact-ptc1-imax", "fact-ptc1-pd-typ", "fact-ptc1-time-to-trip", "fact-ptc1-rimin", "fact-ptc1-r1max"],
+      "fact_ids": [
+        "fact-ptc1-ihold",
+        "fact-ptc1-itrip",
+        "fact-ptc1-vmax",
+        "fact-ptc1-imax",
+        "fact-ptc1-pd-typ",
+        "fact-ptc1-time-to-trip",
+        "fact-ptc1-rimin",
+        "fact-ptc1-r1max"
+      ],
       "blocking_fact_ids": []
     },
     {
@@ -16,7 +25,12 @@
       "domain": "ambient-derating-and-cycling",
       "status": "COVERED",
       "reason": "Ambient operating range (-40 to +85C), maximum tripped-state surface temperature (125C), 85C-ambient derated hold current (0.98A), and qualitative aging/thermal-shock/repeated-trip resistance-change data are all primary-source confirmed from the same datasheet's Environmental Specifications and Thermal Derating Chart-Ih(A) tables.",
-      "fact_ids": ["fact-ptc1-temperature", "fact-ptc1-surface-temperature", "fact-ptc1-hold-85c", "fact-ptc1-cycling"],
+      "fact_ids": [
+        "fact-ptc1-temperature",
+        "fact-ptc1-surface-temperature",
+        "fact-ptc1-hold-85c",
+        "fact-ptc1-cycling"
+      ],
       "blocking_fact_ids": []
     },
     {
@@ -25,7 +39,10 @@
       "domain": "12v-rail-application",
       "status": "COVERED",
       "reason": "Ihold leaves a 0.8A margin above the +12V/1.2A rail current budget (safe), but Vmax leaves a -6V margin against the +12V nominal rail voltage: the part's own 6V maximum voltage rating is exceeded by the rail it protects under normal, non-fault operation. This resolves the project's previously-unconfirmed PTC1 voltage-rating data gap with a deterministic spec violation rather than a passing margin.",
-      "fact_ids": ["fact-ptc1-ihold-margin", "fact-ptc1-vmax-margin"],
+      "fact_ids": [
+        "fact-ptc1-ihold-margin",
+        "fact-ptc1-vmax-margin"
+      ],
       "blocking_fact_ids": []
     },
     {
@@ -36,6 +53,44 @@
       "reason": "No board-b generator spec exists yet to bound upstream fault current/energy at PTC1, in-enclosure ambient temperature, local heat sources, expected trip count over product life, or the cooling interval between faults.",
       "fact_ids": [],
       "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-ptc1b-electrical-limits",
+      "record_id": "rec-ptc-smd1210p150tf16-c7529589",
+      "domain": "electrical-limits",
+      "status": "COVERED",
+      "reason": "Ihold (1.50A), Itrip (3.00A), and Vmax (16 VDC) are read from the retained RUILON SMD1210 Series family datasheet's Performance Specification table row SMD1210P150TF/16, corroborated by the dated LCSC C7529589 listing and the project's components/ptc-12v.md page.",
+      "fact_ids": [
+        "fact-ptc1b-ihold",
+        "fact-ptc1b-itrip",
+        "fact-ptc1b-vmax"
+      ],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-ptc1b-rail-application",
+      "record_id": "rec-ptc-smd1210p150tf16-c7529589",
+      "domain": "12v-rail-application",
+      "status": "COVERED",
+      "reason": "Vmax margin is +4V at the 12V nominal rail and ~2.5V at the tripped-passthrough corner (vs the removed SMD1210P200TF's deterministic -6V violation), and Ihold leaves 0.3A (25%) margin over the 1.2A rail budget at 25C \u2014 the accepted trade recorded in decisions.json dec-g-ptc1-replacement.",
+      "fact_ids": [
+        "fact-ptc1b-ihold-margin",
+        "fact-ptc1b-vmax-margin"
+      ],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-ptc1b-derating",
+      "record_id": "rec-ptc-smd1210p150tf16-c7529589",
+      "domain": "hold-derating-and-fault-duty",
+      "status": "OPEN",
+      "reason": "No 85C derated hold figure is retained for the /16 variant (UNSOURCED \u2014 the family derating table has no /16 row), and upstream fault current/energy, enclosure ambient, and trip-cycle duty are unbounded until the Board B bench plan runs; bench fallback is SMD1812P200TF16 (C20812, 1812 footprint change).",
+      "fact_ids": [
+        "fact-ptc1b-hold-85c"
+      ],
+      "blocking_fact_ids": [
+        "fact-ptc1b-hold-85c"
+      ]
     }
   ]
 }
