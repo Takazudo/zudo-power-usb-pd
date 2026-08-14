@@ -350,9 +350,15 @@ export class PublicationPolicy {
       const uncoveredRecords = selection.recordIds.filter(
         (id) => !documentRecords.has(id) && !exceptedRecords.has(id),
       );
-      if (uncoveredRecords.length > 0) {
+      // The size comparison is not implied by the filter: it is what catches a
+      // record listed TWICE in `recordIds`, which one covering entry would
+      // otherwise satisfy for both occurrences.
+      const covered = documentRecords.size + exceptedRecords.size;
+      if (uncoveredRecords.length > 0 || covered !== selection.recordIds.length) {
         fail("PUBLICATION_POLICY", "every selected record must be curated or explicitly excepted", {
           uncoveredRecords: uncoveredRecords.sort(byCodeUnit),
+          covered,
+          records: selection.recordIds.length,
         });
       }
     }

@@ -182,6 +182,19 @@ describe("reviewed document shortcuts", () => {
     );
   });
 
+  it("refuses a record listed twice, which one covering entry would satisfy", () => {
+    // The uncovered-list filter alone cannot see this: both occurrences of the
+    // duplicate resolve to the same covering entry.
+    assert.throws(
+      () => new PublicationPolicy(CIRCUIT_PUBLICATION_MATRIX, {
+        ...CIRCUIT_SELECTION,
+        recordIds: [...CIRCUIT_SELECTION.recordIds, "rec-ss34-c8678"],
+      }),
+      (error: unknown) =>
+        error instanceof ComponentDocsError && error.code === "PUBLICATION_POLICY",
+    );
+  });
+
   it("refuses an exception that states no reason, and one that doubles a selection", () => {
     for (const documentExceptions of [
       [{ recordId: "rec-c335982", reason: "   " }],

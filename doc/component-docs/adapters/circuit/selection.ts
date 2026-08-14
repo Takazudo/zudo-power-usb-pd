@@ -54,11 +54,13 @@ import type { InstanceSelection } from "../../core/publication.ts";
  * `method` is the field that keeps the two apart if the lists are ever
  * compared.
  *
- * The bundles are a sound basis for it: `component-spec-audit`'s validator
- * already refuses a HASH-LOCKED source whose bytes no longer match its
- * `sha256`, so "this ID names a fixed document, not a live HTML page" is a
- * property the evidence contract enforces, not one this file assumes. Every
- * one of the 40 selected sources is HASH-LOCKED with a non-sentinel hash.
+ * The bundles are still the right basis for it. Every one of the 40 selected
+ * sources declares `refresh_policy: HASH-LOCKED` with a non-sentinel `sha256`
+ * — the evidence contract's way of saying "a fixed document, not a live page"
+ * — and none of the volatile distributor HTML sources was selected. Note the
+ * limit of that: `validate.py` compares those hashes against the real bytes
+ * only under its opt-in `--online` mode, so offline the declaration is a
+ * reviewed claim in the data rather than a re-verified fact.
  *
  * Re-auditing at led-lamp's strength means performing the retrieval and
  * updating this artifact and the selection in one review.
