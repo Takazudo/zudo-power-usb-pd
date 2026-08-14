@@ -756,6 +756,287 @@
         }
       ],
       "reviewer": "issue-116 worktree child (Claude Fable 5), project KiCad symbol/footprint asset review against symbols/zudo-pd.kicad_sym and footprints/kicad/zudo-power.pretty/HDR-TH_16P-P2.54-H-M-R2-C8-S2.54.kicad_mod; net-pair assignment reviewed against board-b-synth-power.md pin table; key orientation and Ref.Pin-level baseline confirmation remain NEEDS BENCH"
+    },
+    {
+      "record_id": "rec-c25803",
+      "pin_map_id": "pinmap-c25803",
+      "canonical_sha256": "97000204a79e5fb95cb8ebb8ba27f0b9d3ef40336493ff904677cb49e0446fe7",
+      "evidence_fact_ids": [
+        "fact-c25803-manufacturer"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [],
+      "reviewer": "component-project-passives self-review: 2-terminal chip resistor, generic pad numbering, project footprint file"
+    },
+    {
+      "record_id": "rec-c23206",
+      "pin_map_id": "pinmap-c23206",
+      "canonical_sha256": "0000c063300a4d93d950cdf89ef180fbeab5d85e765e03a82bb9a6c8cc39e5cf",
+      "evidence_fact_ids": [
+        "fact-c23206-manufacturer"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [],
+      "reviewer": "component-project-passives self-review: 2-terminal chip resistor, generic pad numbering, project footprint file"
+    },
+    {
+      "record_id": "rec-c23179",
+      "pin_map_id": "pinmap-c23179",
+      "canonical_sha256": "94542526bbd7b632a02e32be0e3cd1d6e728c9871c06e6fda2fdc0679507f5b5",
+      "evidence_fact_ids": [
+        "fact-c23179-manufacturer"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [],
+      "reviewer": "component-project-passives self-review: 2-terminal chip resistor, generic pad numbering, project footprint file"
+    },
+    {
+      "record_id": "rec-c23162",
+      "pin_map_id": "pinmap-c23162",
+      "canonical_sha256": "a0c09e4e847eaeb745d8aeb7751bad285a2af1d64c0c1e7cb7dcc5e12ae97784",
+      "evidence_fact_ids": [
+        "fact-c23162-manufacturer"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [],
+      "reviewer": "component-project-passives self-review: 2-terminal chip resistor, generic pad numbering, project footprint file"
+    },
+    {
+      "record_id": "rec-c25804",
+      "pin_map_id": "pinmap-c25804",
+      "canonical_sha256": "35dd1c66e5dc24a7c97883e2e012d82c1cad40b353f5202670d5c30ec81afa74",
+      "evidence_fact_ids": [
+        "fact-c25804-manufacturer"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [],
+      "reviewer": "component-project-passives self-review: 2-terminal chip resistor, generic pad numbering, project footprint file"
+    },
+    {
+      "record_id": "rec-c21190",
+      "pin_map_id": "pinmap-c21190",
+      "canonical_sha256": "b17fe2bbfd80197d6e9a358b867ce03ba64c82c0e50f20192064effd5e353611",
+      "evidence_fact_ids": [
+        "fact-c21190-manufacturer"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [],
+      "reviewer": "component-project-passives self-review: 2-terminal chip resistor, generic pad numbering, project footprint file"
+    },
+    {
+      "record_id": "rec-c17513",
+      "pin_map_id": "pinmap-c17513",
+      "canonical_sha256": "e82201e9cf9a8fbfa6d0e76ae8b5a21841e2d477129fe7b7b36806ef10419594",
+      "evidence_fact_ids": [
+        "fact-c17513-manufacturer"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [],
+      "reviewer": "component-project-passives self-review: 2-terminal chip resistor, generic pad numbering, project footprint file"
+    },
+    {
+      "record_id": "rec-c23186",
+      "pin_map_id": "pinmap-c23186",
+      "canonical_sha256": "1d228e330c8f4d22fd1587e7b47aaf2032583ba4cf310a4fe4148b2c1d697bf6",
+      "evidence_fact_ids": [
+        "fact-c23186-manufacturer"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [],
+      "reviewer": "component-project-passives self-review: 2-terminal chip resistor, generic pad numbering, project footprint file"
+    },
+    {
+      "record_id": "rec-c21189",
+      "pin_map_id": "pinmap-c21189",
+      "canonical_sha256": "dbcfe01ec451238e26e0203dd526481fa2f57a7eb8a9156cb9334e821f2774ec",
+      "evidence_fact_ids": [
+        "fact-c21189-manufacturer"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [],
+      "reviewer": "component-project-passives self-review: 2-terminal chip jumper, generic pad numbering, project footprint file"
+    },
+    {
+      "record_id": "rec-c13585",
+      "pin_map_id": "pinmap-c13585",
+      "canonical_sha256": "5ca4a49e702d2bbdfc294c0b6204b102711c24ac0497eb32e2e0b70b67d11ca4",
+      "evidence_fact_ids": [
+        "fact-c13585-manufacturer"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [],
+      "reviewer": "component-project-passives self-review: 2-terminal MLCC, generic pad numbering, project footprint file"
+    },
+    {
+      "record_id": "rec-c15849",
+      "pin_map_id": "pinmap-c15849",
+      "canonical_sha256": "da8265c29c39656df9189deaaed61ad5fdc639839decd4d61042ad2ff289f0f2",
+      "evidence_fact_ids": [
+        "fact-c15849-manufacturer"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [],
+      "reviewer": "component-project-passives self-review: 2-terminal MLCC, generic pad numbering, project footprint file"
+    },
+    {
+      "record_id": "rec-c1711",
+      "pin_map_id": "pinmap-c1711",
+      "canonical_sha256": "9f05a8d443d8affc0541293c4db10c2b19d6cf3661e3fd0e1135e585f19be15e",
+      "evidence_fact_ids": [
+        "fact-c1711-manufacturer"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [],
+      "reviewer": "component-project-passives self-review: 2-terminal MLCC, generic pad numbering, project footprint file"
+    },
+    {
+      "record_id": "rec-c1623",
+      "pin_map_id": "pinmap-c1623",
+      "canonical_sha256": "c79c73ae8505fa1b7c405e429291d493128e93bc2350f53a1f766c7373ed2d79",
+      "evidence_fact_ids": [
+        "fact-c1623-manufacturer"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [],
+      "reviewer": "component-project-passives self-review: 2-terminal MLCC, generic pad numbering, project footprint file"
+    },
+    {
+      "record_id": "rec-c1729",
+      "pin_map_id": "pinmap-c1729",
+      "canonical_sha256": "d3667c23f32a5771831fba05b77eec30df0000a5b9e7face2a76b605a07482d0",
+      "evidence_fact_ids": [
+        "fact-c1729-manufacturer"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [],
+      "reviewer": "component-project-passives self-review: 2-terminal MLCC, generic pad numbering, project footprint file"
+    },
+    {
+      "record_id": "rec-c2983319",
+      "pin_map_id": "pinmap-c2983319",
+      "canonical_sha256": "7fdf516ffc29b8254090fdc1d03739bceed7dc83d548eda187c563ca7702dcd1",
+      "evidence_fact_ids": [
+        "fact-c2983319-manufacturer"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [],
+      "reviewer": "component-project-passives self-review: 2-terminal electrolytic, generic pad numbering, project footprint file"
+    },
+    {
+      "record_id": "rec-c22383803",
+      "pin_map_id": "pinmap-c22383803",
+      "canonical_sha256": "4fd68e112216be205d973ba70fd05e3a6d1f3810c8153864b62a659652092d3a",
+      "evidence_fact_ids": [
+        "fact-c22383803-manufacturer"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [],
+      "reviewer": "component-project-passives self-review: 2-terminal electrolytic, generic pad numbering, project footprint file"
+    },
+    {
+      "record_id": "rec-c22383804",
+      "pin_map_id": "pinmap-c22383804",
+      "canonical_sha256": "ae5b0603e0df4e8a09184a472ddb211136d7b6170999d89efddbed7f686613eb",
+      "evidence_fact_ids": [
+        "fact-c22383804-manufacturer"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [],
+      "reviewer": "component-project-passives self-review: 2-terminal electrolytic, generic pad numbering, project footprint file"
+    },
+    {
+      "record_id": "rec-c970687",
+      "pin_map_id": "pinmap-c970687",
+      "canonical_sha256": "1e689818f771d3eb830206d1b76c492120fe2f06a17ded2e7bc3b03016b1166f",
+      "evidence_fact_ids": [
+        "fact-c970687-manufacturer"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [],
+      "reviewer": "component-project-passives self-review: 2-terminal electrolytic, generic pad numbering, project footprint file"
+    },
+    {
+      "record_id": "rec-c22387780",
+      "pin_map_id": "pinmap-c22387780",
+      "canonical_sha256": "cc3c0993ff220f10c32b42976fb5709dcbcb8a1448d61a8b495825560c854e14",
+      "evidence_fact_ids": [
+        "fact-c22387780-manufacturer"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [],
+      "reviewer": "component-project-passives self-review: 2-terminal electrolytic, generic pad numbering, project footprint file"
+    },
+    {
+      "record_id": "rec-c2289",
+      "pin_map_id": "pinmap-c2289",
+      "canonical_sha256": "6b8fa19334e8c7406fc8778fe371cded5d652c3a08db1098460cfcf433b2d7a6",
+      "evidence_fact_ids": [
+        "fact-c2289-polarity-note"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "anode"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "cathode"
+        }
+      ],
+      "reviewer": "component-project-passives self-review against symbols/zudo-pd.kicad_sym 'YLED0603YG' and the project footprint file; NOTE: this symbol's pin numbering is REVERSED relative to the blue (Bluelight0603/C2288) and red (KT-0603R/C2286) LED symbols in this same library, which both use pin1=K(cathode)/pin2=A(anode). Worth a physical/silkscreen check before assuming uniform LED2/LED3/LED4 orientation on the board. Separately, this symbol's own Footprint property reads 'easyeda2kicad:LED0603-FD', a footprint file that does not exist in footprints/kicad/zudo-power.pretty/ (only LED0603-FD_BLUE.kicad_mod exists there) -- inventory.json's package field ('LED0603-RD') is used for this record's identity instead, matching LED3/LED4."
+    },
+    {
+      "record_id": "rec-c2288",
+      "pin_map_id": "pinmap-c2288",
+      "canonical_sha256": "fbe9f3119cb260cece39ef4101c88eef4dccd8cf37a531128feeec50c784ca22",
+      "evidence_fact_ids": [
+        "fact-c2288-polarity-note"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "cathode"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "anode"
+        }
+      ],
+      "reviewer": "component-project-passives self-review against symbols/zudo-pd.kicad_sym 'Bluelight0603' and the project footprint file; Pin numbering matches the red LED (KT-0603R/C2286): pin1=K(cathode)/pin2=A(anode)."
+    },
+    {
+      "record_id": "rec-c2286",
+      "pin_map_id": "pinmap-c2286",
+      "canonical_sha256": "b134b383a9866142afae23e2c4f625280ecb8fcd95b18b84394fc3eca58611ef",
+      "evidence_fact_ids": [
+        "fact-c2286-polarity-note"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "cathode"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "anode"
+        }
+      ],
+      "reviewer": "component-project-passives self-review against symbols/zudo-pd.kicad_sym 'KT-0603R' and the project footprint file; Pin numbering matches the blue LED (Bluelight0603/C2288): pin1=K(cathode)/pin2=A(anode)."
     }
   ]
 }

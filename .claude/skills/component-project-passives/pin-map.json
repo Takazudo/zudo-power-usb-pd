@@ -1,0 +1,467 @@
+{
+  "schema_version": 1,
+  "pin_maps": [
+    {
+      "pin_map_id": "pinmap-c25803",
+      "record_id": "rec-c25803",
+      "symbol": "0603WAF1003T5E",
+      "footprint": "R0603",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "terminal 1"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "terminal 2"
+        }
+      ],
+      "reviewed_by": "self-review: 2-terminal chip resistor, generic pad 1/2 numbering per footprints/kicad/zudo-power.pretty/R0603.kicad_mod; independent second-reviewer pass pending"
+    },
+    {
+      "pin_map_id": "pinmap-c23206",
+      "record_id": "rec-c23206",
+      "symbol": "0603WAF5602T5E",
+      "footprint": "R0603",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "terminal 1"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "terminal 2"
+        }
+      ],
+      "reviewed_by": "self-review: 2-terminal chip resistor, generic pad 1/2 numbering per footprints/kicad/zudo-power.pretty/R0603.kicad_mod; independent second-reviewer pass pending"
+    },
+    {
+      "pin_map_id": "pinmap-c23179",
+      "record_id": "rec-c23179",
+      "symbol": "0603WAF4700T5E",
+      "footprint": "R0603",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "terminal 1"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "terminal 2"
+        }
+      ],
+      "reviewed_by": "self-review: 2-terminal chip resistor, generic pad 1/2 numbering per footprints/kicad/zudo-power.pretty/R0603.kicad_mod; independent second-reviewer pass pending"
+    },
+    {
+      "pin_map_id": "pinmap-c23162",
+      "record_id": "rec-c23162",
+      "symbol": "0603WAF4701T5E",
+      "footprint": "R0603",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "terminal 1"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "terminal 2"
+        }
+      ],
+      "reviewed_by": "self-review: 2-terminal chip resistor, generic pad 1/2 numbering per footprints/kicad/zudo-power.pretty/R0603.kicad_mod; independent second-reviewer pass pending"
+    },
+    {
+      "pin_map_id": "pinmap-c25804",
+      "record_id": "rec-c25804",
+      "symbol": "0603WAF1002T5E",
+      "footprint": "R0603",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "terminal 1"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "terminal 2"
+        }
+      ],
+      "reviewed_by": "self-review: 2-terminal chip resistor, generic pad 1/2 numbering per footprints/kicad/zudo-power.pretty/R0603.kicad_mod; independent second-reviewer pass pending"
+    },
+    {
+      "pin_map_id": "pinmap-c21190",
+      "record_id": "rec-c21190",
+      "symbol": "0603WAF1001T5E",
+      "footprint": "R0603",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "terminal 1"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "terminal 2"
+        }
+      ],
+      "reviewed_by": "self-review: 2-terminal chip resistor, generic pad 1/2 numbering per footprints/kicad/zudo-power.pretty/R0603.kicad_mod; independent second-reviewer pass pending"
+    },
+    {
+      "pin_map_id": "pinmap-c17513",
+      "record_id": "rec-c17513",
+      "symbol": "0805W8F1001T5E",
+      "footprint": "R0805",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "terminal 1"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "terminal 2"
+        }
+      ],
+      "reviewed_by": "self-review: 2-terminal chip resistor, generic pad 1/2 numbering per footprints/kicad/zudo-power.pretty/R0805.kicad_mod; independent second-reviewer pass pending"
+    },
+    {
+      "pin_map_id": "pinmap-c23186",
+      "record_id": "rec-c23186",
+      "symbol": "0603WAF5101T5E",
+      "footprint": "R0603",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "terminal 1"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "terminal 2"
+        }
+      ],
+      "reviewed_by": "self-review: 2-terminal chip resistor, generic pad 1/2 numbering per footprints/kicad/zudo-power.pretty/R0603.kicad_mod; independent second-reviewer pass pending"
+    },
+    {
+      "pin_map_id": "pinmap-c21189",
+      "record_id": "rec-c21189",
+      "symbol": "0603WAF0000T5E",
+      "footprint": "R0603",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "terminal 1"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "terminal 2"
+        }
+      ],
+      "reviewed_by": "self-review: 2-terminal chip jumper, generic pad 1/2 numbering per footprints/kicad/zudo-power.pretty/R0603.kicad_mod; independent second-reviewer pass pending"
+    },
+    {
+      "pin_map_id": "pinmap-c13585",
+      "record_id": "rec-c13585",
+      "symbol": "CL31A106KBHNNNE",
+      "footprint": "C1206",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "terminal 1"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "terminal 2"
+        }
+      ],
+      "reviewed_by": "self-review: 2-terminal MLCC, generic pad 1/2 numbering per footprints/kicad/zudo-power.pretty/C1206.kicad_mod; independent second-reviewer pass pending"
+    },
+    {
+      "pin_map_id": "pinmap-c15849",
+      "record_id": "rec-c15849",
+      "symbol": "CL10A105KB8NNNC",
+      "footprint": "C0603",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "terminal 1"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "terminal 2"
+        }
+      ],
+      "reviewed_by": "self-review: 2-terminal MLCC, generic pad 1/2 numbering per footprints/kicad/zudo-power.pretty/C0603.kicad_mod; independent second-reviewer pass pending"
+    },
+    {
+      "pin_map_id": "pinmap-c1711",
+      "record_id": "rec-c1711",
+      "symbol": "CC0805KRX7R9BB104",
+      "footprint": "C0805",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "terminal 1"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "terminal 2"
+        }
+      ],
+      "reviewed_by": "self-review: 2-terminal MLCC, generic pad 1/2 numbering per footprints/kicad/zudo-power.pretty/C0805.kicad_mod; independent second-reviewer pass pending"
+    },
+    {
+      "pin_map_id": "pinmap-c1623",
+      "record_id": "rec-c1623",
+      "symbol": "CL10B474KA8NNNC",
+      "footprint": "C0603",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "terminal 1"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "terminal 2"
+        }
+      ],
+      "reviewed_by": "self-review: 2-terminal MLCC, generic pad 1/2 numbering per footprints/kicad/zudo-power.pretty/C0603.kicad_mod; independent second-reviewer pass pending"
+    },
+    {
+      "pin_map_id": "pinmap-c1729",
+      "record_id": "rec-c1729",
+      "symbol": "CL21B223KBANNNC",
+      "footprint": "C0805",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "terminal 1"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "terminal 2"
+        }
+      ],
+      "reviewed_by": "self-review: 2-terminal MLCC, generic pad 1/2 numbering per footprints/kicad/zudo-power.pretty/C0805.kicad_mod; independent second-reviewer pass pending"
+    },
+    {
+      "pin_map_id": "pinmap-c2983319",
+      "record_id": "rec-c2983319",
+      "symbol": "GVT1E477M0810CNVC",
+      "footprint": "CAP-SMD_BD10.0-L10.3-W10.3-LS11.0-FD",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "terminal 1 (polarity not independently confirmed this pass)"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "terminal 2 (polarity not independently confirmed this pass)"
+        }
+      ],
+      "reviewed_by": "self-review: project symbol library numbers this electrolytic's pins '1'/'2' with no explicit polarity (+/-) marking in the .kicad_sym drawing (checked against the project's own aluminum electrolytic symbols, e.g. RVT1C471M0607_C22383803, RVT1E101M0607_C22383804, RST1UF50V017 -- all use plain '1'/'2' pin names); manufacturer datasheet package-outline polarity marking was not independently confirmed in this pass. Treat pin-1/pin-2 polarity as UNCONFIRMED until a datasheet package drawing or physical board photo settles it."
+    },
+    {
+      "pin_map_id": "pinmap-c22383803",
+      "record_id": "rec-c22383803",
+      "symbol": "RVT1C471M0607_C22383803",
+      "footprint": "CAP-SMD_BD6.3-L6.6-W6.6-FD",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "terminal 1 (polarity not independently confirmed this pass)"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "terminal 2 (polarity not independently confirmed this pass)"
+        }
+      ],
+      "reviewed_by": "self-review: project symbol library numbers this electrolytic's pins '1'/'2' with no explicit polarity (+/-) marking in the .kicad_sym drawing (checked against the project's own aluminum electrolytic symbols, e.g. RVT1C471M0607_C22383803, RVT1E101M0607_C22383804, RST1UF50V017 -- all use plain '1'/'2' pin names); manufacturer datasheet package-outline polarity marking was not independently confirmed in this pass. Treat pin-1/pin-2 polarity as UNCONFIRMED until a datasheet package drawing or physical board photo settles it."
+    },
+    {
+      "pin_map_id": "pinmap-c22383804",
+      "record_id": "rec-c22383804",
+      "symbol": "RVT1E101M0607_C22383804",
+      "footprint": "CAP-SMD_BD6.3-L6.6-W6.6-LS7.3-FD",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "terminal 1 (polarity not independently confirmed this pass)"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "terminal 2 (polarity not independently confirmed this pass)"
+        }
+      ],
+      "reviewed_by": "self-review: project symbol library numbers this electrolytic's pins '1'/'2' with no explicit polarity (+/-) marking in the .kicad_sym drawing (checked against the project's own aluminum electrolytic symbols, e.g. RVT1C471M0607_C22383803, RVT1E101M0607_C22383804, RST1UF50V017 -- all use plain '1'/'2' pin names); manufacturer datasheet package-outline polarity marking was not independently confirmed in this pass. Treat pin-1/pin-2 polarity as UNCONFIRMED until a datasheet package drawing or physical board photo settles it."
+    },
+    {
+      "pin_map_id": "pinmap-c970687",
+      "record_id": "rec-c970687",
+      "symbol": "RVT1H101M0810",
+      "footprint": "CAP-SMD_BD8.0-L8.3-W8.3-LS9.0-FD",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "terminal 1 (polarity not independently confirmed this pass)"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "terminal 2 (polarity not independently confirmed this pass)"
+        }
+      ],
+      "reviewed_by": "self-review: project symbol library numbers this electrolytic's pins '1'/'2' with no explicit polarity (+/-) marking in the .kicad_sym drawing (checked against the project's own aluminum electrolytic symbols, e.g. RVT1C471M0607_C22383803, RVT1E101M0607_C22383804, RST1UF50V017 -- all use plain '1'/'2' pin names); manufacturer datasheet package-outline polarity marking was not independently confirmed in this pass. Treat pin-1/pin-2 polarity as UNCONFIRMED until a datasheet package drawing or physical board photo settles it."
+    },
+    {
+      "pin_map_id": "pinmap-c22387780",
+      "record_id": "rec-c22387780",
+      "symbol": "EFVH035ADA471M10B0",
+      "footprint": "CAP-SMD_BD10.0-L10.3-W10.3-LS11.0-FD",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "terminal 1 (polarity not independently confirmed this pass)"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "terminal 2 (polarity not independently confirmed this pass)"
+        }
+      ],
+      "reviewed_by": "self-review: project symbol library numbers this electrolytic's pins '1'/'2' with no explicit polarity (+/-) marking in the .kicad_sym drawing (checked against the project's own aluminum electrolytic symbols, e.g. RVT1C471M0607_C22383803, RVT1E101M0607_C22383804, RST1UF50V017 -- all use plain '1'/'2' pin names); manufacturer datasheet package-outline polarity marking was not independently confirmed in this pass. Treat pin-1/pin-2 polarity as UNCONFIRMED until a datasheet package drawing or physical board photo settles it."
+    },
+    {
+      "pin_map_id": "pinmap-c2289",
+      "record_id": "rec-c2289",
+      "symbol": "YLED0603YG",
+      "footprint": "LED0603-RD",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "anode"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "cathode"
+        }
+      ],
+      "reviewed_by": "self-review against symbols/zudo-pd.kicad_sym symbol 'YLED0603YG' (pin 1=1, pin 2=2) and footprints/kicad/zudo-power.pretty/LED0603-RD.kicad_mod (pad 1, pad 2); NOTE: this symbol's pin numbering is REVERSED relative to the blue (Bluelight0603/C2288) and red (KT-0603R/C2286) LED symbols in this same library, which both use pin1=K(cathode)/pin2=A(anode). Worth a physical/silkscreen check before assuming uniform LED2/LED3/LED4 orientation on the board. Separately, this symbol's own Footprint property reads 'easyeda2kicad:LED0603-FD', a footprint file that does not exist in footprints/kicad/zudo-power.pretty/ (only LED0603-FD_BLUE.kicad_mod exists there) -- inventory.json's package field ('LED0603-RD') is used for this record's identity instead, matching LED3/LED4. independent second-reviewer pass pending"
+    },
+    {
+      "pin_map_id": "pinmap-c2288",
+      "record_id": "rec-c2288",
+      "symbol": "Bluelight0603",
+      "footprint": "LED0603-RD",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "cathode"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "anode"
+        }
+      ],
+      "reviewed_by": "self-review against symbols/zudo-pd.kicad_sym symbol 'Bluelight0603' (pin 1=1, pin 2=2) and footprints/kicad/zudo-power.pretty/LED0603-RD.kicad_mod (pad 1, pad 2); Pin numbering matches the red LED (KT-0603R/C2286): pin1=K(cathode)/pin2=A(anode). independent second-reviewer pass pending"
+    },
+    {
+      "pin_map_id": "pinmap-c2286",
+      "record_id": "rec-c2286",
+      "symbol": "KT-0603R",
+      "footprint": "LED0603-RD",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "cathode"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "anode"
+        }
+      ],
+      "reviewed_by": "self-review against symbols/zudo-pd.kicad_sym symbol 'KT-0603R' (pin 1=1, pin 2=2) and footprints/kicad/zudo-power.pretty/LED0603-RD.kicad_mod (pad 1, pad 2); Pin numbering matches the blue LED (Bluelight0603/C2288): pin1=K(cathode)/pin2=A(anode). independent second-reviewer pass pending"
+    }
+  ]
+}
