@@ -333,6 +333,6 @@ for the current fitted parts and their margin analysis.
 
 - [USBLC6-2SC6 removal background](../overview/board-a-usb-pd-core.md#deltas-vs-the-current-single-board-circuit) - D4 was deleted entirely in the 2-board split, not relocated
 - ESDA25L - Legacy component (replaced by USBLC6-2SC6, then USBLC6-2SC6 itself removed; no current design page)
-- [SMAJ15A (Protection Stage)](../overview/board-b-synth-power.md#protection-stage) - VBUS protection TVS
+- [SMAJ15A (Protection Stage)](../overview/board-b-synth-power.md#protection-stage) - +12V/-12V output rail protection TVS (TVS1/TVS3)
 - [SD05 (Protection Stage)](../overview/board-b-synth-power.md#protection-stage) - 5V rail protection TVS (superseded by SMAJ6.5A — see decision (a))
 - [USB Type-C Pinout](./usb-type-c-pinout.md) - Understanding CC and other pins
