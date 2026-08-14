@@ -1,56 +1,93 @@
 ---
-title: JK-nSMD100/16V - -12V Rail PTC Resettable Fuse
+title: BSMD1206-150-16V - -12V Rail PTC Resettable Fuse
 sidebar_position: 14
 ---
 
-Auto-reset overcurrent protection for -12V power rail with 1.0A hold current.
+Auto-reset overcurrent protection for the -12V power rail with 1.5A hold current and
+16V voltage rating.
 
-- 🔗 [View on JLCPCB: C2830246](https://jlcpcb.com/partdetail/C2830246)
-- 📄 Datasheet: Contact manufacturer
+- 🔗 [View on JLCPCB: C883133](https://jlcpcb.com/partdetail/C883133)
+- 📄 Datasheet: BHFUSE BSMD1206 series (primary-sourced; see `component-ptc-bsmd1206-150-16v-c883133` skill bundle)
 
 ## Overview
 
-The JK-nSMD100/16V is a PTC resettable fuse providing automatic overcurrent protection for the -12V power rail. It protects the CJ7912 negative linear regulator and downstream modules from overcurrent conditions while automatically resetting after cooling.
+The BSMD1206-150-16V is a Positive Temperature Coefficient (PTC) resettable fuse that
+provides automatic overcurrent protection for the -12V power rail. Placed at board-b
+refdes **PTC3**, downstream of U8 (CJ7912 -12V LDO), it is the part actually fitted in
+`scripts/schgen/board_b_spec.py` — this page previously described a different part
+(JK-nSMD100/16V, C2830246) that was never the fitted component; see
+[issue #131](https://github.com/Takazudo/zudo-pd/issues/131).
+
+<Note>
+
+PTCs are non-polarized: they respond to current magnitude, not direction, so the same
+part and behavior apply equally on a negative rail.
+
+</Note>
 
 ## Part Information
 
 | Parameter                    | Value                                              |
-| ---------------------------- | -------------------------------------------------- |
-| **JLCPCB Part Number**       | [C2830246](https://jlcpcb.com/partdetail/C2830246) |
-| **Manufacturer Part Number** | JK-nSMD100/16V                                     |
-| **Package**                  | 1206 (3.2mm x 1.6mm)                               |
-| **Stock**                    | 99,339 units (excellent availability)              |
-| **Estimated Price**          | ~$0.10-0.15                                        |
+| ----------------------------- | -------------------------------------------------- |
+| **JLCPCB Part Number**       | [C883133](https://jlcpcb.com/partdetail/C883133) |
+| **Manufacturer Part Number** | BSMD1206-150-16V                                   |
+| **Manufacturer**             | BHFUSE                                             |
+| **Package**                  | 1206 (F1206 footprint)                             |
 | **Type**                     | Resettable Polymeric PTC                           |
 
 ## Electrical Specifications
 
-### Current Ratings
+Primary-sourced from the BHFUSE BSMD1206 series datasheet, Electrical Characteristics
+(25°C) table, row `BSMD1206-150-16V`.
 
-| Parameter          | Value | Unit | Conditions                      |
-| ------------------ | ----- | ---- | ------------------------------- |
-| **Hold Current**   | 1.0   | A    | Maximum safe continuous current |
-| **Trip Current**   | ~2.0  | A    | Typical (2x hold current)       |
-| **Voltage Rating** | 16    | V    | Maximum voltage                 |
+### Current and Voltage Ratings
 
-### Key Characteristics
+| Parameter             | Symbol  | Value | Unit | Conditions                              |
+| ---------------------- | ------- | ----- | ---- | ----------------------------------------- |
+| **Hold Current**      | I_hold  | 1.5   | A    | Maximum current that will not trip, 25°C still air |
+| **Trip Current**      | I_trip  | 3.0   | A    | Minimum current that will trip, 25°C still air |
+| **Maximum Voltage**   | V_max   | 16    | V    | Absolute maximum |
+| **Maximum Current**   | I_max   | 40    | A    | Maximum fault current withstood at V_max |
+| **Power Dissipation** | P_D typ | 1.0   | W    | Tripped-state, 25°C still air (NEEDS BENCH — typical curve, not guaranteed) |
 
-| Parameter               | Value      | Unit      |
-| ----------------------- | ---------- | --------- |
-| **Initial Resistance**  | &lt;0.05Ω  | (typical) |
-| **Trip Time @ 2x Hold** | 1-5        | s         |
-| **Reset Time**          | 30-60      | s         |
-| **Operating Temp**      | -40 to +85 | °C        |
+### Resistance Characteristics
+
+| State                              | Resistance | Notes                                    |
+| ------------------------------------ | ---------- | ------------------------------------------ |
+| **Initial (cold), minimum**        | 0.025 Ω    | Prior to tripping, 25°C, unsoldered      |
+| **Post-trip, maximum (R1max)**     | 0.13 Ω     | Measured 1 hour after trip, or after a 260°C/20s reflow |
+
+### Dynamic and Thermal Characteristics
+
+| Parameter                          | Value       | Unit | Conditions                            |
+| ------------------------------------ | ----------- | ---- | ---------------------------------------- |
+| **Time to trip**                   | 0.3 (max)   | s    | At 8.00A applied fault current, 25°C |
+| **Operating ambient temperature**  | -40 to +85  | °C   | Recommended operating range |
+| **Max tripped-state surface temp** | 125         | °C   | Absolute maximum |
+| **Hold current at 85°C**           | 0.77        | A    | Thermal derating — see margin note below |
+
+<Warning title="85°C hold current sits below the 0.8A rail budget">
+
+At the datasheet's 85°C ambient derating point, `I_hold` falls to **0.77A** — 0.03A
+below the -12V rail's 0.8A current budget. At 25°C the part comfortably holds 1.5A
+(0.7A / 87% margin over 0.8A). This is a genuine thermal-derating concern flagged by the
+wave-5 evidence review (finding BB-8, `fact-ptc3-hold-85c`) and left as a **NEEDS
+BENCH** item for the Board B bench plan — enclosure-ambient temperature at the PTC3
+location has not been measured. It is not a part-selection blocker on its own (no
+higher-hold 16V/1210-or-smaller alternative was identified), just a margin to verify
+once Board B has a real enclosure.
+
+</Warning>
 
 ## Circuit Integration
 
 ### Protection Architecture
 
 ```
-Layer 1: USB-PD Adapter → Overcurrent protection
+Layer 1: USB-PD Adapter → Overcurrent protection (input side)
 Layer 2: U4 LM2596S-ADJ inverting buck-boost (+15V → -13.5V) → Current limiting
-Layer 3: LM7912 Linear Regulator → Current limiting ~1A, thermal shutdown
-Layer 4: This PTC (1.0A hold / 2.0A trip) → Auto-reset protection
+Layer 3: U8 CJ7912 Linear Regulator → Current limiting, thermal shutdown
+Layer 4: PTC3 (1.5A hold / 3.0A trip) → Auto-reset overcurrent protection
     ↓
 -12V Output to Modules
 ```
@@ -58,134 +95,63 @@ Layer 4: This PTC (1.0A hold / 2.0A trip) → Auto-reset protection
 ### Circuit Placement
 
 ```
-LM7912 Output ──┬─── PTC3 (1.0A) ───┬─── TVS3 ─── -12V OUT
-                │  JK-nSMD100/16V   │   SMAJ15A
-                │                   │   (reversed)
-                │                   │      ↑
-                │                   └─────GND
-                │
-         GND ─── LED4 ─── R9 (1kΩ) ─┘
-              Red status (reversed polarity)
+U8 (CJ7912) Output ──┬─── PTC3 (1.5A) ───┬─── TVS3 ─── -12V OUT
+                     │  BSMD1206-150-16V │   SMAJ15A
+                     │                   │   (anode on -12V,
+                     │                   │    cathode on GND —
+                     │                   │    the locked orientation)
+                     │                   └─────GND
+                     │
+              GND ─── LED4 ─── R9 (1kΩ) ─┘
+                   Red status indicator
 ```
 
-**Note:** LED polarity is reversed for negative rail: anode to GND, cathode to -12V.
+**Connection (per `scripts/schgen/board_b_spec.py`):**
 
-## Protection Behavior
+- `Net-(U8-OUT)`: `U8.3` (OUT), `C19.1`, `C25.2`, `R9.1`, `PTC3.1`
+- `-12V rail`: `PTC3.2`, `TVS3.2`, `J6.1`, `J6.2`, `J10.15`, `J10.16`, `J11.15`, `J11.16`
 
-### Current vs Protection State
-
-| Current  | LM7912 State            | PTC State  | Result                      |
-| -------- | ----------------------- | ---------- | --------------------------- |
-| 0-1.0A   | ✅ Normal               | ✅ Normal  | Normal operation            |
-| 1.0-1.5A | ⚠️ Current limiting     | ⚠️ Warming | Both protections activating |
-| &gt;1.5A | 🛑 Hard limit (~1A max) | 🛑 Trips   | Dual protection active      |
-
-### Design Rationale
-
-**Why 1.0A hold for 1.0A target?**
+## Voltage Margin on the -12V Rail
 
 ```
-Hold current:  1.0A
-Design target: 1.0A (CJ7912 max)
-Note:          PTC and regulator rated equally
-
-Benefits:
-✅ Matches CJ7912 regulator maximum (1A)
-✅ Provides margin for transients
-✅ Typical modular synth -12V usage: 0.6-0.8A
-✅ Prevents false trips during normal operation
+V_max (this part):  16 V
+Rail nominal:        12 V  (magnitude)
+Margin:              4 V   (33% headroom)
 ```
 
-## Negative Voltage Considerations
+This is the tightest voltage margin of board-b's three PTCs (PTC1 and PTC2 both carry
+larger headroom against their respective rails), though it does not by itself account
+for switching-rail ripple or clamp-event transients on the -13.5V intermediate rail
+upstream of U8.
 
-### PTC Polarity
+## Comparison to the Other Rail PTCs
 
-**Important:** PTCs are non-polarized devices and work equally well with positive or negative voltages:
-
-```
-Positive rail:  +12V ─── [PTC] ─── Output
-Negative rail:  -12V ─── [PTC] ─── Output
-
-PTC behavior is identical in both cases!
-The PTC responds to current magnitude, not polarity.
-```
-
-### Protection on Negative Rails
-
-**Current measurement:**
-
-- Current flows from GND to -12V rail (conventional direction)
-- PTC measures absolute current magnitude
-- Trip behavior is identical to positive rails
-
-**Example:**
-
-```
-Module draws 1.5A from -12V rail:
-
-Current path: GND → Module → -12V → PTC → LM7912
-PTC sees: 1.5A (absolute value)
-Result: PTC warms up and may trip (same as +12V rail)
-```
-
-## Comparison to Other Rails
-
-| Feature       | -12V PTC (This) | +12V PTC | +5V PTC |
-| ------------- | --------------- | -------- | ------- |
-| Hold current  | 1.0A            | 1.5A     | 1.1A    |
-| Package       | 1206            | SMD1210  | 1812    |
-| Regulator max | 1.0A (CJ7912)   | 1.5A     | 1.5A    |
-| PTC limits to | 1.0A            | 1.5A     | 1.1A    |
-| Stock         | 99,339          | 7,525    | 44,459  |
-
-**Note:** -12V rail uses CJ7912 which has 1A max output (vs 1.5A for positive rails). This is adequate for typical modular synth applications where -12V draws less current than +12V.
-
-## Typical Modular Synth -12V Usage
-
-**Why -12V draws less current:**
-
-- Analog synth modules use +12V for:
-  - Op-amp power (primary)
-  - Audio signal processing
-  - CV generation
-  - LED indicators
-- Modules use -12V only for:
-  - Op-amp negative rail
-  - Bipolar signals
-
-**Typical current split:**
-
-```
-+12V: 60-70% of total current
--12V: 30-40% of total current
-+5V:  10-20% of total current (digital modules)
-```
-
-**Example modular system (10 modules):**
-
-```
-+12V: 1.0-1.2A
--12V: 0.6-0.8A  ← This rail
-+5V:  0.2-0.4A
-```
-
-This is why the -12V PTC has lower current rating (1.0A) compared to +12V (1.5A).
+| Feature       | -12V PTC (PTC3, this part) | +12V PTC (PTC1)          | +5V PTC (PTC2)     |
+| -------------- | --------------------------- | -------------------------- | --------------------- |
+| Part           | BSMD1206-150-16V (C883133) | SMD1210P150TF/16 (C7529589) | mSMD110-33V (C70119) |
+| Hold current   | 1.5 A                        | 1.5 A                       | 1.1 A                 |
+| Voltage rating | 16 V                         | 16 V                        | 33 V                  |
+| Package        | 1206                         | 1210                        | 1812                  |
+| Regulator max  | 1 A (CJ7912)                 | 1.5 A (L7812CD2T)           | 1.5 A (L7805ABD2T)    |
 
 ## Bill of Materials
 
-| Designator | Part           | Package | JLCPCB Part # | Qty | Unit Price | Extended |
-| ---------- | -------------- | ------- | ------------- | --- | ---------- | -------- |
-| PTC3       | JK-nSMD100/16V | 1206    | C2830246      | 1   | $0.10      | $0.10    |
+| Designator | Part               | Package | JLCPCB Part # | Qty |
+| ----------- | ------------------- | ------- | -------------- | --- |
+| PTC3        | BSMD1206-150-16V   | 1206    | C883133        | 1   |
 
 ## Related Components
 
-- **Protected circuit**: CJ7912 (U8) - -12V Linear Regulator
-- **Upstream**: LM2596S-ADJ (U4) - -13.5V DC-DC Converter (Inverting Buck-Boost)
-- **Overvoltage protection**: SMAJ15A (TVS3, reversed polarity)
-- **Parallel rails**: PTC +12V (C7529589), PTC +5V (C70119)
+- **Protected circuit**: CJ7912 (U8) — -12V Linear Regulator
+- **Upstream**: LM2596S-ADJ (U4) — -13.5V DC-DC Converter (inverting buck-boost)
+- **Overvoltage protection**: SMAJ15A (TVS3), locked orientation anode on -12V / cathode on GND
+- **Parallel rails**: PTC +12V ([SMD1210P150TF/16](./ptc-12v.md), C7529589), PTC +5V ([mSMD110-33V](./ptc-5v.md), C70119)
 
 ## References
 
-- **Protection design**: `/doc/docs/learning/protection-fuse-strategy.md`
-- **Circuit diagram**: [Diagram7 - -12V Linear Regulator](/docs/overview/circuit-diagrams#diagram7--135v---12v-linear-regulator-cj7912-u8)
-- **JLCPCB Part Page**: https://jlcpcb.com/partdetail/C2830246
+- [Board B — Synth Power Conversion](../overview/board-b-synth-power.md) — Protection
+  Stage table and net connectivity
+- `scripts/schgen/board_b_spec.py` — the spec module that places and nets PTC3
+- `.claude/skills/component-ptc-bsmd1206-150-16v-c883133` — full primary-sourced
+  evidence bundle for this part
+- **JLCPCB Part Page**: https://jlcpcb.com/partdetail/C883133

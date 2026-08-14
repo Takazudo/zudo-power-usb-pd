@@ -27,7 +27,18 @@ This page lists which nets are worth bringing out to test points on v3, why, and
 | TP5 | -13.5V (DC-DC out, before -12V LDO) | dc-dc-conversion | TestPoint |
 | J2 | VBUS / SCL / SDA / GND (NVM programming) | usb-pd-input | PogoPad_1x04 |
 
-Reasonable coverage of the power rails. **Gaps**: the entire STUSB4500 chip-side signal set, and the -15V SEPIC inverter output node.
+Reasonable coverage of the power rails. **Gaps**: the entire STUSB4500 chip-side signal
+set.
+
+<Note>
+
+An earlier draft of this page also listed a "-15V SEPIC inverter output node" gap. There
+is no separate -15V stage and no SEPIC topology anywhere in this design — the -12V rail
+comes from a single LM2596S-ADJ run in an inverting buck-boost configuration
+(+15V → -13.5V directly), and its output is already covered by TP5 in the table above.
+That planned TP row and the corresponding TP8 checklist item below were never real gaps.
+
+</Note>
 
 ## New test points — STUSB4500 chip area
 
@@ -75,7 +86,6 @@ Current TPs cover the DC-DC outputs but not every intermediate. Gaps worth addin
 
 | Signal | Reason |
 | --- | --- |
-| **-15V** (SEPIC inverter output, before -13.5V buck) | Currently no TP — if -12V output is wrong, you need to know whether -15V or -13.5V or -12V is the failing stage |
 | **VBUS_DISCH** (post-470Ω discharge node) | Verifies discharge path works on disconnect |
 
 The final output rails (+12V / +5V / -12V) appear on the output connectors and are easy to probe there — no separate TP needed.
@@ -113,7 +123,6 @@ Reuses the J2 style (2.54 mm pitch pogo pads) so the same probe clip works. Need
 | --- | --- | --- |
 | TP6 | CC1 (USB-C side) | Long trace to U1 pogo block would add stub capacitance on the CC line |
 | TP7 | CC2 (USB-C side) | Same |
-| TP8 | -15V | Lives in dc-dc-conversion sheet, far from U1 |
 | TP9 | VBUS_DISCH | Lives near the discharge resistor R13 |
 
 Use the existing `Connector:TestPoint` symbol (same style as TP1–TP5).
@@ -162,7 +171,6 @@ Add a small filled silkscreen marker (triangle, dot, or pin-1 arrow) next to eac
 - [ ] Create new footprint `PogoPad_1x08_P2.54mm` (copy `PogoPad_1x04_P2.54mm`, extend to 8 positions)
 - [ ] Add Tier 1 + Tier 2 pogo block (J3) to `usb-pd-input.kicad_sch` using `Conn_01x08`
 - [ ] Add individual TPs to `usb-pd-input.kicad_sch`: CC1 (TP6), CC2 (TP7), VBUS_DISCH (TP9)
-- [ ] Add individual TP to `dc-dc-conversion.kicad_sch`: -15V (TP8)
 - [ ] Confirm silkscreen labels are readable at silkscreen min line width (typically 0.15 mm)
 - [ ] Place pogo block near U1 with clear single-side access (not blocked by tall components)
 - [ ] Re-run ERC + DRC

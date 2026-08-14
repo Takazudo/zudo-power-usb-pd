@@ -5,7 +5,8 @@ sidebar_position: 3
 
 Current progress and plan for the USB-PD powered modular synthesizer power supply — now in
 the **2-board split era** following the v4 diagnosis (epic
-[#86](https://github.com/Takazudo/zudo-pd/issues/86)).
+[#86](https://github.com/Takazudo/zudo-pd/issues/86)), with both boards now generated
+from spec-driven KiCad projects under `boards/`.
 
 ## 🎯 Project Goal
 
@@ -16,11 +17,11 @@ the **2-board split era** following the v4 diagnosis (epic
 - Low-noise design with &lt;1mVp-p ripple
 - Easy to use with USB-C PD
 
-## 🔄 Current Phase: 2-Board Split (Diagnosis + Design Docs)
+## 🔄 Current Phase: Spec-Driven 2-Board Architecture
 
 The single-board zudo-pd design (v1 → v4) never reached a working USB-PD negotiation,
 across four separate JLCPCB orders. Rather than order a v5 single-board respin, the
-project is splitting into two boards:
+project split into two boards:
 
 - **Board A** — a reusable USB-PD sink core (STUSB4500 + USB-C receptacle + load switch +
   NVM programming pads). Cheap to re-order in isolation while the front end is under
@@ -28,6 +29,14 @@ project is splitting into two boards:
 - **Board B** — the synth power conversion stage (DC-DC converters + linear regulators +
   protection + output connectors). Carries the expensive/bulky parts, only re-ordered
   once the front end is proven stable.
+
+Both boards now exist as real, **generated** KiCad projects under `boards/board-a/` and
+`boards/board-b/` — built by the `schgen` toolchain from Python spec modules
+(`scripts/schgen/board_a_spec.py` / `board_b_spec.py`), not hand-drawn. A structured
+evidence review (epic #86's spec-architecture wave) locked a set of component-level
+fixes on top of the original board-split fix list — see
+[Spec-Architecture Review](./spec-architecture-review.md) for the findings and
+`scripts/schgen/decisions.json` for the machine-readable decision record.
 
 See [Two-Board Plan](../overview/two-board-plan.md) for the full why-split rationale,
 [Board A: USB-PD Core](../overview/board-a-usb-pd-core.md) and
@@ -37,11 +46,13 @@ and the Board A ↔ Board B interface contract.
 
 <Note title="What's actually done vs. not started">
 
-Diagnosis and design docs are complete. Confirmed schematic fixes are being applied to
-the **existing** KiCad project (the source both new boards derive from) — no new KiCad
-projects, PCB layouts, or JLCPCB order files (gerbers/BOM/CPL) exist yet for Board A or
-Board B. That is the next plan, gated on the user bench-confirming the root cause on the
-dead v4 boards.
+Diagnosis, design docs, and both boards' generated schematics are done, including the
+wave-6 decision-locked part swaps (TVS2, PTC1, C5/C7, canonical 470µF LCSC numbers) and
+a new Q1 gate-source clamp (D8) on Board A. **Not started:** PCB layouts or JLCPCB order
+files (gerbers/BOM/CPL) for Board A or Board B. That is the next plan, gated on the user
+bench-confirming the v4 root cause on the dead v4 boards. The legacy root KiCad project
+(`zudo-pd.kicad_pro` etc.) stays in place, unregenerated, as the as-built v4 reference —
+see root `CLAUDE.md`.
 
 </Note>
 
@@ -65,14 +76,22 @@ have actually reached a real order package — see
   [Board B Architecture Review](./board-b-architecture-review.md) (#89)
 - **Wave 2 (decision):** [Board Split Decision](./board-split-decision.md) (#90) — locks
   the front-end fix list and the Board A ↔ Board B interface contract
-- **Wave 3 (implement, in progress):** Board A design doc, Board B design doc, confirmed
-  schematic fixes applied to the KiCad project, and this doc-base housekeeping pass
+- **Wave 3 (implement):** Board A design doc, Board B design doc, confirmed schematic
+  fixes applied to the legacy KiCad project
+- **Spec-architecture epic (waves 1–8, epic #86):** the `schgen` spec-driven generator
+  toolchain ported in; `boards/board-a/board-a.kicad_sch` and
+  `boards/board-b/board-b.kicad_sch` generated from `board_a_spec.py`/`board_b_spec.py`;
+  a structured evidence review of both boards
+  ([Spec-Architecture Review](./spec-architecture-review.md)); a wave-6 decision lock
+  (`scripts/schgen/decisions.json`) covering part swaps (TVS2 → SMAJ6.5A, PTC1 →
+  SMD1210P150TF/16, C5/C7 → 470µF/35V FOLLON, canonical 470µF LCSC C335982), a new Q1
+  gate-source clamp (D8) on Board A, and the LM2596S-ADJ inverting-buck-boost topology
+  wording (closes #46); this doc-base alignment pass (wave 8, #126)
 
 ## 📋 What's Next
 
-- **Wave 4:** confirm pass across the wave-3 outputs, plus a follow-up issue carrying the
-  pre-order checklist for Board A / Board B (gerbers, BOM, CPL — explicitly **not**
-  started; that is a separate future plan, outside epic #86)
+- **Wave 9 and beyond:** PCB layout for Board A / Board B, then the pre-order checklist
+  (gerbers, BOM, CPL — explicitly **not** started; that is a separate future plan)
 - **User action:** bench-confirm the v4 root cause on the dead v4 boards using the
   [bench discrimination procedure](./v4-pd-failure-diagnosis.md#bench-discrimination-procedure-dead-v4-boards-cheapest-first) —
   this gates several of the locked fixes before the first Board A order
