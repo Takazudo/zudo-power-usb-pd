@@ -32,19 +32,24 @@ import type { SafeUrl } from "./url.ts";
  * The only MDX components generated pages may reference, each with the only
  * attribute names it accepts.
  *
- * `EvidenceAnchor`, `EvidenceDetails` and `EvidenceTable` are bound in this
- * project's `doc/pages/_mdx-components.ts`; `CategoryNav` ships globally from
+ * `EvidenceAnchor`, `EvidenceDetails`, `EvidenceTable` and
+ * `ComponentReferences` are bound in this project's
+ * `doc/pages/_mdx-components.ts`; `CategoryNav` ships globally from
  * `@takazudo/zudo-doc` and needs no binding. A name outside this map — or an
  * attribute outside its component's list — fails the guard, because an
  * unbound component renders as literal text and would silently swallow
- * content. zudo-pd has no 3D assets, so `ComponentReferences` and
- * `PackageModelViewer` (led-lamp's 3D-preview components) are not ported and
- * are not in this map.
+ * content.
+ *
+ * led-lamp also lists `PackageModelViewer` here. It is deliberately absent:
+ * `tests/presentation.test.ts` requires every name on this list to be
+ * imported AND registered in the host, and the interactive 3D viewer has no
+ * assets to show and no binding yet. It joins the list with its component.
  */
 export const ALLOWED_COMPONENT_ATTRIBUTES = {
   EvidenceAnchor: ["id"],
   EvidenceDetails: ["label"],
   EvidenceTable: ["label"],
+  ComponentReferences: ["descriptor"],
   CategoryNav: ["category"],
 } as const satisfies Record<string, readonly string[]>;
 
@@ -227,7 +232,15 @@ function assertComponentAttributes(
         attribute: key,
       });
     }
-    if (!ATTRIBUTE_VALUE_PATTERN.test(value)) {
+    // The one escape hatch: a `descriptor` is hex-encoded JSON, which the slug
+    // pattern would reject on length alone. Hex is a strictly narrower
+    // alphabet than the slug pattern's, so this widens the LENGTH, not the
+    // character set — and the payload is re-validated as a descriptor by
+    // `assertComponentReferencesDescriptor` on both encode and decode.
+    const safeValue = name === "ComponentReferences" && key === "descriptor"
+      ? /^(?:[0-9a-f]{2})+$/u.test(value) && value.length <= 8192
+      : ATTRIBUTE_VALUE_PATTERN.test(value);
+    if (!safeValue) {
       fail("UNSAFE_MDX", `attribute ${key} has an unpublishable value`, {
         name,
         attribute: key,

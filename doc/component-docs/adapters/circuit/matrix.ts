@@ -19,9 +19,12 @@
  *     `/docs/claude-skills/<name>/` does not exist as a route. Publishing the
  *     owner-skill name would be a dead reciprocal link, not an existing one —
  *     the opposite of led-lamp's reasoning for PUBLISH here.
- *   - every `reference.*` field — zudo-pd has no 3D assets at all (no
- *     `.wrl`/`.step` audit pairs), so `references.ts` / `model-assets.ts` are
- *     not ported and no record ever has a reference descriptor to publish.
+ *   - the `reference.model.*` / `reference.footprint.path` /
+ *     `reference.package.recordIds` fields — zudo-pd has no `.wrl`/`.step`
+ *     audit pairs and no footprint-preview emitter yet, so nothing here ever
+ *     produces a value for them. They stay DENY until the assets and the
+ *     emitter land, and a model appearing before that decision is reviewed
+ *     fails loudly on `publishRequired` rather than publishing itself.
  */
 
 import type { PublicationMatrix } from "../../core/publication.ts";
@@ -158,20 +161,27 @@ export const CIRCUIT_PUBLICATION_MATRIX: PublicationMatrix = {
   // bookkeeping that reads as a quality claim out of context.
   "pinMap.reviewedBy": "DENY",
 
-  // zudo-pd has no 3D assets at all (no `.wrl`/`.step` audit pairs), so
-  // `references.ts` / `model-assets.ts` are not ported and none of this ever
-  // has a value to publish. Denied rather than deleted from the matrix — see
-  // the module comment — so the matrix stays diffable against led-lamp's for
-  // a future re-sync, and preflight records the withheld counts.
-  "reference.document.sourceId": "DENY",
-  "reference.document.documentTitle": "DENY",
-  "reference.document.label": "DENY",
-  "reference.document.authorityClass": "DENY",
-  "reference.document.url": "DENY",
-  "reference.document.availability": "DENY",
-  "reference.document.documentKind": "DENY",
-  "reference.footprint.packageId": "DENY",
-  "reference.footprint.name": "DENY",
+  // Curated shortcuts only. These do not widen the complete evidence-source
+  // list and do not publish arbitrary repository binaries: the document half
+  // republishes one already-selected, already-linkable source under a reviewed
+  // PDF label, and the footprint half republishes the package name the pin map
+  // already publishes.
+  "reference.document.sourceId": "PUBLISH",
+  "reference.document.documentTitle": "PUBLISH",
+  "reference.document.label": "PUBLISH",
+  "reference.document.authorityClass": "PUBLISH",
+  "reference.document.url": "PUBLISH",
+  "reference.document.availability": "PUBLISH",
+  "reference.document.documentKind": "PUBLISH",
+  "reference.footprint.packageId": "PUBLISH",
+  "reference.footprint.name": "PUBLISH",
+
+  // Still denied: no renderer reads them yet. `reference.footprint.path` and
+  // `reference.package.recordIds` are inputs to a footprint-preview EMITTER
+  // that does not exist here, and `reference.model.*` needs reviewed
+  // `.wrl`/`.step` pairs, of which this repository has none. Publishing a
+  // field nothing renders is exactly what the matrix exists to prevent, so
+  // these flip when their consumer lands — not before.
   "reference.footprint.path": "DENY",
   "reference.model.path": "DENY",
   "reference.model.offset": "DENY",
@@ -181,9 +191,9 @@ export const CIRCUIT_PUBLICATION_MATRIX: PublicationMatrix = {
 
   "corpus.counts": "PUBLISH",
 
-  // Same reason as the `reference.*` block above: no 3D/document reference
-  // feature is ported, so these assets never exist to publish.
-  "asset.datasheetPdf": "DENY",
+  // The one narrow capability the reference contract needs: the selected
+  // document is an outbound audited URL that already passed `classifyUrl`.
+  "asset.datasheetPdf": "PUBLISH",
   // No catch-all binary publication is permitted.
   "asset.binary": "DENY",
 };

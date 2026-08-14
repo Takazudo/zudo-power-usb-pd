@@ -38,6 +38,7 @@
 import {
   bulletList,
   code,
+  component,
   containerComponent,
   evidenceAnchor,
   heading,
@@ -53,6 +54,8 @@ import {
   text,
   type TableRow,
 } from "../mdx.ts";
+import { MODEL_ASSET_BASE } from "../model-descriptor.ts";
+import { createComponentReferencesDescriptor, encodeComponentReferencesDescriptor } from "../reference-descriptor.ts";
 import { buildPage, type GeneratedPage } from "../page.ts";
 import { joinSafe, literal, safeText, type SafeText } from "../text.ts";
 import {
@@ -110,6 +113,7 @@ export function renderRecord(record: PublicRecord, index: RecordIndex): Generate
     ...orientation(record),
     ...subordinateSection(record),
     ...identitySection(record),
+    ...componentReferencesSection(record),
     ...placementSection(record),
     ...coverageSection(record, index),
     ...factsSection(record, index),
@@ -152,6 +156,56 @@ export function renderRecord(record: PublicRecord, index: RecordIndex): Generate
     },
     body,
   );
+}
+
+/**
+ * Why no footprint preview image exists yet.
+ *
+ * Renderer-side rather than view-model-side because it is a fact about this
+ * site's build — no preview emitter runs — not about the evidence. It moves
+ * into the model when the emitter lands and can distinguish "not generated"
+ * from "generation failed for this package".
+ */
+const FOOTPRINT_PREVIEW_UNRESOLVED_REASON =
+  "No footprint preview image is generated for this package yet. " +
+  "The reviewed footprint name above is the authoritative identity.";
+
+function componentReferencesSection(record: PublicRecord): RootContent[] {
+  const { document, documentUnresolvedReason, footprint } = record.reference;
+  const model = footprint.model;
+  const descriptor = encodeComponentReferencesDescriptor(createComponentReferencesDescriptor({
+    document: document === null
+      ? { unresolvedReason: String(documentUnresolvedReason ?? "") }
+      : {
+        label: String(document.label),
+        title: String(document.documentTitle),
+        authority: String(document.authorityClass),
+        availability: String(document.availability),
+        url: String(document.url),
+      },
+    footprintName: String(footprint.footprintName),
+    footprintPreview: { unresolvedReason: FOOTPRINT_PREVIEW_UNRESOLVED_REASON },
+    model: model === null
+      ? { unresolvedReason: String(footprint.modelUnresolvedReason ?? "") }
+      : {
+        version: 1,
+        packageId: String(footprint.packageId),
+        packageLabel: String(footprint.footprintName),
+        modelUrl: `${MODEL_ASSET_BASE}${modelBasename(model.modelPath)}`,
+        offset: model.offset,
+        rotation: model.rotation,
+        scale: model.scale,
+      },
+  }));
+  return [
+    component("ComponentReferences", { descriptor }),
+  ];
+}
+
+function modelBasename(modelPath: SafeText): string {
+  const name = String(modelPath).split("/").at(-1);
+  if (name === undefined) throw new Error("Published model path has no basename");
+  return name;
 }
 
 function orientation(record: PublicRecord): RootContent[] {

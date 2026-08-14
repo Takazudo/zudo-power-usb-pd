@@ -22,12 +22,14 @@ import {
   fixtureBundle,
   fixtureIntegrationRules,
   fixtureInventory,
+  withFixtureReferences,
 } from "./provider-fixtures.ts";
 
-// zudo-pd's `EvidenceIndex` has no `references` field to attach (see
-// `provider-fixtures.ts`) — this is `indexEvidence` unwrapped, kept under a
-// local alias so the rest of this file reads the same as led-lamp's.
-const indexEvidence = rawIndexEvidence;
+// Every projection fixture needs the reference contract attached, exactly as
+// `readEvidenceIndex()` attaches the real one: `projectIndex()` treats a
+// missing contract as fatal rather than as "no references".
+const indexEvidence: typeof rawIndexEvidence = (...args) =>
+  withFixtureReferences(rawIndexEvidence(...args));
 
 function project(selection: InstanceSelection = FIXTURE_SELECTION): {
   model: PublicViewModel;
@@ -484,7 +486,7 @@ describe("selection stays closed under published links", () => {
       linkableSourceIds: FIXTURE_SELECTION.linkableSourceIds.filter(
         (id) => id !== "src-driver-gone",
       ),
-      expect: { records: 3, sources: 4, integrationRules: 3 },
+      expect: { records: 3, sources: 4, integrationRules: 3, footprintPackages: 3 },
     };
     assert.throws(
       () => projectIndex(index, new PublicationPolicy(FIXTURE_MATRIX, selection)),
@@ -530,7 +532,7 @@ describe("selection stays closed under published links", () => {
     const index = indexEvidence(fixtureInventory(), [fixtureBundle()], fixtureIntegrationRules());
     const selection: InstanceSelection = {
       ...FIXTURE_SELECTION,
-      expect: { records: 4, sources: 4, integrationRules: 3 },
+      expect: { records: 4, sources: 4, integrationRules: 3, footprintPackages: 3 },
     };
     assert.throws(
       () => projectIndex(index, new PublicationPolicy(FIXTURE_MATRIX, selection)),
