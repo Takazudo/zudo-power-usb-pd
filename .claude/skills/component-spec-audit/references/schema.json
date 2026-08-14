@@ -1,11 +1,16 @@
 {
   "schema_version": 1,
   "project": {
-    "boards": ["board-a", "board-b"],
+    "boards": [
+      "board-a",
+      "board-b"
+    ],
     "library_nickname": "zudo-pd",
     "symbol_library": "symbols/zudo-pd.kicad_sym",
     "footprint_library_dir": "footprints/kicad/zudo-power.pretty",
-    "mpn_from_value_lcsc": ["C144397"],
+    "mpn_from_value_lcsc": [
+      "C144397"
+    ],
     "mpn_from_value_contract": "Generator entries whose symbol is a generic KiCad connector symbol carry the orderable MPN in the value field instead. Only the LCSC IDs listed here may resolve their MPN that way; every other line resolves its MPN from the symbol name."
   },
   "required_skill_files": [
@@ -92,7 +97,11 @@
     "function",
     "placements"
   ],
-  "placement_required": ["board", "refdes", "dnp"],
+  "placement_required": [
+    "board",
+    "refdes",
+    "dnp"
+  ],
   "candidate_required": [
     "candidate_id",
     "mpn",
@@ -105,7 +114,11 @@
     "replaces_line_id",
     "rationale"
   ],
-  "candidate_states": ["SHORTLISTED", "REJECTED", "NEEDS EVIDENCE"],
+  "candidate_states": [
+    "SHORTLISTED",
+    "REJECTED",
+    "NEEDS EVIDENCE"
+  ],
   "inventory_assertions": [
     "orderable_lines",
     "fitted_lines",
@@ -118,7 +131,10 @@
   "open_domain_contract": "Each item is a nonblank domain string with exactly one matching OPEN coverage domain and an explicit reason. COVERED domains require explicit same-record fact IDs whose complete evidence closure is AVAILABLE and not UNSOURCED.",
   "blocking_fact_ids_contract": "Every coverage entry carries blocking_fact_ids, a same-record subset of fact_ids. For an OPEN entry it names the exact facts whose non-PASS verdicts keep the domain open; each member must carry a verdict of UNSOURCED or NEEDS BENCH, or cite a SOURCE UNAVAILABLE source. The converse is enforced too: whenever any fact listed in fact_ids meets that same blocking test, blocking_fact_ids must name at least one of them. It may be empty only when no listed fact addresses the domain in that sense; a NOT APPLICABLE fact never blocks, so an OPEN entry whose only evidence is NOT APPLICABLE correctly keeps the array empty. Independently, any OPEN reason whose text claims evidence is unavailable, lower-authority, or UNSOURCED must cite the blocking facts instead of leaving the array empty.",
   "pass_trust_contract": "PRIMARY-SPEC PASS requires AVAILABLE MANUFACTURER_PRIMARY; CALCULATED PASS requires only trusted raw leaves through the full dependency closure.",
-  "source_availability": ["AVAILABLE", "SOURCE UNAVAILABLE"],
+  "source_availability": [
+    "AVAILABLE",
+    "SOURCE UNAVAILABLE"
+  ],
   "authority_classes": [
     "MANUFACTURER_PRIMARY",
     "MANUFACTURER_MIRROR",
@@ -156,7 +172,12 @@
     "UNSOURCED",
     "NOT APPLICABLE"
   ],
-  "pin_trust_states": ["TRUSTED", "PROJECT-LOCKED", "NEEDS BENCH", "UNSOURCED"],
+  "pin_trust_states": [
+    "TRUSTED",
+    "PROJECT-LOCKED",
+    "NEEDS BENCH",
+    "UNSOURCED"
+  ],
   "critical_review_domains": [
     "connector",
     "polarity",
@@ -167,6 +188,16 @@
     "thermal",
     "current"
   ],
-  "integration_domains": [],
-  "integration_domains_contract": "Exact cross-component rule domains required by circuit-spec-integration/references/rules.json. Empty while the scaffold is staged; the cross-component rules sub-issue fills this list and strict mode then enforces exact parity."
+  "integration_domains": [
+    "rail-envelope",
+    "tvs-clamp-vs-absmax",
+    "u4-inverting-stress",
+    "ldo-dropout-chain",
+    "ab-interface-current",
+    "q1-gate-drive-vs-contract",
+    "inverting-startup-vs-pd-source",
+    "pptc-vmax-vs-rail",
+    "source-to-bench-chain"
+  ],
+  "integration_domains_contract": "Exact cross-component rule domains required by circuit-spec-integration/references/rules.json; strict and staged modes both enforce exact parity with that file."
 }

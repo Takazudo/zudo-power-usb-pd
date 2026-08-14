@@ -241,10 +241,13 @@ class ComponentSpecValidatorTests(unittest.TestCase):
             with self.assertRaisesRegex(validator.ContractError, "missing local manifest files"):
                 validator.validate_local_skills(self.schema, [TEMPLATE_LINE], staged=True, skills_root=skills_root)
 
-    def test_integration_scaffold_is_valid_staged_and_incomplete_strict(self):
+    def test_integration_rules_fail_closed_on_empty_aggregate(self):
         empty = {key: [] for key in ("records", "sources", "facts", "coverage", "routes", "interactions", "pin_maps")}
-        validator.validate_integration_artifacts(empty, self.schema, staged=True)
-        if not validator.load(validator.INTEGRATION / "references/rules.json")["rules"]:
+        if validator.load(validator.INTEGRATION / "references/rules.json")["rules"]:
+            with self.assertRaisesRegex(validator.ContractError, "unknown record/fact ID"):
+                validator.validate_integration_artifacts(empty, self.schema, staged=True)
+        else:
+            validator.validate_integration_artifacts(empty, self.schema, staged=True)
             with self.assertRaisesRegex(validator.ContractError, "strict mode requires committed cross-component rules"):
                 validator.validate_integration_artifacts(empty, self.schema, staged=False)
 
