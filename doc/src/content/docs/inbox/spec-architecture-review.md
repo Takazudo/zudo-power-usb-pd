@@ -735,3 +735,30 @@ gaps in the connectivity record itself (BB-11).
   carries −13.5 V (BB-5), TO-263 pours, PTC placement vs heat sources (BB-8), header
   key orientation vs the red-stripe convention, and the A↔B harness build are all
   future-plan scope.
+
+## Decisions
+
+Locked 2026-08-14 by the wave-6 decision task (#123). The machine-consumable source
+of truth is `scripts/schgen/decisions.json` (validated by
+`scripts/schgen/check_decisions.py`); issue bodies #124/#125/#126 mirror the deltas.
+Each row below is a one-line projection — the JSON carries the full rationale,
+runner-up analysis, and evidence IDs.
+
+| Key | Decision | Status |
+|---|---|---|
+| (a) TVS2 | Replace SD05 (C502527) with **Brightking SMAJ6.5A, C87267** (SMA/DO-214AC, fitted): largest standoff/breakdown clearance over the 5.2 V band top (the exact BB-2 failure mode), same D-FLAT footprint family as TVS1/TVS3/D5, 400 W fully-specified waveform; 500 µA leakage trade accepted per BB-2; stock 8,450 (2026-08-14) | LOCKED → #125 |
+| (b) Topology label | Canonical wording: **"LM2596S-ADJ inverting buck-boost"** — schematic authoritative; "LM2586SX-ADJ" wrong chip, "inverted SEPIC" wrong topology. Resolves the question in #46; doc edits in #126 | LOCKED → #126 |
+| (c) 470 µF canonical | **C335982 (ROQANG, 10 V) canonical** for C4/C22/C23; C22383803 (ACMECON — actually 16 V, low-stock) is the alias. Reverses the original #117 assumption. `LCSC Part` property migration is Board B spec scope | LOCKED → #125 |
+| (d) C5/C7 | **Swap to FOLLON 470 µF/35 V C22387780** (line already at five positions): clamp-point margin −7.4 V → +2.6 V, 20 V-edge 5 V → 15 V, input bulk 200 → 940 µF toward the BB-4 enlarged-CIN mitigation. Not conditional on (e). Stock 935 (2026-08-14) — re-verify at order time | LOCKED → #125 |
+| (e) Q1 20 V guard | **Fitted gate-source zener clamp D8** (Vz 10.4–11.6 V window, BZT52C11-class, SOD-123-class pads) across Q1 G-S in the Board A spec; exact orderable picked in #124 under TVS2-grade evidence discipline. DNP would be absent in exactly the unprogrammed-board window BA-1 flags, and only a fitted clamp bounds the −20.77 V clamp-event transient. NVM stays locked ≤15 V; program-before-first-attach note → #126 | LOCKED → #124 |
+| (f) L7812 margin | **NO spec change** — R1 stays 10 k / rail 13.53 V. Math recorded (−0.5 V typical deficit; −0.88 to −1.01 V under tolerance stack); the R1 10 k→11 k candidate stays NEEDS BENCH per locked A5#1 | NO SPEC CHANGE |
+| (g) PTC1 | Replace SMD1210P200TF (C20808, 6 VDC — BLOCKER) with **RUILON SMD1210P150TF/16, C7529589** (16 V, 1.5 A hold, 1210, fitted): +4 V nominal / +2.5 V passthrough-corner margin, hold 1.5 ≥ 1.2 A (0.3 A margin, trade vs P200TF's 0.8 A accepted — no 16 V 1210 with higher hold exists at LCSC; 2 A/16 V is 1812-only, C20812, recorded fallback). Stock 6,025 (2026-08-14) | LOCKED → #125 |
+| P1 form | **P1 = `PogoPad_1x04`, bare pads** (no fitted part, out of BOM): 1 = ATT (J5.3), 2 = PDOK (J5.4), 3 = GND probe return, 4 = no-connect. Flags stay open-drain, no on-board pull-up | LOCKED → #125 |
+| TVS3 orientation | Board B spec must lock TVS3 (SMAJ15A) as **cathode → GND, anode → −12 V rail**, as explicit pin-to-net rows (closes the BB-9 lock-point; reversed = forward-biased short) | LOCKED → #125 |
+| BB-3 (U4 clamp overage) | **Accepted transient-class residual** — the −0.93 V abs-max overage exists only at the 10/1000 µs table point; (e) does not bound it (gate-side only), (d) restores input-cap margin at the same point. Bench scope + revisit only if a lower-clamping D5 lands at Board A layout | DISPOSITION |
+| BA-2 (D5 clamp vs STUSB 28 V) | **D5 stays SMAJ20A** (locked #90 — no BLOCKER contradiction: the 28 V ceiling is mirror-only and the stress is a table point). SMBJ20A (same 20 V standoff, lower real clamp) recorded as the Board A layout-phase upgrade path; primary DS12499 retrieval remains open | DISPOSITION |
+
+Doc-defect dispositions: BA-3/BA-10 stay tracked in agent-found issue #130 and BB-10 in
+#131; decision (g) resolves BB-10's `ptc-12v.md` half in the doc's favor (the page
+already documents the winning part), leaving #131's remaining items
+(board-b-synth-power.md protection row, ptc-12v-neg.md title) for the docs pass.
