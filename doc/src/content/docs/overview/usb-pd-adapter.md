@@ -242,11 +242,17 @@ If the power supply doesn't work with your adapter:
 
 ### LED Not Lighting
 
-If LED2 (power indicator) doesn't light:
+The three rail indicators all live on Board B: **LED2** (green) on +12 V, **LED3** (blue)
+on +5 V, **LED4** (red) on −12 V. All three dark means Board B never received 15 V, which
+points at Board A's negotiation rather than at any single rail:
 
 1. Verify adapter is connected and powered
 2. Try a different USB-C cable
 3. Verify adapter supports 15V PDO
+4. Verify the J4 ↔ J5 interface cable is seated — Board B has no other power source
+
+A *single* dark LED with the other two lit is the opposite situation: the 15 V contract
+is fine and that one rail has tripped its PTC or lost its regulator.
 
 ## Multi-Case Setup (Multiple zudo-PD Units)
 

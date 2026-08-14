@@ -19,9 +19,10 @@ three synth rails.
 | **−12 V** | **0.8 A** | U8 CJ7912       | PTC3 + TVS3           |
 | **+5 V**  | **0.5 A** | U7 L7805ABD2T-TR | PTC2 + TVS2          |
 
-These are the project's **rail budgets**, not the packages' capability. The L78xx family
-can deliver more; the budgets above are what the protection chain, the thermal design,
-and the PD power budget are sized against. See
+These are the project's **rail budgets** — what the protection chain, the thermal design,
+and the PD power budget are all sized against. Older writing quoted higher numbers
+(1.5 A / 1.0 A / 1.5 A) taken from the L78xx package family rather than from this
+project's own evidence base; those are not this design's specification. See
 [Board B — Synth Power Conversion](./board-b-synth-power.md) for the per-rail dropout and
 PTC margin tables.
 
@@ -103,7 +104,10 @@ decision (b).
 - **U8 CJ7912**: −13.5 V → −12 V
 
 The linear stage exists to strip the DC-DC switching ripple, which is why each converter
-targets 1.5 V above its rail rather than the rail voltage directly.
+targets a voltage above its rail rather than the rail voltage directly — 1.5 V of
+headroom on the ±12 V rails, 2.5 V on +5 V. Whether the +12 V headroom is enough at the
+1.2 A budget is an open item; see
+[Board B — Synth Power Conversion](./board-b-synth-power.md#linear-regulator-ldo-stage).
 
 #### Stage 4: Protection (Board B)
 
@@ -116,9 +120,11 @@ targets 1.5 V above its rail rather than the rail voltage directly.
 
 Earlier revisions of this document described a two-level "PTC then SMD fuse" scheme.
 That is not the design. `scripts/schgen/board_b_spec.py` places three PTCs and three TVS
-diodes and no fuse of any kind, so **every** overcurrent event is handled by a
-self-resetting PTC. Nothing on the board needs replacing after a fault, and nothing
-blows open on a hard short — the PTC trips and recovers when the fault is removed.
+diodes and no fuse of any kind, so nothing on the board is consumed by a fault and
+nothing needs replacing afterwards. Note that on a hard short the regulator's **own**
+current limit engages long before the PTC heats to its trip point — the cascade is worked
+through in
+[Board B — Synth Power Conversion](./board-b-synth-power.md#ptc1-and-the-l7812-current-limit-cascade).
 
 </Note>
 
@@ -144,7 +150,9 @@ efficiently, and the LDO behind it rejects what the switcher leaves behind.
 
 ### Manufacturability
 
-- **All-SMD**: compatible with automated assembly
+- **SMD active parts**: every IC, regulator, and passive is surface-mount and
+  JLCPCB-assemblable. The connectors are the exception — J4/J5 (JST XH), Board B's
+  J6-J9 Faston terminals, and the J10/J11 Eurorack headers are all through-hole
 - **TO-263 / TO-252 packages**: surface-mount thermal pads rather than through-hole tabs
 - **Split boards**: the front end can be re-spun without re-ordering the power stage
 
