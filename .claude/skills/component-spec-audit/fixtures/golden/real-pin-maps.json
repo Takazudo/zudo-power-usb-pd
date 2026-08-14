@@ -1,5 +1,34 @@
 {
   "schema_version": 1,
   "contract": "One lock per committed pin map. canonical_sha256 locks the reviewed symbol/footprint/pin set, evidence_fact_ids cite same-record evidence, and trust_status must match that evidence: TRUSTED requires a primary-source-confirmed closure, UNSOURCED requires at least one UNSOURCED or unavailable-source fact. Empty until component bundles land; strict mode requires exact pin-map parity.",
-  "locks": []
+  "locks": [
+    {
+      "record_id": "rec-cj7912-c94173",
+      "pin_map_id": "pinmap-cj7912-c94173",
+      "canonical_sha256": "21830855459c86325179dca45a823549481407d6b903463a1419bb9c51970339",
+      "evidence_fact_ids": ["fact-cj7912-pinout"],
+      "trust_status": "TRUSTED",
+      "critical_pins": [
+        {
+          "symbol_pin": "1",
+          "name": "GND",
+          "footprint_pad": "1",
+          "function": "ground reference"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "IN",
+          "footprint_pad": "2",
+          "function": "negative input from the -13.5V rail; package tab position"
+        },
+        {
+          "symbol_pin": "3",
+          "name": "OUT",
+          "footprint_pad": "3",
+          "function": "regulated -12V output"
+        }
+      ],
+      "reviewer": "issue-113 worktree child (Claude Fable 5), datasheet-figure review; negative-regulator pin order is polarity-critical and differs from 78xx"
+    }
+  ]
 }

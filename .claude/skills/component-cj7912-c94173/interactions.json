@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "interactions": [
+    {
+      "interaction_id": "int-cj7912-input-rail",
+      "record_ids": ["rec-cj7912-c94173"],
+      "fact_ids": [
+        "fact-cj7912-rail-input",
+        "fact-cj7912-vin-absmax",
+        "fact-cj7912-ci-typical",
+        "fact-cj7912-input-network"
+      ],
+      "conditions": "U8.2 is fed from /DC-DC Conversion/-13.5V OUT (U4 LM2596S-ADJ inverting output; the net also carries U4's bootstrapped GND/ON-OFF/TAB pins, D3.2, C9/C10/C11, R6.2, C16.1, C24.2 per the board-b baseline). The static -13.5V sits 16.5V inside the -30V abs-max; the rail's start-up/transient behavior and its level under load belong to the U4/D3 owner records and are unproven on Board B.",
+      "verdict": "NEEDS BENCH"
+    },
+    {
+      "interaction_id": "int-cj7912-output-network",
+      "record_ids": ["rec-cj7912-c94173"],
+      "fact_ids": [
+        "fact-cj7912-co-typical",
+        "fact-cj7912-esr-window-not-specified",
+        "fact-cj7912-output-network",
+        "fact-cj7912-stability-project-network"
+      ],
+      "conditions": "Net-(U8-OUT): U8.3 into C19 100nF MLCC + C25 470uF electrolytic (both grounded after the #93 Net-(C16-Pad2) merge) + R9 + PTC3.1 toward the -12V output. The datasheet application value is Co=1uF with no ESR window, so this network's stability is bench-gated on Board B.",
+      "verdict": "NEEDS BENCH"
+    },
+    {
+      "interaction_id": "int-cj7912-dropout-headroom",
+      "record_ids": ["rec-cj7912-c94173"],
+      "fact_ids": [
+        "fact-cj7912-rail-headroom",
+        "fact-cj7912-dropout-typ",
+        "fact-cj7912-vi-guarantee-band",
+        "fact-cj7912-project-io-max"
+      ],
+      "conditions": "The -13.5V rail to -12V output leaves 1.5V headroom against a 1.1V typical dropout at Io=1A (project rated 0.8A). Headroom is 1.0V short of the -14.5V guaranteed-band start and the dropout spec is typ-only; the board-b overview doc itself flags a full-load bench check for this rail.",
+      "verdict": "NEEDS BENCH"
+    },
+    {
+      "interaction_id": "int-cj7912-thermal-dissipation",
+      "record_ids": ["rec-cj7912-c94173"],
+      "fact_ids": [
+        "fact-cj7912-pd-full-load-mw",
+        "fact-cj7912-tj-rise-full-load",
+        "fact-cj7912-rthja",
+        "fact-cj7912-pd-continuous"
+      ],
+      "conditions": "1.2W continuous at the rated 0.8A versus PD 1.25W (Ta=25 degC) and RthJA 100 degC/W free-air implies a 120 degC junction rise; viable only if the Board B layout lowers effective theta-JA well below the free-air figure. The tab (pin 2) copper pour sits on the -13.5V input net, which constrains pour placement.",
+      "verdict": "NEEDS BENCH"
+    }
+  ]
+}
