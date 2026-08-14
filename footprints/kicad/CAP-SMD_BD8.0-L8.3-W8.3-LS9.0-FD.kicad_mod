@@ -30,4 +30,9 @@
 	(fp_poly (pts (xy 3.900932 -1.784426) (xy 3.900932 -2.033422) (xy 2.904922 -2.033422) (xy 2.904922 -1.784426) (xy 3.900932 -1.784426)) (stroke (width 0) (type solid)) (fill solid) (layer "F.SilkS"))
 	(fp_poly (pts (xy -3.901084 -1.784426) (xy -3.901084 -2.033422) (xy -2.905074 -2.033422) (xy -2.905074 -1.784426) (xy -3.901084 -1.784426)) (stroke (width 0) (type solid)) (fill solid) (layer "F.SilkS"))
 	(fp_poly (pts (xy -3.527577 -1.078916) (xy -3.527577 -2.738933) (xy -3.278581 -2.738933) (xy -3.278581 -1.078916) (xy -3.527577 -1.078916)) (stroke (width 0) (type solid)) (fill solid) (layer "F.SilkS"))
+	(model "${KIPRJMOD}/../../footprints/kicad/zudo-pd.3dshapes/CAP-SMD_BD8.0-L8.3-W8.3-LS9.1-FD.wrl"
+		(offset (xyz 0.000 0.000 0.000))
+		(scale (xyz 1 1 1))
+		(rotate (xyz 0 0 0))
+	)
 )

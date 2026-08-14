@@ -78,11 +78,13 @@ export const DIST_ROOT = join(DOC_ROOT, "dist");
  * from an earlier project name and is load-bearing, so it is spelled out here
  * rather than derived from the repository name.
  *
- * `MODEL_ROOT` is where reviewed `.wrl`/`.step` pairs WILL live. Today the
- * directory does not exist: every footprint either has no `(model …)` line at
- * all or points at `${EASYEDA2KICAD}` / a stale `tmp/` path, none of which
- * resolves to a committed asset. `readPackage()` treats that as an unresolved
- * model with a stated reason rather than as a failure — see `references.ts`.
+ * `MODEL_ROOT` holds reviewed `.wrl`/`.step` pairs, sourced (wave 7) via
+ * `easyeda2kicad` against the central inventory's LCSC ids for every package
+ * it could supply one — 27 of 27 published packages, see the wave-7 coverage
+ * manifest. A package `easyeda2kicad` genuinely cannot supply one for still
+ * has no `(model …)` line, or one pointing outside this repository; those
+ * remain an unresolved model with a stated reason rather than a failure — see
+ * `references.ts`.
  */
 export const FOOTPRINT_MASTER_ROOT = join(REPO_ROOT, "footprints", "kicad");
 export const FOOTPRINT_ROOT = join(FOOTPRINT_MASTER_ROOT, "zudo-power.pretty");

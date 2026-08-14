@@ -25,4 +25,9 @@
 	(fp_line (start 0.60 0.40) (end -0.60 0.40) (layer F.CrtYd) (width 0.05))
 	(fp_poly (pts (xy -0.599999 -0.552399) (xy -0.599999 -0.332410) (xy -0.904799 -0.332410) (xy -0.904799 -0.552399) (xy -0.599999 -0.552399)) (stroke (width 0) (type solid)) (fill solid) (layer "F.SilkS"))
 	(fp_poly (pts (xy -0.559587 0.552018) (xy -0.559587 0.332029) (xy -0.864387 0.332029) (xy -0.864387 0.552018) (xy -0.559587 0.552018)) (stroke (width 0) (type solid)) (fill solid) (layer "F.SilkS"))
+	(model "${KIPRJMOD}/../../footprints/kicad/zudo-pd.3dshapes/SOD-523_L1.2-W0.8-H0.7-LS1.6.wrl"
+		(offset (xyz 0.000 0.000 0.000))
+		(scale (xyz 1 1 1))
+		(rotate (xyz 0 0 180))
+	)
 )

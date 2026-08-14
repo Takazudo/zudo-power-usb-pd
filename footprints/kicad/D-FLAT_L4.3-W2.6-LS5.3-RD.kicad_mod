@@ -23,7 +23,7 @@
 	(pad 2 smd rect (at 2.33 0.00 -90.00) (size 1.90 1.90) (layers F.Cu F.Paste F.Mask))
 	(pad 1 smd rect (at -2.33 0.00 -90.00) (size 1.90 1.90) (layers F.Cu F.Paste F.Mask))
 	(fp_circle (center -2.62 1.30) (end -2.59 1.30) (layer F.Fab) (width 0.06))
-	(model "${EASYEDA2KICAD}/easyeda2kicad.3dshapes/D-FLAT_L4.3-W2.6-LS5.3-RD.wrl"
+	(model "${KIPRJMOD}/../../footprints/kicad/zudo-pd.3dshapes/SMA_L4.2-W2.6-LS5.3-RD.wrl"
 		(offset (xyz 0.000 -0.000 -0.000))
 		(scale (xyz 1 1 1))
 		(rotate (xyz 0 0 0))
