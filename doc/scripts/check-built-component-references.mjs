@@ -7,15 +7,18 @@
  * framework — MDX compiler, HTML minifier, search indexer — so the generator's
  * own tests cannot prove what a reader actually receives. This reads `dist/`.
  *
- * Forked from led-lamp's version. Its checks for footprint SVGs, WRL models,
- * enlarge dialogs and preview islands are not here: none of those assets or
- * components exist in this project yet, and a check that asserts a resolved
- * card would fail the honest state rather than catch a regression. What IS
- * asserted is the part that must hold from day one — every record page renders
- * exactly one section, before the evidence tables, with all three cards, and
- * every card is either fully resolved or explicitly unresolved WITH a stated
- * reason. A card that is silently missing, or unresolved with an empty reason,
- * fails here.
+ * Forked from led-lamp's version. The part that must hold whatever the corpus
+ * resolves is asserted for every record: exactly one section, before the
+ * evidence tables, with all three cards, each either fully resolved or
+ * explicitly unresolved WITH a stated reason. A card that is silently missing,
+ * or unresolved with an empty reason, fails here.
+ *
+ * On top of that, the preview halves are asserted as SHAPE rather than as a
+ * count: a record that resolves a footprint or a model must ship the island
+ * markup and a real file in `dist/` for it, and a record that resolves neither
+ * must ship no live preview UI at all. Both directions are checked because
+ * this project's cards are independently optional — a future package
+ * `easyeda2kicad` cannot supply a model for must publish, not fail.
  */
 
 import assert from "node:assert/strict";
@@ -45,6 +48,7 @@ async function main() {
 
   let resolvedDocuments = 0;
   let resolvedFootprints = 0;
+  let resolvedModels = 0;
 
   for (const slug of recordDirectories) {
     const html = await readFile(join(RECORDS_ROOT, slug, "index.html"), "utf8");
@@ -102,6 +106,38 @@ async function main() {
       await assertRegularDistFile(footprintPath);
     }
 
+    // The 3D model half. A resolved card ships exactly one viewer root naming
+    // a published WRL — never the STEP sibling, which is reviewed but never
+    // published — and the hydration marker that makes it interactive.
+    const viewerRoots = [...section.matchAll(/<figure\b[^>]*\bdata-component-model-viewer-root\b[^>]*>/gu)];
+    assert.ok(viewerRoots.length <= 1, `${slug} must render at most one package model viewer`);
+    if (viewerRoots.length === 1) {
+      resolvedModels += 1;
+      const modelPath = decodeHtml(readAttribute(viewerRoots[0]?.[0] ?? "", "data-model-url"));
+      assert.match(modelPath, /^\/assets\/component-previews\/models\/[A-Za-z0-9._+-]+\.wrl$/u);
+      await assertRegularDistFile(modelPath);
+      assert.match(
+        section,
+        /data-zfb-island=(?:"PackageModelViewerIsland"|PackageModelViewerIsland)/u,
+        `${slug} renders a viewer that never hydrates`,
+      );
+    }
+
+    // Both enlarge dialogs ship closed, labelled, and paired with a trigger.
+    // A `<dialog>` without `open` is `display:none` per UA stylesheet, so a
+    // leaked `open` here would cover the page for a reader with no JavaScript.
+    const dialogs = [...section.matchAll(/<dialog\b[^>]*\bdata-component-preview-dialog=(?:"([a-z]+)"|([a-z]+))[^>]*>/gu)];
+    const kinds = dialogs.map((match) => match[1] ?? match[2]).sort();
+    assert.deepEqual(
+      kinds,
+      [...(footprintImages.length === 1 ? ["footprint"] : []), ...(viewerRoots.length === 1 ? ["model"] : [])],
+      `${slug} must ship one closed enlarge dialog per resolved preview`,
+    );
+    for (const [tag] of dialogs) {
+      assert.doesNotMatch(tag, /\bopen\b/u, `${slug} ships an enlarge dialog already open`);
+      assert.match(tag, /aria-labelledby=/u, `${slug} ships an unlabelled enlarge dialog`);
+    }
+
     assert.match(html, /id=(?:"sources"|sources)(?:\s|>)/u, `${slug} must retain its Sources section`);
   }
 
@@ -118,6 +154,7 @@ async function main() {
   process.stdout.write(
     `built component references passed: ${EXPECTED_RECORDS} records, ` +
     `${resolvedDocuments} resolved documents, ${resolvedFootprints} resolved footprint previews, ` +
+    `${resolvedModels} resolved package models, ` +
     "every remaining card unresolved with a stated reason; catalog viewer-free\n",
   );
 }
