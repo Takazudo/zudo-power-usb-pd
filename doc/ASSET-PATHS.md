@@ -34,6 +34,14 @@ These are intentionally in **separate directories** to avoid filename collisions
 | `doc/public/img/` | 5 files | Site images (logo, favicon copy, enlarge icon) |
 | `doc/public/kicad/` | 3 files | KiCad setup screenshots |
 | `doc/public/favicon.ico` | 1 | Site favicon |
+| `doc/public/assets/component-previews/footprints/` | 27 SVGs | **Generated** — `pnpm generate:footprint-previews` |
+| `doc/public/assets/component-previews/models/` | 27 WRLs | **Generated** — `pnpm generate:models` |
+
+The two `assets/component-previews/` directories are owned by
+`doc/component-docs/` and regenerated from the KiCad library; do not hand-edit
+or hand-add files there. They are committed, and `pnpm check:footprint-previews`
+/ `pnpm check:models` fail on drift. Both are distinct from the hand-authored
+`doc/public/footprints/` diagrams above, which content pages link by hand.
 
 ## Not moved (S7/S8 handle these)
 
