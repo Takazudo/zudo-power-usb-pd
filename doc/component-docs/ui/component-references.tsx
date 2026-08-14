@@ -1,6 +1,7 @@
 /** @jsxRuntime automatic */
 /** @jsxImportSource preact */
 
+import { decodeModelDescriptor } from "../core/model-descriptor.ts";
 import {
   decodeComponentReferencesDescriptor,
   type ComponentReferencesDescriptor,
@@ -71,7 +72,10 @@ function FootprintCard({ footprint }: { readonly footprint: ComponentReferencesD
         )
         : (
           <>
-            <p className="zld-component-references__document-label">{footprint.name}</p>
+            {/* Its own class, not the document card's: the built-output check
+                reads `__document-label` to find the reviewed PDF label, and
+                reusing it here would put a package name in that lookup. */}
+            <p className="zld-component-references__footprint-name">{footprint.name}</p>
             <Unresolved reason={footprint.reason} />
           </>
         )}
@@ -83,13 +87,28 @@ function ModelCard({ model }: { readonly model: ComponentReferencesDescriptor["m
   return (
     <article className="zld-component-references__card zld-component-references__model-card">
       <h3 className="zld-component-references__card-heading">Package model</h3>
-      {model.resolved
-        // A static handle on the reviewed asset, not a viewer: the interactive
-        // WebGL island is a separate port and needs assets that do not exist
-        // here yet. A reader with a resolved model can still fetch it.
-        ? <p data-model-descriptor={model.descriptor}>The reviewed 3D model for this package is available.</p>
-        : <Unresolved reason={model.reason} />}
+      {model.resolved ? <ResolvedModel descriptor={model.descriptor} /> : <Unresolved reason={model.reason} />}
     </article>
+  );
+}
+
+/**
+ * A static handle on the reviewed asset, not a viewer: the interactive WebGL
+ * island is a separate port and needs assets that do not exist here yet. This
+ * is what that port replaces, and what a reader without JavaScript keeps.
+ */
+function ResolvedModel({ descriptor }: { readonly descriptor: string }) {
+  const model = decodeModelDescriptor(descriptor);
+  return (
+    <>
+      {/* Distinct classes again: `__document-title` marks the ONE selected-PDF
+          destination the built-output check counts, and the model link is not
+          that. */}
+      <p className="zld-component-references__model-name">{model.packageLabel}</p>
+      <p className="zld-component-references__model-link">
+        <a href={model.modelUrl} data-model-url={model.modelUrl}>Open the VRML model</a>
+      </p>
+    </>
   );
 }
 

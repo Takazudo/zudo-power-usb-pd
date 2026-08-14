@@ -127,27 +127,30 @@ export function assertComponentReferencesDescriptor(value: unknown): asserts val
 
 /**
  * Shared entry point for every card: reads the `resolved` discriminant, and
- * for the unresolved branch enforces the exact `{resolved, reason}` key set
- * with a non-empty displayable reason. Returns `null` when the card resolved,
- * so each caller continues into its own key-set check.
+ * for the unresolved branch enforces a non-empty displayable reason. Returns
+ * the card either way, plus whether it claims to be resolved — each caller
+ * continues into its own exact-key-set check for the variant it got.
  */
-function unresolvedOrNull(value: unknown, card: string): Record<string, unknown> | null {
+function cardState(value: unknown, card: string): {
+  readonly resolved: boolean;
+  readonly fields: Record<string, unknown>;
+} {
   if (typeof value !== "object" || value === null) throw new Error(`Component reference ${card} is invalid`);
-  const record = value as Record<string, unknown>;
-  if (record.resolved === true) return record;
-  if (record.resolved !== false) throw new Error(`Component reference ${card} has no resolution state`);
-  if (typeof record.reason !== "string" || !isDisplayText(record.reason)) {
+  const fields = value as Record<string, unknown>;
+  if (fields.resolved === true) return { resolved: true, fields };
+  if (fields.resolved !== false) throw new Error(`Component reference ${card} has no resolution state`);
+  if (typeof fields.reason !== "string" || !isDisplayText(fields.reason)) {
     // An unresolved card whose reason is missing or unreadable would render as
     // a blank apology, which is worse than the resolved card it replaces.
     throw new Error(`Component reference ${card} is unresolved without a stated reason`);
   }
-  return null;
+  return { resolved: false, fields };
 }
 
 function assertDocument(value: unknown): asserts value is ComponentReferencesDescriptor["document"] {
-  const document = unresolvedOrNull(value, "document");
-  if (document === null) {
-    if (Object.keys(value as object).sort().join(",") !== "reason,resolved") {
+  const { resolved, fields: document } = cardState(value, "document");
+  if (!resolved) {
+    if (Object.keys(document).sort().join(",") !== "reason,resolved") {
       throw new Error("Component reference document has unexpected fields");
     }
     return;
@@ -173,13 +176,15 @@ function assertDocument(value: unknown): asserts value is ComponentReferencesDes
 }
 
 function assertFootprint(value: unknown): asserts value is ComponentReferencesDescriptor["footprint"] {
-  const footprint = unresolvedOrNull(value, "footprint");
-  const source = (footprint ?? value) as Record<string, unknown>;
-  if (typeof source.name !== "string" || !SAFE_FOOTPRINT_NAME.test(source.name)) {
+  const { resolved, fields: footprint } = cardState(value, "footprint");
+  // The package name is present in BOTH variants, so it is checked before the
+  // branch: an unresolved card still displays it.
+  const name = footprint.name;
+  if (typeof name !== "string" || !SAFE_FOOTPRINT_NAME.test(name)) {
     throw new Error("Component reference footprint contains an unsafe value");
   }
-  if (footprint === null) {
-    if (Object.keys(source).sort().join(",") !== "name,reason,resolved") {
+  if (!resolved) {
+    if (Object.keys(footprint).sort().join(",") !== "name,reason,resolved") {
       throw new Error("Component reference footprint has unexpected fields");
     }
     return;
@@ -188,16 +193,16 @@ function assertFootprint(value: unknown): asserts value is ComponentReferencesDe
     Object.keys(footprint).sort().join(",") !== "assetUrl,name,resolved" ||
     typeof footprint.assetUrl !== "string" ||
     !SAFE_FOOTPRINT_ASSET.test(footprint.assetUrl) ||
-    footprint.assetUrl !== footprintAssetUrl(footprint.name as string)
+    footprint.assetUrl !== footprintAssetUrl(name)
   ) {
     throw new Error("Component reference footprint contains an unsafe value");
   }
 }
 
 function assertModel(value: unknown): asserts value is ComponentReferencesDescriptor["model"] {
-  const model = unresolvedOrNull(value, "model");
-  if (model === null) {
-    if (Object.keys(value as object).sort().join(",") !== "reason,resolved") {
+  const { resolved, fields: model } = cardState(value, "model");
+  if (!resolved) {
+    if (Object.keys(model).sort().join(",") !== "reason,resolved") {
       throw new Error("Component reference model has unexpected fields");
     }
     return;

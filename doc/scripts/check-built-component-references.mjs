@@ -20,7 +20,7 @@
 
 import assert from "node:assert/strict";
 import { lstat, readFile, readdir } from "node:fs/promises";
-import { basename, join, relative, resolve, sep } from "node:path";
+import { join, relative, resolve, sep } from "node:path";
 
 const DIST = resolve("dist");
 const RECORDS_ROOT = join(DIST, "docs", "components", "records");
@@ -45,7 +45,6 @@ async function main() {
 
   let resolvedDocuments = 0;
   let resolvedFootprints = 0;
-  const referencedFootprints = new Set();
 
   for (const slug of recordDirectories) {
     const html = await readFile(join(RECORDS_ROOT, slug, "index.html"), "utf8");
@@ -100,7 +99,6 @@ async function main() {
       resolvedFootprints += 1;
       const footprintPath = decodeHtml(readAttribute(footprintImages[0]?.[0] ?? "", "src"));
       assert.match(footprintPath, /^\/assets\/component-previews\/footprints\/[A-Za-z0-9._+-]+\.svg$/u);
-      referencedFootprints.add(basename(footprintPath));
       await assertRegularDistFile(footprintPath);
     }
 

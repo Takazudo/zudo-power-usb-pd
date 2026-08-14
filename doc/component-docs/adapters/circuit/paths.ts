@@ -79,9 +79,8 @@ export const DIST_ROOT = join(DOC_ROOT, "dist");
  * resolves to a committed asset. `readPackage()` treats that as an unresolved
  * model with a stated reason rather than as a failure — see `references.ts`.
  */
-export const FOOTPRINT_MASTER_ROOT = join(REPO_ROOT, "footprints", "kicad");
-export const FOOTPRINT_ROOT = join(FOOTPRINT_MASTER_ROOT, "zudo-power.pretty");
-export const MODEL_ROOT = join(FOOTPRINT_MASTER_ROOT, "zudo-pd.3dshapes");
+export const FOOTPRINT_ROOT = join(REPO_ROOT, "footprints", "kicad", "zudo-power.pretty");
+export const MODEL_ROOT = join(REPO_ROOT, "footprints", "kicad", "zudo-pd.3dshapes");
 
 /** Per-record bundle files, in the order a record page consumes them. */
 export const BUNDLE_FILES = [

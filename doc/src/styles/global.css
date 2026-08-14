@@ -1334,12 +1334,16 @@ dialog.zd-enlarge-dialog::backdrop {
 
 .zld-component-references__document-label,
 .zld-component-references__document-title,
+.zld-component-references__model-link,
 .zld-component-references__footprint,
 .zld-component-references__metadata {
   margin: 0;
 }
 
-.zld-component-references__document-label {
+.zld-component-references__document-label,
+.zld-component-references__footprint-name,
+.zld-component-references__model-name {
+  margin: 0;
   color: var(--color-fg);
   font-weight: 600;
   overflow-wrap: anywhere;
