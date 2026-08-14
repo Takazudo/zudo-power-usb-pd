@@ -200,5 +200,16 @@
     "pptc-vmax-vs-rail",
     "source-to-bench-chain"
   ],
-  "integration_domains_contract": "Exact cross-component rule domains required by circuit-spec-integration/references/rules.json; strict and staged modes both enforce exact parity with that file."
+  "integration_evidence_chain_stages": [
+  "official-source",
+  "conditioned-requirement",
+  "generated-netlist",
+  "symbol-footprint",
+  "pcb-orientation",
+  "bom-cpl",
+  "as-built",
+  "programmed",
+  "bench"
+ ],
+ "integration_domains_contract": "Exact cross-component rule domains required by circuit-spec-integration/references/rules.json; strict and staged modes both enforce exact parity with that file."
 }

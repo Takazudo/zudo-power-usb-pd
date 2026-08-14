@@ -38,12 +38,13 @@ independent IDs, sources, facts, locators, routing cases, and pin maps. Store
 normalized short evidence extracts, not vendor PDFs. Put temporary downloads only in
 ignored `tmp/pdfs/` and remove them after extraction.
 
-Run the validator and unit tests after edits:
+Run the validator and unit tests after edits — in `--strict`, the same mode CI
+enforces (a bare invocation runs the laxer staged mode and can pass where CI fails):
 
 ```sh
-python3 .claude/skills/component-spec-audit/scripts/validate.py
+python3 .claude/skills/component-spec-audit/scripts/validate.py --strict
 python3 -m unittest discover -s .claude/skills/component-spec-audit/scripts -p 'test_*.py'
-python3 .claude/skills/circuit-spec-integration/scripts/check_forward_tests.py
+python3 .claude/skills/circuit-spec-integration/scripts/check_forward_tests.py --strict
 ```
 
-Use `--online` only for an explicit source refresh; it downloads into `tmp/pdfs/`, rejects stale hashes, and does not alter retained evidence.
+Use `--online` only for an explicit source refresh; it fetches each source in memory, rejects stale hashes, retains nothing on disk, and does not alter retained evidence.
