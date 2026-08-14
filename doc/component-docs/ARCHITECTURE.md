@@ -193,11 +193,12 @@ zudo-pd's `DENY` set is 16 of 97 keys: led-lamp's seven content denials
 `routing.positivePrompts`, `routing.negativePrompts`, `pinMap.reviewedBy`),
 `asset.binary`, both `ownerSkill` keys (`claudeResources: false`), and the
 `reference.*` keys whose consumer does not exist yet — `reference.model.*`
-(no reviewed `.wrl`/`.step` pair is committed anywhere), plus
-`reference.footprint.path` and `reference.package.recordIds`. The document
-half of `reference.*` publishes: `documentSelections` names one reviewed
-source for 40 of the 41 records, and `documentExceptions` names why the
-41st has none. URL policy, the preflight report contract, and the
+(no reviewed `.wrl`/`.step` pair is committed anywhere) plus
+`reference.package.recordIds`. The document and footprint halves of
+`reference.*` both publish: `documentSelections` names one reviewed source
+for 40 of the 41 records and `documentExceptions` names why the 41st has
+none, while `reference.footprint.{packageId,name,path}` back the rendered
+footprint preview and its `Source:` line. URL policy, the preflight report contract, and the
 emitted-vs-withheld accounting are ported unchanged from led-lamp §6.
 
 ### 6.1 Artifact-level proof (`pnpm scan:components`)
