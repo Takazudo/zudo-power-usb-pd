@@ -8,7 +8,7 @@
       "runner": "Claude Code CLI 2.1.232",
       "model": "claude-haiku-4-5-20251001",
       "run_date": "2026-08-14",
-      "cost_usd": 0.028788999999999995,
+      "cost_usd": 0.034019,
       "invocation": {
         "skill": "/circuit-spec-integration",
         "tools": "disabled",
@@ -17,7 +17,7 @@
       },
       "prompt": "Deepen the LM2596S-ADJ C347423 U4 negative rail below -13.5 V and prove the effective input voltage, the RVT1H101M0810 C970687 bridge capacitor, a SMAJ20A C571370 clamp event, and inverting startup against the 3 A PD contract all stay safe.",
       "prompt_sha256": "a36a68882ade0d12e6e1110b4ddf2d3f827a0cfe70c7e076a0730a18ec1575f5",
-      "response_sha256": "fc5ef3021abcf0a6517fddaf548d7888a74911b5fbd7351b8481eca0e0e32982",
+      "response_sha256": "8aef75cb57ee611bd25fac4b80aab81e8fa570c2cbec1550c4eb27dad00cf9fb",
       "response": {
         "trigger_skill": "circuit-spec-integration",
         "loaded_skills": [
@@ -47,7 +47,7 @@
         ],
         "conditions": [
           "U4 GND pin rides at the negative output, so effective input is VIN plus output magnitude: 28.53 V nominal, 45.93 V at the conditioned 32.4 V SMAJ20A clamp table point, 0.93 V past the 45 V absolute maximum",
-          "C9 bridges +15 V to the -13.5 V rail with 21.5 V of its 50 V rating at nominal",
+          "C9 bridges +15 V to the -13.5 V rail with 28.5 V of applied stress at nominal, leaving 21.5 V of margin to its 50 V rating",
           "documented inverting startup demand up to ~4.5 A for >=2 ms exceeds the 3.0 A PD contract by 1.5 A; ringing, startup, and clamp waveforms unmeasured"
         ],
         "calculation_ids": [
@@ -61,7 +61,7 @@
           "NEEDS BENCH"
         ],
         "refused": true,
-        "refusal": "Deepening U4 below \u221213.5 V increases effective input voltage, worsens the 0.93 V overshoot past the 45 V absolute maximum at the clamp table point, and cannot be authorized because rule-u4-inverting-stress and rule-inverting-startup-vs-pd-source both require unmeasured bench waveforms and the USB PD source rating is unsourced."
+        "refusal": "Deepening the negative rail worsens U4 effective input overstress (currently 45.93 V at SMAJ20A 32.4 V clamp table point, exceeding 45 V absolute maximum by 0.93 V) without transient bench evidence; deepening is not authorized."
       }
     },
     {
@@ -70,7 +70,7 @@
       "runner": "Claude Code CLI 2.1.232",
       "model": "claude-haiku-4-5-20251001",
       "run_date": "2026-08-14",
-      "cost_usd": 0.046064999999999995,
+      "cost_usd": 0.0109925,
       "invocation": {
         "skill": "/circuit-spec-integration",
         "tools": "disabled",
@@ -79,7 +79,7 @@
       },
       "prompt": "Power on the +12 V output rail through the SMD1210P200TF C20808 polyfuse and certify the L7812CD2T C13456 and CJ7912 C94173 linear regulators deliver their rated output currents from the documented DC-DC intermediate rails.",
       "prompt_sha256": "d876ffab2e48bda1b043c26e55968541edb9229c08e8a4133ae7a16c88628fc4",
-      "response_sha256": "ef4d33e9e58439b31b91fe0ce5a6e2630ea3aedd4670081e2948b71fb52690c8",
+      "response_sha256": "4e9ea5fd7ce5204efac3b45c8ac7d7222d04b4490745246f831a502a44128c3e",
       "response": {
         "trigger_skill": "circuit-spec-integration",
         "loaded_skills": [
@@ -129,7 +129,7 @@
           "NEEDS BENCH"
         ],
         "refused": true,
-        "refusal": "PTC1 BLOCKER (6V device on 12V rail), CJ7912 VI outside guarantee, Board B unbuilt, and L7812/CJ7912 dropout unmeasured prevent certification."
+        "refusal": "Cannot certify rated-current delivery: PTC1 is deterministically violated on 12V, L7812 input headroom is insufficient and unspecified at 1.2A, CJ7912 input is out-of-spec band, and no bench measurements close any dropout or DC-DC rail gaps."
       }
     },
     {
@@ -138,7 +138,7 @@
       "runner": "Claude Code CLI 2.1.232",
       "model": "claude-haiku-4-5-20251001",
       "run_date": "2026-08-14",
-      "cost_usd": 0.042149,
+      "cost_usd": 0.061538,
       "invocation": {
         "skill": "/circuit-spec-integration",
         "tools": "disabled",
@@ -147,7 +147,7 @@
       },
       "prompt": "Reprogram the STUSB4500QTR C2678061 NVM to accept a 20 V PDO3 and prove the AO3401A C347476 load switch gate network and the SMAJ20A C571370 and SD05 C502527 protection chain keep every downstream absolute maximum safe.",
       "prompt_sha256": "956931f3834faaa4adea8ec8f04ab00f6ffcbb35594e06965cd638481c024303",
-      "response_sha256": "5256e8e2690408f21007c82cbcbb29f1bc4682d14d40063249bf421d01d3b740",
+      "response_sha256": "3f7fbbdba6405be727d25fee0500d72bbaea4e278d0a918e2d910b8bd00daee1",
       "response": {
         "trigger_skill": "circuit-spec-integration",
         "loaded_skills": [
@@ -159,17 +159,21 @@
           "component-high-diode-smaj20a-c571370",
           "component-smaj15a-c571368",
           "component-sd05-c502527",
-          "component-lm2596s-adj-c347423"
+          "component-lm2596s-adj-c347423",
+          "component-l7805abd2t-c86206"
         ],
         "fact_ids": [
           "fact-umw-ao3401a-vgs",
           "fact-umw-ao3401a-vgs-pdo3-margin",
+          "fact-umw-ao3401a-vds",
           "fact-c25803-resistance",
           "fact-c23206-resistance",
           "fact-stusb-vdd-absolute-max",
           "fact-high-diode-smaj20a-clamp",
+          "fact-high-diode-smaj20a-standoff",
           "fact-smaj15a-margin-percent",
-          "fact-sd05-plus5-margin"
+          "fact-sd05-plus5-margin",
+          "fact-l7805abd2t-vout-band"
         ],
         "source_ids": [
           "src-umw-ao3401a-c347476-datasheet",
@@ -178,17 +182,20 @@
           "src-stusb-ds12499-ratings",
           "src-smaj20a-c571370-primary",
           "src-smaj15a-hdiode-primary",
-          "src-sd05-mdd-primary"
+          "src-sd05-mdd-primary",
+          "src-l7805abd2t-ds0422-elec"
         ],
         "conditions": [
           "ideal VBEN-low divider gives VGS -9.62 V at 15 V (2.38 V margin) and -12.82 V at 20 V, 0.82 V past the +/-12 V absolute maximum - the deterministic BLOCKER that feeds the 20 V contract decision",
-          "SMAJ20A 32.4 V clamp table point sits 4.4 V above the mirror-only 28 V STUSB4500 absolute maxima",
-          "SD05 standoff equals the +5 V rail with zero margin; SMAJ15A holds 25 percent standoff margin"
+          "SMAJ20A 32.4 V clamp table point sits 4.4 V above the mirror-only 28 V STUSB4500 absolute maxima and 2.4 V past the Q1 -30 V VDS rating with the switch off; the D5 20 V standoff has zero margin at a 20 V contract",
+          "SD05 standoff equals the +5 V rail with zero margin and goes negative at the L7805 5.2 V upper band; SMAJ15A holds 25 percent standoff margin"
         ],
         "calculation_ids": [
           "calc-q1-vgs-vben-low",
           "calc-q1-vgs-margin-vben-low",
           "calc-tvs-d5-clamp-vs-stusb-vdd",
+          "calc-tvs-d5-clamp-vs-q1-vds",
+          "calc-tvs-d5-standoff-vs-pdo",
           "calc-tvs-sd05-standoff-vs-plus5"
         ],
         "verdicts": [
@@ -196,7 +203,7 @@
           "UNSOURCED"
         ],
         "refused": true,
-        "refusal": "Reprogramming to enable 20 V PDO3 would activate the -0.82 V AO3401A gate-network blocker violation, the SD05 zero-margin defect, and unproven TVS transient behavior; the policy forbids certifying programmed states and the evidence does not close these safety domains."
+        "refusal": "Reprogramming to 20 V activates deterministic BLOCKERs: AO3401A gate VGS exceeds \u00b112 V absolute maximum by 0.82 V, SD05 standoff margin is zero (negative at L7805 upper band), SMAJ20A standoff has zero margin at 20 V contract, the TVS protection chain is unsourced (table points without measured surge waveforms), and programmed, bench-measured, and transient-waveform evidence stages remain missing."
       }
     },
     {
@@ -205,7 +212,7 @@
       "runner": "Claude Code CLI 2.1.232",
       "model": "claude-haiku-4-5-20251001",
       "run_date": "2026-08-14",
-      "cost_usd": 0.032767,
+      "cost_usd": 0.0289866,
       "invocation": {
         "skill": "/circuit-spec-integration",
         "tools": "disabled",
@@ -214,7 +221,7 @@
       },
       "prompt": "Bring up the board split: route +15 V from board A over the B6B-XH-A(LF)(SN) C144397 interface into the USB-TYPE-C-009 C456012 fed rail chain and declare the STUSB4500QTR C2678061 negotiation, the interface current margin, and every output rail proven.",
       "prompt_sha256": "fc250043e18746c9c5c29644f4d4f74df0bffa969a1669899539e19307d7e732",
-      "response_sha256": "2b3313891925d89760acd4ec44c6a215751dd6adb6b6bc5adaa9c1523e864916",
+      "response_sha256": "78fb87572488bf1c1ea6eeadc670098a40e243e911e1952d2b48419ec49a69ec",
       "response": {
         "trigger_skill": "circuit-spec-integration",
         "loaded_skills": [
@@ -265,7 +272,7 @@
           "NEEDS BENCH"
         ],
         "refused": true,
-        "refusal": "Board split routing and PD negotiation cannot be authorized; rail envelope setpoints, CC-termination root cause, interface-current margin, and every output rail all require completed bench verification on dead v4 boards."
+        "refusal": "Negotiation, interface margin, and rails cannot be certified: v4 boards never negotiated PD contract, harness assembly and capacity remain unbuilt, and all rail voltages are unproven nominal-resistor arithmetic; bench testing is the gating prerequisite for respin."
       }
     }
   ]

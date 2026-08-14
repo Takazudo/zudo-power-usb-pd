@@ -71,7 +71,7 @@
       ],
       "expected_observed_conditions": [
         "U4 GND pin rides at the negative output, so effective input is VIN plus output magnitude: 28.53 V nominal, 45.93 V at the conditioned 32.4 V SMAJ20A clamp table point, 0.93 V past the 45 V absolute maximum",
-        "C9 bridges +15 V to the -13.5 V rail with 21.5 V of its 50 V rating at nominal",
+        "C9 bridges +15 V to the -13.5 V rail with 28.5 V of applied stress at nominal, leaving 21.5 V of margin to its 50 V rating",
         "documented inverting startup demand up to ~4.5 A for >=2 ms exceeds the 3.0 A PD contract by 1.5 A; ringing, startup, and clamp waveforms unmeasured"
       ],
       "expected_verdicts": [
@@ -180,7 +180,8 @@
         "component-high-diode-smaj20a-c571370",
         "component-smaj15a-c571368",
         "component-sd05-c502527",
-        "component-lm2596s-adj-c347423"
+        "component-lm2596s-adj-c347423",
+        "component-l7805abd2t-c86206"
       ],
       "routing_queries": [
         {
@@ -206,6 +207,7 @@
         "rec-c23206",
         "rec-c25803",
         "rec-high-diode-smaj20a-c571370",
+        "rec-l7805abd2t-c86206",
         "rec-lm2596s-adj-c347423",
         "rec-sd05-c502527",
         "rec-smaj15a-c571368",
@@ -220,7 +222,8 @@
         "src-stusb-ds12499-ratings",
         "src-smaj20a-c571370-primary",
         "src-smaj15a-hdiode-primary",
-        "src-sd05-mdd-primary"
+        "src-sd05-mdd-primary",
+        "src-l7805abd2t-ds0422-elec"
       ],
       "rule_ids": [
         "rule-q1-gate-drive-vs-contract",
@@ -229,23 +232,28 @@
       "required_fact_ids": [
         "fact-umw-ao3401a-vgs",
         "fact-umw-ao3401a-vgs-pdo3-margin",
+        "fact-umw-ao3401a-vds",
         "fact-c25803-resistance",
         "fact-c23206-resistance",
         "fact-stusb-vdd-absolute-max",
         "fact-high-diode-smaj20a-clamp",
+        "fact-high-diode-smaj20a-standoff",
         "fact-smaj15a-margin-percent",
-        "fact-sd05-plus5-margin"
+        "fact-sd05-plus5-margin",
+        "fact-l7805abd2t-vout-band"
       ],
       "required_calculation_ids": [
         "calc-q1-vgs-vben-low",
         "calc-q1-vgs-margin-vben-low",
         "calc-tvs-d5-clamp-vs-stusb-vdd",
+        "calc-tvs-d5-clamp-vs-q1-vds",
+        "calc-tvs-d5-standoff-vs-pdo",
         "calc-tvs-sd05-standoff-vs-plus5"
       ],
       "expected_observed_conditions": [
         "ideal VBEN-low divider gives VGS -9.62 V at 15 V (2.38 V margin) and -12.82 V at 20 V, 0.82 V past the +/-12 V absolute maximum - the deterministic BLOCKER that feeds the 20 V contract decision",
-        "SMAJ20A 32.4 V clamp table point sits 4.4 V above the mirror-only 28 V STUSB4500 absolute maxima",
-        "SD05 standoff equals the +5 V rail with zero margin; SMAJ15A holds 25 percent standoff margin"
+        "SMAJ20A 32.4 V clamp table point sits 4.4 V above the mirror-only 28 V STUSB4500 absolute maxima and 2.4 V past the Q1 -30 V VDS rating with the switch off; the D5 20 V standoff has zero margin at a 20 V contract",
+        "SD05 standoff equals the +5 V rail with zero margin and goes negative at the L7805 5.2 V upper band; SMAJ15A holds 25 percent standoff margin"
       ],
       "expected_verdicts": [
         "NEEDS BENCH",

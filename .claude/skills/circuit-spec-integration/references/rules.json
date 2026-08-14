@@ -78,7 +78,9 @@
         "rec-smaj15a-c571368",
         "rec-sd05-c502527",
         "rec-stusb4500qtr",
-        "rec-lm2596s-adj-c347423"
+        "rec-lm2596s-adj-c347423",
+        "rec-umw-ao3401a-c347476",
+        "rec-l7805abd2t-c86206"
       ],
       "fact_ids": [
         "fact-high-diode-smaj20a-standoff",
@@ -87,17 +89,19 @@
         "fact-stusb-vdd-absolute-max",
         "fact-stusb-vbus-pin-absolute-max",
         "fact-lm2596-vin-absmax",
+        "fact-umw-ao3401a-vds",
         "fact-smaj15a-clamp",
         "fact-smaj15a-margin-plus12",
         "fact-smaj15a-margin-percent",
         "fact-smaj15a-tvs3-orientation",
         "fact-sd05-standoff",
         "fact-sd05-plus5-margin",
-        "fact-sd05-plus5-margin-percent"
+        "fact-sd05-plus5-margin-percent",
+        "fact-l7805abd2t-vout-band"
       ],
-      "conditions": "Compare each TVS clamp/standoff against its downstream absolute maxima: D5 SMAJ20A on VBUS_IN clamps at the 32.4 V table point, 4.4 V above the mirror-only 28 V STUSB4500 VDD/VBUS-pin absolute maxima but 12.6 V under the LM2596 45 V input rating; SMAJ15A holds a 3 V / 25 percent standoff margin on the +/-12 V rails while the TVS3 orientation on -12 V is not yet locked; SD05 standoff exactly equals the +5 V rail (zero margin, deterministic BLOCKER standoff fact) and sits 0.2 V below the L7805 5.2 V upper output band. All clamp values are 10/1000 us table points, not the installed surge waveform.",
+      "conditions": "Compare each TVS clamp/standoff against its downstream absolute maxima: D5 SMAJ20A on VBUS_IN clamps at the 32.4 V table point, 4.4 V above the mirror-only 28 V STUSB4500 VDD/VBUS-pin absolute maxima and 2.4 V past the Q1 -30 V VDS rating when the load switch is off with VBUS_OUT near 0 V, but 12.6 V under the LM2596 45 V input rating; D5's 20 V standoff leaves 5 V of margin at the 15 V contract and zero at a 20 V contract; SMAJ15A holds a 3 V / 25 percent standoff margin on the +/-12 V rails while the TVS3 orientation on -12 V is not yet locked; SD05 standoff exactly equals the +5 V rail (zero margin, deterministic BLOCKER standoff fact) and sits 0.2 V below the L7805 5.2 V guaranteed upper output band. All clamp values are 10/1000 us table points, not the installed surge waveform.",
       "verdict": "UNSOURCED",
-      "refusal": "Do not clear the TVS protection chain: the STUSB4500 absolute maxima are mirror-only, no installed clamp or surge waveform has been measured, and the SD05 zero-margin standoff on the +5 V rail is a deterministic blocker that requires a part change, not more analysis.",
+      "refusal": "Do not clear the TVS protection chain: the STUSB4500 absolute maxima are mirror-only, no installed clamp or surge waveform has been measured, a clamp event arithmetically exceeds the Q1 VDS rating, and the SD05 zero-margin standoff on the +5 V rail is a deterministic blocker that requires a part change, not more analysis.",
       "conditioned_calculations": [
         {
           "calculation_id": "calc-tvs-d5-clamp-vs-stusb-vdd",
@@ -111,6 +115,17 @@
           "overage_v": 4.399999999999999
         },
         {
+          "calculation_id": "calc-tvs-d5-clamp-vs-q1-vds",
+          "fact_ids": [
+            "fact-high-diode-smaj20a-clamp",
+            "fact-umw-ao3401a-vds"
+          ],
+          "expression": "fact_high_diode_smaj20a_clamp + fact_umw_ao3401a_vds",
+          "result_key": "overage_v",
+          "conditions": "conditioned magnitude overage above the -30 V Q1 VDS absolute maximum at the 32.4 V clamp table point, for the off-state case where Q1's source rides VBUS_IN while VBUS_OUT sits near 0 V; actual polarity, waveform, and parasitics remain open",
+          "overage_v": 2.3999999999999986
+        },
+        {
           "calculation_id": "calc-tvs-d5-clamp-vs-lm2596-vin-absmax",
           "fact_ids": [
             "fact-lm2596-vin-absmax",
@@ -122,13 +137,33 @@
           "margin_v": 12.600000000000001
         },
         {
+          "calculation_id": "calc-tvs-d5-standoff-vs-pdo",
+          "fact_ids": [
+            "fact-high-diode-smaj20a-standoff"
+          ],
+          "expression": "fact_high_diode_smaj20a_standoff - vbus_v",
+          "result_key": "margin_v",
+          "conditions": "D5 20 V standoff minus the contract VBUS: 5 V of margin at the 15 V contract and zero at a 20 V contract, where the TVS sits at the very edge of its guaranteed non-conducting region with no tolerance for supply overshoot",
+          "results": [
+            {
+              "vbus_v": 15,
+              "margin_v": 5
+            },
+            {
+              "vbus_v": 20,
+              "margin_v": 0
+            }
+          ]
+        },
+        {
           "calculation_id": "calc-tvs-sd05-standoff-vs-plus5",
           "fact_ids": [
-            "fact-sd05-standoff"
+            "fact-sd05-standoff",
+            "fact-l7805abd2t-vout-band"
           ],
           "expression": "fact_sd05_standoff - rail_v",
           "result_key": "margin_v",
-          "conditions": "SD05 5 V standoff minus the +5 V rail: zero margin at nominal and negative at the L7805 5.2 V guaranteed upper output band, so the TVS can conduct inside normal regulation; deterministic from primary-sourced values",
+          "conditions": "SD05 5 V standoff minus the +5 V rail: zero margin at the 5.0 V nominal and negative at rail_v 5.2, the guaranteed upper output band from fact-l7805abd2t-vout-band, so the TVS can conduct inside normal regulation; deterministic from primary-sourced values",
           "results": [
             {
               "rail_v": 5,
@@ -165,7 +200,7 @@
         "fact-c970687-topology",
         "fact-high-diode-smaj20a-clamp"
       ],
-      "conditions": "U4's GND pin rides at the -13.5 V output, so the device sees VIN plus the output magnitude: 28.53 V nominal against the 40 V operating and 45 V absolute-maximum input ratings. At the SMAJ20A 32.4 V clamp table point the same chain reaches 45.93 V, 0.93 V past the absolute maximum - a conditioned table-point subtraction, not a waveform claim. C9 bridges +15 V to the -13.5 V rail and holds 21.5 V of its 50 V rating at nominal. Switching-node ringing, startup overshoot, and any real clamp waveform at U4 are unmeasured.",
+      "conditions": "U4's GND pin rides at the -13.5 V output, so the device sees VIN plus the output magnitude: 28.53 V nominal against the 40 V operating and 45 V absolute-maximum input ratings. At the SMAJ20A 32.4 V clamp table point the same chain reaches 45.93 V, 0.93 V past the absolute maximum - a conditioned table-point subtraction, not a waveform claim. C9 bridges +15 V to the -13.5 V rail: 28.5 V of applied stress at nominal, leaving 21.5 V of margin to its 50 V rating. Switching-node ringing, startup overshoot, and any real clamp waveform at U4 are unmeasured.",
       "verdict": "NEEDS BENCH",
       "refusal": "Do not treat the nominal 16.47 V absolute-maximum margin as proof: a VBUS clamp event arithmetically exceeds the U4 effective-input rating, and no ringing, startup, or surge waveform has been measured on the inverting stage.",
       "conditioned_calculations": [
