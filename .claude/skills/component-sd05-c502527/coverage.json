@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "coverage": [
+    {
+      "coverage_id": "cov-sd05-electrical-limits",
+      "record_id": "rec-sd05-c502527",
+      "domain": "electrical-limits",
+      "status": "COVERED",
+      "reason": "Standoff (5 V), minimum breakdown (6 V at 1 mA), clamp (9.8 V at 1 A; 18 V at 17 A, 8/20 us), peak pulse power (350 W, 8/20 us), leakage (10 uA), and capacitance (300 pF) are primary-source confirmed from the exact SD05 row of the MDD SDxx datasheet.",
+      "fact_ids": [
+        "fact-sd05-standoff",
+        "fact-sd05-breakdown",
+        "fact-sd05-clamp-1a",
+        "fact-sd05-clamp-ipp",
+        "fact-sd05-pppm",
+        "fact-sd05-leakage",
+        "fact-sd05-capacitance"
+      ],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-sd05-plus5-rail-application",
+      "record_id": "rec-sd05-c502527",
+      "domain": "plus5-rail-application",
+      "status": "COVERED",
+      "reason": "The +5 V rail application defect is deterministically established: VRWM 5.0 V on the nominal 5.0 V rail gives 0 V / 0% standoff margin (BLOCKER-class calculated facts). Replacement candidates are recorded in this bundle; selection is deferred to the decision task.",
+      "fact_ids": [
+        "fact-sd05-plus5-margin",
+        "fact-sd05-plus5-margin-percent"
+      ],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-sd05-distributor-identity",
+      "record_id": "rec-sd05-c502527",
+      "domain": "distributor-identity",
+      "status": "COVERED",
+      "reason": "Exact orderable C502527 is bound to MDD SD05 by the dated LCSC product page identity extract.",
+      "fact_ids": [
+        "fact-sd05-identity"
+      ],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-cand-smf6-0a-electrical-limits",
+      "record_id": "rec-cand-smf6-0a-c123790",
+      "domain": "electrical-limits",
+      "status": "COVERED",
+      "reason": "Standoff (6 V), breakdown (6.67-7.37 V at 10 mA), clamp (10.3 V at 19.4 A, 10/1000 us), peak pulse power (200 W), leakage (400 uA), and the +5 V rail margin math (1 V / 20% at nominal) are recorded from the exact SMF6.0A row of the MDD SMF-series datasheet.",
+      "fact_ids": [
+        "fact-cand-smf6-0a-standoff",
+        "fact-cand-smf6-0a-breakdown",
+        "fact-cand-smf6-0a-clamp",
+        "fact-cand-smf6-0a-pppm",
+        "fact-cand-smf6-0a-leakage",
+        "fact-cand-smf6-0a-plus5-margin"
+      ],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-cand-smf6-0a-package",
+      "record_id": "rec-cand-smf6-0a-c123790",
+      "domain": "package",
+      "status": "COVERED",
+      "reason": "SOD-123 outline (SOD-123FL orderable) is primary-source confirmed; hand-reworkable, JLCPCB-assemblable, and the repository already carries a SOD-123FL footprint.",
+      "fact_ids": [
+        "fact-cand-smf6-0a-package"
+      ],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-cand-smf6-0a-availability",
+      "record_id": "rec-cand-smf6-0a-c123790",
+      "domain": "availability",
+      "status": "COVERED",
+      "reason": "Exact orderable C123790 identity and the dated LCSC stock observation (148,360 units at 2026-08-14) are recorded from the distributor product page.",
+      "fact_ids": [
+        "fact-cand-smf6-0a-identity",
+        "fact-cand-smf6-0a-stock"
+      ],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-cand-smaj6-5a-electrical-limits",
+      "record_id": "rec-cand-smaj6-5a-c87267",
+      "domain": "electrical-limits",
+      "status": "COVERED",
+      "reason": "Standoff (6.5 V), breakdown (7.22-7.98 V at 10 mA), clamp (11.2 V at 35.7 A, 10/1000 us), peak pulse power (400 W minimum), leakage (500 uA), and the +5 V rail margin math (1.5 V / 30% at nominal) are recorded from the exact SMAJ6.5A row of the Brightking SMAJ-series datasheet.",
+      "fact_ids": [
+        "fact-cand-smaj6-5a-standoff",
+        "fact-cand-smaj6-5a-breakdown",
+        "fact-cand-smaj6-5a-clamp",
+        "fact-cand-smaj6-5a-pppm",
+        "fact-cand-smaj6-5a-leakage",
+        "fact-cand-smaj6-5a-plus5-margin"
+      ],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-cand-smaj6-5a-package",
+      "record_id": "rec-cand-smaj6-5a-c87267",
+      "domain": "package",
+      "status": "COVERED",
+      "reason": "JEDEC DO-214AC (SMA) case is primary-source confirmed; same SMA/D-FLAT footprint family already used by TVS1/TVS3 and D5.",
+      "fact_ids": [
+        "fact-cand-smaj6-5a-package"
+      ],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-cand-smaj6-5a-availability",
+      "record_id": "rec-cand-smaj6-5a-c87267",
+      "domain": "availability",
+      "status": "COVERED",
+      "reason": "Exact orderable C87267 identity (SMAJ6.5A/TR13) and the dated LCSC stock observation (8,450 units at 2026-08-14) are recorded from the distributor product page.",
+      "fact_ids": [
+        "fact-cand-smaj6-5a-identity",
+        "fact-cand-smaj6-5a-stock"
+      ],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-cand-smaj6-0a-electrical-limits",
+      "record_id": "rec-cand-smaj6-0a-c5353156",
+      "domain": "electrical-limits",
+      "status": "COVERED",
+      "reason": "Standoff (6.0 V), breakdown (6.67-7.67 V at 10 mA), clamp (10.3 V at 38.8 A), peak power (400 W, waveform not stated in the FOSAN document), leakage (800 uA), and the +5 V rail margin math (1 V / 20% at nominal) are recorded from the exact SMAJ6.0(C)A row of the FOSAN SMAJ-series datasheet.",
+      "fact_ids": [
+        "fact-cand-smaj6-0a-standoff",
+        "fact-cand-smaj6-0a-breakdown",
+        "fact-cand-smaj6-0a-clamp",
+        "fact-cand-smaj6-0a-pppm",
+        "fact-cand-smaj6-0a-leakage",
+        "fact-cand-smaj6-0a-plus5-margin"
+      ],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-cand-smaj6-0a-package",
+      "record_id": "rec-cand-smaj6-0a-c5353156",
+      "domain": "package",
+      "status": "COVERED",
+      "reason": "SMA case is primary-source confirmed; same SMA/D-FLAT footprint family already used by TVS1/TVS3 and D5.",
+      "fact_ids": [
+        "fact-cand-smaj6-0a-package"
+      ],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-cand-smaj6-0a-availability",
+      "record_id": "rec-cand-smaj6-0a-c5353156",
+      "domain": "availability",
+      "status": "COVERED",
+      "reason": "Exact orderable C5353156 identity and the dated LCSC stock observation (6,400 units at 2026-08-14) are recorded from the distributor product page.",
+      "fact_ids": [
+        "fact-cand-smaj6-0a-identity",
+        "fact-cand-smaj6-0a-stock"
+      ],
+      "blocking_fact_ids": []
+    }
+  ]
+}

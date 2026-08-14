@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "routes": [
+    {
+      "route_id": "route-pesd24vs1ub-c85382",
+      "record_id": "rec-pesd24vs1ub-c85382",
+      "aliases": {
+        "mpn": [
+          "PESD24VS1UB"
+        ],
+        "lcsc": [
+          "C85382"
+        ],
+        "manufacturer": [
+          "Nexperia"
+        ],
+        "function": [
+          "ESD protection diode",
+          "CC-line protection"
+        ]
+      },
+      "positive": [
+        "check PESD24VS1UB pinout",
+        "audit C85382"
+      ],
+      "negative": [
+        "check PESD5V0S1BA pinout"
+      ]
+    }
+  ]
+}

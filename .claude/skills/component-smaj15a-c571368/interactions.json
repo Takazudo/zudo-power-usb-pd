@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "interactions": [
+    {
+      "interaction_id": "int-smaj15a-rail-margin",
+      "record_ids": [
+        "rec-smaj15a-c571368"
+      ],
+      "fact_ids": [
+        "fact-smaj15a-margin-plus12",
+        "fact-smaj15a-margin-percent"
+      ],
+      "conditions": "TVS1 (+12 V rail) and TVS3 (-12 V rail) standoff margin against the SMAJ15A 15 V standoff rating at nominal rail voltage; acceptability under tolerance/ripple is deferred to the review and decision tasks",
+      "verdict": "PASS - primary-source confirmed"
+    }
+  ]
+}

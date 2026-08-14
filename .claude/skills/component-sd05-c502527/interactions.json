@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "interactions": [
+    {
+      "interaction_id": "int-sd05-plus5-rail-blocker",
+      "record_ids": [
+        "rec-sd05-c502527"
+      ],
+      "fact_ids": [
+        "fact-sd05-standoff"
+      ],
+      "conditions": "TVS2 on the +5 V output rail: the primary-confirmed VRWM 5.0 V equals the nominal rail voltage, a deterministic 0 V / 0% standoff margin (see fact-sd05-plus5-margin and fact-sd05-plus5-margin-percent). Replacement candidates with VRWM >= 6.0 V are recorded in this bundle; selection is deferred to the decision task.",
+      "verdict": "BLOCKER - deterministic spec violation"
+    }
+  ]
+}

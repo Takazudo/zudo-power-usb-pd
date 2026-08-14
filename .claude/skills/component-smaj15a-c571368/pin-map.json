@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "pin_maps": [
+    {
+      "pin_map_id": "pinmap-smaj15a-c571368",
+      "record_id": "rec-smaj15a-c571368",
+      "symbol": "SMAJ15A_C571368",
+      "footprint": "D-FLAT_L4.3-W2.6-LS5.3-RD",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "C",
+          "footprint_pad": "1",
+          "function": "cathode (color band end)"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "A",
+          "footprint_pad": "2",
+          "function": "anode"
+        }
+      ],
+      "reviewed_by": "child-114 foreground review against symbols/zudo-pd.kicad_sym SMAJ15A_C571368 (pin 1=C, pin 2=A) and footprints/kicad/zudo-power.pretty/D-FLAT_L4.3-W2.6-LS5.3-RD.kicad_mod (pads 1, 2); datasheet polarity band per page 1 marking rule; generator-spec lock pending"
+    }
+  ]
+}

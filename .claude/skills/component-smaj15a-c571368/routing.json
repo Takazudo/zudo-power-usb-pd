@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "routes": [
+    {
+      "route_id": "route-smaj15a-c571368",
+      "record_id": "rec-smaj15a-c571368",
+      "aliases": {
+        "mpn": [
+          "SMAJ15A"
+        ],
+        "lcsc": [
+          "C571368"
+        ],
+        "manufacturer": [
+          "High Diode"
+        ],
+        "function": [
+          "TVS diode",
+          "overvoltage protection"
+        ]
+      },
+      "positive": [
+        "check SMAJ15A pinout",
+        "audit C571368"
+      ],
+      "negative": [
+        "check SMAJ20A pinout"
+      ]
+    }
+  ]
+}

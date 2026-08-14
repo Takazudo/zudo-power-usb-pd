@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "source_id": "src-pesd24vs1ub-nexperia-primary",
+      "record_id": "rec-pesd24vs1ub-c85382",
+      "document_title": "PESD24VS1UB — ESD protection diode in SOD523 package",
+      "document_number": "PESD24VS1UB",
+      "revision": "Product data sheet, 6 August 2026 release",
+      "document_date": "2026-08-06",
+      "authoritative_url": "https://assets.nexperia.com/documents/data-sheet/PESD24VS1UB.pdf",
+      "alternate_authoritative_url": "https://datasheet.lcsc.com/datasheet/pdf/c5b1d786a78f2de97034567c97cac954.pdf",
+      "retrieval_date": "2026-08-14",
+      "authority_class": "MANUFACTURER_PRIMARY",
+      "sha256": "93da62874438e6d8993e9c87ec138d7b5b81edee7a642b78d6c057fdd553207b",
+      "availability": "AVAILABLE",
+      "physical_pdf_page_index": 3,
+      "printed_page_label": "4",
+      "locator": "Table 1 Quick reference data (printed page 1), Table 2 Pinning information (printed page 2), Table 5 Limiting values (printed page 3), and Table 6 Characteristics rows VRWM/VBR/IRM/Cd/VCL (printed page 4)",
+      "evidence_extract": "Official Nexperia product data sheet retrieved from assets.nexperia.com (release 6 August 2026). Table 6 Characteristics at Tamb=25 C: VRWM 24 V max; VBR 26.5/27/27.5 V min/typ/max at IR 5 mA; IRM 1 nA typ / 50 nA max at VRWM 24 V; Cd 23 pF typ / 50 pF max at f=1 MHz, VR=0 V; VCL 36 V max at IPPM 1 A and 70 V max at IPPM 3 A (non-repetitive 8/20 us pulse). Table 5 Limiting values: PPPM 160 W and IPPM 3 A at tp=8/20 us; VESD 23 kV IEC 61000-4-2 contact, 10 kV HBM; Tj max 150 C. Table 2: pin 1 = K cathode (marking bar indicates pin 1), pin 2 = A anode; package SC-79 (SOD523). The LCSC-hosted alternate is the older 29 November 2018 revision of the same Nexperia document.",
+      "refresh_policy": "HASH-LOCKED"
+    },
+    {
+      "source_id": "src-pesd24vs1ub-lcsc-identity",
+      "record_id": "rec-pesd24vs1ub-c85382",
+      "document_title": "LCSC product page C85382 — PESD24VS1UB,115 | TVS Diodes | Nexperia | LCSC",
+      "document_number": "C85382",
+      "revision": "volatile web page (as retrieved)",
+      "document_date": "2026-08-14",
+      "authoritative_url": "https://www.lcsc.com/product-detail/C85382.html",
+      "alternate_authoritative_url": "https://datasheet.lcsc.com/datasheet/pdf/c5b1d786a78f2de97034567c97cac954.pdf",
+      "retrieval_date": "2026-08-14",
+      "authority_class": "DISTRIBUTOR_IDENTITY",
+      "sha256": "6c8199de453b5a494d3b1016dda2aadd16c864fb708e478cd854c03746d3a8bc",
+      "identity_extract_sha256": "c1d6463c8be27fea544c6e2f237831240af591e96b7308d6dad035451570d4ea",
+      "availability": "AVAILABLE",
+      "physical_pdf_page_index": 0,
+      "printed_page_label": "1",
+      "locator": "Product page title row 'PESD24VS1UB,115 | TVS Diodes | Nexperia | LCSC' and the stock row (100,540 in stock), retrieved 2026-08-14",
+      "evidence_extract": "LCSC product page binds exact orderable C85382 to Nexperia PESD24VS1UB,115 (the ,115 suffix is the tape/reel ordering code for the datasheet part PESD24VS1UB), package SOD-523; listing reported 100,540 units in stock at the 2026-08-14 retrieval.",
+      "refresh_policy": "VOLATILE-HTML",
+      "refresh_note": "LCSC product page HTML is not deterministic (prices, stock, and page assets change per retrieval); only the canonical identity extract hash is locked. Stock counts are dated observations, not spec claims."
+    }
+  ]
+}

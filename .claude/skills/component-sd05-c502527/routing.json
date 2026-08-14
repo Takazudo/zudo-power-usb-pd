@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "routes": [
+    {
+      "route_id": "route-sd05-c502527",
+      "record_id": "rec-sd05-c502527",
+      "aliases": {
+        "mpn": [
+          "SD05"
+        ],
+        "lcsc": [
+          "C502527"
+        ],
+        "manufacturer": [
+          "MDD (Microdiode Semiconductor)"
+        ],
+        "function": [
+          "TVS diode",
+          "overvoltage protection"
+        ]
+      },
+      "positive": [
+        "check SD05 pinout",
+        "audit C502527"
+      ],
+      "negative": [
+        "check SD05C pinout"
+      ]
+    },
+    {
+      "route_id": "route-cand-smf6-0a-c123790",
+      "record_id": "rec-cand-smf6-0a-c123790",
+      "aliases": {
+        "mpn": [
+          "SMF6.0A"
+        ],
+        "lcsc": [
+          "C123790"
+        ],
+        "manufacturer": [
+          "MDD (Microdiode Semiconductor)"
+        ],
+        "function": [
+          "TVS diode",
+          "replacement candidate"
+        ]
+      },
+      "positive": [
+        "check SMF6.0A limits",
+        "audit C123790"
+      ],
+      "negative": [
+        "check SMF12A limits"
+      ]
+    },
+    {
+      "route_id": "route-cand-smaj6-5a-c87267",
+      "record_id": "rec-cand-smaj6-5a-c87267",
+      "aliases": {
+        "mpn": [
+          "SMAJ6.5A",
+          "SMAJ6.5A/TR13"
+        ],
+        "lcsc": [
+          "C87267"
+        ],
+        "manufacturer": [
+          "Brightking"
+        ],
+        "function": [
+          "TVS diode",
+          "replacement candidate"
+        ]
+      },
+      "positive": [
+        "check SMAJ6.5A limits",
+        "audit C87267"
+      ],
+      "negative": [
+        "check SMAJ6.5CA limits"
+      ]
+    },
+    {
+      "route_id": "route-cand-smaj6-0a-c5353156",
+      "record_id": "rec-cand-smaj6-0a-c5353156",
+      "aliases": {
+        "mpn": [
+          "SMAJ6.0A"
+        ],
+        "lcsc": [
+          "C5353156"
+        ],
+        "manufacturer": [
+          "FOSAN"
+        ],
+        "function": [
+          "TVS diode",
+          "replacement candidate"
+        ]
+      },
+      "positive": [
+        "check SMAJ6.0A limits",
+        "audit C5353156"
+      ],
+      "negative": [
+        "check SMAJ6.0CA limits"
+      ]
+    }
+  ]
+}
