@@ -329,7 +329,9 @@ precisely the state in which an assembly error goes unnoticed.
 
 Correctly oriented, TVS3 stands off 15 V against the rail's 12.0 V nominal — 3 V / 25 %
 margin (`fact-smaj15a-margin-plus12`, `fact-smaj15a-margin-percent`) — and its 16.7 V
-breakdown minimum stays 4.1 V above the 12.6 V band-edge proxy.
+breakdown minimum stays 4.1 V above 12.6 V, the band-edge proxy used for the CJ7912-fed
+−12 V rail (`fact-l7812cd2t-vout-band`'s 12.6 V maximum, borrowed as the magnitude proxy
+since no equivalent band is retained for the CJ7912).
 
 ### TVS placement and verification
 
@@ -388,19 +390,22 @@ regulation.
 ### PTC1 and the L7812 current-limit cascade
 
 The design intent worth recording is that **PTC1 is a backstop, not the primary limiter.**
-U6 (L7812) reacts to an overload first — a linear regulator's current limit acts
-essentially immediately, and its thermal shutdown follows within seconds — while a PTC is
-a thermal device that needs seconds to warm and trip. So in ordinary fault handling PTC1
-rarely reaches its trip point at all. It exists for the case where U6's own protection is
-bypassed or defeated: a shorted pass element, or a fault that does not route through the
-regulator.
+The two protections work on different timescales: a linear regulator's current limit is
+electronic and acts essentially at once, with thermal shutdown following as the die heats,
+whereas a PTC is a thermal device that must warm for seconds before it trips. U6 therefore
+reacts first, and in ordinary fault handling PTC1 rarely reaches its trip point at all. It
+exists for the case where U6's own protection is bypassed or defeated — a shorted pass
+element, or a fault that does not route through the regulator.
 
-| Rail current | U6 (L7812) | PTC1 | Net effect |
-|--------------|-----------|------|------------|
-| 0–1.2 A (design budget) | Normal | Below hold | Normal operation |
-| 1.2–1.5 A | Approaching its limit | Below hold, warming | Both margins being consumed |
-| 1.5–3.0 A | Current-limiting, heating | Above the 1.50 A hold, warming toward trip | Regulator acts first |
-| ≥3.0 A | Thermal shutdown | Trips (3.00 A) | Rail off until the fault clears and PTC1 cools |
+The PTC1 column below is sourced (`fact-ptc1b-ihold`, `fact-ptc1b-itrip`); the U6 column
+deliberately states no threshold, for the reason in the warning that follows.
+
+| Rail current | PTC1 state | U6's role |
+|--------------|------------|-----------|
+| 0–1.20 A (design budget) | Below hold | Normal regulation |
+| 1.20–1.50 A | Still below the 1.50 A hold | Normal regulation; rail headroom being consumed |
+| 1.50–3.00 A | Above hold, warming toward trip over seconds | U6's own limiting engages on a far shorter timescale, so it acts first |
+| ≥3.00 A | Trips at the 3.00 A trip point | Rail stays off until the fault clears and PTC1 cools |
 
 <Warning title="U6's own limit thresholds are not in this project's evidence base">
 
@@ -453,8 +458,8 @@ matters least — which is the same point the cascade above makes from the other
 ### PTC2 hold-current rationale on the +5 V rail
 
 PTC2 (mSMD110-33V, C70119) holds at **1.10 A** and trips at **2.20 A**
-(`fact-ptc2-ihold`, `fact-ptc2-itrip`) on a rail budgeted at **0.5 A** — a 2.2× hold
-margin. The gap is deliberate:
+(`fact-ptc2-ihold`, `fact-ptc2-itrip`) on a rail budgeted at **0.5 A**, so the hold
+current sits 1.1 A / 0.5 A = **2.2×** above the budget. The gap is deliberate:
 
 - 0.5 A is the specified rail budget, so a 1.1 A hold leaves better than 2× headroom for
   power-on surge and brief spikes without nuisance trips.

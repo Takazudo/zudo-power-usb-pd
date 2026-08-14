@@ -315,6 +315,15 @@ estimates — re-verify at order time.
 | R17, R18 | 5.1 kΩ | C23186 | 0603 | External Rd, rework insurance |
 | D6, D7 | PESD24VS1UB | C85382 | SOD-523 | CC ESD, enclosed/production builds only |
 
+**Rough per-board total (fitted parts only): ~$2.90.** U1 alone is ~86% of that — this is
+an inherent cost of the STUSB4500, not something Board A's split-out changes. What the
+split *does* change: this board has roughly a quarter of the single-board design's unique
+Extended-part count (U1, J1, J4, D5, D8 vs. the full board's ~20), so JLCPCB's per-unique-part
+setup/Extended fees amortize much faster on a small reorder batch — the actual point of
+"cheap, re-orderable." Fabrication, stencil, setup, and Extended-part fees are separate
+from the component total above; see [BOM](./bom.md) for the general JLCPCB fee structure
+(those figures describe the full single-board order, not Board A alone).
+
 ### J1 substitution options
 
 If `C456012` is out of stock, these 6-pin power-only USB Type-C receptacles were screened
@@ -332,17 +341,9 @@ the pad map before substituting.** Board A's footprint (`TYPE-C-SMD_TYPE-C-6P`) 
 `A5` = CC1, `B5` = CC2, `A9`/`B9` = VBUS, and `A12`/`B12` plus the four shell tabs (all
 numbered `7`) = GND — see `fact-usb-type-c-009-cc-pins` and the net table above. Most
 6-pin power-only receptacles follow the same GND–VBUS–CC1 / CC2–VBUS–GND arrangement, but
-the pad numbering is what has to match, not the physical order. A full 24-pin receptacle
-works electrically too; the 6-pin part is chosen for cost on a power-only port.
-
-**Rough per-board total (fitted parts only): ~$2.90.** U1 alone is ~86% of that — this is
-an inherent cost of the STUSB4500, not something Board A's split-out changes. What the
-split *does* change: this board has roughly a quarter of the single-board design's unique
-Extended-part count (U1, J1, J4, D5, D8 vs. the full board's ~20), so JLCPCB's per-unique-part
-setup/Extended fees amortize much faster on a small reorder batch — the actual point of
-"cheap, re-orderable." Fabrication, stencil, setup, and Extended-part fees are separate
-from the component total above; see [BOM](./bom.md) for the general JLCPCB fee structure
-(those figures describe the full single-board order, not Board A alone).
+it is the pad *numbering* that has to match, not the physical order. A full 24-pin
+receptacle carries the same power and CC contacts and would work electrically, but it
+needs its own footprint; the 6-pin part is chosen for cost on a power-only port.
 
 ## A↔B interface contract (LOCKED — copied verbatim from #90)
 
@@ -467,7 +468,7 @@ alive?") lives in [NVM Programming Setup](../inbox/nvm-programming.md).
 | Wrong output voltage | PDO configuration error | Read the NVM back over I2C and compare against the locked configuration |
 | Load switch never turns on | `VBEN` not reaching the gate network | Probe `J3` pad 8 (`VBEN`), then continuity through `R12` (56 kΩ) to `Net-(Q1-G)` |
 | Intermittent negotiation | Inadequate VDD decoupling | Check `C1` (10 µF) and `C2` (100 nF) values and their placement next to `U1.24` |
-| U1 overheating | Poor thermal/ground path | Improve via stitching under `U1.25` (EP) to the ground plane |
+| U1 overheating | Poor thermal/ground path | Add ground-plane via stitching under `U1.25` (EP) |
 | I2C not responding | Wrong device address | Confirm `U1.12`/`U1.13` (ADDR0/ADDR1) are grounded — address `0x28` |
 | No VBUS voltage sense | Pin-18 network open | Confirm `R14` (470 Ω) between `VBUS_IN` and `U1.18`; probe `TP6` against `J3` pad 4 |
 
