@@ -44,13 +44,12 @@ permissions:
   contents: read
 
 env:
-  # staged (default) tolerates absent generator specs, owner skills, and
-  # forward-test cases while board-a and board-b are still being built.
-  # Flip this single line to `strict` once the wave-9 confirm task locks
-  # the full evidence corpus for both boards — validate.py and
-  # check_forward_tests.py both accept --staged/--strict directly, so no
-  # other line in this file needs to change.
-  MODE: staged
+  # strict: the wave-9 confirm task (issue #128) locked the full evidence
+  # corpus for both boards — inventory <-> skill-dir <-> generator-spec
+  # parity, the critical-fact review, and refresh evidence are all
+  # satisfiable now. validate.py and check_forward_tests.py both accept
+  # --staged/--strict directly, so this is the only line that changed.
+  MODE: strict
 
 jobs:
   validate:
