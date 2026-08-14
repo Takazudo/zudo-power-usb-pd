@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "skill": "component-cj7912-c94173",
+  "records": [
+    {
+      "record_id": "rec-cj7912-c94173",
+      "line_id": "line-c94173",
+      "candidate_id": null,
+      "kind": "standalone",
+      "parent_record_id": null,
+      "mpn": "CJ7912",
+      "manufacturer": "JSCJ",
+      "lcsc": "C94173",
+      "package": "TO-252-3_L6.5-W5.8-P4.58-BL",
+      "source_ids": [
+        "src-cj7912-ds-identity",
+        "src-cj7912-ds-pinout",
+        "src-cj7912-ds-absmax",
+        "src-cj7912-ds-electrical",
+        "src-cj7912-ds-application",
+        "src-cj7912-ds-package",
+        "src-cj7912-project-baseline",
+        "src-cj7912-project-docs",
+        "src-cj7912-schematic"
+      ],
+      "fact_ids": [
+        "fact-cj7912-manufacturer",
+        "fact-cj7912-vout-nominal",
+        "fact-cj7912-vi-guarantee-band",
+        "fact-cj7912-iomax",
+        "fact-cj7912-pinout",
+        "fact-cj7912-vin-absmax",
+        "fact-cj7912-tj-operating-range",
+        "fact-cj7912-rthja",
+        "fact-cj7912-pd-continuous",
+        "fact-cj7912-dropout-typ",
+        "fact-cj7912-iq-max",
+        "fact-cj7912-ripple-rejection-min",
+        "fact-cj7912-ci-typical",
+        "fact-cj7912-co-typical",
+        "fact-cj7912-esr-window-not-specified",
+        "fact-cj7912-package-outline",
+        "fact-cj7912-rail-input",
+        "fact-cj7912-project-io-max",
+        "fact-cj7912-input-network",
+        "fact-cj7912-output-network",
+        "fact-cj7912-stability-project-network",
+        "fact-cj7912-rail-headroom",
+        "fact-cj7912-pd-full-load-mw",
+        "fact-cj7912-tj-rise-full-load"
+      ],
+      "interaction_ids": [
+        "int-cj7912-input-rail",
+        "int-cj7912-output-network",
+        "int-cj7912-dropout-headroom",
+        "int-cj7912-thermal-dissipation"
+      ],
+      "open_domains": [
+        "dropout-operating-point",
+        "output-capacitor-esr-stability",
+        "thermal-to252"
+      ]
+    }
+  ]
+}
