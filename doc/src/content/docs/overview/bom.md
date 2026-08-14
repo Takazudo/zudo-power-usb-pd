@@ -56,7 +56,7 @@ Total output budget: 12 V × 1.2 A + 5 V × 0.5 A + 12 V × 0.8 A = **26.5 W**.
 The L78xx family's 1.5 A rating is a property of the package, not of these rails. The
 +5 V rail is budgeted at 0.5 A and its L7805ABD2T evidence bundle records `iout-rating`
 as 0.5 A; PTC2 holds at 1.1 A, well under 1.5 A. Sizing a load against "1.5 A per rail"
-would exceed both the PTC hold currents and the 26.5 W input budget. See
+would exceed both the PTC hold currents and the 26.5 W output budget. See
 [Board B → PTC2 hold-current rationale](./board-b-synth-power.md#ptc2-hold-current-rationale-on-the-5-v-rail).
 
 </Warning>
@@ -64,10 +64,9 @@ would exceed both the PTC hold currents and the 26.5 W input budget. See
 <Note title="Performance figures below are design targets, not measurements">
 
 No rail on this design has yet been energized from a negotiated PD contract — all four
-JLCPCB orders (v1-v4) failed at USB-PD negotiation. Ripple, regulation, and accuracy
-figures on this page are design intent for the DC-DC + linear topology, and become
-measurements only after Board A bring-up. See
-[Project Status and Plan](../inbox/current-status.md).
+JLCPCB orders (v1-v4) failed at USB-PD negotiation. The efficiency and ripple figures on
+this page are design intent for the DC-DC + linear topology, and become measurements only
+after Board A bring-up. See [Project Status and Plan](../inbox/current-status.md).
 
 </Note>
 
@@ -266,8 +265,10 @@ recorded as an open bench item, **not** changed on paper.
 | **C15** | **[C1623](https://jlcpcb.com/partdetail/C1623)** | **470 nF** (CL10B474KA8NNNC) | 0603 | **$0.0036** | U7 input filter | [D6](./circuit-diagrams.mdx#diagram6-75v--5v-linear-regulator-l7805-u7) |
 | **C16** | **[C1623](https://jlcpcb.com/partdetail/C1623)** | **470 nF** (CL10B474KA8NNNC) | 0603 | **$0.0036** | U8 input filter | [D7](./circuit-diagrams.mdx#diagram7--135v---12v-linear-regulator-cj7912-u8) |
 
-U6 has **no** ceramic input capacitor: `board_b_spec.py` puts only `C14.1` and `C20.1` —
-two 470 µF / 35 V electrolytics — on the `+13.5V OUT` net alongside `U6.1`. That asymmetry
+U6 has **no** 470 nF ceramic on its input, unlike U7 and U8. The bypass parts
+`board_b_spec.py` places on the `+13.5V OUT` net alongside `U6.1` are `C14.1` and `C20.1`
+— two 470 µF / 35 V electrolytics — with the rest of that net being U2's own output filter
+(`C3.1`), the feedback network (`R1.2`, `C31.2`), and the `TP3` test pad. That asymmetry
 against U7/U8 is real, not a documentation gap.
 
 ### Ceramic output capacitors (100 nF)
@@ -380,7 +381,7 @@ revisions of the circuit-diagram page; `board_b_spec.py` fits the same 1 kΩ 080
 (C17513) at R7, R8 and R9. The +5 V indicator is therefore the dim one — ~2.2 mA against
 ~10 mA on the ±12 V rails.
 
-**Stage 4 subtotal: ~$0.81.**
+**Stage 4 subtotal: ~$0.82.**
 
 ## Stage 5: Output Connectors and Interface (Board B)
 
@@ -461,7 +462,7 @@ Full height table and enclosure implications: **[Mechanical Design](./mechanical
 The tallest parts are the D10 470 µF electrolytics at **10.2 mm**, then the FASTON
 terminals at 8.89 mm. Total board height is ~12 mm including the 1.6 mm PCB. Note that
 decision (d)'s C5/C7 swap moved those two positions from a D6.3 can to a D10 can, so
-Board B now carries **seven** D10 electrolytics (C3, C5, C7, C11, C14, C20, C21, C24, C25
+Board B now carries **nine** D10 electrolytics (C3, C5, C7, C11, C14, C20, C21, C24, C25
 are D10; C4, C22, C23 are D6.3; C9 is D8).
 
 ## Total Cost Summary
@@ -471,11 +472,11 @@ are D10; C4, C22, C23 are D6.3; C9 is D8).
 | **Stage 1** | USB-PD voltage acquisition (incl. J4) | A | **~$2.90** |
 | **Stage 2** | DC-DC converters | B | **~$2.24** |
 | **Stage 3** | Linear regulators | B | **~$0.64** |
-| **Stage 4** | Protection + indicators | B | **~$0.81** |
+| **Stage 4** | Protection + indicators | B | **~$0.82** |
 | **Stage 5** | Output connectors + J5/P1/test pads | B | **~$1.28** |
-| | **Board A total** | A | **~$2.90** |
-| | **Board B total** | B | **~$4.97** |
-| | **Both boards, components only** | | **~$7.87** |
+| | **Board A total** (Stage 1) | A | **~$2.90** |
+| | **Board B total** (Stages 2-5) | B | **~$4.98** |
+| | **Both boards, components only** | | **~$7.88** |
 
 <Note title="These totals are recomputed, and they are larger than the figures this page used to show">
 
