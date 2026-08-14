@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "skill": "component-stusb4500qtr",
+  "records": [
+    {
+      "record_id": "rec-stusb4500qtr",
+      "line_id": "line-c2678061",
+      "candidate_id": null,
+      "kind": "standalone",
+      "parent_record_id": null,
+      "mpn": "STUSB4500QTR",
+      "manufacturer": "ST (STMicroelectronics)",
+      "lcsc": "C2678061",
+      "package": "QFN-24_L4.0-W4.0-P0.50-BL-EP2.8",
+      "source_ids": [
+        "src-stusb-ds12499",
+        "src-stusb-ds12499-ratings",
+        "src-stusb-um2650",
+        "src-stusb-um2398",
+        "src-stusb-stsw004",
+        "src-stusb-ds12499-primary-attempt",
+        "src-stusb-um2650-primary-attempt",
+        "src-stusb-board-a-baseline"
+      ],
+      "fact_ids": [
+        "fact-stusb-manufacturer",
+        "fact-stusb-order-code",
+        "fact-stusb-pin-states",
+        "fact-stusb-ccdb",
+        "fact-stusb-disch",
+        "fact-stusb-vbus-vs-disch",
+        "fact-stusb-vben",
+        "fact-stusb-supplies",
+        "fact-stusb-vdd-absolute-max",
+        "fact-stusb-cc-absolute-max",
+        "fact-stusb-vbus-pin-absolute-max",
+        "fact-stusb-load-time",
+        "fact-stusb-state-sequence",
+        "fact-stusb-nvm-load",
+        "fact-stusb-volatile-pdo",
+        "fact-stusb-discharge-registers",
+        "fact-stusb-fault-status",
+        "fact-stusb-reference-design",
+        "fact-stusb-artifact",
+        "fact-stusb-endurance",
+        "fact-stusb-ds12499-primary-attempt",
+        "fact-stusb-um2650-primary-attempt",
+        "fact-stusb-vreg2v7-load",
+        "fact-stusb-pin18-path",
+        "fact-stusb-cc-termination",
+        "fact-stusb-gate-network",
+        "fact-stusb-interface-flags"
+      ],
+      "interaction_ids": [
+        "int-stusb-netlist",
+        "int-stusb-safe-power",
+        "int-stusb-nvm-verification",
+        "int-stusb-state-bench",
+        "int-stusb-cc-termination"
+      ],
+      "open_domains": [
+        "identity/package/pinout",
+        "unpowered/reset/startup/normal/fault/disconnect behavior",
+        "project NVM image and factory-state capture",
+        "NVM write endurance and production write budget",
+        "safe power/provisioning/bench discriminators",
+        "VREG_2V7 external DC loading and NVM-jig voltage matching",
+        "board-a netlist and as-built connectivity"
+      ]
+    }
+  ]
+}

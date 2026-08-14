@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "skill": "component-l7812cd2t-c13456",
+  "records": [
+    {
+      "record_id": "rec-l7812cd2t-c13456",
+      "line_id": "line-c13456",
+      "candidate_id": null,
+      "kind": "standalone",
+      "parent_record_id": null,
+      "mpn": "L7812CD2T",
+      "manufacturer": "ST (STMicroelectronics)",
+      "lcsc": "C13456",
+      "package": "TO-263-2_L10.0-W9.1-P5.08-LS15.2-TL",
+      "source_ids": [
+        "src-l7812cd2t-ds0422-identity",
+        "src-l7812cd2t-ds0422-pinout",
+        "src-l7812cd2t-ds0422-absmax",
+        "src-l7812cd2t-ds0422-thermal",
+        "src-l7812cd2t-ds0422-elec",
+        "src-l7812cd2t-ds0422-appinfo",
+        "src-l7812cd2t-project-blocker"
+      ],
+      "fact_ids": [
+        "fact-l7812cd2t-manufacturer",
+        "fact-l7812cd2t-order-code",
+        "fact-l7812cd2t-pinout",
+        "fact-l7812cd2t-vin-absmax",
+        "fact-l7812cd2t-tj-op-range",
+        "fact-l7812cd2t-rthjc",
+        "fact-l7812cd2t-rthja",
+        "fact-l7812cd2t-vout-25c",
+        "fact-l7812cd2t-vout-band",
+        "fact-l7812cd2t-dropout-typ-1a",
+        "fact-l7812cd2t-dropout-1a2",
+        "fact-l7812cd2t-vin-rail",
+        "fact-l7812cd2t-iout-rating",
+        "fact-l7812cd2t-headroom",
+        "fact-l7812cd2t-cap-input",
+        "fact-l7812cd2t-cap-output"
+      ],
+      "interaction_ids": ["int-l7812cd2t-dropout-headroom"],
+      "open_domains": ["dropout-operating-point"]
+    }
+  ]
+}

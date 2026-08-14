@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "interactions": [
+    {
+      "interaction_id": "int-ptc2-5v-rail-protection",
+      "record_ids": ["rec-ptc-msmd110-33v-c70119"],
+      "fact_ids": ["fact-ptc2-ihold", "fact-ptc2-vmax", "fact-ptc2-ihold-margin", "fact-ptc2-vmax-margin"],
+      "conditions": "PTC2 as the board-b +5V output overcurrent-protection PPTC, downstream of U7 (L7805ABD2T +5V LDO): current-hold margin against the +5V/0.5A rail budget is +0.6A and the voltage margin against the +5V nominal rail is +28V, both comfortably positive.",
+      "verdict": "PASS - primary-source confirmed"
+    }
+  ]
+}

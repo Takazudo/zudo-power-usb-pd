@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "coverage": [
+    {
+      "coverage_id": "cov-smaj15a-electrical-limits",
+      "record_id": "rec-smaj15a-c571368",
+      "domain": "electrical-limits",
+      "status": "COVERED",
+      "reason": "Standoff (15 V), breakdown (16.7-18.5 V at 1 mA), clamp (24.4 V at 16.4 A, 10/1000 us), peak pulse power (400 W), forward surge (40 A), and leakage (5 uA at 15 V) are primary-source confirmed from the exact SMAJ15A row of the High Diode family datasheet.",
+      "fact_ids": [
+        "fact-smaj15a-standoff",
+        "fact-smaj15a-breakdown",
+        "fact-smaj15a-clamp",
+        "fact-smaj15a-pppm",
+        "fact-smaj15a-ifsm",
+        "fact-smaj15a-leakage"
+      ],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-smaj15a-rail-application",
+      "record_id": "rec-smaj15a-c571368",
+      "domain": "rail-application",
+      "status": "COVERED",
+      "reason": "The +/-12 V rail standoff-margin math is recorded as calculated facts (3 V, 25% at nominal). Whether that margin is acceptable under rail tolerance and ripple is explicitly deferred to the review and decision tasks.",
+      "fact_ids": [
+        "fact-smaj15a-margin-plus12",
+        "fact-smaj15a-margin-percent"
+      ],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-smaj15a-distributor-identity",
+      "record_id": "rec-smaj15a-c571368",
+      "domain": "distributor-identity",
+      "status": "COVERED",
+      "reason": "Exact orderable C571368 is bound to High Diode SMAJ15A by the dated LCSC product page identity extract.",
+      "fact_ids": [
+        "fact-smaj15a-identity"
+      ],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-smaj15a-negative-rail-orientation",
+      "record_id": "rec-smaj15a-c571368",
+      "domain": "negative-rail-orientation",
+      "status": "OPEN",
+      "reason": "The board-b generator spec does not exist yet, so TVS3's unidirectional orientation on the -12 V rail cannot be verified against a generated netlist, ERC, or the bench; fact-smaj15a-tvs3-orientation records the open state.",
+      "fact_ids": [
+        "fact-smaj15a-tvs3-orientation"
+      ],
+      "blocking_fact_ids": [
+        "fact-smaj15a-tvs3-orientation"
+      ]
+    }
+  ]
+}

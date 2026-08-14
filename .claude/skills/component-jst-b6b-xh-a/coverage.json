@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "coverage": [
+    {
+      "coverage_id": "cov-jst-header",
+      "record_id": "rec-jst-b6b-xh-a",
+      "domain": "header identity/pitch/ratings/dimensions",
+      "status": "COVERED",
+      "reason": "Official JST XH catalog general table and B6B-XH-A row",
+      "fact_ids": [
+        "fact-jst-b6b-xh-a-manufacturer",
+        "fact-jst-b6b-xh-a-identity",
+        "fact-jst-b6b-xh-a-pitch",
+        "fact-jst-b6b-xh-a-current",
+        "fact-jst-b6b-xh-a-voltage",
+        "fact-jst-b6b-xh-a-temperature",
+        "fact-jst-b6b-xh-a-dimensions",
+        "fact-jst-b6b-xh-a-harness"
+      ],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-jst-project-map",
+      "record_id": "rec-jst-b6b-xh-a",
+      "domain": "Board A and Board B signal mapping",
+      "status": "COVERED",
+      "reason": "board-split-decision.md locks the J4 (board-a)/J5 (board-b) pinout (pins 1-2 +15V, 3 ATT, 4 PDOK, 5-6 GND) and the 2-contact current-derating math; this converts the led-lamp port's OPEN 'Board P and Board L signal mapping' domain to COVERED for zudo-pd since the interface contract is a ratified project decision, not merely a per-bundle project note.",
+      "fact_ids": ["fact-jst-b6b-xh-a-identity", "fact-jst-b6b-xh-a-dimensions", "fact-jst-b6b-xh-a-locked-contract", "fact-jst-b6b-xh-a-current-derating-math"],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-jst-harness",
+      "record_id": "rec-jst-b6b-xh-a",
+      "domain": "mating housing/contact/wire/completed harness selection",
+      "status": "OPEN",
+      "reason": "No mating BOM, wire specification, crimp process, or completed pin-to-pin harness has been selected; board-split-decision.md names candidate options (commodity pre-crimped lead, or JST XHP-6 housing + SXH-001T-P0.6 contacts) but does not commit to one.",
+      "fact_ids": ["fact-jst-b6b-xh-a-harness"],
+      "blocking_fact_ids": ["fact-jst-b6b-xh-a-harness"]
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "pin_maps": [
+    {
+      "pin_map_id": "pinmap-jst-b6b-xh-a",
+      "record_id": "rec-jst-b6b-xh-a",
+      "symbol": "B6B-XH-A",
+      "footprint": "CONN-TH_B6B-XH-A-6P",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "+15V, conductor A (paired with pin 2); identical role at J4 board-a and J5 board-b"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "+15V, conductor B (paired with pin 1); identical role at J4 board-a and J5 board-b"
+        },
+        {
+          "symbol_pin": "3",
+          "name": "3",
+          "footprint_pad": "3",
+          "function": "ATT, open-drain active-low (STUSB4500 U1.11/ATTACH); identical role at J4 board-a and J5 board-b"
+        },
+        {
+          "symbol_pin": "4",
+          "name": "4",
+          "footprint_pad": "4",
+          "function": "PDOK, open-drain active-low (STUSB4500 U1.20/POWER_OK2); identical role at J4 board-a and J5 board-b"
+        },
+        {
+          "symbol_pin": "5",
+          "name": "5",
+          "footprint_pad": "5",
+          "function": "GND, conductor A (paired return); identical role at J4 board-a and J5 board-b"
+        },
+        {
+          "symbol_pin": "6",
+          "name": "6",
+          "footprint_pad": "6",
+          "function": "GND, conductor B (paired return); identical role at J4 board-a and J5 board-b"
+        }
+      ],
+      "reviewed_by": "issue-108 worktree child (Claude Fable 5) foreground review against board-split-decision.md's LOCKED Pinout table (Decision set b); no KiCad symbol or CONN-TH_B6B-XH-A-6P footprint has been acquired yet (no B6B-XH-A entry in symbols/zudo-pd.kicad_sym, no matching .kicad_mod in footprints/kicad/zudo-power.pretty/ as of this port -- generator specs for board-a/board-b are also absent, so strict-mode KiCad pin-asset parity is not yet checkable); pin numbering here is the project's own sequential 1-6 assignment pending that KiCad asset acquisition, not a manufacturer pin-1 identification claim; independent second-reviewer pass pending"
+    }
+  ]
+}

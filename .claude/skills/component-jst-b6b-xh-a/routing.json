@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "routes": [
+    {
+      "route_id": "route-jst-b6b-xh-a",
+      "record_id": "rec-jst-b6b-xh-a",
+      "aliases": {
+        "mpn": ["B6B-XH-A(LF)(SN)", "B6B-XH-A"],
+        "lcsc": ["C144397"],
+        "manufacturer": ["JST"],
+        "function": ["board-to-board interface header", "six-circuit XH header"]
+      },
+      "positive": [
+        "B6B-XH-A(LF)(SN)",
+        "C144397",
+        "JST B6B-XH-A(LF)(SN)",
+        "board-to-board interface header B6B-XH-A(LF)(SN)"
+      ],
+      "negative": ["B5B-XH-A(LF)(SN) C999014", "S6B-XH-A", "B6B-PH"]
+    }
+  ]
+}

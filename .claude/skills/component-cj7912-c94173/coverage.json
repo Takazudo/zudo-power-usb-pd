@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "coverage": [
+    {
+      "coverage_id": "cov-cj7912-identity",
+      "record_id": "rec-cj7912-c94173",
+      "domain": "identity",
+      "status": "COVERED",
+      "reason": "Exact orderable identity confirmed from the JSCJ primary datasheet title block and package section; the LCSC C94173 tie is held by the central inventory identity lock established by the wave-2 inventory audit (#106).",
+      "fact_ids": ["fact-cj7912-manufacturer", "fact-cj7912-package-outline"],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-cj7912-pinout",
+      "record_id": "rec-cj7912-c94173",
+      "domain": "pinout",
+      "status": "COVERED",
+      "reason": "Primary pinout 1=GND / 2=IN (tab) / 3=OUT matches the board-b baseline connectivity for U8 (U8.1 GND, U8.2 -13.5V input, U8.3 output) with no remapping; negative-regulator pin order confirmed against the datasheet figures, not assumed from the 78xx convention.",
+      "fact_ids": ["fact-cj7912-pinout"],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-cj7912-absolute-maximums",
+      "record_id": "rec-cj7912-c94173",
+      "domain": "absolute-maximums",
+      "status": "COVERED",
+      "reason": "The single-page absolute-maximum table is recorded in full (Vi -30V, TOPR -40 to +125 degC); the -13.5V static rail sits 16.5V inside the input limit, and rail start-up/transient exposure is carried by int-cj7912-input-rail and the U4/D3 owner records.",
+      "fact_ids": ["fact-cj7912-vin-absmax", "fact-cj7912-tj-operating-range"],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-cj7912-electrical-output",
+      "record_id": "rec-cj7912-c94173",
+      "domain": "electrical-output",
+      "status": "COVERED",
+      "reason": "Output-voltage bands, guarantee input band, output-current capability, quiescent current, and ripple rejection are recorded from the primary electrical-characteristics table with their exact test conditions.",
+      "fact_ids": [
+        "fact-cj7912-vout-nominal",
+        "fact-cj7912-vi-guarantee-band",
+        "fact-cj7912-iomax",
+        "fact-cj7912-iq-max",
+        "fact-cj7912-ripple-rejection-min"
+      ],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-cj7912-dropout-operating-point",
+      "record_id": "rec-cj7912-c94173",
+      "domain": "dropout-operating-point",
+      "status": "OPEN",
+      "reason": "CJ guarantees the output-voltage band only for -14.5V <= Vi <= -27V and publishes dropout only as a 1.1V typical at Io=1A/25 degC with no maximum; the -13.5V project rail leaves 1.5V headroom, 1.0V short of the guaranteed band start, so regulation at the project operating point must be closed on the bench, not from this datasheet.",
+      "fact_ids": ["fact-cj7912-dropout-typ", "fact-cj7912-vi-guarantee-band", "fact-cj7912-rail-headroom"],
+      "blocking_fact_ids": ["fact-cj7912-rail-headroom"]
+    },
+    {
+      "coverage_id": "cov-cj7912-output-capacitor-esr-stability",
+      "record_id": "rec-cj7912-c94173",
+      "domain": "output-capacitor-esr-stability",
+      "status": "OPEN",
+      "reason": "The datasheet fixes only Ci=2.2uF / Co=1uF application values and contains no ESR bounds, minimum output capacitance, or stability window; the project networks (470nF+470uF in, 100nF+470uF out, post-#93 GND merge) differ from those values, so stability cannot be derived from the primary source and must be shown on the bench.",
+      "fact_ids": [
+        "fact-cj7912-ci-typical",
+        "fact-cj7912-co-typical",
+        "fact-cj7912-esr-window-not-specified",
+        "fact-cj7912-input-network",
+        "fact-cj7912-output-network",
+        "fact-cj7912-stability-project-network"
+      ],
+      "blocking_fact_ids": ["fact-cj7912-stability-project-network"]
+    },
+    {
+      "coverage_id": "cov-cj7912-thermal-to252",
+      "record_id": "rec-cj7912-c94173",
+      "domain": "thermal-to252",
+      "status": "OPEN",
+      "reason": "Only RthJA = 100 degC/W (free-air, no copper-area condition, no RthJC) is published; the computed rated-load dissipation of 1.2W implies a 120 degC junction rise, putting Tj above the +125 degC operating limit at Ta=25 degC unless the Board B layout lowers effective theta-JA well below free-air - close with a thermal measurement on the real board (the tab pour is on the -13.5V input net).",
+      "fact_ids": [
+        "fact-cj7912-rthja",
+        "fact-cj7912-pd-continuous",
+        "fact-cj7912-pd-full-load-mw",
+        "fact-cj7912-tj-rise-full-load"
+      ],
+      "blocking_fact_ids": ["fact-cj7912-pd-full-load-mw", "fact-cj7912-tj-rise-full-load"]
+    }
+  ]
+}

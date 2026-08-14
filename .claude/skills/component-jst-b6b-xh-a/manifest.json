@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "skill": "component-jst-b6b-xh-a",
+  "records": [
+    {
+      "record_id": "rec-jst-b6b-xh-a",
+      "line_id": "line-c144397",
+      "candidate_id": null,
+      "kind": "standalone",
+      "parent_record_id": null,
+      "mpn": "B6B-XH-A(LF)(SN)",
+      "manufacturer": "JST",
+      "lcsc": "C144397",
+      "package": "CONN-TH_B6B-XH-A-6P",
+      "source_ids": [
+        "src-jst-xh-catalog",
+        "src-jst-xh-header",
+        "src-jst-board-split-decision"
+      ],
+      "fact_ids": [
+        "fact-jst-b6b-xh-a-manufacturer",
+        "fact-jst-b6b-xh-a-identity",
+        "fact-jst-b6b-xh-a-pitch",
+        "fact-jst-b6b-xh-a-current",
+        "fact-jst-b6b-xh-a-voltage",
+        "fact-jst-b6b-xh-a-temperature",
+        "fact-jst-b6b-xh-a-dimensions",
+        "fact-jst-b6b-xh-a-harness",
+        "fact-jst-b6b-xh-a-locked-contract",
+        "fact-jst-b6b-xh-a-current-derating-math"
+      ],
+      "interaction_ids": [
+        "int-jst-board-map",
+        "int-jst-harness-bench"
+      ],
+      "open_domains": [
+        "mating housing/contact/wire/completed harness selection"
+      ]
+    }
+  ]
+}

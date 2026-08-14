@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "interactions": [
+    {
+      "interaction_id": "int-stusb-netlist",
+      "record_ids": ["rec-stusb4500qtr"],
+      "fact_ids": [
+        "fact-stusb-pin-states",
+        "fact-stusb-ccdb",
+        "fact-stusb-disch",
+        "fact-stusb-vbus-vs-disch",
+        "fact-stusb-vben",
+        "fact-stusb-vreg2v7-load",
+        "fact-stusb-pin18-path",
+        "fact-stusb-cc-termination",
+        "fact-stusb-gate-network",
+        "fact-stusb-interface-flags"
+      ],
+      "conditions": "Assert the zudo-pd board-a baseline nets exactly: U1.24 (VDD) sits directly on VBUS_IN with C1/C2 decoupling; U1.18 reaches VBUS_IN only through R14 470R with TP6 on the node; U1.9 (DISCH) reaches VBUS_OUT only through R13 470R; U1.16 (VBEN) drives the Q1 gate network (R12 56k series, R11 100k pull-up to VBUS_IN, C35 100n soft-start); U1.1/U1.5 bridge through fitted 0R R19/R20 to CC1/CC2 while R17/R18 external Rd and D6/D7 CC clamps stay DNP; U1.11 (ATT) lands on J3.6 and J4.3 and U1.20 (PDOK) on J3.7 and J4.4 with no on-board pull-ups; U1.6 (RESET), U1.10, U1.12/U1.13 (ADDR, I2C 0x28), U1.22 (VSYS) and U1.25 (EP) are grounded; U1.3 NC and U1.14/U1.15/U1.17/U1.19 float; U1.23 (VREG_2V7) also feeds the R15/R16 I2C pull-ups and pogo pad J3.3, an external DC load beyond decoupling that DS12499 does not yet authorize",
+      "verdict": "UNSOURCED"
+    },
+    {
+      "interaction_id": "int-stusb-safe-power",
+      "record_ids": ["rec-stusb4500qtr"],
+      "fact_ids": [
+        "fact-stusb-supplies",
+        "fact-stusb-load-time",
+        "fact-stusb-vben"
+      ],
+      "conditions": "First power with the J4 load disconnected and a current-limited source on VBUS_IN; board-a grounds VSYS, so supply is VDD-only within the documented 4.1..22 V range; use a common-ground I2C programmer on the J2 pogo interface, wait beyond TLOAD, and confirm the Q1 gate stays deasserted while detached before attaching a compliant PD source",
+      "verdict": "NEEDS BENCH"
+    },
+    {
+      "interaction_id": "int-stusb-nvm-verification",
+      "record_ids": ["rec-stusb4500qtr"],
+      "fact_ids": [
+        "fact-stusb-nvm-load",
+        "fact-stusb-volatile-pdo",
+        "fact-stusb-artifact",
+        "fact-stusb-endurance"
+      ],
+      "conditions": "Capture factory 40 bytes; diff intended normalized 40-byte image; write once within verified endurance; read all 40 bytes; reset and read; remove all power long enough for rails to collapse and read again; decode PDO/polarity/discharge fields and negotiate each intended profile",
+      "verdict": "NEEDS BENCH"
+    },
+    {
+      "interaction_id": "int-stusb-state-bench",
+      "record_ids": ["rec-stusb4500qtr"],
+      "fact_ids": [
+        "fact-stusb-state-sequence",
+        "fact-stusb-discharge-registers",
+        "fact-stusb-fault-status",
+        "fact-stusb-vben"
+      ],
+      "conditions": "Observe unpowered Rd, reset Hi-Z, startup load, attach/negotiation, SNK_READY, detach, hard reset, lower-PDO transition, forced fault, VBUS discharge, and VBUS_EN_SNK plus ATT/PDOK polarity with scope and register snapshots, probing through the J3 debug pads and TP1/TP2/TP6",
+      "verdict": "NEEDS BENCH"
+    },
+    {
+      "interaction_id": "int-stusb-cc-termination",
+      "record_ids": ["rec-stusb4500qtr"],
+      "fact_ids": [
+        "fact-stusb-ccdb",
+        "fact-stusb-cc-termination"
+      ],
+      "conditions": "R19/R20 0R bridges implement ST's dead-battery sink topology (CC1DB to CC1, CC2DB to CC2) on board-a; R17/R18 5.1k external Rd stay DNP because fitting them parallels the always-on internal Rd to about 2.55k effective and leaves the Type-C sink window (the v4 blocker); D6/D7 PESD24VS1UB CC clamps stay DNP for bring-up builds (when fitted, cathode faces CC and anode GND; their component evidence lives in the component-pesd24vs1ub-c85382 owner); re-audit the termination before fitting any DNP CC part",
+      "verdict": "NEEDS BENCH"
+    }
+  ]
+}

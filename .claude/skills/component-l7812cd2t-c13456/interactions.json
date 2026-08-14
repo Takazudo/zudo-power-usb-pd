@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "interactions": [
+    {
+      "interaction_id": "int-l7812cd2t-dropout-headroom",
+      "record_ids": ["rec-l7812cd2t-c13456"],
+      "fact_ids": [
+        "fact-l7812cd2t-headroom",
+        "fact-l7812cd2t-dropout-typ-1a",
+        "fact-l7812cd2t-dropout-1a2",
+        "fact-l7812cd2t-vin-rail",
+        "fact-l7812cd2t-iout-rating"
+      ],
+      "conditions": "U6 operating point on Board B: +13.5 V DC-DC rail input, 12 V output, 1.2 A rated load. Available headroom 1.5 V vs Vd 2 V typical specified only at IO = 1 A, TJ = 25 degC, with no guaranteed dropout at any current and a regulation guarantee band starting at VI = 14.5 V. The open Board-B blocker (board-split decision A5 row 1) bench-gates this point: measure a real L7812 at 1.2 A from a 13.5 V source before locking the rail setpoint",
+      "verdict": "NEEDS BENCH"
+    }
+  ]
+}

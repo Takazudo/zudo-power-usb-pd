@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "pin_maps": [
+    {
+      "pin_map_id": "pinmap-sd05-c502527",
+      "record_id": "rec-sd05-c502527",
+      "symbol": "SD05_C502527",
+      "footprint": "SOD-323_L1.8-W1.3-LS2.5-FD",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "A",
+          "footprint_pad": "1",
+          "function": "anode"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "K",
+          "footprint_pad": "2",
+          "function": "cathode (band end)"
+        }
+      ],
+      "reviewed_by": "child-114 foreground review against symbols/zudo-pd.kicad_sym SD05_C502527 (pin 1=A, pin 2=K) and footprints/kicad/zudo-power.pretty/SOD-323_L1.8-W1.3-LS2.5-FD.kicad_mod (pads 1, 2); generator-spec lock pending"
+    },
+    {
+      "pin_map_id": "pinmap-cand-smf6-0a-c123790",
+      "record_id": "rec-cand-smf6-0a-c123790",
+      "symbol": "SMF6.0A_C123790",
+      "footprint": "SOD-123FL_L2.8-W1.8-LS3.7-RD",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "K",
+          "footprint_pad": "1",
+          "function": "cathode (band end)"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "A",
+          "footprint_pad": "2",
+          "function": "anode"
+        }
+      ],
+      "reviewed_by": "child-114 prospective mapping for an unplaced replacement candidate: no KiCad symbol exists yet; polarity band denotes cathode per the MDD SMF datasheet outline figure; the listed repository footprint SOD-123FL_L2.8-W1.8-LS3.7-RD is the intended landing pattern; numbering is finalized at symbol import if the candidate is selected"
+    },
+    {
+      "pin_map_id": "pinmap-cand-smaj6-5a-c87267",
+      "record_id": "rec-cand-smaj6-5a-c87267",
+      "symbol": "SMAJ6.5A_C87267",
+      "footprint": "D-FLAT_L4.3-W2.6-LS5.3-RD",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "C",
+          "footprint_pad": "1",
+          "function": "cathode (band end)"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "A",
+          "footprint_pad": "2",
+          "function": "anode"
+        }
+      ],
+      "reviewed_by": "child-114 prospective mapping for an unplaced replacement candidate: no KiCad symbol exists yet; cathode band per the Brightking SMAJ datasheet; the SMA/D-FLAT repository footprint (shared with SMAJ15A/SMAJ20A) is the intended landing pattern; numbering is finalized at symbol import if the candidate is selected"
+    },
+    {
+      "pin_map_id": "pinmap-cand-smaj6-0a-c5353156",
+      "record_id": "rec-cand-smaj6-0a-c5353156",
+      "symbol": "SMAJ6.0A_C5353156",
+      "footprint": "D-FLAT_L4.3-W2.6-LS5.3-RD",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "C",
+          "footprint_pad": "1",
+          "function": "cathode (band end)"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "A",
+          "footprint_pad": "2",
+          "function": "anode"
+        }
+      ],
+      "reviewed_by": "child-114 prospective mapping for an unplaced replacement candidate: no KiCad symbol exists yet; cathode band per the FOSAN SMAJ datasheet outline; the SMA/D-FLAT repository footprint (shared with SMAJ15A/SMAJ20A) is the intended landing pattern; numbering is finalized at symbol import if the candidate is selected"
+    }
+  ]
+}

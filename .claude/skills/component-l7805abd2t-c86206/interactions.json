@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "interactions": [
+    {
+      "interaction_id": "int-l7805abd2t-dropout-headroom",
+      "record_ids": ["rec-l7805abd2t-c86206"],
+      "fact_ids": [
+        "fact-l7805abd2t-headroom",
+        "fact-l7805abd2t-dropout-typ-1a",
+        "fact-l7805abd2t-dropout-05a",
+        "fact-l7805abd2t-vin-rail",
+        "fact-l7805abd2t-iout-rating"
+      ],
+      "conditions": "U7 operating point on Board B: +7.5 V DC-DC rail input, 5 V output, 0.5 A rated load. Available headroom 2.5 V vs Vd 2 V typical specified only at IO = 1 A, TJ = 25 degC; no guaranteed dropout at any current, and the rail equals the exact lower edge of the DS0422 guaranteed input band (VI = 7.5 to 18 V), leaving zero guaranteed margin for DC-DC tolerance/ripple. Bench-confirm regulation margin when the L7812 bench gate is exercised",
+      "verdict": "NEEDS BENCH"
+    }
+  ]
+}

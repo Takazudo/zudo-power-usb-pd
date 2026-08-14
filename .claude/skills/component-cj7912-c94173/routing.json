@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "routes": [
+    {
+      "route_id": "route-cj7912-c94173",
+      "record_id": "rec-cj7912-c94173",
+      "aliases": {
+        "mpn": ["CJ7912"],
+        "lcsc": ["C94173"],
+        "manufacturer": ["JSCJ"],
+        "function": ["-12V negative linear regulator", "board-b U8 -12V LDO"]
+      },
+      "positive": [
+        "audit CJ7912 dropout margin",
+        "check C94173 output capacitor stability",
+        "JSCJ CJ7912 abs max input rating",
+        "board-b U8 CJ7912 thermal margin"
+      ],
+      "negative": [
+        "check LM7912 dropout",
+        "MC7912 output capacitor ESR window",
+        "L7912 abs max input",
+        "L7912CV substitution data",
+        "STMicroelectronics CJ7912 datasheet",
+        "CJ7912 from ST",
+        "borrow 7912-family dropout folklore"
+      ]
+    }
+  ]
+}

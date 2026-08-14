@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "interactions": [
+    {
+      "interaction_id": "int-ptc3-neg12v-rail-protection",
+      "record_ids": ["rec-ptc-bsmd1206-150-16v-c883133"],
+      "fact_ids": ["fact-ptc3-ihold", "fact-ptc3-vmax", "fact-ptc3-ihold-margin", "fact-ptc3-vmax-margin"],
+      "conditions": "PTC3 as the board-b -12V output overcurrent-protection PPTC, downstream of U8 (CJ7912 -12V LDO): current-hold margin against the -12V/0.8A rail budget magnitude is +0.7A and the voltage margin against the 12V nominal rail magnitude is +4V (33% headroom) -- positive but the tightest of board-b's three PTCs.",
+      "verdict": "PASS - primary-source confirmed"
+    }
+  ]
+}

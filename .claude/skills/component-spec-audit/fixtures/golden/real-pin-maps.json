@@ -144,6 +144,548 @@
       "reviewer": "issue-110 author review; independent manager review pending"
     },
     {
+      "record_id": "rec-l7812cd2t-c13456",
+      "pin_map_id": "pinmap-l7812cd2t-c13456",
+      "canonical_sha256": "f09a2459a6c3b1476f9930da1c0aedec7f3646173d96b2f5a2d249be76507cd5",
+      "evidence_fact_ids": [
+        "fact-l7812cd2t-pinout"
+      ],
+      "trust_status": "TRUSTED",
+      "critical_pins": [
+        {
+          "symbol_pin": "1",
+          "name": "IN",
+          "footprint_pad": "1",
+          "function": "input lead (DS0422 Figure 2 D2PAK top view: lower lead = INPUT)"
+        },
+        {
+          "symbol_pin": "3",
+          "name": "OUT",
+          "footprint_pad": "3",
+          "function": "output lead (DS0422 Figure 2 D2PAK top view: upper lead = OUTPUT)"
+        },
+        {
+          "symbol_pin": "4",
+          "name": "GND",
+          "footprint_pad": "4",
+          "function": "ground tab (DS0422 Figure 2: tab = GND, middle lead position cut; this footprint numbers the 8.40 x 10.57 mm tab pad 4 and has no pad 2)"
+        }
+      ],
+      "reviewer": "child-112 (issue #112)"
+    },
+    {
+      "record_id": "rec-l7805abd2t-c86206",
+      "pin_map_id": "pinmap-l7805abd2t-c86206",
+      "canonical_sha256": "47887f8ffcd40c629dfb728693381a20aa9be621c588b3555434430d3924e38c",
+      "evidence_fact_ids": [
+        "fact-l7805abd2t-pinout"
+      ],
+      "trust_status": "TRUSTED",
+      "critical_pins": [
+        {
+          "symbol_pin": "1",
+          "name": "IN",
+          "footprint_pad": "1",
+          "function": "input lead (DS0422 Figure 2 D2PAK top view: lower lead = INPUT)"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "GND",
+          "footprint_pad": "2",
+          "function": "ground tab (DS0422 Figure 2: tab = GND, middle lead position cut; this footprint numbers the 9.00 x 10.20 mm tab pad 2)"
+        },
+        {
+          "symbol_pin": "3",
+          "name": "OUT",
+          "footprint_pad": "3",
+          "function": "output lead (DS0422 Figure 2 D2PAK top view: upper lead = OUTPUT)"
+        }
+      ],
+      "reviewer": "child-112 (issue #112)"
+    },
+    {
+      "record_id": "rec-stusb4500qtr",
+      "pin_map_id": "pinmap-stusb4500qtr",
+      "canonical_sha256": "d3337ac911b24a312359737028faedcece369f55a6838818233fd9d923194908",
+      "evidence_fact_ids": [
+        "fact-stusb-pin-states"
+      ],
+      "trust_status": "UNSOURCED",
+      "critical_pins": [
+        {
+          "symbol_pin": "1",
+          "name": "CC1DB",
+          "footprint_pad": "1",
+          "function": "dead-battery enable CC1"
+        },
+        {
+          "symbol_pin": "10",
+          "name": "GND",
+          "footprint_pad": "10",
+          "function": "ground"
+        },
+        {
+          "symbol_pin": "11",
+          "name": "ATTACH",
+          "footprint_pad": "11",
+          "function": "active-low open-drain attach"
+        },
+        {
+          "symbol_pin": "12",
+          "name": "ADDR0",
+          "footprint_pad": "12",
+          "function": "I2C address"
+        },
+        {
+          "symbol_pin": "13",
+          "name": "ADDR1",
+          "footprint_pad": "13",
+          "function": "I2C address"
+        },
+        {
+          "symbol_pin": "14",
+          "name": "POWER_OK3",
+          "footprint_pad": "14",
+          "function": "active-low open-drain contract flag"
+        },
+        {
+          "symbol_pin": "15",
+          "name": "GPIO",
+          "footprint_pad": "15",
+          "function": "configurable active-low open-drain"
+        },
+        {
+          "symbol_pin": "16",
+          "name": "VBUS_EN_SNK",
+          "footprint_pad": "16",
+          "function": "active-low HV open-drain sink-path enable"
+        },
+        {
+          "symbol_pin": "17",
+          "name": "A_B_SIDE",
+          "footprint_pad": "17",
+          "function": "active-low open-drain orientation"
+        },
+        {
+          "symbol_pin": "18",
+          "name": "VBUS_VS_DISCH",
+          "footprint_pad": "18",
+          "function": "VBUS sense/monitor/internal discharge"
+        },
+        {
+          "symbol_pin": "19",
+          "name": "ALERT",
+          "footprint_pad": "19",
+          "function": "I2C interrupt active-low OD"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "CC1",
+          "footprint_pad": "2",
+          "function": "configuration channel 1"
+        },
+        {
+          "symbol_pin": "20",
+          "name": "POWER_OK2",
+          "footprint_pad": "20",
+          "function": "HV active-low OD contract flag"
+        },
+        {
+          "symbol_pin": "21",
+          "name": "VREG_1V2",
+          "footprint_pad": "21",
+          "function": "1.2 V regulator decoupling"
+        },
+        {
+          "symbol_pin": "22",
+          "name": "VSYS",
+          "footprint_pad": "22",
+          "function": "system supply or ground if unused"
+        },
+        {
+          "symbol_pin": "23",
+          "name": "VREG_2V7",
+          "footprint_pad": "23",
+          "function": "2.7 V regulator decoupling"
+        },
+        {
+          "symbol_pin": "24",
+          "name": "VDD",
+          "footprint_pad": "24",
+          "function": "VBUS-side supply"
+        },
+        {
+          "symbol_pin": "25",
+          "name": "EP",
+          "footprint_pad": "25",
+          "function": "exposed-pad ground"
+        },
+        {
+          "symbol_pin": "3",
+          "name": "NC",
+          "footprint_pad": "3",
+          "function": "no connect"
+        },
+        {
+          "symbol_pin": "4",
+          "name": "CC2",
+          "footprint_pad": "4",
+          "function": "configuration channel 2"
+        },
+        {
+          "symbol_pin": "5",
+          "name": "CC2DB",
+          "footprint_pad": "5",
+          "function": "dead-battery enable CC2"
+        },
+        {
+          "symbol_pin": "6",
+          "name": "RESET",
+          "footprint_pad": "6",
+          "function": "active-high reset"
+        },
+        {
+          "symbol_pin": "7",
+          "name": "SCL",
+          "footprint_pad": "7",
+          "function": "I2C clock"
+        },
+        {
+          "symbol_pin": "8",
+          "name": "SDA",
+          "footprint_pad": "8",
+          "function": "I2C data open drain"
+        },
+        {
+          "symbol_pin": "9",
+          "name": "DISCH",
+          "footprint_pad": "9",
+          "function": "internal discharge input or external discharge active-low OD"
+        }
+      ],
+      "reviewer": "issue-107 foreground port review against the retained DS12499 Rev 8 mirror pin table and the board-a baseline"
+    },
+    {
+      "record_id": "rec-cj7912-c94173",
+      "pin_map_id": "pinmap-cj7912-c94173",
+      "canonical_sha256": "21830855459c86325179dca45a823549481407d6b903463a1419bb9c51970339",
+      "evidence_fact_ids": [
+        "fact-cj7912-pinout"
+      ],
+      "trust_status": "TRUSTED",
+      "critical_pins": [
+        {
+          "symbol_pin": "1",
+          "name": "GND",
+          "footprint_pad": "1",
+          "function": "ground reference"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "IN",
+          "footprint_pad": "2",
+          "function": "negative input from the -13.5V rail; package tab position"
+        },
+        {
+          "symbol_pin": "3",
+          "name": "OUT",
+          "footprint_pad": "3",
+          "function": "regulated -12V output"
+        }
+      ],
+      "reviewer": "issue-113 worktree child (Claude Fable 5), datasheet-figure review; negative-regulator pin order is polarity-critical and differs from 78xx"
+    },
+    {
+      "record_id": "rec-umw-ao3401a-c347476",
+      "pin_map_id": "pinmap-umw-ao3401a-c347476",
+      "canonical_sha256": "3af3ebf6ea9a57386fcfe0ecc53724e9a3223fc14bc47c6ce197975a297f8c08",
+      "evidence_fact_ids": [
+        "fact-umw-ao3401a-manufacturer",
+        "fact-umw-ao3401a-pinout"
+      ],
+      "trust_status": "TRUSTED",
+      "critical_pins": [
+        {
+          "symbol_pin": "1",
+          "name": "G",
+          "footprint_pad": "1",
+          "function": "gate, Net-(Q1-G) (R11 pull-up to VBUS_IN, R12 series from STUSB4500 VBEN)"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "S",
+          "footprint_pad": "2",
+          "function": "source, VBUS_IN"
+        },
+        {
+          "symbol_pin": "3",
+          "name": "D",
+          "footprint_pad": "3",
+          "function": "drain, VBUS_OUT"
+        }
+      ],
+      "reviewer": "issue-108 worktree child (Claude Fable 5) foreground review against symbols/zudo-pd.kicad_sym AO3401A_C347476 (pin 1=G, pin 2=S, pin 3=D) and footprints/kicad/zudo-power.pretty/SOT-23_L2.9-W1.3-P1.90-LS2.4-BR.kicad_mod (pads 1,2,3, all-primary evidence); independent second-reviewer pass pending"
+    },
+    {
+      "record_id": "rec-high-diode-smaj20a-c571370",
+      "pin_map_id": "pinmap-high-diode-smaj20a-c571370",
+      "canonical_sha256": "4b6d8e7efebc8b99a92213795ae457e0d53e9c6cc20e883e070ab1780b73a5e7",
+      "evidence_fact_ids": [
+        "fact-high-diode-smaj20a-manufacturer",
+        "fact-high-diode-smaj20a-polarity"
+      ],
+      "trust_status": "TRUSTED",
+      "critical_pins": [
+        {
+          "symbol_pin": "1",
+          "name": "C",
+          "footprint_pad": "1",
+          "function": "cathode, D5.1 on VBUS_IN"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "A",
+          "footprint_pad": "2",
+          "function": "anode, D5.2 on GND"
+        }
+      ],
+      "reviewer": "issue-108 worktree child (Claude Fable 5) foreground review against symbols/zudo-pd.kicad_sym SMAJ20A_C571370 (pin 1=C, pin 2=A, all-primary evidence) and footprints/kicad/zudo-power.pretty/D-FLAT_L4.3-W2.6-LS5.3-RD.kicad_mod (pads 1,2); independent second-reviewer pass pending"
+    },
+    {
+      "record_id": "rec-jst-b6b-xh-a",
+      "pin_map_id": "pinmap-jst-b6b-xh-a",
+      "canonical_sha256": "ea17b874989c073b1f1e159d5f50a3f7ac676fed4a1bddf9b91eebbe9c3a3ee8",
+      "evidence_fact_ids": [
+        "fact-jst-b6b-xh-a-locked-contract",
+        "fact-jst-b6b-xh-a-identity"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "+15V, conductor A (paired with pin 2); identical role at J4 board-a and J5 board-b"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "+15V, conductor B (paired with pin 1); identical role at J4 board-a and J5 board-b"
+        },
+        {
+          "symbol_pin": "3",
+          "name": "3",
+          "footprint_pad": "3",
+          "function": "ATT, open-drain active-low (STUSB4500 U1.11/ATTACH); identical role at J4 board-a and J5 board-b"
+        },
+        {
+          "symbol_pin": "4",
+          "name": "4",
+          "footprint_pad": "4",
+          "function": "PDOK, open-drain active-low (STUSB4500 U1.20/POWER_OK2); identical role at J4 board-a and J5 board-b"
+        },
+        {
+          "symbol_pin": "5",
+          "name": "5",
+          "footprint_pad": "5",
+          "function": "GND, conductor A (paired return); identical role at J4 board-a and J5 board-b"
+        },
+        {
+          "symbol_pin": "6",
+          "name": "6",
+          "footprint_pad": "6",
+          "function": "GND, conductor B (paired return); identical role at J4 board-a and J5 board-b"
+        }
+      ],
+      "reviewer": "issue-108 worktree child (Claude Fable 5) foreground review against board-split-decision.md's LOCKED Pinout table; PROJECT-LOCKED because evidence is the project's own locked interface decision, not manufacturer-primary pin-1 identification, and no KiCad symbol/footprint exists yet to cross-check; independent second-reviewer pass pending"
+    },
+    {
+      "record_id": "rec-smaj15a-c571368",
+      "pin_map_id": "pinmap-smaj15a-c571368",
+      "canonical_sha256": "9b5387bac8d9af7c5c7daf7e7208af40c46a458c2dc66a8d53c4c06dcc888855",
+      "evidence_fact_ids": [
+        "fact-smaj15a-polarity"
+      ],
+      "trust_status": "TRUSTED",
+      "critical_pins": [
+        {
+          "symbol_pin": "1",
+          "name": "C",
+          "footprint_pad": "1",
+          "function": "cathode (color band end)"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "A",
+          "footprint_pad": "2",
+          "function": "anode"
+        }
+      ],
+      "reviewer": "x-wt-teams manager, merge-time parity lock: 2-terminal TVS/ESD pin set re-reviewed against the bundle pin map and the KiCad symbol/footprint it names; upgraded to TRUSTED on child-114's suggestion (primary-PASS polarity fact)"
+    },
+    {
+      "record_id": "rec-sd05-c502527",
+      "pin_map_id": "pinmap-sd05-c502527",
+      "canonical_sha256": "a7e7e418e1922ad5e84b5bc870d2bb4fda38f196ab73adb415f6ff52b2da74a8",
+      "evidence_fact_ids": [
+        "fact-sd05-manufacturer",
+        "fact-sd05-identity"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [
+        {
+          "symbol_pin": "1",
+          "name": "A",
+          "footprint_pad": "1",
+          "function": "anode"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "K",
+          "footprint_pad": "2",
+          "function": "cathode (band end)"
+        }
+      ],
+      "reviewer": "x-wt-teams manager, merge-time parity lock: 2-terminal TVS/ESD pin set re-reviewed against the bundle pin map and the KiCad symbol/footprint it names"
+    },
+    {
+      "record_id": "rec-cand-smf6-0a-c123790",
+      "pin_map_id": "pinmap-cand-smf6-0a-c123790",
+      "canonical_sha256": "2a6658173444910269f5880d7f0036021c37075fe6f5267f5c19ba2713bb0a4f",
+      "evidence_fact_ids": [
+        "fact-cand-smf6-0a-manufacturer",
+        "fact-cand-smf6-0a-identity"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [
+        {
+          "symbol_pin": "1",
+          "name": "K",
+          "footprint_pad": "1",
+          "function": "cathode (band end)"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "A",
+          "footprint_pad": "2",
+          "function": "anode"
+        }
+      ],
+      "reviewer": "x-wt-teams manager, merge-time parity lock: 2-terminal TVS/ESD pin set re-reviewed against the bundle pin map and the KiCad symbol/footprint it names"
+    },
+    {
+      "record_id": "rec-cand-smaj6-5a-c87267",
+      "pin_map_id": "pinmap-cand-smaj6-5a-c87267",
+      "canonical_sha256": "ab3f14df60a02383698be17b6aecb5c8a6c8785ea772ea88b06dc0e8fbc5311d",
+      "evidence_fact_ids": [
+        "fact-cand-smaj6-5a-manufacturer",
+        "fact-cand-smaj6-5a-identity"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [
+        {
+          "symbol_pin": "1",
+          "name": "C",
+          "footprint_pad": "1",
+          "function": "cathode (band end)"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "A",
+          "footprint_pad": "2",
+          "function": "anode"
+        }
+      ],
+      "reviewer": "x-wt-teams manager, merge-time parity lock: 2-terminal TVS/ESD pin set re-reviewed against the bundle pin map and the KiCad symbol/footprint it names"
+    },
+    {
+      "record_id": "rec-cand-smaj6-0a-c5353156",
+      "pin_map_id": "pinmap-cand-smaj6-0a-c5353156",
+      "canonical_sha256": "15ec67bb896faed6188ff41ed9b6efc76f10df287f441aad85fcde3022573973",
+      "evidence_fact_ids": [
+        "fact-cand-smaj6-0a-manufacturer",
+        "fact-cand-smaj6-0a-identity"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [
+        {
+          "symbol_pin": "1",
+          "name": "C",
+          "footprint_pad": "1",
+          "function": "cathode (band end)"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "A",
+          "footprint_pad": "2",
+          "function": "anode"
+        }
+      ],
+      "reviewer": "x-wt-teams manager, merge-time parity lock: 2-terminal TVS/ESD pin set re-reviewed against the bundle pin map and the KiCad symbol/footprint it names"
+    },
+    {
+      "record_id": "rec-pesd24vs1ub-c85382",
+      "pin_map_id": "pinmap-pesd24vs1ub-c85382",
+      "canonical_sha256": "fe24b39f57e4f667b2fc9d7e09c66279f548c1a1a81c6a1b3dbbb6c28e49a8f1",
+      "evidence_fact_ids": [
+        "fact-pesd24vs1ub-manufacturer",
+        "fact-pesd24vs1ub-identity"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [
+        {
+          "symbol_pin": "1",
+          "name": "K",
+          "footprint_pad": "1",
+          "function": "cathode (marking bar indicates pin 1)"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "A",
+          "footprint_pad": "2",
+          "function": "anode"
+        }
+      ],
+      "reviewer": "x-wt-teams manager, merge-time parity lock: 2-terminal TVS/ESD pin set re-reviewed against the bundle pin map and the KiCad symbol/footprint it names"
+    },
+    {
+      "record_id": "rec-ptc-smd1210p200tf-c20808",
+      "pin_map_id": "pinmap-ptc1-smd1210p200tf-c20808",
+      "canonical_sha256": "a149b5ac0ddec1087d1c83fd673e5bdacd9ba07f8f79dff4d5105055f36a20ea",
+      "evidence_fact_ids": [
+        "fact-ptc1-manufacturer",
+        "fact-ptc1-vmax"
+      ],
+      "trust_status": "TRUSTED",
+      "critical_pins": [],
+      "reviewer": "issue-115 worktree child (Claude Sonnet 5) foreground self-review against symbols/zudo-pd.kicad_sym SMD1210P200TF (pin 1, pin 2, generic names) and footprints/kicad/zudo-power.pretty/F1210.kicad_mod (pad 1, pad 2, 2-terminal unpolarized PPTC); independent second-reviewer pass pending"
+    },
+    {
+      "record_id": "rec-ptc-msmd110-33v-c70119",
+      "pin_map_id": "pinmap-ptc2-msmd110-33v-c70119",
+      "canonical_sha256": "1e102282d978e18f7f76afb93723586e0e87c58111a589219d6ba0f21da77952",
+      "evidence_fact_ids": [
+        "fact-ptc2-manufacturer",
+        "fact-ptc2-ihold"
+      ],
+      "trust_status": "TRUSTED",
+      "critical_pins": [],
+      "reviewer": "issue-115 worktree child (Claude Sonnet 5) foreground self-review against symbols/zudo-pd.kicad_sym mSMD110-33V (pin 1, pin 2, generic names) and footprints/kicad/zudo-power.pretty/F1812.kicad_mod (pad 1, pad 2, 2-terminal unpolarized PPTC); independent second-reviewer pass pending"
+    },
+    {
+      "record_id": "rec-ptc-bsmd1206-150-16v-c883133",
+      "pin_map_id": "pinmap-ptc3-bsmd1206-150-16v-c883133",
+      "canonical_sha256": "7a5b5062b5de2b3439da3e3e17bc92d1a3e11adbc85b1346b2062657f1706406",
+      "evidence_fact_ids": [
+        "fact-ptc3-manufacturer",
+        "fact-ptc3-ihold"
+      ],
+      "trust_status": "TRUSTED",
+      "critical_pins": [],
+      "reviewer": "issue-115 worktree child (Claude Sonnet 5) foreground self-review against symbols/zudo-pd.kicad_sym BSMD1206-150-16V (pin 1, pin 2, generic names) and footprints/kicad/zudo-power.pretty/F1206.kicad_mod (pad 1, pad 2, 2-terminal unpolarized PPTC); independent second-reviewer pass pending"
+    },
+    {
       "record_id": "rec-faston-c591344",
       "pin_map_id": "pinmap-faston-c591344",
       "canonical_sha256": "518cacce61c6be104e6550e4388696f4fe95b09d5b77a6c9395ede7b9dbb8e0e",

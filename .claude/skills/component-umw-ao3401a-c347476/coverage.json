@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "coverage": [
+    {
+      "coverage_id": "cov-ao3401a-identity",
+      "record_id": "rec-umw-ao3401a-c347476",
+      "domain": "exact vendor identity/package/pinout",
+      "status": "COVERED",
+      "reason": "UMW document title and pin figure confirm the exact C347476 identity and 1-Gate/2-Source/3-Drain pin figure.",
+      "fact_ids": ["fact-umw-ao3401a-manufacturer", "fact-umw-ao3401a-pinout"],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-ao3401a-electrical-limits",
+      "record_id": "rec-umw-ao3401a-c347476",
+      "domain": "polarity/ratings/threshold/RDS(on)/body diode",
+      "status": "COVERED",
+      "reason": "UMW absolute maximum and electrical tables supply VDS, VGS, current, RDS(on), threshold and body-diode limits.",
+      "fact_ids": [
+        "fact-umw-ao3401a-vds",
+        "fact-umw-ao3401a-vgs",
+        "fact-umw-ao3401a-current",
+        "fact-umw-ao3401a-rdson",
+        "fact-umw-ao3401a-threshold",
+        "fact-umw-ao3401a-body-diode",
+        "fact-umw-ao3401a-thermal"
+      ],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-ao3401a-pdo3-exposure",
+      "record_id": "rec-umw-ao3401a-c347476",
+      "domain": "20V-PD-contract Q1 gate overstress exposure",
+      "status": "COVERED",
+      "reason": "The board-a Q1 gate network (R11 100k/R12 56k) and the AO3401A's +/-12V gate abs-max are both documented, and the calculated exposure under a factory-default STUSB4500 PDO3=20V precondition (fact-umw-ao3401a-vgs-pdo3-margin, BLOCKER - deterministic spec violation) is recorded. The mitigating provision is a separate wave-6 decision-task output, not a documentation gap, so this domain is covered by evidence even though the finding is unfavorable.",
+      "fact_ids": [
+        "fact-umw-ao3401a-vgs",
+        "fact-umw-ao3401a-gate-network",
+        "fact-umw-ao3401a-gate-resistor-values",
+        "fact-umw-ao3401a-vgs-pdo3-margin"
+      ],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-ao3401a-thermal",
+      "record_id": "rec-umw-ao3401a-c347476",
+      "domain": "application SOA/thermal/inrush behavior",
+      "status": "OPEN",
+      "reason": "UMW thermal rows and SOA figures are available, but installed copper, inrush waveform, negotiated VBUS and temperature require bench evidence.",
+      "fact_ids": ["fact-umw-ao3401a-soa"],
+      "blocking_fact_ids": ["fact-umw-ao3401a-soa"]
+    },
+    {
+      "coverage_id": "cov-ao3401a-project-netlist",
+      "record_id": "rec-umw-ao3401a-c347476",
+      "domain": "generated connectivity versus symbol/footprint/as-built confirmation",
+      "status": "OPEN",
+      "reason": "The board-a-baseline projection and the committed usb-pd-input.kicad_sch record Q1's nets and R11/R12 values, but a Board A generator spec, exported netlist, footprint mapping and assembled orientation still need to be created and independently checked.",
+      "fact_ids": [],
+      "blocking_fact_ids": []
+    }
+  ]
+}

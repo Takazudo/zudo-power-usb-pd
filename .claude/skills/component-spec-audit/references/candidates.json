@@ -1,4 +1,41 @@
 {
   "schema_version": 1,
-  "candidates": []
+  "candidates": [
+    {
+      "candidate_id": "cand-smf6-0a-c123790",
+      "mpn": "SMF6.0A",
+      "manufacturer": "MDD (Microdiode Semiconductor)",
+      "lcsc": "C123790",
+      "package": "SOD-123FL",
+      "function": "200 W unidirectional TVS diode, TVS2 (+5 V output rail) replacement candidate",
+      "owner_skill": "component-sd05-c502527",
+      "status": "SHORTLISTED",
+      "replaces_line_id": "line-c502527",
+      "rationale": "Meets every deterministic TVS2 replacement criterion at the 2026-08-14 research date: VRWM 6 V (>= 6.0 V, 20% standoff margin over the nominal +5 V rail), VC 10.3 V max at IPP 19.4 A (10/1000 us), SOD-123FL two-pad package (hand-reworkable, JLCPCB-assemblable, repository already carries the footprint), LCSC in stock (148,360 units, dated fact). Same manufacturer as the incumbent SD05 and the project SS34 diodes. Selection is deferred to the wave-6 decision task."
+    },
+    {
+      "candidate_id": "cand-smaj6-5a-c87267",
+      "mpn": "SMAJ6.5A",
+      "manufacturer": "Brightking",
+      "lcsc": "C87267",
+      "package": "SMA(DO-214AC)",
+      "function": "400 W unidirectional TVS diode, TVS2 (+5 V output rail) replacement candidate",
+      "owner_skill": "component-sd05-c502527",
+      "status": "SHORTLISTED",
+      "replaces_line_id": "line-c502527",
+      "rationale": "Meets every deterministic TVS2 replacement criterion at the 2026-08-14 research date: VRWM 6.5 V (>= 6.0 V, 30% standoff margin over the nominal +5 V rail — the largest of the shortlist), VC 11.2 V max at IPP 35.7 A (10/1000 us, 400 W minimum), SMA/DO-214AC package in the same D-FLAT footprint family already used for TVS1/TVS3/D5 (hand-reworkable, JLCPCB-assemblable), LCSC in stock (8,450 units, dated fact). LCSC orderable model SMAJ6.5A/TR13. Selection is deferred to the wave-6 decision task."
+    },
+    {
+      "candidate_id": "cand-smaj6-0a-c5353156",
+      "mpn": "SMAJ6.0A",
+      "manufacturer": "FOSAN",
+      "lcsc": "C5353156",
+      "package": "SMA(DO-214AC)",
+      "function": "400 W unidirectional TVS diode, TVS2 (+5 V output rail) replacement candidate",
+      "owner_skill": "component-sd05-c502527",
+      "status": "SHORTLISTED",
+      "replaces_line_id": "line-c502527",
+      "rationale": "Meets the deterministic TVS2 replacement criteria at the 2026-08-14 research date: VRWM 6.0 V (>= 6.0 V, 20% standoff margin over the nominal +5 V rail), VC 10.3 V max at IPP 38.8 A (400 W; the FOSAN document does not explicitly state the pulse waveform — recorded as-is in the fact conditions), SMA/DO-214AC package in the same D-FLAT footprint family already used for TVS1/TVS3/D5, LCSC in stock (6,400 units, dated fact). Note: the Littelfuse SMAJ6.0A listing (C223993) was evaluated first but rejected for sourcing: LCSC attaches Slkor- and Brightking-authored PDFs to that listing and littelfuse.com blocks direct retrieval, so no genuine Littelfuse primary datasheet could be retained. Selection is deferred to the wave-6 decision task."
+    }
+  ]
 }

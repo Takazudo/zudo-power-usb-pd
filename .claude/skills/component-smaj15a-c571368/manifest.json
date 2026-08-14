@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "skill": "component-smaj15a-c571368",
+  "records": [
+    {
+      "record_id": "rec-smaj15a-c571368",
+      "line_id": "line-c571368",
+      "candidate_id": null,
+      "kind": "standalone",
+      "parent_record_id": null,
+      "mpn": "SMAJ15A",
+      "manufacturer": "High Diode",
+      "lcsc": "C571368",
+      "package": "D-FLAT_L4.3-W2.6-LS5.3-RD",
+      "source_ids": [
+        "src-smaj15a-hdiode-primary",
+        "src-smaj15a-lcsc-identity"
+      ],
+      "fact_ids": [
+        "fact-smaj15a-manufacturer",
+        "fact-smaj15a-identity",
+        "fact-smaj15a-standoff",
+        "fact-smaj15a-breakdown",
+        "fact-smaj15a-clamp",
+        "fact-smaj15a-pppm",
+        "fact-smaj15a-ifsm",
+        "fact-smaj15a-leakage",
+        "fact-smaj15a-polarity",
+        "fact-smaj15a-margin-plus12",
+        "fact-smaj15a-margin-percent",
+        "fact-smaj15a-tvs3-orientation"
+      ],
+      "interaction_ids": [
+        "int-smaj15a-rail-margin"
+      ],
+      "open_domains": [
+        "negative-rail-orientation"
+      ]
+    }
+  ]
+}
