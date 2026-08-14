@@ -8149,7 +8149,7 @@
 				)
 			)
 		)
-		(property "Footprint" "zudo-led-lamp:C1206"
+		(property "Footprint" "easyeda2kicad:C1206"
 			(at 0 -7.62 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8340,7 +8340,7 @@
 				)
 			)
 		)
-		(property "Footprint" "zudo-led-lamp:C0603"
+		(property "Footprint" "easyeda2kicad:C0603"
 			(at 0 -7.62 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8531,7 +8531,7 @@
 				)
 			)
 		)
-		(property "Footprint" "zudo-led-lamp:R0603"
+		(property "Footprint" "easyeda2kicad:R0603"
 			(at 0 -7.62 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8685,7 +8685,7 @@
 				)
 			)
 		)
-		(property "Footprint" "zudo-led-lamp:R0603"
+		(property "Footprint" "easyeda2kicad:R0603"
 			(at 0 -7.62 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8839,7 +8839,7 @@
 				)
 			)
 		)
-		(property "Footprint" "zudo-led-lamp:R0603"
+		(property "Footprint" "easyeda2kicad:R0603"
 			(at 0 -7.62 0)
 			(show_name no)
 			(do_not_autoplace no)
