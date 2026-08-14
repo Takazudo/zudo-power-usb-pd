@@ -6,7 +6,7 @@ description: Why zudo-pd is splitting from one PCBA into a reusable USB-PD core 
 
 The single-board zudo-pd design went through four JLCPCB orders (v1 → v4) and never
 reached a working USB-PD negotiation — see the
-[failure history](../inbox/current-status.md#failure-history-v1--v4) and the
+[failure history](../inbox/current-status.md#failure-history-v1-→-v4) and the
 [v4 USB-PD Failure Diagnosis](../inbox/v4-pd-failure-diagnosis.md) for the root-cause
 detail. Rather than order a v5 single-board respin, the project (epic
 [#86](https://github.com/Takazudo/zudo-pd/issues/86)) splits into two boards:
@@ -34,7 +34,7 @@ Splitting removes that tax:
   every front-end debug iteration, instead of dragging the whole synth-power BOM along
   for the ride.
 - **Board A is reusable outside this project.** Per the
-  [Board A ↔ Board B interface contract](../inbox/board-split-decision.md#decision-set-b--board-a--board-b-interface-contract),
+  [Board A ↔ Board B interface contract](../inbox/board-split-decision.md#decision-set-b-—-board-a-↔-board-b-interface-contract),
   the inter-board connector carries only switched 15V power, ground, and two generic
   open-drain status lines — nothing synth-specific. Board A stands alone as a plain
   "USB-C PD 15V sink module" usable in other projects.
@@ -49,7 +49,7 @@ Splitting removes that tax:
 ## How they connect
 
 Board A and Board B join over a single 6-pin JST XH connector — see the
-[Board Split Decision](../inbox/board-split-decision.md#decision-set-b--board-a--board-b-interface-contract)
+[Board Split Decision](../inbox/board-split-decision.md#decision-set-b-—-board-a-↔-board-b-interface-contract)
 for the full pinout, current-rating math, and keying rationale. In summary: two pins of
 switched +15V (paired for current sharing), two pins of GND (paired return), and two
 open-drain status lines (ATTACH, POWER_OK2) that Board B or any other consumer may
@@ -62,7 +62,7 @@ Board A and Board B **design docs** live as **flat pages under `overview/`** —
 [`overview/board-b-synth-power.md`](./board-b-synth-power.md) — alongside this page,
 rather than under a new dedicated doc section. This matches the doc-structure
 assumption recorded in the
-[Board Split Decision](../inbox/board-split-decision.md#decision-set-c--doc-structure-note)
+[Board Split Decision](../inbox/board-split-decision.md#decision-set-c-—-doc-structure-note)
 (decision set (c)) and the default used by the parallel Board A / Board B design-doc
 tasks.
 

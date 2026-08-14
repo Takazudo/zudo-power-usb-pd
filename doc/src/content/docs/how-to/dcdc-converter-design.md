@@ -24,7 +24,7 @@ input for that work, not a description of an existing board.
 | --- | -------- | ---------------------------------------------------------- |
 | 1   | VIN      | Voltage input (4.5V - 40V)                                 |
 | 2   | OUTPUT   | Switching output (connect to inductor)                     |
-| 3   | GND      | IC ground reference (see [ON/OFF pin wiring](#onoff-pin-wiring)) |
+| 3   | GND      | IC ground reference (see [ON/OFF pin wiring](#on-off-pin-wiring)) |
 | 4   | FEEDBACK | Voltage feedback input, 1.23V internal reference           |
 | 5   | ON/OFF   | Enable control, referenced to **pin 3**, not to system GND |
 | TAB | -        | Thermal tab; its electrical net follows pin 3              |
