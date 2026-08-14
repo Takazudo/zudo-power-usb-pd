@@ -5,6 +5,19 @@ sidebar_position: 5
 
 Debug analysis of the first PCBA prototype (v1) for the USB-PD modular synthesizer power supply. The STUSB4500 USB-PD controller stage failed to negotiate power delivery. This report documents the root causes, required fixes, and rework instructions.
 
+<Note title="Superseded — v1 is three revisions behind the current v4/2-board-split work">
+
+This is the debug report for the **very first PCBA** (v1, now `0.1.0`). The
+"Fix required" items below were addressed in subsequent revisions (v2/v3/v4);
+v4 itself later also failed USB-PD negotiation for different reasons, which
+triggered the current Board A / Board B split — see
+[v4 USB-PD Failure Diagnosis](./v4-pd-failure-diagnosis.md) and
+[Board Split Decision](./board-split-decision.md). Nothing on this page
+describes an open action item on the current design; it is kept as the
+historical record of the v1 bring-up.
+
+</Note>
+
 ## Root Cause Summary
 
 Three issues were identified in the STUSB4500 circuit on the v1 PCBA:

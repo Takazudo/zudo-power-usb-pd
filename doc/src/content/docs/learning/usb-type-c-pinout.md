@@ -364,7 +364,7 @@ Pin 6 (GND) ──────────→ Pin 0 (GND/EPAD)
 
 - [J1 substitution options](../overview/board-a-usb-pd-core.md#j1-substitution-options) - Full specifications and footprint
 - [CH224D USB-PD Controller](./ch224d-usb-pd-controller.md) - PD negotiation IC
-- [Diagram1: USB-PD Section](../overview/circuit-diagrams.mdx#diagram1-usb-pd-power-supply-section) - Complete circuit diagram
+- [Board A: USB-PD Core](../overview/board-a-usb-pd-core.md) - Complete circuit diagram
 - [Open-Drain PG Pin](./open-drain-pg-pin.md) - Understanding the Power Good indicator
 
 ## References

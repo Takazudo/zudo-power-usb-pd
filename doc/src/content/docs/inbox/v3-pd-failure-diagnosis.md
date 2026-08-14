@@ -6,6 +6,20 @@ sidebar_position: 10
 Why the v3 board still fails to negotiate USB-PD even after (a) the STUSB4500 NVM was
 correctly reprogrammed (`SNK_PDO_NUMB=2`, 15 V/3 A) and (b) pin 18 was bodged.
 
+<Note title="Superseded by the v4 diagnosis / 2-board split — the open question below is resolved">
+
+v3 was superseded by v4, which itself later also failed USB-PD negotiation for
+different reasons and triggered the current Board A / Board B split — see
+[v4 USB-PD Failure Diagnosis](./v4-pd-failure-diagnosis.md) and
+[Board Split Decision](./board-split-decision.md). The "Open question for you"
+at the end of this page (R14's far end: VBUS_IN or VBUS_OUT?) has since been
+answered and locked into the Board A spec: **R14 connects to `VBUS_IN`**
+(receptacle-side, pre-load-switch), unchanged from the v3 fix — see
+[Board A: USB-PD Core](../overview/board-a-usb-pd-core.md#net-connectivity-table-fixed-circuit),
+`VBUS_VS_DISCH` row.
+
+</Note>
+
 **Method:** every claim below was verified by reading the actual net topology in
 `usb-pd-input.kicad_sch` against U1's own symbol pin table (symbol origin `176.53,63.5`,
 **not mirrored**; absolute pin = `176.53+dx, 63.5−dy`). A first multi-agent pass produced

@@ -66,7 +66,7 @@ The plugin writes the LCSC number into the schematic as a custom field, so this 
 
 **For this project**, the LCSC numbers are already in the BOM at:
 
-- `dist/jlcpcb-ready/jlcpcb-bom-with-lcsc.csv` (legacy reference)
+- `jlcpcb-order-snapshots/v0_4_0/used-for-order/BOM-zudo-pd.csv` (the last real order's BOM, committed to the repo — there is no `dist/` directory)
 - See also the per-component pages under **Components** in this documentation site.
 
 ### Verify Rotation Corrections
@@ -99,6 +99,14 @@ If you find a missing or wrong correction, use the plugin's **Corrections Manage
 - **Gerber**: the zip
 - **BOM**: `production_files/BOM-zudo-pd.csv`
 - **CPL**: `production_files/POS-zudo-pd.csv`
+
+> **Scope note:** `zudo-pd.kicad_pcb` is the legacy root project — the as-built v4
+> board — so the worked example below (Q1/D4) reflects that board's fitted parts.
+> Board A's schematic redesign removed D4 (USBLC6-2SC6) in favor of DNP
+> PESD24VS1UB CC-line ESD diodes (D6/D7); see
+> [Board A: USB-PD Core](../overview/board-a-usb-pd-core.md#deltas-vs-the-current-single-board-circuit).
+> Board A/B have no PCB layout yet, so this plugin workflow does not apply to them
+> until layout starts.
 
 ## Gotcha: EasyEDA-Derived Footprints
 
@@ -175,7 +183,7 @@ U1: rotation = 90   ← = 270° in KiCad's convention (the value JLCPCB confirme
 
 ### Why the Numbers Look Different from KiCad's Native CPL
 
-The plugin's CPL uses JLCPCB's coordinate convention (Y-axis flipped vs. KiCad's), so rotation values do not match KiCad's native CPL export numerically — but they are equivalent physical orientations. Don't try to compare the plugin's CPL row-by-row to `dist/jlcpcb-ready/jlcpcb-cpl.csv`; verify physical correctness instead (pin 1 visual check on JLCPCB's pre-production rendering).
+The plugin's CPL uses JLCPCB's coordinate convention (Y-axis flipped vs. KiCad's), so rotation values do not match KiCad's native CPL export numerically — but they are equivalent physical orientations. Don't try to compare the plugin's CPL row-by-row to `jlcpcb-order-snapshots/v0_4_0/used-for-order/CPL-zudo-pd.csv`; verify physical correctness instead (pin 1 visual check on JLCPCB's pre-production rendering).
 
 ### Adding More Overrides as the Library Grows
 
@@ -205,7 +213,7 @@ After generating, do a quick sanity check before uploading:
 
 1. **Open `production_files/POS-zudo-pd.csv`** in a spreadsheet.
 2. **Find polarized parts** (ICs, diodes, electrolytic caps, LEDs).
-3. **Cross-reference rotation values** against the previous successful order in `dist/jlcpcb-ready/jlcpcb-cpl.csv` if applicable.
+3. **Cross-reference rotation values** against the previous successful order in `jlcpcb-order-snapshots/v0_4_0/used-for-order/CPL-zudo-pd.csv` if applicable.
 4. **For new ICs that were not on the previous order**, manually verify pin 1 in the JLCPCB part library page (e.g., search for the LCSC number on jlcpcb.com and inspect their footprint rendering).
 
 This avoids the back-and-forth seen on PCBA v2 where JLCPCB had to flag U1 mid-order.
