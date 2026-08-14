@@ -278,10 +278,10 @@ PTC resettable fuses plus TVS clamps on each output rail.
 
 | Ref | Part (LCSC) | Hold current | Voltage rating | Rail | Rated load | Margin | Status |
 |-----|-------------|--------------|-----------------|------|------------|--------|--------|
-| PTC1 | [SMD1210P150TF/16](../components/ptc-12v.md) (C7529589) | 1.50A hold / 3.00A trip | 16V | +12V | 1.2A | +4V nominal (+2.5V at the passthrough corner) | OK — wave-6 replacement, decision (g) |
-| PTC2 | [mSMD110-33V](../components/ptc-5v.md) (C70119) | 1.10A hold | 33V | +5V | 0.5A | 2.2× | OK |
-| PTC3 | [BSMD1206-150-16V](../components/ptc-12v-neg.md) (C883133) | 1.50A hold | 16V | −12V | 0.8A | 1.875× | OK — 85°C-derated hold (0.77A) sits just under the 0.8A budget, NEEDS BENCH (finding BB-8) |
-| TVS1 | [SMAJ15A](../components/smaj15a.md) (C571368) | — | VRWM 15V, clamp 24.4V @ 1A | +12V | — | 25% standoff headroom | OK |
+| PTC1 | [SMD1210P150TF/16](https://jlcpcb.com/partdetail/C7529589) (C7529589) | 1.50A hold / 3.00A trip | 16V | +12V | 1.2A | +4V nominal (+2.5V at the passthrough corner) | OK — wave-6 replacement, decision (g) |
+| PTC2 | [mSMD110-33V](https://jlcpcb.com/partdetail/C70119) (C70119) | 1.10A hold | 33V | +5V | 0.5A | 2.2× | OK |
+| PTC3 | [BSMD1206-150-16V](https://jlcpcb.com/partdetail/C883133) (C883133) | 1.50A hold | 16V | −12V | 0.8A | 1.875× | OK — 85°C-derated hold (0.77A) sits just under the 0.8A budget, NEEDS BENCH (finding BB-8) |
+| TVS1 | [SMAJ15A](https://jlcpcb.com/partdetail/C571368) (C571368) | — | VRWM 15V, clamp 24.4V @ 1A | +12V | — | 25% standoff headroom | OK |
 | TVS3 | SMAJ15A (C571368) | — | same as TVS1; **locked orientation**: cathode (pin 1) → GND, anode (pin 2) → −12V rail | −12V | — | 25% standoff headroom | OK — orientation locked by decision `tvs3-orientation` |
 | TVS2 | [SMAJ6.5A](https://jlcpcb.com/partdetail/C87267) (C87267) | — | VRWM 6.5V, breakdown ≥7.22V, clamp 11.2V @ 35.7A | +5V | — | +1.5V standoff over nominal, +1.3V over the L7805's guaranteed 5.2V band top | OK — wave-6 replacement, decision (a) |
 
@@ -299,10 +299,10 @@ Both rows above changed from earlier drafts of this page:
 
 Both replacements are locked in `scripts/schgen/decisions.json` (decisions (a) and (g))
 and land in `boards/board-b/board-b.kicad_sch` via `scripts/schgen/board_b_spec.py` —
-not as a future "Board B design phase" item. [components/sd05.md](../components/sd05.md)
-still documents the removed SD05 part rather than the fitted SMAJ6.5A (it is linked from
-~15 other pages across this site, so retitling it is a larger follow-up, not folded into
-this pass) — the TVS2 row above links straight to the JLCPCB catalog page instead.
+not as a future "Board B design phase" item. The legacy `components/sd05.md` and
+`components/ptc-12v.md` pages that once documented the removed SD05/SMD1210P200TF parts
+were deleted in #136; the table rows above and their JLCPCB catalog links are now the
+sole record of the removed-vs-fitted part history.
 
 </Info>
 

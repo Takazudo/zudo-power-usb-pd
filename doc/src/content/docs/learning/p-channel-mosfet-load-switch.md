@@ -315,7 +315,7 @@ Time ~500ms:
 
 ## See Also
 
-- [AO3401A Documentation](../components/ao3401a.md) - Full MOSFET specifications
-- [STUSB4500 Documentation](../components/stusb4500.md) - USB-PD controller with VBUS_EN_SNK
+- [AO3401A load switch (Q1) gate network](../overview/board-a-usb-pd-core.md#load-switch-q1-gate-network-and-soft-start) - Full MOSFET specifications
+- [STUSB4500 (Board A)](../overview/board-a-usb-pd-core.md) - USB-PD controller with VBUS_EN_SNK
 - [Open-Drain Outputs](./open-drain-pg-pin.md) - How open-drain control signals work
 - [Circuit Diagrams](../overview/circuit-diagrams.mdx) - See the load switch in context

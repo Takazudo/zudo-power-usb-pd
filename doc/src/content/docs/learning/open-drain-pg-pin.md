@@ -190,5 +190,5 @@ Understanding open-drain outputs is essential for reading datasheets and designi
 
 ## See Also
 
-- [CH224D Documentation](../components/ch224d.md) - Full CH224D specifications
+- [CH224D USB-PD Controller](./ch224d-usb-pd-controller.md) - Full CH224D specifications
 - [Circuit Diagrams - Diagram1](../overview/circuit-diagrams.mdx#diagram1-usb-pd-power-supply-section) - Complete USB-PD circuit

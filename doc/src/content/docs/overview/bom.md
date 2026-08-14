@@ -20,7 +20,7 @@ Complete parts configuration using JLCPCB SMT service.
 
 <Info title="v1.1 Upgrade">
 
-This stage was upgraded from CH224D to **STUSB4500** for significantly improved charger compatibility (~95%+ vs ~33%). See [CH224D](../components/ch224d.md) for the deprecated v1.0 design.
+This stage was upgraded from CH224D to **STUSB4500** for significantly improved charger compatibility (~95%+ vs ~33%). See [CH224D USB-PD Controller](../learning/ch224d-usb-pd-controller.md) for the deprecated v1.0 design.
 
 </Info>
 
@@ -28,15 +28,15 @@ This stage was upgraded from CH224D to **STUSB4500** for significantly improved 
 
 | Symbol | Part Number                                            | Manufacturer Part Number                           | Description               | Package | Stock     | Price     | Application             | Diagram                                                                    |
 | ------ | ------------------------------------------------------ | -------------------------------------------------- | ------------------------- | ------- | --------- | --------- | ----------------------- | -------------------------------------------------------------------------- |
-| **U1** | **[C2678061](https://jlcpcb.com/partdetail/C2678061)** | **[STUSB4500QTR](../components/stusb4500.md)**        | USB-IF Certified PD Sink  | QFN-24  | **4,728** | **$2.50** | PD Negotiation (15V)    | [D1](./circuit-diagrams.mdx#diagram1-usb-pd-power-supply-section) |
-| **Q1** | **[C347476](https://jlcpcb.com/partdetail/C347476)**   | **[AO3401A](../components/ao3401a.md)**               | P-Channel MOSFET -30V -4A | SOT-23  | **1.1M**  | **$0.02** | Load Switch (High-side) | [D1](./circuit-diagrams.mdx#diagram1-usb-pd-power-supply-section) |
-| **J1** | **[C456012](https://jlcpcb.com/partdetail/C456012)**   | **[USB-TYPE-C-6P](../components/usb-c-connector.md)** | 6P Type-C Female          | SMD     | **Stock** | **$0.05** | USB-C Input             | [D1](./circuit-diagrams.mdx#diagram1-usb-pd-power-supply-section) |
+| **U1** | **[C2678061](https://jlcpcb.com/partdetail/C2678061)** | **[STUSB4500QTR](./board-a-usb-pd-core.md#component-list-lcsc-parts-and-rough-cost)**        | USB-IF Certified PD Sink  | QFN-24  | **4,728** | **$2.50** | PD Negotiation (15V)    | [D1](./circuit-diagrams.mdx#diagram1-usb-pd-power-supply-section) |
+| **Q1** | **[C347476](https://jlcpcb.com/partdetail/C347476)**   | **[AO3401A](./board-a-usb-pd-core.md#load-switch-q1-gate-network-and-soft-start)**               | P-Channel MOSFET -30V -4A | SOT-23  | **1.1M**  | **$0.02** | Load Switch (High-side) | [D1](./circuit-diagrams.mdx#diagram1-usb-pd-power-supply-section) |
+| **J1** | **[C456012](https://jlcpcb.com/partdetail/C456012)**   | **[USB-TYPE-C-6P](./board-a-usb-pd-core.md#j1-substitution-options)** | 6P Type-C Female          | SMD     | **Stock** | **$0.05** | USB-C Input             | [D1](./circuit-diagrams.mdx#diagram1-usb-pd-power-supply-section) |
 
 #### ESD Protection (Recommended)
 
 | Symbol | Part Number                                      | Manufacturer Part Number                     | Description                  | Package  | Stock       | Price     | Application             | Diagram                                                                    |
 | ------ | ------------------------------------------------ | -------------------------------------------- | ---------------------------- | -------- | ----------- | --------- | ----------------------- | -------------------------------------------------------------------------- |
-| **D4** | **[C7519](https://jlcpcb.com/partdetail/C7519)** | **[USBLC6-2SC6](../components/usblc6-2sc6.md)** | CC + VBUS TVS Array 5V 3.5pF | SOT-23-6 | **354,000** | **$0.13** | CC1/CC2/VBUS Protection | [D1](./circuit-diagrams.mdx#diagram1-usb-pd-power-supply-section) |
+| **D4** | **[C7519](https://jlcpcb.com/partdetail/C7519)** | **[USBLC6-2SC6](./board-a-usb-pd-core.md#deltas-vs-the-current-single-board-circuit)** | CC + VBUS TVS Array 5V 3.5pF | SOT-23-6 | **354,000** | **$0.13** | CC1/CC2/VBUS Protection | [D1](./circuit-diagrams.mdx#diagram1-usb-pd-power-supply-section) |
 
 #### Capacitors
 
@@ -87,9 +87,9 @@ This stage was upgraded from CH224D to **STUSB4500** for significantly improved 
 
 | Symbol | Part Number                                          | Manufacturer Part Number                          | Description        | Package  | Stock     | Price      | Application                      | Diagram                                                                                       |
 | ------ | ---------------------------------------------------- | ------------------------------------------------- | ------------------ | -------- | --------- | ---------- | -------------------------------- | --------------------------------------------------------------------------------------------- |
-| **U2** | **[C347423](https://jlcpcb.com/partdetail/C347423)** | **[LM2596S-ADJ(UMW)](../components/lm2596s-adj.mdx)** | Adjustable 3A Buck | TO-263-5 | **12075** | **$0.266** | +15V→+13.5V                      | [D2](./circuit-diagrams.mdx#diagram2-usb-pd-15v--135v-buck-converter-lm2596s-adj-1)  |
-| **U3** | **[C347423](https://jlcpcb.com/partdetail/C347423)** | **[LM2596S-ADJ(UMW)](../components/lm2596s-adj.mdx)** | Adjustable 3A Buck | TO-263-5 | **12075** | **$0.266** | +15V→+7.5V                       | [D3](./circuit-diagrams.mdx#diagram3-15v--75v-buck-converter-lm2596s-adj-2-u3)       |
-| **U4** | **[C347423](https://jlcpcb.com/partdetail/C347423)** | **[LM2596S-ADJ(UMW)](../components/lm2596s-adj.mdx)** | Adjustable 3A Buck | TO-263-5 | **12075** | **$0.266** | +15V→-13.5V Inverting Buck-Boost | [D4](./circuit-diagrams.mdx#diagram4-15v---135v-inverting-buck-boost-lm2596s-adj-u4) |
+| **U2** | **[C347423](https://jlcpcb.com/partdetail/C347423)** | **[LM2596S-ADJ(UMW)](./board-b-synth-power.md#dc-dc-conversion-stage)** | Adjustable 3A Buck | TO-263-5 | **12075** | **$0.266** | +15V→+13.5V                      | [D2](./circuit-diagrams.mdx#diagram2-usb-pd-15v--135v-buck-converter-lm2596s-adj-1)  |
+| **U3** | **[C347423](https://jlcpcb.com/partdetail/C347423)** | **[LM2596S-ADJ(UMW)](./board-b-synth-power.md#dc-dc-conversion-stage)** | Adjustable 3A Buck | TO-263-5 | **12075** | **$0.266** | +15V→+7.5V                       | [D3](./circuit-diagrams.mdx#diagram3-15v--75v-buck-converter-lm2596s-adj-2-u3)       |
+| **U4** | **[C347423](https://jlcpcb.com/partdetail/C347423)** | **[LM2596S-ADJ(UMW)](./board-b-synth-power.md#dc-dc-conversion-stage)** | Adjustable 3A Buck | TO-263-5 | **12075** | **$0.266** | +15V→-13.5V Inverting Buck-Boost | [D4](./circuit-diagrams.mdx#diagram4-15v---135v-inverting-buck-boost-lm2596s-adj-u4) |
 
 #### Inductors
 
@@ -150,9 +150,9 @@ This stage was upgraded from CH224D to **STUSB4500** for significantly improved 
 
 | Symbol | Part Number                                        | Manufacturer Part Number                      | Description | Package   | Stock       | Price     | Application | Diagram                                                                               |
 | ------ | -------------------------------------------------- | --------------------------------------------- | ----------- | --------- | ----------- | --------- | ----------- | ------------------------------------------------------------------------------------- |
-| **U6** | **[C13456](https://jlcpcb.com/partdetail/C13456)** | **[L7812CD2T-TR](../components/l7812cv.md)**     | +12V 1.5A   | TO-263-2  | **40,204**  | **$0.11** | +12V Output | [D5](./circuit-diagrams.mdx#diagram5-135v--12v-linear-regulator-l7812-u6)    |
-| **U7** | **[C86206](https://jlcpcb.com/partdetail/C86206)** | **[L7805ABD2T-TR](../components/l7805abd2t.md)** | +5V 1.5A    | TO-263-2  | **272,379** | **$0.11** | +5V Output  | [D6](./circuit-diagrams.mdx#diagram6-75v--5v-linear-regulator-l7805-u7)      |
-| **U8** | **[C94173](https://jlcpcb.com/partdetail/C94173)** | **[CJ7912](../components/cj7912.md)**            | -12V 1.5A   | TO-252-2L | **3,386**   | **$0.11** | -12V Output | [D7](./circuit-diagrams.mdx#diagram7--135v---12v-linear-regulator-cj7912-u8) |
+| **U6** | **[C13456](https://jlcpcb.com/partdetail/C13456)** | **[L7812CD2T-TR](./board-b-synth-power.md#linear-regulator-ldo-stage)**     | +12V 1.5A   | TO-263-2  | **40,204**  | **$0.11** | +12V Output | [D5](./circuit-diagrams.mdx#diagram5-135v--12v-linear-regulator-l7812-u6)    |
+| **U7** | **[C86206](https://jlcpcb.com/partdetail/C86206)** | **[L7805ABD2T-TR](./board-b-synth-power.md#linear-regulator-ldo-stage)** | +5V 1.5A    | TO-263-2  | **272,379** | **$0.11** | +5V Output  | [D6](./circuit-diagrams.mdx#diagram6-75v--5v-linear-regulator-l7805-u7)      |
+| **U8** | **[C94173](https://jlcpcb.com/partdetail/C94173)** | **[CJ7912](./board-b-synth-power.md#linear-regulator-ldo-stage)**            | -12V 1.5A   | TO-252-2L | **3,386**   | **$0.11** | -12V Output | [D7](./circuit-diagrams.mdx#diagram7--135v---12v-linear-regulator-cj7912-u8) |
 
 #### Input Capacitors (470nF) - Basic Parts
 
@@ -189,9 +189,9 @@ This stage was upgraded from CH224D to **STUSB4500** for significantly improved 
 
 | Symbol   | Part Number                                          | Manufacturer Part Number                          | Specification             | Package | Stock      | Price     | Application          | Diagram                                                                               |
 | -------- | ---------------------------------------------------- | ------------------------------------------------- | ------------------------- | ------- | ---------- | --------- | -------------------- | ------------------------------------------------------------------------------------- |
-| **PTC1** | **[C20808](https://jlcpcb.com/partdetail/C20808)**   | **[SMD1210P200TF](../components/ptc-12v.md)**        | **2.0A hold / 4A trip**   | SMD1210 | **1,744**  | **$0.22** | +12V Rail Protection | [D5](./circuit-diagrams.mdx#diagram5-135v--12v-linear-regulator-l7812-u6)    |
-| **PTC2** | **[C70119](https://jlcpcb.com/partdetail/C70119)**   | **[mSMD110-33V](../components/ptc-5v.md)**           | **1.1A hold / 2.2A trip** | 1812    | **44,459** | **$0.10** | +5V Rail Protection  | [D6](./circuit-diagrams.mdx#diagram6-75v--5v-linear-regulator-l7805-u7)      |
-| **PTC3** | **[C883133](https://jlcpcb.com/partdetail/C883133)** | **[BSMD1206-150-16V](../components/ptc-12v-neg.md)** | **1.5A hold / 3.0A trip** | 1206    | **60,591** | **$0.14** | -12V Rail Protection | [D7](./circuit-diagrams.mdx#diagram7--135v---12v-linear-regulator-cj7912-u8) |
+| **PTC1** | **[C20808](https://jlcpcb.com/partdetail/C20808)**   | **[SMD1210P200TF](./board-b-synth-power.md#protection-stage)**        | **2.0A hold / 4A trip**   | SMD1210 | **1,744**  | **$0.22** | +12V Rail Protection | [D5](./circuit-diagrams.mdx#diagram5-135v--12v-linear-regulator-l7812-u6)    |
+| **PTC2** | **[C70119](https://jlcpcb.com/partdetail/C70119)**   | **[mSMD110-33V](./board-b-synth-power.md#protection-stage)**           | **1.1A hold / 2.2A trip** | 1812    | **44,459** | **$0.10** | +5V Rail Protection  | [D6](./circuit-diagrams.mdx#diagram6-75v--5v-linear-regulator-l7805-u7)      |
+| **PTC3** | **[C883133](https://jlcpcb.com/partdetail/C883133)** | **[BSMD1206-150-16V](./board-b-synth-power.md#protection-stage)** | **1.5A hold / 3.0A trip** | 1206    | **60,591** | **$0.14** | -12V Rail Protection | [D7](./circuit-diagrams.mdx#diagram7--135v---12v-linear-regulator-cj7912-u8) |
 
 **Protection Philosophy:**
 
@@ -204,9 +204,9 @@ This stage was upgraded from CH224D to **STUSB4500** for significantly improved 
 
 | Symbol   | Part Number                                          | Manufacturer Part Number             | Description            | Package | Estimated Price | Application     | Diagram                                                                               |
 | -------- | ---------------------------------------------------- | ------------------------------------ | ---------------------- | ------- | --------------- | --------------- | ------------------------------------------------------------------------------------- |
-| **TVS1** | **[C571368](https://jlcpcb.com/partdetail/C571368)** | **[SMAJ15A](../components/smaj15a.md)** | 15V TVS Unidirectional | SMA     | **$0.15**       | +12V Protection | [D5](./circuit-diagrams.mdx#diagram5-135v--12v-linear-regulator-l7812-u6)    |
-| **TVS2** | **[C502527](https://jlcpcb.com/partdetail/C502527)** | **[SD05](../components/sd05.md)**       | 5V TVS Unidirectional  | SOD-323 | **$0.02**       | +5V Protection  | [D6](./circuit-diagrams.mdx#diagram6-75v--5v-linear-regulator-l7805-u7)      |
-| **TVS3** | **[C571368](https://jlcpcb.com/partdetail/C571368)** | **[SMAJ15A](../components/smaj15a.md)** | 15V TVS Unidirectional | SMA     | **$0.15**       | -12V Protection | [D7](./circuit-diagrams.mdx#diagram7--135v---12v-linear-regulator-cj7912-u8) |
+| **TVS1** | **[C571368](https://jlcpcb.com/partdetail/C571368)** | **[SMAJ15A](./board-b-synth-power.md#protection-stage)** | 15V TVS Unidirectional | SMA     | **$0.15**       | +12V Protection | [D5](./circuit-diagrams.mdx#diagram5-135v--12v-linear-regulator-l7812-u6)    |
+| **TVS2** | **[C502527](https://jlcpcb.com/partdetail/C502527)** | **[SD05](./board-b-synth-power.md#protection-stage)**       | 5V TVS Unidirectional  | SOD-323 | **$0.02**       | +5V Protection  | [D6](./circuit-diagrams.mdx#diagram6-75v--5v-linear-regulator-l7805-u7)      |
+| **TVS3** | **[C571368](https://jlcpcb.com/partdetail/C571368)** | **[SMAJ15A](./board-b-synth-power.md#protection-stage)** | 15V TVS Unidirectional | SMA     | **$0.15**       | -12V Protection | [D7](./circuit-diagrams.mdx#diagram7--135v---12v-linear-regulator-cj7912-u8) |
 
 #### Status Indicator LEDs (Using Basic Parts)
 
@@ -260,7 +260,7 @@ This stage was upgraded from CH224D to **STUSB4500** for significantly improved 
 
 | Symbol    | Part Number                                          | Manufacturer Part Number                            | Description               | Package      | Stock     | Price         | Application             |
 | --------- | ---------------------------------------------------- | --------------------------------------------------- | ------------------------- | ------------ | --------- | ------------- | ----------------------- |
-| **J6-J9** | **[C591344](https://jlcpcb.com/partdetail/C591344)** | **[63951-1](../components/faston-terminal.md)** (×4) | FASTON 250 PCB Tab 6.35mm | Through-hole | **465** | **~$0.26 × 4** | Individual Power Output |
+| **J6-J9** | **[C591344](https://jlcpcb.com/partdetail/C591344)** | **[63951-1](./board-b-synth-power.md#output-connectors)** (×4) | FASTON 250 PCB Tab 6.35mm | Through-hole | **465** | **~$0.26 × 4** | Individual Power Output |
 
 **Individual Terminal Configuration:**
 
