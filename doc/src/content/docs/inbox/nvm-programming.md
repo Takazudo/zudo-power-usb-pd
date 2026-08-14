@@ -5,6 +5,23 @@ sidebar_position: 6
 
 The STUSB4500 requires NVM (non-volatile memory) programming to configure its USB-PD negotiation behavior. Factory defaults will negotiate **20V** (not 15V), which would damage downstream circuits. This page documents the hardware setup, required NVM values, and schematic changes needed.
 
+<Warning title="Program the NVM before the board's first attach to a &gt;15V-capable charger">
+
+A **factory-default (unprogrammed) STUSB4500** advertises PDO3 = **20V/1A at highest
+priority** (see the factory-defaults table below). Board A's build order must be:
+assemble → program NVM via `J2` from a **5V-only charger** (any phone charger, or a PD
+charger that maxes out at 9V/15V with no 20V profile) → *then* use with a real PD
+charger. Do not attach an unprogrammed board to any charger capable of more than 15V.
+
+This procedural guard is **not superseded** by Board A's `D8` gate-source zener clamp
+(wave-6 decision, [Board A — USB-PD Core](../overview/board-a-usb-pd-core.md#programming-order-and-the-d8-gate-clamp)):
+D8 bounds only the Q1 gate-source voltage. It does not make a 20V negotiation safe for
+the STUSB4500's own VDD/pin-18 exposure or for anything downstream expecting 15V. Both
+guards are complementary, and only the NVM programming step removes the 20V option
+entirely (`SNK_PDO_NUMB = 2`, below).
+
+</Warning>
+
 ## Why NVM Programming Is Required
 
 The STUSB4500QTR ships from the factory with these default PDO profiles:
@@ -383,3 +400,5 @@ The STUSB4500 NVM is rated for approximately **1,000 write cycles**. Configure o
 - [STUSB4500 Datasheet](https://www.st.com/resource/en/datasheet/stusb4500.pdf) - NVM register map details
 - [Pogo Pin Clip (AliExpress)](https://ja.aliexpress.com/item/1005006108783889.html) - 4P 2.54mm programming clip tool
 - [PCBA v2 Debug Report](/docs/inbox/pcba-v2-debug) - CC1DB internal short failure mode discovered during v2 testing
+- [Board A — USB-PD Core](../overview/board-a-usb-pd-core.md#programming-order-and-the-d8-gate-clamp) - the `D8` gate-source clamp that complements (does not replace) the program-before-first-attach guard above
+- [Spec-Architecture Review](./spec-architecture-review.md) - finding BA-1 (the unguarded 20V-contract gate-divider overage this warning and D8 both address)

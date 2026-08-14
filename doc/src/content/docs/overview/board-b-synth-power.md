@@ -14,21 +14,21 @@ and assembly complexity.
 
 <Note>
 
-This doc documents the circuitry as it will exist on Board B's own KiCad
-project, once laid out. No new KiCad project exists yet — that is the *next*
-plan (see epic #86 "Non-goals"). The stage-level net tables below are derived
-from the **existing, still-combined** `zudo-pd.kicad_sch` netlist (the DC-DC,
-LDO, protection, and output sheets are unchanged by the split and carry
-forward into Board B as-is), exported with:
-
-```
-kicad-cli sch export netlist --format kicadxml \
-  --output __inbox/board-b-netlist.xml zudo-pd.kicad_sch
-```
-
-The A↔B interface connector itself is new — it does not exist in the netlist
-yet — so its section below documents the locked contract directly rather than
-a netlist export.
+Board B now has a real, generated KiCad project: `boards/board-b/board-b.kicad_sch`,
+built by the `schgen` toolchain from `scripts/schgen/board_b_spec.py` — not hand-drawn.
+The spec module is the source of truth; regenerate with `python3
+scripts/schgen/gen_schematic.py board_b_spec` after editing it (see
+`scripts/schgen/README.md`). PCB layout for Board B has not started yet (see epic #86
+"Non-goals"). The stage-level net tables below are read directly from the spec module's
+`NETS` table, which carries forward the DC-DC/LDO/protection/output connectivity from
+the legacy, still-combined `zudo-pd.kicad_sch` (net names kept byte-identical to
+`scripts/schgen/baselines/board-b.json` so `check_baseline.py` diffs cleanly) plus the
+wave-6 locked decision deltas — part swaps, the `P1` ATT/PDOK provision, and the `TVS3`
+orientation lock — see [Protection Stage](#protection-stage) and
+[DC-DC Conversion Stage](#dc-dc-conversion-stage) below. The A↔B interface connector is
+`J5` in the spec module (this page's connectivity tables use `J5`; the locked pinout
+contract below keeps the generic "both boards" wording it was written with, since it is
+byte-identical to the same block in the Board A doc).
 
 </Note>
 
@@ -99,14 +99,19 @@ gets its own 4× M3 (3.2 mm) mounting holes; no shared hole pattern.
 
 ### How the connector feeds Board B's existing circuitry
 
-Once laid out, the interface connector's pins map onto Board B's carried-
-forward nets like this:
+In `boards/board-b/board-b.kicad_sch` (generated from `board_b_spec.py`), the interface
+connector is `J5` and its pins map onto Board B's carried-forward nets like this:
 
-| Connector pin(s) | Board B net (post-split) | Today's net (in the still-combined schematic) |
+| Connector pin(s) | Board B net | Note |
 |---|---|---|
-| 1, 2 (+15V) | Board B's local +15 V input rail | `+15V -> +13.5V gen` — the shared bus already feeding `U2.1 U3.1 U4.1` (see [DC-DC Conversion Stage](#dc-dc-conversion-stage)) |
-| 5, 6 (GND) | Board B's local GND plane | `GND` — the existing system ground net |
-| 3 (ATT), 4 (PDOK) | Not connected by default | New signals; Board B is power-only and has no logic to consume them. Provision as an unpopulated 2-pin test header for a future add-on (e.g. a status LED daughterboard) rather than wiring them anywhere on the power path |
+| 1, 2 (+15V) | `+15V -> +13.5V gen` | The shared bus feeding `U2.1 U3.1 U4.1` (see [DC-DC Conversion Stage](#dc-dc-conversion-stage)) |
+| 5, 6 (GND) | `GND` | The system ground net |
+| 3 (ATT), 4 (PDOK) | `ATT`, `PDOK` | Locked provision (decision `p1-form`,
+`scripts/schgen/decisions.json`): routed to `P1`, a `PogoPad_1x04` bare-pad header (no
+fitted component, out of BOM) — pin 1 = ATT, pin 2 = PDOK, pin 3 = GND probe return, pin
+4 = declared no-connect. Board B is power-only and has no logic to consume these flags;
+both signals are open-drain with **no on-board pull-up on either board** — any future
+consumer wired to `P1` must supply its own pull-up to its own logic rail |
 
 <Info>
 
@@ -142,6 +147,22 @@ to the negative output) give the mirrored formula
 `|Vout| = 1.23 x (1 + R5/R6)`.
 
 ### Net tables
+
+<Info title="Wave-6 part swaps on this stage's electrolytics">
+
+Two locked decisions (`scripts/schgen/decisions.json`) change LCSC numbers on caps that
+appear in the tables below, though the net names and pin roles are unchanged:
+
+- **C5/C7** (decision (d)): swapped from the 100 µF/25 V ACMECON part to **FOLLON
+  470 µF/35 V, LCSC C22387780** — the same line already fitted at C14/C20/C21/C24/C25.
+  Restores positive input-cap voltage margin at both the 20 V mis-contract edge and the
+  D5 clamp table point, and raises input bulk capacitance from 200 µF to 940 µF total.
+- **C4/C22/C23** (decision (c)): canonical LCSC is **C335982** (ROQANG,
+  `RVT1A471M0607`, 470 µF/10 V) — matches the drawn symbol and the `470uF 10V` Value
+  label; `C22383803` (the number this project's docs previously carried) is a 16 V-rated
+  alias part with far lower stock and is not what the spec module emits.
+
+</Info>
 
 **U2 — +13.5V buck**
 
@@ -257,24 +278,33 @@ PTC resettable fuses plus TVS clamps on each output rail.
 
 | Ref | Part (LCSC) | Hold current | Voltage rating | Rail | Rated load | Margin | Status |
 |-----|-------------|--------------|-----------------|------|------------|--------|--------|
-| PTC1 | [SMD1210P200TF](../components/ptc-12v.md) (C20808) | 2.00A hold / 4.00A trip | not confirmed from available sources | +12V | 1.2A | 1.67× | Confirm against RUILON's datasheet at order time (open data gap, #89 lead 5a) |
+| PTC1 | [SMD1210P150TF/16](../components/ptc-12v.md) (C7529589) | 1.50A hold / 3.00A trip | 16V | +12V | 1.2A | +4V nominal (+2.5V at the passthrough corner) | OK — wave-6 replacement, decision (g) |
 | PTC2 | [mSMD110-33V](../components/ptc-5v.md) (C70119) | 1.10A hold | 33V | +5V | 0.5A | 2.2× | OK |
-| PTC3 | [BSMD1206-150-16V](../components/ptc-12v-neg.md) (C883133) | 1.50A hold | 16V | −12V | 0.8A | 1.875× | OK |
+| PTC3 | [BSMD1206-150-16V](../components/ptc-12v-neg.md) (C883133) | 1.50A hold | 16V | −12V | 0.8A | 1.875× | OK — 85°C-derated hold (0.77A) sits just under the 0.8A budget, NEEDS BENCH (finding BB-8) |
 | TVS1 | [SMAJ15A](../components/smaj15a.md) (C571368) | — | VRWM 15V, clamp 24.4V @ 1A | +12V | — | 25% standoff headroom | OK |
-| TVS3 | SMAJ15A (C571368) | — | same as TVS1 | −12V | — | 25% standoff headroom | OK |
-| TVS2 | [SD05](../components/sd05.md) (C502527) | — | VRWM 5V | +5V | — | **0% standoff headroom** | **Deferred to Board B design phase** — see below |
+| TVS3 | SMAJ15A (C571368) | — | same as TVS1; **locked orientation**: cathode (pin 1) → GND, anode (pin 2) → −12V rail | −12V | — | 25% standoff headroom | OK — orientation locked by decision `tvs3-orientation` |
+| TVS2 | [SMAJ6.5A](https://jlcpcb.com/partdetail/C87267) (C87267) | — | VRWM 6.5V, breakdown ≥7.22V, clamp 11.2V @ 35.7A | +5V | — | +1.5V standoff over nominal, +1.3V over the L7805's guaranteed 5.2V band top | OK — wave-6 replacement, decision (a) |
 
-<Warning title="TVS2 — deferred to Board B design phase">
+<Info title="PTC1 and TVS2 were replaced by the wave-6 decision lock">
 
-`VRWM = 5V` sits exactly at the +5V rail's nominal voltage — zero standoff
-margin — and the L7805's own datasheet allows the output to reach 5.2V under
-normal operation, already above TVS2's rated standoff. Per the #90 decision,
-this is **not** included in the #93 KiCad fix; it is deferred to Board B's own
-design phase. Direction: replace TVS2 with a ≥6V-standoff part (e.g. an
-SD6.5-class device) so the L7805's legal 4.8–5.2V output window never sits
-at or above the TVS's `VRWM`.
+Both rows above changed from earlier drafts of this page:
 
-</Warning>
+- **PTC1** was `SMD1210P200TF` (C20808) — a part whose primary-sourced `Vmax` is
+  **6 VDC**, a deterministic BLOCKER on a +12V rail (finding BB-1, `fact-ptc1-vmax`).
+  This is now replaced by `SMD1210P150TF/16` (C7529589, 16V) in the Board B spec.
+- **TVS2** was `SD05` (C502527), `VRWM = 5V` — exactly the +5V rail's nominal voltage
+  (0% standoff margin), and the L7805's own datasheet allows the output to reach 5.2V
+  under normal operation, already above that standoff (finding BB-2). This is now
+  replaced by `SMAJ6.5A` (C87267) in the Board B spec.
+
+Both replacements are locked in `scripts/schgen/decisions.json` (decisions (a) and (g))
+and land in `boards/board-b/board-b.kicad_sch` via `scripts/schgen/board_b_spec.py` —
+not as a future "Board B design phase" item. [components/sd05.md](../components/sd05.md)
+still documents the removed SD05 part rather than the fitted SMAJ6.5A (it is linked from
+~15 other pages across this site, so retitling it is a larger follow-up, not folded into
+this pass) — the TVS2 row above links straight to the JLCPCB catalog page instead.
+
+</Info>
 
 ## Output Connectors
 
@@ -322,7 +352,7 @@ flowchart TD
   N12 --> J101516["J10/J11 pins 15-16"]
 
   TVS1["TVS1 SMAJ15A"] --- P12
-  TVS2["TVS2 SD05\n(deferred swap)"] --- P5
+  TVS2["TVS2 SMAJ6.5A\n(wave-6 replacement)"] --- P5
   TVS3["TVS3 SMAJ15A"] --- N12
 ```
 
@@ -403,11 +433,11 @@ carried into this doc, with its locked disposition from
 | U6 (L7812) dropout margin: 1.5V available &lt; 2.0V typ dropout at a *lower* test current than the actual 1.2A load | **Deferred to the Board B design plan, bench-gated** | Open — see [Linear Regulator Stage](#linear-regulator-ldo-stage) |
 | U8 (CJ7912) −12V decoupling network's `Net-(C16-Pad2)` missing its GND tie | **Fixed in #93** | Resolved — document the corrected network (see [Linear Regulator Stage](#linear-regulator-ldo-stage)) |
 | C9 (100µF, 25V rated) bridges +15V to −13.5V = 28.5V nominal (33.5V @ 20V edge case), over its own rating | **Fixed in #93** — swapped to DMBJ RVT1H101M0810, 100µF 50V, LCSC C970687 (alt: Semtech CK1H101M-CRF10, C129420); can grows to 8×10.2mm | Resolved — Board B gets a fresh layout anyway, so the footprint change is free |
-| TVS2 (SD05) zero standoff margin on the +5V rail | **Deferred to Board B design phase** | Open — see [Protection Stage](#protection-stage) |
-| C4/C22/C23 Value field says "16V" but the actual LCSC part (`RVT1A471M0607`/C335982) is 10V-rated | **Fixed in #93** — Value field corrected to `470uF 10V` (electrically safe on the 7.5V/5V nets either way) | Resolved — data-integrity only, no netlist change |
-| PTC1 voltage rating not confirmed from available sources | Unresolved data gap | Open — confirm against RUILON's datasheet at order time |
+| TVS2 (SD05) zero standoff margin on the +5V rail | **Resolved — wave-6 decision (a)** — swapped to Brightking SMAJ6.5A, LCSC C87267 | Resolved — see [Protection Stage](#protection-stage) |
+| C4/C22/C23 Value field says "16V" but the actual LCSC part (`RVT1A471M0607`/C335982) is 10V-rated | **Fixed in #93** — Value field corrected to `470uF 10V` (electrically safe on the 7.5V/5V nets either way); LCSC number canonicalized on C335982 in the Board B spec (wave-6 decision (c)) | Resolved — data-integrity only, no netlist change |
+| PTC1 voltage rating not confirmed from available sources | **Resolved — wave-5 evidence review confirmed 6VDC (BLOCKER, finding BB-1); wave-6 decision (g)** — swapped to RUILON SMD1210P150TF/16, LCSC C7529589 (16V) | Resolved — see [Protection Stage](#protection-stage) |
 | U4 inverting buck-boost referencing (GND/ON-OFF/TAB bootstrap, D3/L3 orientation) | OK-confirmed, no action | Carried forward unchanged |
-| C5/C7 input-cap margin at the 20V edge case (20% headroom) | Lead-to-verify, no fix scheduled | Open — worth re-checking once Board B's own input-margin policy is set |
+| C5/C7 input-cap margin at the 20V edge case (20% headroom) | **Resolved — wave-6 decision (d)** — swapped to FOLLON 470µF/35V, LCSC C22387780 (same line as C14/C20/C21/C24/C25); margin now +2.6V at the D5 clamp table point and +15V at the 20V edge | Resolved — see [DC-DC Conversion Stage](#dc-dc-conversion-stage) |
 | J10/J11 Eurorack header structure (GND moat, −12V placement) | OK-confirmed (structure); physical key orientation not netlist-verifiable | Carried forward — verify key orientation against the footprint/physical board before Board B layout is finalized |
 
 ## References
@@ -416,6 +446,14 @@ carried into this doc, with its locked disposition from
   A↔B interface contract and the #89 finding dispositions this doc implements
 - [Board B Architecture Review](../inbox/board-b-architecture-review.md) (#89)
   — full DC-DC/LDO/protection/output review this doc's stage sections summarize
+- [Spec-Architecture Review](../inbox/spec-architecture-review.md) — the wave-5
+  evidence review behind the PTC1/TVS2/C5-C7/C4-C22-C23 part-swap decisions above
+  (findings BB-1, BB-2, BB-6)
+- `scripts/schgen/decisions.json` and `scripts/schgen/board_b_spec.py` — the locked
+  wave-6 decision record and the spec module that generates
+  `boards/board-b/board-b.kicad_sch`
+- [generated component records](/docs/components/records/) — validated evidence for every
+  part on both boards, projected from the component skill bundles
 - [Bill of Materials](./bom.md) — full single-board parts list, prices, and
   the JLCPCB Extended-parts fee structure referenced in the cost split above
 - [Mechanical Design](./mechanical-design.md) — component heights driving

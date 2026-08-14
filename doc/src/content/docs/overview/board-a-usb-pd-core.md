@@ -27,11 +27,15 @@ circuit — the front end after the [board-split decision](../inbox/board-split-
 
 <Note>
 
-This is a documentation-only deliverable. No `.kicad_sch`/`.kicad_pcb` file was created or
-edited for this page — Board A's own KiCad project is a later task. Reference designators
-below (U1, Q1, J1-J4, R11-R20, C1/C2/C30/C34/C35, D5-D7, TP1/TP2/TP6) are inherited from the
-existing `usb-pd-input.kicad_sch` sheet, since Board A's schematic is that sheet plus the
-#90 fix list plus one new connector (J4).
+Board A now has a real, generated KiCad project: `boards/board-a/board-a.kicad_sch`,
+built by the `schgen` toolchain from `scripts/schgen/board_a_spec.py` — not hand-drawn,
+and not written back into the legacy `usb-pd-input.kicad_sch` sheet. The spec module is
+the source of truth; regenerate with `python3 scripts/schgen/gen_schematic.py
+board_a_spec` after editing it (see `scripts/schgen/README.md`). PCB layout for Board A
+has not started yet. Reference designators below (U1, Q1, J1-J4, R11-R20,
+C1/C2/C30/C34/C35, D5-D8, TP1/TP2/TP6) match the spec module: the original
+`usb-pd-input.kicad_sch` sheet plus the #90 fix list, one new connector (J4), and the
+wave-6 D8 gate-clamp addition (decision (e), documented below).
 
 </Note>
 
@@ -49,6 +53,7 @@ flowchart TD
   U1 -->|"VBUS_VS_DISCH via R14 470R"| P18["Pin-18 sense/discharge\n(unchanged from v0.4.0)"]
   U1 -->|"VBEN (active-low OD)"| GATE["Q1 gate node\nR11 100k pull-up, R12 56k series, C35 100n softstart"]
   GATE --> Q1["Q1 AO3401A P-FET\nload switch"]
+  D8["D8 BZT52C11-7-F zener\n(new; gate-source clamp, decision e)"] --- GATE
 
   D5["D5 SMAJ20A\n(new; replaces D4's VBUS-clamp role)"] --- U1
   D5 --- J1
@@ -69,22 +74,25 @@ flowchart TD
 
 ## Net-connectivity table (fixed circuit)
 
-Per [Net-Table + Mermaid Convention](../how-to/net-table-convention.md). Derived from the
-2026-07-05 `kicad-cli sch export netlist` export of the current `usb-pd-input.kicad_sch`
-sheet, with the #90 fix-list deltas applied on paper (D4 removed; R17/R18 DNP; R19/R20
-rewired; D5-D7 added; J4 added as Board A's new A↔B interface connector — none of this was
-written back into the KiCad file).
+Per [Net-Table + Mermaid Convention](../how-to/net-table-convention.md). Read directly
+from `scripts/schgen/board_a_spec.py`'s `NETS` table — the spec module that generates
+`boards/board-a/board-a.kicad_sch` — so, unlike the wave-3 version of this page, the #90
+fix-list deltas (D4 removed; R17/R18 DNP; R19/R20 rewired; D5-D7 added; J4 added as
+Board A's new A↔B interface connector) plus the wave-6 D8 gate-clamp addition **are**
+written into a real KiCad file; they are just not written back into the legacy
+`usb-pd-input.kicad_sch` sheet, which stays the as-built v4 reference (see root
+`CLAUDE.md`, "Legacy root KiCad project").
 
 | Net | Connected pins (Ref.Pin) | Value/Note |
 |-----|--------------------------|------------|
-| `VBUS_IN` | `J1.A9 J1.B9 U1.24 C1.2 C2.2 R14.1 R11.2 Q1.2 J3.4 D5.1` | Receptacle VBUS (5 V pre-contract, 15 V post-contract). `U1.24` = VDD (direct, 4.1–22 V range). `C1` 10 µF + `C2` 100 nF decoupling. `D5.1` (cathode) = new SMAJ20A VBUS clamp — **replaces D4**, which sat here as a 6 V-rated zener (abs-max violation on a 15 V rail) |
+| `VBUS_IN` | `J1.A9 J1.B9 U1.24 C1.2 C2.2 R14.1 R11.2 Q1.2 J3.4 D5.1 D8.1` | Receptacle VBUS (5 V pre-contract, 15 V post-contract). `U1.24` = VDD (operating range up to 22 V; abs-max is 28 V — mirror-only, see the caveat below). `C1` 10 µF + `C2` 100 nF decoupling. `D5.1` (cathode) = new SMAJ20A VBUS clamp — **replaces D4**, which sat here as a 6 V-rated zener (abs-max violation on a 15 V rail). `D8.1` (cathode) = new wave-6 BZT52C11-7-F gate-source clamp, sourced from `VBUS_IN` (= Q1 source) |
 | `CC1` (merges the former `Net-(J1-CC1)` + `Net-(U1-CC1)`) | `J1.A5 U1.2 R17.1 R19.2 D6.1` | Connector CC1 to `U1.2` is now **plain copper** (D4's internal 1↔6 flow-through is gone). `R17` (5.1 kΩ) = **DNP** (footprint kept, excluded from BOM/CPL). `R19` (0 Ω, fitted) now lands its GND-side pin here — restores `CC1DB↔CC1`. `D6` = PESD24VS1UB, **DNP**, fit only for enclosed/production builds |
 | `CC2` (merges the former `Net-(J1-CC2)` + `Net-(U1-CC2)`) | `J1.B5 U1.4 R18.1 R20.2 D7.1` | Mirror of CC1. `R18` DNP. `R20` (0 Ω, fitted) restores `CC2DB↔CC2`. `D7` = PESD24VS1UB, DNP |
 | `CC1DB` | `U1.1 R19.1 J3.1` | Dead-battery pin. `R19` (0 Ω) now bridges this to the `CC1` net (was grounded pre-fix) — ST reference VBUS-only-sink topology (DS12499 §3.5) |
 | `CC2DB` | `U1.5 R20.1 J3.2` | Mirror; `R20` bridges to `CC2` |
 | `VBUS_VS_DISCH` | `U1.18 R14.2 TP6.1` | Pin-18 sense/discharge node. **Unchanged** — `R14` 470 Ω series from `VBUS_IN`; the v3 fix stays as-is (A3, locked, no divider) |
 | `VBEN` | `U1.16 R12.1 J3.8` | VBUS_EN_SNK, active-low open-drain. `R12` 56 kΩ series to the gate node |
-| `Net-(Q1-G)` | `Q1.1 R11.1 R12.2 C35.1` | Q1 gate. `R11` 100 kΩ pull-up to `VBUS_IN` (default OFF). `C35` 100 nF soft-start to GND (τ ≈ 56 kΩ × 100 nF ≈ 5.6 ms) |
+| `Net-(Q1-G)` | `Q1.1 R11.1 R12.2 C35.1 D8.2` | Q1 gate. `R11` 100 kΩ pull-up to `VBUS_IN` (default OFF). `C35` 100 nF soft-start to GND (τ ≈ 56 kΩ × 100 nF ≈ 5.6 ms). `D8.2` (anode) = wave-6 gate-source zener clamp, Vz window 10.4–11.6 V — bounds |Vgs| against the 20 V-contract / clamp-event overages the wave-6 review found on this node (decision (e); R11/R12 values and topology untouched) |
 | `VBUS_OUT` (current netlist label `+15V -> +13.5V gen`; renamed for Board A since it now terminates at the interface connector instead of a DC-DC stage) | `Q1.3 R13.1 TP1.1 J4.1 J4.2` | Switched output of the load switch — Board A's reusable "switched 15 V sink" rail. Feeds `J4` pins 1–2 (paired for current sharing) instead of the DC-DC sheet |
 | `Net-(U1-DISCH)` | `U1.9 R13.2` | DISCH pin → `R13` 470 Ω → `VBUS_OUT` (system-side discharge). Unchanged |
 | `VREG_2V7` | `U1.23 C30.2 R15.2 R16.2 J3.3` | 2.7 V internal regulator / I2C pull-up rail. `C30` 1 µF decap |
@@ -145,6 +153,19 @@ to Board B, not Board A):
 - `J4` = the new Board A ↔ Board B interface connector (JST B6B-XH-A, 6-pin) — see below.
   This did not exist on the single-board design (the front end fed the DC-DC sheet
   directly through the shared `VBUS_OUT` net); Board A terminates that net at `J4` instead.
+- `D8` = BZT52C11-7-F (SOD-123-class, LCSC C92321), zener across Q1's gate-source: cathode
+  on `VBUS_IN` (Q1 source), anode on `Net-(Q1-G)`. Wave-6 addition (decision (e),
+  `scripts/schgen/decisions.json`) — a fitted hardware guard for the case where an
+  **unprogrammed** STUSB4500 (factory NVM advertises PDO3 = 20 V/1 A at highest priority)
+  is first plugged into a 20 V-capable charger: without a clamp, the R11/R12 divider drives
+  Q1's Vgs to −12.82 V, 0.82 V past the ±12 V abs-max, with no hardware interlock. The
+  zener's 10.4–11.6 V Vz window sits below its knee at the legal 15 V contract (|Vgs|
+  9.62 V) and clamps the gate-source voltage in every reachable state, including the
+  −20.77 V transient a D5 clamp event can otherwise reach. R11/R12 values and topology are
+  untouched — this is purely additive. See
+  [Programming order and the D8 gate clamp](#programming-order-and-the-d8-gate-clamp)
+  below and [NVM Programming Setup](../inbox/nvm-programming.md) for the companion
+  procedural guard.
 
 **Unchanged (re-confirmed correct, do not touch)**
 
@@ -168,10 +189,11 @@ estimates — re-verify at order time.
 | Q1 | AO3401A | C347476 | SOT-23 | Load switch (P-FET) | ~$0.02 |
 | J1 | USB-C receptacle, 6P | C456012 | SMD | USB-PD input | ~$0.05 |
 | D5 | SMAJ20A (new) | C571370 (alt: C1973455) | SMA | VBUS TVS clamp | ~$0.15 (SMAJ-family estimate) |
+| D8 | BZT52C11-7-F (new, wave-6) | C92321 | SOD-123-class | Q1 gate-source zener clamp | ~$0.05 (C92321 catalog, 20pcs) |
 | C1 | 10 µF 50V | C13585 | 1206 | VDD bulk decouple | ~$0.02–0.03 |
 | C2 | 100 nF 50V | C1711 | 0805 | VDD HF decouple | ~$0.002 |
-| C30 | 1 µF 16V | C15849 | 0603 | VREG_2V7 decouple | ~$0.001 |
-| C34 | 1 µF 16V | C15849 | 0603 | VREG_1V2 decouple | ~$0.001 |
+| C30 | 1 µF 50V | C15849 | 0603 | VREG_2V7 decouple | ~$0.001 |
+| C34 | 1 µF 50V | C15849 | 0603 | VREG_1V2 decouple | ~$0.001 |
 | C35 | 100 nF 50V | C1711 | 0805 | Gate soft-start | ~$0.002 |
 | R11 | 100 kΩ | C25803 | 0603 | Gate pull-up | ~$0.0005 |
 | R12 | 56 kΩ | C23206 | 0603 | Gate divider | ~$0.0005 |
@@ -193,10 +215,10 @@ estimates — re-verify at order time.
 | R17, R18 | 5.1 kΩ | C23186 | 0603 | External Rd, rework insurance |
 | D6, D7 | PESD24VS1UB | C85382 | SOD-523 | CC ESD, enclosed/production builds only |
 
-**Rough per-board total (fitted parts only): ~$2.85.** U1 alone is ~88% of that — this is
+**Rough per-board total (fitted parts only): ~$2.90.** U1 alone is ~86% of that — this is
 an inherent cost of the STUSB4500, not something Board A's split-out changes. What the
 split *does* change: this board has roughly a quarter of the single-board design's unique
-Extended-part count (U1, J1, J4, D5 vs. the full board's ~20), so JLCPCB's per-unique-part
+Extended-part count (U1, J1, J4, D5, D8 vs. the full board's ~20), so JLCPCB's per-unique-part
 setup/Extended fees amortize much faster on a small reorder batch — the actual point of
 "cheap, re-orderable." Fabrication, stencil, setup, and Extended-part fees are separate
 from the component total above; see [BOM](./bom.md) for the general JLCPCB fee structure
@@ -279,6 +301,28 @@ Use `J3` pad 4 (VBUS_IN) and pad 3 (VREG_2V7) instead to confirm the chip itself
 
 </Tip>
 
+## Programming order and the D8 gate clamp
+
+<Warning title="Program the NVM before first attaching a &gt;15V-capable charger">
+
+A **factory-default (unprogrammed) STUSB4500** advertises PDO3 = **20 V/1 A at highest
+priority** — see the factory-defaults table in
+[NVM Programming Setup](../inbox/nvm-programming.md). Board A's intended build order is
+assemble → program NVM via `J2` → use. Program the NVM (target ≤15 V, `SNK_PDO_NUMB = 2`
+so 20 V is never advertised — the locked configuration) from a **5 V-only charger**
+before ever attaching a board to any charger capable of more than 15 V. This procedural
+guard stays necessary even with `D8` fitted: D8 only bounds the Q1 gate-source voltage;
+it does not make a 20 V negotiation safe for the STUSB4500's own VDD/pin-18 exposure
+(see the electrical-limits caveats below) or for anything downstream expecting 15 V.
+
+</Warning>
+
+`D8` (see [Deltas vs the current single-board circuit](#deltas-vs-the-current-single-board-circuit)
+above) is a complementary **hardware** guard, not a substitute for the procedural one:
+it bounds the specific Q1 Vgs overage a 20 V contract or a D5 clamp event would otherwise
+cause, but the NVM itself must still be programmed and locked to ≤15 V before the board
+sees a charger that could offer more.
+
 ## Reuse guidance for other projects
 
 Board A is designed to drop into any project that just needs a switched, PD-negotiated DC
@@ -295,18 +339,33 @@ rail — not only this synth power supply.
 
 **NVM reconfiguration for other voltages:** the negotiated voltage/current live entirely in
 the STUSB4500's NVM (see [NVM Programming Setup](../inbox/nvm-programming.md)), not in the
-schematic. A reuse project can reprogram `J2` for a different PDO (e.g. 5 V, 9 V, 12 V, or
-20 V, subject to the connected charger actually advertising it) instead of 15 V/3 A,
-without any hardware change — as long as `D5`'s 20 V standoff and Q1's ratings (below)
-still cover the new target voltage. Reprogramming above 20 V nominal would need a
-higher-rated D5/Q1 and is out of scope for this board as documented.
+schematic. A reuse project can reprogram `J2` for a different PDO instead of 15 V/3 A
+without a hardware change **only up to and including 15 V** — this board's locked
+electrical exposure is bench-verified only at that contract. Reprogramming to **20 V is
+not currently safe** on the as-documented hardware: the wave-5 evidence review found the
+Q1 gate divider exceeds its Vgs abs-max at a 20 V contract (finding BA-1) and D5's
+standoff margin drops to zero at exactly 20 V (finding BA-4). The wave-6 `D8` gate clamp
+(above) closes the Q1 exposure, but D5 and the STUSB4500 pin exposures below are not
+re-evaluated for a 20 V contract. Do not reprogram above 15 V without re-deriving these
+margins for the target voltage.
 
 **Electrical limits to respect:**
 
-- `VBUS_IN`/VDD abs-max is 22 V (DS12499); `D5` (SMAJ20A) is chosen with a 20 V standoff /
-  22.2–24.5 V breakdown / ≤32.4 V clamp specifically to sit under that ceiling with margin
-  at the contracted 15 V, while still tolerating the 20 V-mis-contract edge case.
-- `Q1` (AO3401A) is rated −30 V/−4 A — comfortably above the 15 V/3 A design point.
+- `VBUS_IN`/VDD's **operating** range tops out at 22 V (DS12499, mirror-sourced); the
+  **absolute maximum** is a separate, higher figure — **28 V** (also mirror-only; the
+  primary ST datasheet DS12499 could not be retrieved to confirm it, so treat this ceiling
+  as evidence-capped, not primary-confirmed). `D5` (SMAJ20A) is chosen for its 20 V
+  standoff / 22.2–24.5 V breakdown, but its **≤32.4 V clamp table point sits above every
+  one of these ceilings** (32.4 &gt; 28 &gt; 22), not under any of them — the clamp does not
+  protect VDD from a fault event; it only sets the outer bound the STUSB4500's own 28 V
+  mirror-only rating would need to survive. This overage is a recorded, accepted
+  transient-class residual (disposition `ba2-disposition`,
+  `scripts/schgen/decisions.json`), not a design guarantee — D5 stays SMAJ20A because no
+  lower-clamping 20 V-standoff part is currently fitted; a lower-clamping SMBJ20A upgrade
+  is recorded as a future Board A layout-phase option.
+- `Q1` (AO3401A) is rated −30 V/−4 A on VDS — comfortably above the 15 V/3 A design point.
+  Its **Vgs** rating is the tighter limit and is now bounded by `D8` (above), not by
+  margin alone.
 - `J4`'s 2 contacts per power rail give a 1.6× derated-current margin at the 3.0 A PD
   contract cap (see the current-rating math above); do not exceed that per-board 3 A cap
   when reusing Board A at higher currents without re-deriving the connector margin.
@@ -322,8 +381,11 @@ test points accessible and silkscreened for bring-up on whatever host this ends 
 
 - [Board Split Decision — Fix List + A/B Interface Contract](../inbox/board-split-decision.md) (#90) — source of the fix list and the interface contract copied above
 - [v4 USB-PD Failure Diagnosis](../inbox/v4-pd-failure-diagnosis.md) (#87) — root-cause analysis behind the D4/CC-termination fixes
+- [Spec-Architecture Review](../inbox/spec-architecture-review.md) — the wave-5/wave-6 evidence review behind D8, the 22V/28V correction, and the 20V-reuse-guidance caveat above (findings BA-1 through BA-4)
+- `scripts/schgen/decisions.json` and `scripts/schgen/board_a_spec.py` — the locked wave-6 decision record and the spec module that generates `boards/board-a/board-a.kicad_sch`
 - [NVM Programming Setup](../inbox/nvm-programming.md) — full NVM programming procedure, hardware, and pitfalls
 - [STUSB4500 Pin Cheat-Sheet](../inbox/stusb4500-pinout.md) — per-pin rationale for U1
 - [Net-Table + Mermaid Convention](../how-to/net-table-convention.md) — the documentation convention used above
 - [Bill of Materials](./bom.md) — general JLCPCB fee structure and the (currently full single-board) BOM
 - [STUSB4500](../components/stusb4500.md), [AO3401A](../components/ao3401a.md), [USB-C connector](../components/usb-c-connector.md), [SMAJ15A](../components/smaj15a.md) (cloned pattern for D5), [USBLC6-2SC6](../components/usblc6-2sc6.md) (D4, removed — background only) — component reference pages
+- `.claude/skills/component-bzt52c11-c92321` — full primary-sourced evidence bundle for D8; [generated component records](/docs/components/records/) index the validated evidence for every part on both boards
