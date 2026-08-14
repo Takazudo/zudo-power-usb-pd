@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "routes": [
+    {
+      "route_id": "route-bzt52c11-c92321",
+      "record_id": "rec-bzt52c11-c92321",
+      "aliases": {
+        "mpn": [
+          "BZT52C11-7-F"
+        ],
+        "lcsc": [
+          "C92321"
+        ],
+        "manufacturer": [
+          "Diodes Incorporated"
+        ],
+        "function": [
+          "zener diode",
+          "gate clamp"
+        ]
+      },
+      "positive": [
+        "check BZT52C11-7-F pinout",
+        "audit C92321"
+      ],
+      "negative": [
+        "check BZT52C15 pinout"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "pin_maps": [
+    {
+      "pin_map_id": "pinmap-bzt52c11-c92321",
+      "record_id": "rec-bzt52c11-c92321",
+      "symbol": "BZT52C11-7-F_C92321",
+      "footprint": "SOD-123_L2.8-W1.8-LS3.7-RD",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "K",
+          "footprint_pad": "1",
+          "function": "cathode (band end); board-a D8: VBUS_IN = Q1 source"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "A",
+          "footprint_pad": "2",
+          "function": "anode; board-a D8: Net-(Q1-G) = Q1 gate"
+        }
+      ],
+      "reviewed_by": "child-124 foreground review against symbols/zudo-pd.kicad_sym BZT52C11-7-F_C92321 (pin 1=K, pin 2=A) and footprints/kicad/zudo-power.pretty/SOD-123_L2.8-W1.8-LS3.7-RD.kicad_mod (pads 1, 2); DS18004 page 1 polarity rule (cathode band); generator-spec lock scripts/schgen/board_a_spec.py D8"
+    }
+  ]
+}
