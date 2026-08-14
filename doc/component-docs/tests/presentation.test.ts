@@ -149,7 +149,7 @@ describe("dense tables carry a scroll container", () => {
   it("never lets a label carry evidence text", () => {
     // Attribute values are the one place evidence may never reach. Every label
     // the renderers emit is authored in this repository.
-    const authored = new Set(["parts-index", "facts", "calculation-dependencies", "pin-assignments"]);
+    const authored = new Set(["parts-index", "facts", "calculation-dependencies", "pin-assignments", "placements"]);
     for (const page of [catalogPage, ...recordPages]) {
       for (const match of page.matchAll(/<Evidence(?:Table|Details) label="([^"]*)"/gu)) {
         assert.ok(authored.has(match[1] ?? ""), `unexpected label ${match[1]}`);

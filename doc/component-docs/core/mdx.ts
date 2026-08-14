@@ -56,9 +56,10 @@ export const ALLOWED_COMPONENTS: readonly string[] = Object.keys(
 
 /**
  * The pattern every attribute VALUE must match. Evidence text can never reach
- * an attribute: this admits slugs and small integers and nothing else.
+ * an attribute: this admits slug paths (slash-separated slug segments, for
+ * `CategoryNav`'s nested `category`) and small integers and nothing else.
  */
-export const ATTRIBUTE_VALUE_PATTERN = /^[a-z0-9][a-z0-9-]*$/u;
+export const ATTRIBUTE_VALUE_PATTERN = /^[a-z0-9][a-z0-9-]*(?:\/[a-z0-9][a-z0-9-]*)*$/u;
 
 function allowedAttributesFor(name: string): readonly string[] | null {
   return name in ALLOWED_COMPONENT_ATTRIBUTES

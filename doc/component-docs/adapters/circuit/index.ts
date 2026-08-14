@@ -16,9 +16,8 @@
  *
  * zudo-pd has no 3D assets at all, so unlike led-lamp this adapter never reads
  * a reference contract and never builds a `PublicRecordReference` — every
- * record publishes `reference: null` (see `core/view-model.ts`) and
- * `packagePreviews` is always empty. `references.ts` / `model-assets.ts` are
- * not ported.
+ * record publishes `reference: null` (see `core/view-model.ts`).
+ * `references.ts` / `model-assets.ts` are not ported.
  */
 
 import { anchor, byCodeUnit, recordSlug, type Slug } from "../../core/ids.ts";
@@ -142,17 +141,30 @@ export function projectIndex(index: EvidenceIndex, policy: PublicationPolicy): P
     policy,
   );
 
+  // Counted from what was actually published (the projected records), not
+  // from the provider index: the landing page must never assert counts the
+  // site does not deliver. The three inventory rows stay inventory-scoped on
+  // purpose — they are identity truth about the whole inventory, and the line
+  // count is cross-checked against it below.
   const corpus: CorpusSummary = {
-    ownerBundles: index.ownerSkills.length,
-    records: index.records.length,
-    standaloneRecords: index.records.filter((entry) => entry.record.kind === "standalone").length,
-    subordinateRecords: index.records.filter((entry) => entry.record.kind === "subordinate").length,
-    sources: index.totals.sources,
-    facts: index.totals.facts,
-    coverageDomains: index.totals.coverage,
-    interactions: index.totals.interactions,
-    pinMaps: index.totals.pinMaps,
-    pins: index.totals.pins,
+    ownerBundles: new Set(ordered.map((entry) => entry.line.owner_skill)).size,
+    records: records.length,
+    standaloneRecords: records.filter((record) => record.identity.kind === "standalone").length,
+    subordinateRecords: records.filter((record) => record.identity.kind === "subordinate").length,
+    sources: records.reduce((total, record) => total + record.sources.length, 0),
+    facts: records.reduce((total, record) => total + record.facts.length, 0),
+    coverageDomains: records.reduce((total, record) => total + record.coverage.length, 0),
+    interactions: new Set(
+      records.flatMap((record) =>
+        record.interactions.map((interaction) => interaction.interactionId),
+      ),
+    ).size,
+    pinMaps: records.reduce((total, record) => total + record.pinMaps.length, 0),
+    pins: records.reduce(
+      (total, record) =>
+        total + record.pinMaps.reduce((count, pinMap) => count + pinMap.pins.length, 0),
+      0,
+    ),
     inventoryLines: inventory.assertions.orderable_lines,
     fittedLines: inventory.assertions.fitted_lines,
     dnpOrHandFitLines: inventory.assertions.dnp_or_hand_fit_lines,
@@ -168,9 +180,6 @@ export function projectIndex(index: EvidenceIndex, policy: PublicationPolicy): P
     },
     corpus,
     records,
-    // Always empty: zudo-pd has no 3D assets, so `references.ts` /
-    // `model-assets.ts` are not ported and no package preview ever exists.
-    packagePreviews: [],
     integration,
   };
 }
@@ -272,11 +281,10 @@ function buildIdentity(
       safeText(line.source_state, { field: "source_state" }),
     ),
     // `dnp` lives per placement in zudo-pd's inventory (see `evidence.ts`'s
-    // `InventoryLine`), so a line placed more than once has to collapse to
-    // one flag: fitted if fitted ANYWHERE. The full per-placement truth is
-    // never lost — `identity.placements` below still lists every position —
-    // this is only the summary boolean `fitLabel()` and the catalog columns
-    // read.
+    // `InventoryLine`). The line-level flag is only the rollup the catalog
+    // columns read (fitted if fitted ANYWHERE); the per-placement truth is
+    // carried through on each placement below, so a mixed line (board-a
+    // R17/R18 DNP, board-b R3 fitted) renders each position's real fit state.
     dnp: policy.publishRequired(
       "record.dnp",
       line.placements.every((placement) => placement.dnp),
@@ -286,6 +294,7 @@ function buildIdentity(
       line.placements.map((placement) => ({
         board: safeText(placement.board, { field: "placement.board" }),
         refdes: safeText(placement.refdes, { field: "placement.refdes" }),
+        dnp: placement.dnp,
       })),
     ),
   };
@@ -759,11 +768,13 @@ function assertCorpusMatchesInventory(
     });
   }
   // One routing entry per record is what makes aliases a total function; a
-  // mismatch means some record would publish without search terms.
-  if (index.totals.routes !== corpus.records) {
+  // mismatch means some record would publish without search terms. This is a
+  // provider-level invariant, so it compares provider totals — the corpus
+  // counts above are published counts and may lawfully be smaller.
+  if (index.totals.routes !== index.records.length) {
     fail("ADAPTER_CONTRACT", "route count does not match the record count", {
       routes: index.totals.routes,
-      records: corpus.records,
+      records: index.records.length,
     });
   }
 }

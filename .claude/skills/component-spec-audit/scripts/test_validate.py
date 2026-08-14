@@ -341,12 +341,9 @@ class ComponentSpecValidatorTests(unittest.TestCase):
         next(f for f in trusted["facts"] if f["fact_id"] == "fact-golden-margin")["verdict"] = "PASS - primary-source confirmed"
         validator.validate_pass_trust(trusted["facts"], trusted["sources"])
 
-    def test_stale_online_hash_fails_and_removes_download(self):
-        with tempfile.TemporaryDirectory() as directory:
-            target = Path(directory) / "source.pdf"
-            with self.assertRaisesRegex(validator.ContractError, "stale online hash"):
-                validator.store_and_verify(b"fixture", target, "0" * 64, "src-test")
-            self.assertFalse(target.exists())
+    def test_stale_online_hash_fails(self):
+        with self.assertRaisesRegex(validator.ContractError, "stale online hash"):
+            validator.verify_payload(b"fixture", "0" * 64, "src-test")
 
     def test_subordinate_uses_full_contract(self):
         bundle = validator.load(validator.FIXTURES / "valid/subordinate-record.json")

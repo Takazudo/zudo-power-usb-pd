@@ -65,14 +65,14 @@ describe("open coverage never reads as safety", () => {
     const open = model.records.flatMap((record) =>
       record.coverage.filter((entry) => entry.status === "OPEN"),
     );
-    assert.equal(open.length, 57);
+    assert.equal(open.length, 59);
     // The hard case: open because NOTHING addresses the domain, so there is no
     // fact to show and no blocker to blame.
     const barren = open.filter(
       (entry) => entry.factIds.length === 0 && entry.blockingFactIds.length === 0,
     );
-    assert.equal(barren.length, 5);
-    assert.equal(open.filter((entry) => entry.blockingFactIds.length === 0).length, 5);
+    assert.equal(barren.length, 4);
+    assert.equal(open.filter((entry) => entry.blockingFactIds.length === 0).length, 4);
   });
 
   it("gives every open domain a reason, and every barren one a reason with content", () => {
@@ -102,7 +102,7 @@ describe("open coverage never reads as safety", () => {
         )
         .map((entry) => ({ slug: record.identity.slug, entry })),
     );
-    assert.equal(barren.length, 5);
+    assert.equal(barren.length, 4);
 
     for (const { slug, entry } of barren) {
       const section = coverageSection(slug, entry.anchor);
@@ -272,13 +272,11 @@ describe("the canary set cannot quietly become empty", () => {
     "reference.model.scale": "",
     "reference.package.recordIds": "",
     "asset.datasheetPdf": "",
-    "asset.footprintPreview": "",
-    "asset.modelPreview": "",
   };
 
   it("covers every denied field in the committed matrix", () => {
     const denied = FIELD_KEYS.filter((key) => CIRCUIT_PUBLICATION_MATRIX[key] === "DENY");
-    assert.equal(denied.length, 28, "the number of denied fields moved without review");
+    assert.equal(denied.length, 26, "the number of denied fields moved without review");
 
     for (const key of denied) {
       const providerKey = PROVIDER_KEY_FOR_DENIED_FIELD[key];

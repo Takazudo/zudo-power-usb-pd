@@ -11,9 +11,10 @@
     "check:html": "html-validate \"dist/**/*.html\"",
     "generate:components": "node --experimental-strip-types component-docs/cli/generate.ts",
     "check:components": "node --experimental-strip-types component-docs/cli/check.ts",
+    "scan:components": "node --experimental-strip-types component-docs/cli/scan.ts",
     "test:components": "node --experimental-strip-types --test \"component-docs/tests/*.test.ts\"",
     "dev:components": "node --experimental-strip-types component-docs/cli/generate.ts --watch",
-    "b4push": "pnpm check && pnpm test:components && pnpm build && pnpm check:components",
+    "b4push": "pnpm check && pnpm test:components && pnpm build && pnpm check:components && pnpm scan:components",
     "format:md": "../scripts/mdx-format.sh --write \"src/content/docs/**/*.{md,mdx}\" --ignore \"node_modules/**,dist/**,build/**,.git/**,worktrees/**,src/content/docs/components/records/**\"",
     "format:md:check": "../scripts/mdx-format.sh --check \"src/content/docs/**/*.{md,mdx}\" --ignore \"node_modules/**,dist/**,build/**,.git/**,worktrees/**,src/content/docs/components/records/**\"",
     "prepare": "cd .. && lefthook install --reset-hooks-path"

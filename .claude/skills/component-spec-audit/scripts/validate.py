@@ -16,7 +16,6 @@ import json
 import math
 import re
 import sys
-import tempfile
 import urllib.request
 from pathlib import Path
 
@@ -34,6 +33,16 @@ OWNER_SKILL = re.compile(r"^component-[a-z0-9][a-z0-9-]*$")
 LOCATOR_DETAIL = re.compile(r"(section|table|figure|row|pin|title block|calculated)", re.I)
 OPEN_UNAVAILABLE_CLAIM = re.compile(r"unavailable|lower-authority|UNSOURCED", re.I)
 ZERO_SHA256 = "0" * 64
+
+# The surface other scripts may depend on (circuit-spec-integration's
+# check_forward_tests.py imports these); renaming anything here is a
+# cross-skill breaking change.
+__all__ = [
+    "ROOT", "REFS", "ContractError", "load", "require", "load_contract",
+    "validate_inventory", "validate_candidates", "validate_local_skills",
+    "resolve", "validate_all", "verify_payload",
+]
+
 HTTP_TIMEOUT_SECONDS = 20
 HTTP_HEADERS = {
     "User-Agent": "Mozilla/5.0 (compatible; zudo-pd-component-spec/1.0)",
@@ -242,12 +251,15 @@ def generator_inventory(pairs, schema):
         for refdes, item in components.items():
             require(isinstance(item, (tuple, list)) and len(item) == 6, f"{board}/{refdes}: generator entry must be (symbol, value, lcsc, footprint, dnp, position)")
             symbol, value, lcsc, footprint, dnp, _position = item
+            # nickname check runs before the blank-LCSC exclusion so bare-copper
+            # entries (test pads, pogo pads) cannot smuggle in an undeclared
+            # footprint library
+            library, _, package = footprint.partition(":")
+            require(package and library == nickname, f"{board}/{refdes}: footprint must be {nickname}:<package>, got {footprint!r}")
             if not lcsc:
                 excluded.append((board, refdes))
                 continue
             mpn = expected_mpn(symbol, value, lcsc, mpn_from_value)
-            library, _, package = footprint.partition(":")
-            require(package and library == nickname, f"{board}/{refdes}: footprint must be {nickname}:<package>, got {footprint!r}")
             entry = grouped.setdefault(lcsc, {"mpn": mpn, "package": package, "symbols": set(), "placements": []})
             require(entry["mpn"] == mpn and entry["package"] == package, f"generator LCSC {lcsc}: conflicting identity")
             entry["symbols"].add(symbol)
@@ -969,9 +981,9 @@ def validate_refresh_evidence(aggregate, data):
     require("PROJECT_GENERATOR" in classes and "MANUFACTURER_PRIMARY" in classes, "refresh evidence requires generator and manufacturer-primary examples")
 
 
-def validate_evidence_chain(chain, aggregate):
+def validate_evidence_chain(chain, aggregate, schema):
     facts = {fact["fact_id"]: fact for fact in aggregate["facts"]}
-    expected_stages = ["official-source", "conditioned-requirement", "generated-netlist", "symbol-footprint", "pcb-orientation", "bom-cpl", "as-built", "programmed", "bench"]
+    expected_stages = schema["integration_evidence_chain_stages"]
     require([stage["stage"] for stage in chain["evidence_chain"]] == expected_stages, "integration evidence chain: stage order changed")
     for stage in chain["evidence_chain"]:
         required_keys(stage, ("stage", "status", "fact_ids"), "integration evidence stage")
@@ -1024,7 +1036,7 @@ def validate_integration_artifacts(aggregate, schema, *, staged=True):
                 require(math.isclose(arithmetic(item["expression"], fact_values), item[item["result_key"]], rel_tol=1e-12, abs_tol=1e-12), f"{item['calculation_id']}: result is stale")
     chain = next((rule for rule in rules if rule["domain"] == "source-to-bench-chain"), None)
     if chain is not None:
-        validate_evidence_chain(chain, aggregate)
+        validate_evidence_chain(chain, aggregate, schema)
 
 
 def component_skill_dirs(skills_root):
@@ -1201,12 +1213,8 @@ def apply_inventory_case(schema, inventory_data, candidates_data, base, target, 
     validate_candidates(candidates_changed, schema, lines, generated)
 
 
-def store_and_verify(payload, target, expected_sha256, source_id):
-    target.write_bytes(payload)
-    try:
-        require(hashlib.sha256(payload).hexdigest() == expected_sha256, f"{source_id}: stale online hash")
-    finally:
-        target.unlink(missing_ok=True)
+def verify_payload(payload, expected_sha256, source_id):
+    require(hashlib.sha256(payload).hexdigest() == expected_sha256, f"{source_id}: stale online hash")
 
 
 def fetch_source(source, opener=urllib.request.urlopen):
@@ -1216,8 +1224,6 @@ def fetch_source(source, opener=urllib.request.urlopen):
 
 
 def online_sources(schema, sources, selected_ids=None, opener=urllib.request.urlopen):
-    temp_parent = ROOT / "tmp/pdfs"
-    temp_parent.mkdir(parents=True, exist_ok=True)
     sources_by_id = {source["source_id"]: source for source in sources}
     selected = set(selected_ids or ())
     if selected:
@@ -1225,33 +1231,33 @@ def online_sources(schema, sources, selected_ids=None, opener=urllib.request.url
         chosen = [sources_by_id[source_id] for source_id in sorted(selected)]
     else:
         chosen = [source for source in sources if source["availability"] == "AVAILABLE"]
-    with tempfile.TemporaryDirectory(prefix="component-spec-refresh-", dir=temp_parent) as directory:
-        temp = Path(directory)
-        for source in chosen:
-            validate_source(source, schema)
-            require(source["availability"] == "AVAILABLE", f"{source['source_id']}: only AVAILABLE sources can be refreshed")
-            require(source.get("refresh_policy", "HASH-LOCKED") == "HASH-LOCKED", f"{source['source_id']}: volatile source cannot claim deterministic selective refresh")
-            target = temp / f"{source['source_id']}.download"
-            payload = fetch_source(source, opener)
-            store_and_verify(payload, target, source["sha256"], source["source_id"])
+    for source in chosen:
+        validate_source(source, schema)
+        require(source["availability"] == "AVAILABLE", f"{source['source_id']}: only AVAILABLE sources can be refreshed")
+        require(source.get("refresh_policy", "HASH-LOCKED") == "HASH-LOCKED", f"{source['source_id']}: volatile source cannot claim deterministic selective refresh")
+        payload = fetch_source(source, opener)
+        verify_payload(payload, source["sha256"], source["source_id"])
 
 
-def validate_all(*, staged=True, online=False, refresh_source_ids=None, skipped=None):
+def load_contract(*, staged, skipped=None, root=None):
+    """Shared staged-bootstrap for every consumer of the contract: load the
+    schema, validate the inventory and candidates with the staged/strict
+    tolerances, and return (schema, lines, candidates, generated).
+
+    validate_all and circuit-spec-integration's check_forward_tests.py both
+    call this — one body, so the two gates cannot drift apart."""
     skipped = skipped if skipped is not None else []
+    root = root or ROOT
     schema = load(REFS / "schema.json")
-    frontmatter(AUDIT / "SKILL.md", "component-spec-audit")
-    validate_template_skill()
-    validate_bundle(template_bundle(), schema)
-    run_seeded_fixtures(schema)
 
     inventory_path = REFS / "inventory.json"
     if inventory_path.is_file():
         inventory_data = load(inventory_path)
-        lines, generated = validate_inventory(inventory_data, schema, staged=staged, root=ROOT)
+        lines, generated = validate_inventory(inventory_data, schema, staged=staged, root=root)
         if generated is None:
             skipped.append("generator specs are absent: inventory-to-generator identity, placement/DNP, exclusion, and KiCad pin-asset parity were not checked")
         else:
-            absent_boards = [item["board"] for item in inventory_data["generator_specs"] if not (ROOT / item["spec"]).is_file()]
+            absent_boards = [item["board"] for item in inventory_data["generator_specs"] if not (root / item["spec"]).is_file()]
             if absent_boards:
                 skipped.append(f"generator specs for {absent_boards} are absent: their placements, exclusions, and KiCad pin-asset parity were not checked")
     else:
@@ -1266,6 +1272,17 @@ def validate_all(*, staged=True, online=False, refresh_source_ids=None, skipped=
         require(staged, f"{candidates_path}: candidates file is required in strict mode")
         skipped.append("references/candidates.json is absent: replacement-candidate identity was not checked")
         candidates = []
+
+    return schema, lines, candidates, generated
+
+
+def validate_all(*, staged=True, online=False, refresh_source_ids=None, skipped=None):
+    skipped = skipped if skipped is not None else []
+    schema, lines, candidates, generated = load_contract(staged=staged, skipped=skipped)
+    frontmatter(AUDIT / "SKILL.md", "component-spec-audit")
+    validate_template_skill()
+    validate_bundle(template_bundle(), schema)
+    run_seeded_fixtures(schema)
 
     validate_routing(lines)
     owners = owner_skills(lines, candidates)

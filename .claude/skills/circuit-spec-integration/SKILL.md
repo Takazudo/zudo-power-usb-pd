@@ -11,9 +11,9 @@ Resolve MPN and LCSC identifiers independently. Reject conflicts, same-name wron
 
 Use the listed fact IDs with their exact conditions and locators. `UNSOURCED` evidence cannot close a domain, and project connectivity cannot prove programmed, assembled, or bench state. For substitutions or design changes, report the affected rule, raw facts, recalculated margins, missing evidence stages, and one honest verdict. Do not silently change design files.
 
-Run `python3 .claude/skills/circuit-spec-integration/scripts/check_forward_tests.py` after editing rules, routes, facts, or evidence-chain state. Deterministic fixtures prove routing and discovery; the hash-locked `references/observed-runs.json` records explicit-skill policy rendering/refusal against frozen evidence and does not claim independent model discovery of IDs.
+Run `python3 .claude/skills/circuit-spec-integration/scripts/check_forward_tests.py --strict` (the mode CI enforces) after editing rules, routes, facts, or evidence-chain state. Deterministic fixtures prove routing and discovery; the hash-locked `references/observed-runs.json` records explicit-skill policy rendering/refusal against frozen evidence and does not claim independent model discovery of IDs.
 
-`references/rules.json` carries the committed cross-component rules — nine domains, mirrored exactly by `component-spec-audit/references/schema.json` `integration_domains` (both files must change together). `references/forward-tests.json` and the hash-locked `references/observed-runs.json` carry the deterministic forward cases; re-run the observed runs whenever a case's frozen expectations change. Full `--strict` runs of both gates additionally require the generator specs, which are not committed yet.
+`references/rules.json` carries the committed cross-component rules — nine domains, mirrored exactly by `component-spec-audit/references/schema.json` `integration_domains` (both files must change together). `references/forward-tests.json` and the hash-locked `references/observed-runs.json` carry the deterministic forward cases; re-run the observed runs whenever a case's frozen expectations change. Full `--strict` runs of both gates additionally require the generator specs (`scripts/schgen/board_a_spec.py` / `board_b_spec.py`), which are committed — `--strict` is what CI runs.
 
 ## Human component reference
 

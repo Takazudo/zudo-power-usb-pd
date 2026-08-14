@@ -1,14 +1,15 @@
 # Offline validation of the frozen component contract for the zudo-pd
-# board-a / board-b split: the canonical Python validator, its unit tests,
-# the cross-component routing/refusal forward tests, schematic
-# regen-idempotency for both boards, connectivity-baseline drift for both
-# boards, and the wave-6 decision-lock contract. No credentials, no
-# network, no KiCad.
+# board-a / board-b split: the canonical Python validator, its unit tests
+# and self-tests, the cross-component routing/refusal forward tests, the
+# schgen smoke test, schematic regen-idempotency + label-geometry checks
+# for both boards, connectivity-baseline drift for both boards, the wave-6
+# decision-lock contract, and the doc-engine test suite. No credentials,
+# no network, no KiCad.
 #
 # This is the source of truth for component evidence; main-deploy.yml's
 # build depends on the same validator (`pnpm generate:components` shells
-# out to validate.py), which is why both workflows pin the same Python
-# 3.12.
+# out to validate.py --strict), which is why both workflows pin the same
+# Python 3.12.
 
 name: Component spec skills
 
@@ -24,6 +25,12 @@ on:
       - 'footprints/**'
       - 'doc/**'
   push:
+    # main only: a push to a topic branch with an open PR already runs the
+    # pull_request trigger, and the two land in different concurrency groups
+    # (refs/heads/<topic> vs refs/pull/N/merge), so without this filter every
+    # PR commit burns two full runs and tag pushes trigger a third.
+    branches:
+      - main
     paths:
       - 'CLAUDE.md'
       - '.claude/skills/**'
@@ -43,42 +50,71 @@ concurrency:
 permissions:
   contents: read
 
-env:
-  # strict: the wave-9 confirm task (issue #128) locked the full evidence
-  # corpus for both boards — inventory <-> skill-dir <-> generator-spec
-  # parity, the critical-fact review, and refresh evidence are all
-  # satisfiable now. validate.py and check_forward_tests.py both accept
-  # --staged/--strict directly, so this is the only line that changed.
-  MODE: strict
-
 jobs:
   validate:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      # SHA-pinned to the same pins main-deploy.yml's Python setup uses — a
-      # mutable tag is a supply-chain hole, and two workflows on one runner
-      # image should not disagree about which checkout/Python they get.
-      # Both SHAs verified against the real tags (checkout v5.0.1,
-      # setup-python v5.6.0).
+      # SHA-pinned to the same pins main-deploy.yml uses — a mutable tag is a
+      # supply-chain hole, and two workflows on one runner image should not
+      # disagree about which checkout/Python they get. Both SHAs verified
+      # against the real tags (checkout v5.0.1, setup-python v5.6.0).
       - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
         with:
           python-version: '3.12'
-      - name: Validate frozen component contract (offline)
-        run: python3 .claude/skills/component-spec-audit/scripts/validate.py --${{ env.MODE }}
+      - name: Validate frozen component contract (offline, strict)
+        run: python3 .claude/skills/component-spec-audit/scripts/validate.py --strict
       - name: Test validator and fixtures (offline)
         run: python3 -m unittest discover -s .claude/skills/component-spec-audit/scripts -p 'test_*.py'
-      - name: Test cross-component routing and refusals (offline)
-        run: python3 .claude/skills/circuit-spec-integration/scripts/check_forward_tests.py --${{ env.MODE }}
+      - name: Test cross-component routing and refusals (offline, strict)
+        run: python3 .claude/skills/circuit-spec-integration/scripts/check_forward_tests.py --strict
+      - name: Self-test the baseline checker (fixture corpus)
+        run: python3 scripts/schgen/check_baseline.py --self-test
+      - name: Smoke-test the schematic generator (temp dir, geometry checks included)
+        run: bash scripts/schgen/run_smoke_test.sh
       - name: Regen-idempotency check — board A + board B (pure Python, no KiCad)
+        # `--intent-to-add` first: a generator change that emits a NEW file
+        # leaves it untracked, and `git diff` cannot see untracked files on
+        # its own — without this the gate passes on a real drift.
         run: |
           python3 scripts/schgen/gen_schematic.py board_a_spec
           python3 scripts/schgen/gen_schematic.py board_b_spec
-          git diff --exit-code boards/
+          git add --intent-to-add -A -- boards/
+          git diff --exit-code -- boards/
+      - name: Label-geometry check — board A + board B (labels on pin endpoints, no cross-net collisions)
+        run: |
+          python3 scripts/schgen/verify_geometry.py scripts/schgen/board_a_spec.py boards/board-a/board-a.kicad_sch
+          python3 scripts/schgen/verify_geometry.py scripts/schgen/board_b_spec.py boards/board-b/board-b.kicad_sch
       - name: Connectivity-baseline drift check — board A + board B
         run: |
           python3 scripts/schgen/check_baseline.py scripts/schgen/board_a_spec.py scripts/schgen/baselines/board-a.json --allow scripts/schgen/baselines/board-a-allowed-deltas.json
           python3 scripts/schgen/check_baseline.py scripts/schgen/board_b_spec.py scripts/schgen/baselines/board-b.json --allow scripts/schgen/baselines/board-b-allow.json
       - name: Validate wave-6 decision lock (decisions.json)
         run: python3 scripts/schgen/check_decisions.py
+
+  # The doc-engine suite (~9k lines under doc/component-docs/tests/) is the
+  # only guard on the TypeScript projection — including the two-place MDX
+  # component-registry sync that fails silently at runtime. It needs Node AND
+  # Python (pipeline tests shell out to validate.py), hence its own job.
+  doc-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: doc
+    steps:
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+        with:
+          version: 11.5.2
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Doc-engine test suite
+        run: pnpm test:components

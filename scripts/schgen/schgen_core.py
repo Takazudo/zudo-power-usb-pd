@@ -20,9 +20,12 @@ tells you anything if the diff is empty whenever the spec is unchanged --
 random UUIDs would make that diff non-empty on every run regardless of
 whether the spec actually changed.
 """
+import importlib
+import importlib.util
 import math
 import os
 import uuid
+from pathlib import Path
 
 from sexp import load, atom, find_all
 
@@ -33,6 +36,25 @@ LIB_PATH = os.path.join(PROJ, 'symbols', 'zudo-pd.kicad_sym')
 _UUID_NAMESPACE = uuid.UUID('a3f0c9d2-2f3e-4a9b-9b0f-3c1d7e8f4a10')
 
 
+class SchgenError(Exception):
+    """A spec or library problem the user must fix — reported as a message,
+    not a traceback."""
+
+
+def load_spec_module(spec_module_arg):
+    """Load a spec module from either a filesystem .py path or a dotted
+    module name on sys.path. Shared by every schgen CLI tool."""
+    path = Path(spec_module_arg)
+    if path.suffix == '.py' or path.exists():
+        module_spec = importlib.util.spec_from_file_location(path.stem, path)
+        if module_spec is None or module_spec.loader is None:
+            raise SchgenError(f'could not load spec module from {spec_module_arg}')
+        module = importlib.util.module_from_spec(module_spec)
+        module_spec.loader.exec_module(module)
+        return module
+    return importlib.import_module(spec_module_arg)
+
+
 def new_uuid(seed):
     """Deterministic UUID derived from `seed` (see module docstring)."""
     return str(uuid.uuid5(_UUID_NAMESPACE, seed))
@@ -40,13 +62,15 @@ def new_uuid(seed):
 
 class Library:
     def __init__(self, path=LIB_PATH):
-        self.text = open(path).read()
+        with open(path, encoding='utf-8') as f:
+            self.text = f.read()
         self.tree = load(path)
 
     def extract_symbol_raw(self, name):
         needle = f'(symbol "{name}"'
         i = self.text.find(needle)
-        assert i >= 0, f'symbol {name} not found'
+        if i < 0:
+            raise SchgenError(f'symbol {name} not found in {LIB_PATH}')
         depth = 0
         j = i
         in_str = False
@@ -64,7 +88,7 @@ class Library:
                 if depth == 0:
                     return self.text[i:j + 1]
             j += 1
-        raise AssertionError('unbalanced s-expression')
+        raise SchgenError(f'unbalanced s-expression while extracting symbol {name}')
 
     def pins_of(self, name):
         for sym in find_all(self.tree, 'symbol'):
@@ -80,28 +104,41 @@ class Library:
                     ang = float(atom(at[3])) if len(at) > 3 else 0.0
                     out.append((num, pname, float(atom(at[1])), float(atom(at[2])), ang, length))
             return out
-        raise AssertionError(f'symbol {name} not found in parsed lib')
+        raise SchgenError(f'symbol {name} not found in parsed lib {LIB_PATH}')
 
 
 def check_coverage(spec, pin_cache):
-    """Every pin of every component must be in exactly one net or NC."""
+    """Every pin of every component must be in exactly one net or NC.
+
+    Collects every violation before failing, so a spec with several
+    mis-assigned pins reports them all in one run instead of one per regen.
+    """
+    problems = []
     used = {}
     for net, specs in spec.NETS.items():
         for s in specs:
-            assert s not in used, f'{s} appears in both {used[s]} and {net}'
+            if s in used:
+                problems.append(f'{s} appears in both {used[s]} and {net}')
             used[s] = net
     for s in spec.NO_CONNECT:
-        assert s not in used, f'{s} is both connected and NC'
+        if s in used:
+            problems.append(f'{s} is both connected and NC')
         used[s] = 'NC'
     for ref, comp in spec.COMPONENTS.items():
         numbers = {num for num, *_ in pin_cache[comp[0]]}
         for num in numbers:
-            assert f'{ref}.{num}' in used, f'pin {ref}.{num} not assigned to any net or NC'
+            if f'{ref}.{num}' not in used:
+                problems.append(f'pin {ref}.{num} not assigned to any net or NC')
     for s in used:
         ref, num = s.split('.')
-        assert ref in spec.COMPONENTS, f'unknown ref {ref}'
+        if ref not in spec.COMPONENTS:
+            problems.append(f'unknown ref {ref}')
+            continue
         numbers = {n for n, *_ in pin_cache[spec.COMPONENTS[ref][0]]}
-        assert num in numbers, f'{s}: pin {num} not in symbol ({sorted(numbers)})'
+        if num not in numbers:
+            problems.append(f'{s}: pin {num} not in symbol ({sorted(numbers)})')
+    if problems:
+        raise SchgenError('coverage check failed:\n  ' + '\n  '.join(problems))
     return len(used)
 
 
@@ -123,25 +160,18 @@ def abs_pin_positions(spec, pin_cache, ref):
     return out
 
 
-def generate(spec):
-    lib = Library()
-    pin_cache = {}
-    for ref, comp in spec.COMPONENTS.items():
-        if comp[0] not in pin_cache:
-            pin_cache[comp[0]] = lib.pins_of(comp[0])
+def _emit_header(spec, root_uuid):
+    return [
+        '(kicad_sch',
+        '\t(version 20260306)',
+        '\t(generator "eeschema")',
+        '\t(generator_version "10.0")',
+        f'\t(uuid "{root_uuid}")',
+        f'\t(paper "{spec.PAPER}")',
+    ]
 
-    n = check_coverage(spec, pin_cache)
-    print(f'coverage OK: {n} pin specs over {len(spec.COMPONENTS)} components')
 
-    root_uuid = new_uuid(f'{spec.PROJECT_NAME}:root')
-    parts = []
-    parts.append('(kicad_sch')
-    parts.append('\t(version 20260306)')
-    parts.append('\t(generator "eeschema")')
-    parts.append('\t(generator_version "10.0")')
-    parts.append(f'\t(uuid "{root_uuid}")')
-    parts.append(f'\t(paper "{spec.PAPER}")')
-
+def _emit_lib_symbols(spec, lib):
     embedded = []
     seen = set()
     for ref, comp in spec.COMPONENTS.items():
@@ -152,10 +182,11 @@ def generate(spec):
         raw = lib.extract_symbol_raw(symname)
         raw = raw.replace(f'(symbol "{symname}"', f'(symbol "zudo-pd:{symname}"', 1)
         embedded.append('\t\t' + raw.replace('\n', '\n\t\t'))
-    parts.append('\t(lib_symbols')
-    parts.extend(embedded)
-    parts.append('\t)')
+    return ['\t(lib_symbols'] + embedded + ['\t)']
 
+
+def _emit_symbol_instances(spec, pin_cache, root_uuid):
+    parts = []
     label_overrides = getattr(spec, 'LABEL_OVERRIDES', {})
     for ref, (symname, value, lcsc, fp, dnp, (X, Y)) in spec.COMPONENTS.items():
         pins = pin_cache[symname]
@@ -208,7 +239,11 @@ def generate(spec):
             f'\n\t\t\t\t\t(reference "{ref}")\n\t\t\t\t\t(unit 1)\n\t\t\t\t)\n\t\t\t)\n\t\t)')
         body.append('\t)')
         parts.append('\n'.join(body))
+    return parts
 
+
+def _emit_global_labels(spec, pin_cache):
+    parts = []
     for net, specs in spec.NETS.items():
         for s in specs:
             ref, num = s.split('.')
@@ -222,18 +257,42 @@ def generate(spec):
                     f'\t\t(effects\n\t\t\t(font (size 1.27 1.27))\n\t\t\t(justify {justify})\n\t\t)\n'
                     f'\t\t(uuid "{label_uuid}")\n'
                     f'\t)')
+    return parts
 
+
+def _emit_no_connects(spec, pin_cache):
+    parts = []
     for s in spec.NO_CONNECT:
         ref, num = s.split('.')
         for nc_idx, (x, y, _ang) in enumerate(abs_pin_positions(spec, pin_cache, ref)[num]):
             nc_uuid = new_uuid(f'{spec.PROJECT_NAME}:nc:{s}:{nc_idx}')
             parts.append(f'\t(no_connect\n\t\t(at {x:g} {y:g})\n\t\t(uuid "{nc_uuid}")\n\t)')
+    return parts
 
+
+def generate(spec):
+    lib = Library()
+    pin_cache = {}
+    for ref, comp in spec.COMPONENTS.items():
+        if comp[0] not in pin_cache:
+            pin_cache[comp[0]] = lib.pins_of(comp[0])
+
+    n = check_coverage(spec, pin_cache)
+    print(f'coverage OK: {n} pin specs over {len(spec.COMPONENTS)} components')
+
+    root_uuid = new_uuid(f'{spec.PROJECT_NAME}:root')
+    parts = []
+    parts.extend(_emit_header(spec, root_uuid))
+    parts.extend(_emit_lib_symbols(spec, lib))
+    parts.extend(_emit_symbol_instances(spec, pin_cache, root_uuid))
+    parts.extend(_emit_global_labels(spec, pin_cache))
+    parts.extend(_emit_no_connects(spec, pin_cache))
     parts.append('\t(sheet_instances\n\t\t(path "/"\n\t\t\t(page "1")\n\t\t)\n\t)')
     parts.append('\t(embedded_fonts no)')
     parts.append(')')
 
     out_path = os.path.join(PROJ, spec.OUT)
-    open(out_path, 'w').write('\n'.join(parts) + '\n')
+    with open(out_path, 'w', encoding='utf-8') as f:
+        f.write('\n'.join(parts) + '\n')
     print(f'wrote {out_path}')
     return out_path

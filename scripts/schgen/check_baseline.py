@@ -44,29 +44,20 @@ Exit 1 = mismatch found; the diff is printed to stdout.
 """
 
 import argparse
-import importlib
-import importlib.util
 import json
+import os
 import sys
 from pathlib import Path
 
-
-def _load_module(spec_module_arg):
-    """Load a spec module from either a filesystem .py path or a dotted
-    module name on sys.path."""
-    path = Path(spec_module_arg)
-    if path.suffix == ".py" or path.exists():
-        module_spec = importlib.util.spec_from_file_location(path.stem, path)
-        if module_spec is None or module_spec.loader is None:
-            raise SystemExit(f"error: could not load spec module from {spec_module_arg}")
-        module = importlib.util.module_from_spec(module_spec)
-        module_spec.loader.exec_module(module)
-        return module
-    return importlib.import_module(spec_module_arg)
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from schgen_core import SchgenError, load_spec_module
 
 
 def load_spec_nets(spec_module_arg):
-    module = _load_module(spec_module_arg)
+    try:
+        module = load_spec_module(spec_module_arg)
+    except SchgenError as err:
+        raise SystemExit(f"error: {err}")
     if not hasattr(module, "NETS"):
         raise SystemExit(f"error: {spec_module_arg} has no top-level NETS dict")
     return {name: set(pins) for name, pins in module.NETS.items()}

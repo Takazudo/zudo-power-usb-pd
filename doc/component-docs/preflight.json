@@ -6,8 +6,9 @@
   },
   "records": {
     "available": 41,
-    "selected": 40,
+    "selected": 41,
     "slugs": [
+      "bzt52c11-c92321",
       "c13585",
       "c15849",
       "c1623",
@@ -52,11 +53,13 @@
   },
   "sources": {
     "available": 126,
-    "selected": 124,
-    "linkable": 124,
+    "selected": 126,
+    "linkable": 126,
     "ids": [
       "src-ao3401a-board-a-baseline",
       "src-ao3401a-usb-pd-input-sch",
+      "src-bzt52c11-diodes-primary",
+      "src-bzt52c11-lcsc-identity",
       "src-c13585-boardadoc",
       "src-c13585-catalog",
       "src-c13585-page",
@@ -185,343 +188,343 @@
     {
       "key": "record.recordId",
       "decision": "PUBLISH",
-      "emitted": 40,
+      "emitted": 41,
       "withheld": 0
     },
     {
       "key": "record.slug",
       "decision": "PUBLISH",
-      "emitted": 40,
+      "emitted": 41,
       "withheld": 0
     },
     {
       "key": "record.kind",
       "decision": "PUBLISH",
-      "emitted": 40,
+      "emitted": 41,
       "withheld": 0
     },
     {
       "key": "record.parentRecordId",
       "decision": "PUBLISH",
-      "emitted": 40,
+      "emitted": 41,
       "withheld": 0
     },
     {
       "key": "record.lineId",
       "decision": "PUBLISH",
-      "emitted": 40,
+      "emitted": 41,
       "withheld": 0
     },
     {
       "key": "record.ownerSkill",
       "decision": "DENY",
       "emitted": 0,
-      "withheld": 40
+      "withheld": 41
     },
     {
       "key": "record.mpn",
       "decision": "PUBLISH",
-      "emitted": 40,
+      "emitted": 41,
       "withheld": 0
     },
     {
       "key": "record.manufacturer",
       "decision": "PUBLISH",
-      "emitted": 40,
+      "emitted": 41,
       "withheld": 0
     },
     {
       "key": "record.lcsc",
       "decision": "PUBLISH",
-      "emitted": 40,
+      "emitted": 41,
       "withheld": 0
     },
     {
       "key": "record.package",
       "decision": "PUBLISH",
-      "emitted": 40,
+      "emitted": 41,
       "withheld": 0
     },
     {
       "key": "record.function",
       "decision": "PUBLISH",
-      "emitted": 40,
+      "emitted": 41,
       "withheld": 0
     },
     {
       "key": "record.identityState",
       "decision": "PUBLISH",
-      "emitted": 40,
+      "emitted": 41,
       "withheld": 0
     },
     {
       "key": "record.sourceState",
       "decision": "PUBLISH",
-      "emitted": 40,
+      "emitted": 41,
       "withheld": 0
     },
     {
       "key": "record.dnp",
       "decision": "PUBLISH",
-      "emitted": 40,
+      "emitted": 41,
       "withheld": 0
     },
     {
       "key": "record.placements",
       "decision": "PUBLISH",
-      "emitted": 40,
+      "emitted": 41,
       "withheld": 0
     },
     {
       "key": "alias.mpn",
       "decision": "PUBLISH",
-      "emitted": 40,
+      "emitted": 41,
       "withheld": 0
     },
     {
       "key": "alias.lcsc",
       "decision": "PUBLISH",
-      "emitted": 40,
+      "emitted": 41,
       "withheld": 0
     },
     {
       "key": "alias.manufacturer",
       "decision": "PUBLISH",
-      "emitted": 40,
+      "emitted": 41,
       "withheld": 0
     },
     {
       "key": "alias.function",
       "decision": "PUBLISH",
-      "emitted": 40,
+      "emitted": 41,
       "withheld": 0
     },
     {
       "key": "routing.positivePrompts",
       "decision": "DENY",
       "emitted": 0,
-      "withheld": 40
+      "withheld": 41
     },
     {
       "key": "routing.negativePrompts",
       "decision": "DENY",
       "emitted": 0,
-      "withheld": 40
+      "withheld": 41
     },
     {
       "key": "source.sourceId",
       "decision": "PUBLISH",
-      "emitted": 124,
+      "emitted": 126,
       "withheld": 0
     },
     {
       "key": "source.documentTitle",
       "decision": "PUBLISH",
-      "emitted": 124,
+      "emitted": 126,
       "withheld": 0
     },
     {
       "key": "source.documentNumber",
       "decision": "PUBLISH",
-      "emitted": 124,
+      "emitted": 126,
       "withheld": 0
     },
     {
       "key": "source.revision",
       "decision": "PUBLISH",
-      "emitted": 124,
+      "emitted": 126,
       "withheld": 0
     },
     {
       "key": "source.documentDate",
       "decision": "PUBLISH",
-      "emitted": 124,
+      "emitted": 126,
       "withheld": 0
     },
     {
       "key": "source.retrievalDate",
       "decision": "PUBLISH",
-      "emitted": 124,
+      "emitted": 126,
       "withheld": 0
     },
     {
       "key": "source.authorityClass",
       "decision": "PUBLISH",
-      "emitted": 124,
+      "emitted": 126,
       "withheld": 0
     },
     {
       "key": "source.availability",
       "decision": "PUBLISH",
-      "emitted": 124,
+      "emitted": 126,
       "withheld": 0
     },
     {
       "key": "source.locator",
       "decision": "PUBLISH",
-      "emitted": 124,
+      "emitted": 126,
       "withheld": 0
     },
     {
       "key": "source.printedPageLabel",
       "decision": "PUBLISH",
-      "emitted": 124,
+      "emitted": 126,
       "withheld": 0
     },
     {
       "key": "source.physicalPdfPageIndex",
       "decision": "DENY",
       "emitted": 0,
-      "withheld": 124
+      "withheld": 126
     },
     {
       "key": "source.authoritativeUrl",
       "decision": "PUBLISH",
-      "emitted": 124,
+      "emitted": 126,
       "withheld": 0
     },
     {
       "key": "source.alternateAuthoritativeUrl",
       "decision": "DENY",
       "emitted": 0,
-      "withheld": 124
+      "withheld": 126
     },
     {
       "key": "source.sha256",
       "decision": "DENY",
       "emitted": 0,
-      "withheld": 124
+      "withheld": 126
     },
     {
       "key": "source.evidenceExtract",
       "decision": "DENY",
       "emitted": 0,
-      "withheld": 124
+      "withheld": 126
     },
     {
       "key": "fact.factId",
       "decision": "PUBLISH",
-      "emitted": 444,
+      "emitted": 454,
       "withheld": 0
     },
     {
       "key": "fact.class",
       "decision": "PUBLISH",
-      "emitted": 444,
+      "emitted": 454,
       "withheld": 0
     },
     {
       "key": "fact.value",
       "decision": "PUBLISH",
-      "emitted": 444,
+      "emitted": 454,
       "withheld": 0
     },
     {
       "key": "fact.unit",
       "decision": "PUBLISH",
-      "emitted": 444,
+      "emitted": 454,
       "withheld": 0
     },
     {
       "key": "fact.conditions",
       "decision": "PUBLISH",
-      "emitted": 444,
+      "emitted": 454,
       "withheld": 0
     },
     {
       "key": "fact.locator",
       "decision": "PUBLISH",
-      "emitted": 444,
+      "emitted": 454,
       "withheld": 0
     },
     {
       "key": "fact.provenance",
       "decision": "PUBLISH",
-      "emitted": 444,
+      "emitted": 454,
       "withheld": 0
     },
     {
       "key": "fact.verdict",
       "decision": "PUBLISH",
-      "emitted": 444,
+      "emitted": 454,
       "withheld": 0
     },
     {
       "key": "fact.dependsOn",
       "decision": "PUBLISH",
-      "emitted": 444,
+      "emitted": 454,
       "withheld": 0
     },
     {
       "key": "fact.expression",
       "decision": "PUBLISH",
-      "emitted": 444,
+      "emitted": 454,
       "withheld": 0
     },
     {
       "key": "coverage.coverageId",
       "decision": "PUBLISH",
-      "emitted": 141,
+      "emitted": 144,
       "withheld": 0
     },
     {
       "key": "coverage.domain",
       "decision": "PUBLISH",
-      "emitted": 141,
+      "emitted": 144,
       "withheld": 0
     },
     {
       "key": "coverage.status",
       "decision": "PUBLISH",
-      "emitted": 141,
+      "emitted": 144,
       "withheld": 0
     },
     {
       "key": "coverage.reason",
       "decision": "PUBLISH",
-      "emitted": 141,
+      "emitted": 144,
       "withheld": 0
     },
     {
       "key": "coverage.factIds",
       "decision": "PUBLISH",
-      "emitted": 141,
+      "emitted": 144,
       "withheld": 0
     },
     {
       "key": "coverage.blockingFactIds",
       "decision": "PUBLISH",
-      "emitted": 141,
+      "emitted": 144,
       "withheld": 0
     },
     {
       "key": "interaction.interactionId",
       "decision": "PUBLISH",
-      "emitted": 38,
+      "emitted": 39,
       "withheld": 0
     },
     {
       "key": "interaction.recordIds",
       "decision": "PUBLISH",
-      "emitted": 38,
+      "emitted": 39,
       "withheld": 0
     },
     {
       "key": "interaction.factIds",
       "decision": "PUBLISH",
-      "emitted": 38,
+      "emitted": 39,
       "withheld": 0
     },
     {
       "key": "interaction.conditions",
       "decision": "PUBLISH",
-      "emitted": 38,
+      "emitted": 39,
       "withheld": 0
     },
     {
       "key": "interaction.verdict",
       "decision": "PUBLISH",
-      "emitted": 38,
+      "emitted": 39,
       "withheld": 0
     },
     {
@@ -629,32 +632,32 @@
     {
       "key": "pinMap.pinMapId",
       "decision": "PUBLISH",
-      "emitted": 40,
+      "emitted": 41,
       "withheld": 0
     },
     {
       "key": "pinMap.symbol",
       "decision": "PUBLISH",
-      "emitted": 40,
+      "emitted": 41,
       "withheld": 0
     },
     {
       "key": "pinMap.footprint",
       "decision": "PUBLISH",
-      "emitted": 40,
+      "emitted": 41,
       "withheld": 0
     },
     {
       "key": "pinMap.pins",
       "decision": "PUBLISH",
-      "emitted": 40,
+      "emitted": 41,
       "withheld": 0
     },
     {
       "key": "pinMap.reviewedBy",
       "decision": "DENY",
       "emitted": 0,
-      "withheld": 40
+      "withheld": 41
     },
     {
       "key": "reference.document.sourceId",
@@ -759,18 +762,6 @@
       "withheld": 0
     },
     {
-      "key": "asset.footprintPreview",
-      "decision": "DENY",
-      "emitted": 0,
-      "withheld": 0
-    },
-    {
-      "key": "asset.modelPreview",
-      "decision": "DENY",
-      "emitted": 0,
-      "withheld": 0
-    },
-    {
       "key": "asset.binary",
       "decision": "DENY",
       "emitted": 0,
@@ -787,6 +778,18 @@
     {
       "sourceId": "src-ao3401a-usb-pd-input-sch",
       "url": "https://raw.githubusercontent.com/Takazudo/zudo-pd/9f4d6240f1f5c14660e0bbb62c256139e15c54ef/usb-pd-input.kicad_sch",
+      "decision": "ALLOW",
+      "reason": "ABSOLUTE_HTTP_URL"
+    },
+    {
+      "sourceId": "src-bzt52c11-diodes-primary",
+      "url": "https://www.diodes.com/assets/Datasheets/ds18004.pdf",
+      "decision": "ALLOW",
+      "reason": "ABSOLUTE_HTTP_URL"
+    },
+    {
+      "sourceId": "src-bzt52c11-lcsc-identity",
+      "url": "https://www.lcsc.com/product-detail/C92321.html",
       "decision": "ALLOW",
       "reason": "ABSOLUTE_HTTP_URL"
     },
@@ -1524,13 +1527,13 @@
     }
   ],
   "counts": {
-    "generatedPages": 44,
-    "publishedCoverageDomains": 141,
-    "publishedFacts": 444,
+    "generatedPages": 45,
+    "publishedCoverageDomains": 144,
+    "publishedFacts": 454,
     "publishedIntegrationRules": 9,
-    "publishedInteractions": 35,
-    "publishedPinMaps": 40,
-    "publishedRecords": 40,
-    "publishedSources": 124
+    "publishedInteractions": 36,
+    "publishedPinMaps": 41,
+    "publishedRecords": 41,
+    "publishedSources": 126
   }
 }

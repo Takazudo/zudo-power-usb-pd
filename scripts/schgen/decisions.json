@@ -3,6 +3,7 @@
   "source_issue": 123,
   "locked_date": "2026-08-14",
   "review_report": "doc/src/content/docs/inbox/spec-architecture-review.md",
+  "required_decision_keys": ["a", "b", "c", "d", "e", "f", "g", "p1-form", "tvs3-orientation", "bb3-disposition", "ba2-disposition"],
   "notes": "Machine-consumable wave-6 decision lock for epic #86 / plan #101. Issue bodies #124/#125/#126 mirror these decisions; this file is the source of truth. Validate with scripts/schgen/check_decisions.py. Statuses: LOCKED = spec-able pick the downstream spec must implement; NO-SPEC-CHANGE-NEEDS-BENCH = recorded math, explicitly no spec change; DISPOSITION = accepted residual / recorded options, no part change.",
   "decisions": [
     {

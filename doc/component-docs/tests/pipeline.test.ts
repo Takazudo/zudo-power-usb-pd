@@ -34,8 +34,8 @@ describe("the real circuit adapter", () => {
     // committed selection needs review — exactly what should fail a build.
     assert.equal(result.report.records.available, 41);
     assert.equal(result.report.records.selected, 41);
-    assert.equal(result.report.sources.available, 128);
-    assert.equal(result.report.sources.selected, 128);
+    assert.equal(result.report.sources.available, 126);
+    assert.equal(result.report.sources.selected, 126);
     assert.equal(result.report.viewModelVersion, VIEW_MODEL_VERSION);
     assert.equal(result.report.provider.id, "circuit-component-spec");
 
@@ -181,7 +181,6 @@ describe("adapter contract", () => {
           dnpOrHandFitLines: 0,
         },
         records: [],
-        packagePreviews: [],
         integration: [],
       }),
     };

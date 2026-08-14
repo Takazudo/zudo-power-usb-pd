@@ -6,26 +6,25 @@ conversion: DC-DCs + LDOs + protection + outputs). See
 `doc/src/content/docs/inbox/board-split-decision.md` for the full board-split
 decision and the A/B interface contract.
 
-This directory is currently a stub — no board projects exist yet. Board A and
-Board B are each created in their own later sub-issue.
+Both board projects exist and their schematics are generated from the spec
+modules in `scripts/schgen/`. PCB layout has not started yet — the
+directories carry schematics only, no `.kicad_pcb`.
 
 ## Layout
 
-Each board gets its own directory with its own KiCad project, named after the
-board:
+Each board has its own directory with its own KiCad project, named after the
+board (a `<board>.kicad_pcb` is added when layout starts):
 
 ```
 boards/
   board-a/
     board-a.kicad_pro
     board-a.kicad_sch
-    board-a.kicad_pcb
     fp-lib-table
     sym-lib-table
   board-b/
     board-b.kicad_pro
     board-b.kicad_sch
-    board-b.kicad_pcb
     fp-lib-table
     sym-lib-table
 ```
@@ -59,11 +58,11 @@ failure mode — double-check it whenever a new board project is created here.
 
 Board schematics are not hand-drawn; they're generated from a Python spec
 module by the `schgen` toolchain. See `scripts/schgen/README.md` for the full
-workflow. Short version, once a board's spec module exists:
+workflow. Short version:
 
 ```
-python3 scripts/schgen/gen_schematic.py <spec_module>
+python3 scripts/schgen/gen_schematic.py board_a_spec   # or board_b_spec
 ```
 
-The spec module name is `sys.argv[1]` (an importable module name like
-`board_a_spec`, not a file path); there is no `--help`.
+`<spec_module>` is either a dotted module name (`board_a_spec`) or a path
+(`scripts/schgen/board_a_spec.py`); `--help` works.
