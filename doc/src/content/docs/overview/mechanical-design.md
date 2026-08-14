@@ -23,24 +23,34 @@ Physical height reference for PCB layout and enclosure design.
 | **CJ7912**        | U8                             | TO-252-3 (DPAK) | **2.3mm**  | -12V linear regulator                |
 | **CYA1265-100UH** | L1, L2, L3                     | SMD 13.8x12.8mm | **~6-7mm** | Power inductors                      |
 | **63951-1**       | J6, J7, J8, J9                 | FASTON 250 THT  | **8.89mm** | Power terminals                      |
-| **470uF 35V**     | C5, C7, C14, C20-C21, C24-C25  | D10 (BD10.0)    | **10.5mm** | Electrolytic (tallest) — decision (d) |
-| **470uF 25V**     | C3, C11                        | D10 (BD10.0)    | **10.5mm** | Electrolytic (tallest)               |
-| **100uF 50V**     | C9                             | D8 (BD8.0)      | **10.2mm** | Electrolytic, U4 bridging cap        |
+| **470uF 35V**     | C5, C7, C14, C20-C21, C24-C25  | D10xL10.5mm     | **10.5mm** | Electrolytic (tallest) — decision (d) |
+| **470uF 25V**     | C3, C11                        | D8xL10.5mm      | **10.5mm** | Electrolytic (tallest)               |
+| **100uF 50V**     | C9                             | D8xL10.2mm      | **10.2mm** | Electrolytic, U4 bridging cap        |
 | **470uF 10V**     | C4, C22, C23                   | D6.3xL7.7mm     | **7.7mm**  | Electrolytic — decision (c)          |
 
 <Note title="Where these numbers come from">
 
-Diameters are evidence-backed: they are the footprint assigned to each position in
-`scripts/schgen/board_b_spec.py` (`CAP-SMD_BD10.0-…`, `BD8.0`, `BD6.3`). Heights are
-weaker. Only two can heights are recorded in this repo — the 6.3 × 7.7 mm RVT1A471M0607
-(passives bundle `fact-c335982-identity`) and the 8 × 10.2 mm RVT1H101M0810
-([Board B design notes](./board-b-synth-power.md#design-notes-from-the-89-architecture-review)).
-The **10.5 mm** used here for both Φ10 lines is the working figure carried by the
-[BOM](./bom.md), and no primary dimension table for either Φ10 part has been captured
-yet. Treat it as provisional and confirm against the datasheets before committing an
-enclosure height.
+Can dimensions follow the [BOM](./bom.md)'s per-part package column, which agrees with the
+MPN case codes (`GVT1E477M0810` and `RVT1H101M0810` are Φ8 cans; `RVT1A471M0607` is the
+6.3 × 7.7 mm can recorded as `fact-c335982-identity` in the passives bundle). C9's
+10.2 mm is separately confirmed in the
+[Board B design notes](./board-b-synth-power.md#design-notes-from-the-89-architecture-review).
+
+No manufacturer dimension **drawing** has been captured for the two 10.5 mm lines, so
+treat that figure as the project's working number rather than a datasheet-verified one,
+and confirm it before committing to an enclosure height.
 
 </Note>
+
+<Warning title="C3/C11 sit on an oversized land">
+
+`scripts/schgen/board_b_spec.py` assigns C3/C11 the `CAP-SMD_BD10.0-L10.3-W10.3-LS11.0-FD`
+footprint — a Φ10 land pattern — while the fitted part (`GVT1E477M0810CNVC`, C2983319) is
+a Φ8 can. Nothing is broken by this today because Board B has no layout yet, but it needs
+a decision at layout time: either shrink the land to `CAP-SMD_BD8.0-…` or keep the larger
+pad deliberately.
+
+</Warning>
 
 ### Height Profile
 
