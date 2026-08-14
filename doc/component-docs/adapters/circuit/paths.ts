@@ -68,6 +68,11 @@ export const DIST_ROOT = join(DOC_ROOT, "dist");
  * The KiCad footprint library, and the 3D-model directory that does not exist
  * yet.
  *
+ * `FOOTPRINT_MASTER_ROOT` is the authoring copy — every `.kicad_mod` here is
+ * expected to be byte-identical to its `FOOTPRINT_ROOT` copy;
+ * `footprint-previews/parity.ts` `assertFootprintLibraryParity()` is what
+ * enforces that rather than assuming it.
+ *
  * `FOOTPRINT_ROOT` is the library `fp-lib-table` registers as `zudo-pd`
  * (`${KIPRJMOD}/footprints/kicad/zudo-power.pretty`) — the name is a leftover
  * from an earlier project name and is load-bearing, so it is spelled out here
@@ -79,7 +84,8 @@ export const DIST_ROOT = join(DOC_ROOT, "dist");
  * resolves to a committed asset. `readPackage()` treats that as an unresolved
  * model with a stated reason rather than as a failure — see `references.ts`.
  */
-export const FOOTPRINT_ROOT = join(REPO_ROOT, "footprints", "kicad", "zudo-power.pretty");
+export const FOOTPRINT_MASTER_ROOT = join(REPO_ROOT, "footprints", "kicad");
+export const FOOTPRINT_ROOT = join(FOOTPRINT_MASTER_ROOT, "zudo-power.pretty");
 export const MODEL_ROOT = join(REPO_ROOT, "footprints", "kicad", "zudo-pd.3dshapes");
 
 /** Per-record bundle files, in the order a record page consumes them. */

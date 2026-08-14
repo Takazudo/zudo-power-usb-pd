@@ -40,17 +40,21 @@ export type ResolvedDocumentCard = {
 export type ResolvedFootprintCard = {
   readonly resolved: true;
   readonly name: string;
+  /** The reviewed `.kicad_mod` source path — provenance for the SVG at `assetUrl`. */
+  readonly path: string;
   readonly assetUrl: string;
 };
 
 /**
- * The footprint's unresolved form still carries the package name: the name is
- * known from the reviewed pin map even when no preview image exists, and a
- * card that names the package is more useful than one that only apologises.
+ * The footprint's unresolved form still carries the package name and its
+ * source path: both are known from the reviewed pin map even when no preview
+ * image exists, and a card that names the package is more useful than one
+ * that only apologises.
  */
 export type UnresolvedFootprintCard = {
   readonly resolved: false;
   readonly name: string;
+  readonly path: string;
   readonly reason: string;
 };
 
@@ -68,6 +72,8 @@ const HEX = /^(?:[0-9a-f]{2})+$/u;
 const DOCUMENT_LABELS = new Set(["Datasheet PDF", "Specification PDF", "Mechanical drawing PDF"]);
 const SAFE_FOOTPRINT_NAME = /^[A-Za-z0-9][A-Za-z0-9 ._+(),/-]*$/u;
 const SAFE_FOOTPRINT_ASSET = /^\/assets\/component-previews\/footprints\/[A-Za-z0-9][A-Za-z0-9._+-]*\.svg$/u;
+/** Ties directly to `FOOTPRINT_ROOT`'s repo-root-relative form (`paths.ts`). */
+const SAFE_FOOTPRINT_PATH = /^footprints\/kicad\/zudo-power\.pretty\/[A-Za-z0-9][A-Za-z0-9._+-]*\.kicad_mod$/u;
 
 export function footprintAssetUrl(footprintName: string): string {
   const assetUrl = `${FOOTPRINT_ASSET_BASE}${footprintName}.svg`;
@@ -96,6 +102,7 @@ export function decodeComponentReferencesDescriptor(encoded: string): ComponentR
 export function createComponentReferencesDescriptor(input: {
   readonly document: Omit<ResolvedDocumentCard, "resolved"> | { readonly unresolvedReason: string };
   readonly footprintName: string;
+  readonly footprintPath: string;
   /** Resolved once a preview SVG for `footprintName` is emitted to the site. */
   readonly footprintPreview: { readonly available: true } | { readonly unresolvedReason: string };
   readonly model: ModelViewerDescriptor | { readonly unresolvedReason: string };
@@ -106,8 +113,8 @@ export function createComponentReferencesDescriptor(input: {
       ? { resolved: false, reason: input.document.unresolvedReason }
       : { resolved: true, ...input.document },
     footprint: "unresolvedReason" in input.footprintPreview
-      ? { resolved: false, name: input.footprintName, reason: input.footprintPreview.unresolvedReason }
-      : { resolved: true, name: input.footprintName, assetUrl: footprintAssetUrl(input.footprintName) },
+      ? { resolved: false, name: input.footprintName, path: input.footprintPath, reason: input.footprintPreview.unresolvedReason }
+      : { resolved: true, name: input.footprintName, path: input.footprintPath, assetUrl: footprintAssetUrl(input.footprintName) },
     model: "unresolvedReason" in input.model
       ? { resolved: false, reason: input.model.unresolvedReason }
       : { resolved: true, descriptor: encodeModelDescriptor(input.model) },
@@ -177,20 +184,24 @@ function assertDocument(value: unknown): asserts value is ComponentReferencesDes
 
 function assertFootprint(value: unknown): asserts value is ComponentReferencesDescriptor["footprint"] {
   const { resolved, fields: footprint } = cardState(value, "footprint");
-  // The package name is present in BOTH variants, so it is checked before the
-  // branch: an unresolved card still displays it.
+  // The package name and source path are present in BOTH variants, so they
+  // are checked before the branch: an unresolved card still displays them.
   const name = footprint.name;
   if (typeof name !== "string" || !SAFE_FOOTPRINT_NAME.test(name)) {
     throw new Error("Component reference footprint contains an unsafe value");
   }
+  const path = footprint.path;
+  if (typeof path !== "string" || !SAFE_FOOTPRINT_PATH.test(path)) {
+    throw new Error("Component reference footprint contains an unsafe value");
+  }
   if (!resolved) {
-    if (Object.keys(footprint).sort().join(",") !== "name,reason,resolved") {
+    if (Object.keys(footprint).sort().join(",") !== "name,path,reason,resolved") {
       throw new Error("Component reference footprint has unexpected fields");
     }
     return;
   }
   if (
-    Object.keys(footprint).sort().join(",") !== "assetUrl,name,resolved" ||
+    Object.keys(footprint).sort().join(",") !== "assetUrl,name,path,resolved" ||
     typeof footprint.assetUrl !== "string" ||
     !SAFE_FOOTPRINT_ASSET.test(footprint.assetUrl) ||
     footprint.assetUrl !== footprintAssetUrl(name)

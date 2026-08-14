@@ -246,6 +246,7 @@ function referenceFor(
     footprint: {
       packageId: t(footprintName),
       footprintName: t(footprintName),
+      footprintPath: t(`footprints/kicad/zudo-power.pretty/${footprintName}.kicad_mod`),
       model: null,
       modelUnresolvedReason: t("The KiCad footprint names no 3D model."),
     },

@@ -158,18 +158,6 @@ export function renderRecord(record: PublicRecord, index: RecordIndex): Generate
   );
 }
 
-/**
- * Why no footprint preview image exists yet.
- *
- * Renderer-side rather than view-model-side because it is a fact about this
- * site's build — no preview emitter runs — not about the evidence. It moves
- * into the model when the emitter lands and can distinguish "not generated"
- * from "generation failed for this package".
- */
-const FOOTPRINT_PREVIEW_UNRESOLVED_REASON =
-  "No footprint preview image is generated for this package yet. " +
-  "The reviewed footprint name above is the authoritative identity.";
-
 function componentReferencesSection(record: PublicRecord): RootContent[] {
   const { document, documentUnresolvedReason, footprint } = record.reference;
   const model = footprint.model;
@@ -184,7 +172,14 @@ function componentReferencesSection(record: PublicRecord): RootContent[] {
         url: String(document.url),
       },
     footprintName: String(footprint.footprintName),
-    footprintPreview: { unresolvedReason: FOOTPRINT_PREVIEW_UNRESOLVED_REASON },
+    footprintPath: String(footprint.footprintPath),
+    // Always resolved: `footprint-previews/selection.ts` `readFootprintSelections()`
+    // hard-fails generation unless every record in `CIRCUIT_SELECTION` resolves
+    // to a rendered package (`expect.footprintPackages`), and `check:footprint-previews`
+    // is a required gate against drift between that selection and the committed
+    // SVGs/manifest. Both are independent of this render step, so a record
+    // reaching this function is guaranteed to have a preview.
+    footprintPreview: { available: true },
     model: model === null
       ? { unresolvedReason: String(footprint.modelUnresolvedReason ?? "") }
       : {

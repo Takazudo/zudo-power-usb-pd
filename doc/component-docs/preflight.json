@@ -715,8 +715,8 @@
     },
     {
       "key": "reference.footprint.path",
-      "decision": "DENY",
-      "emitted": 0,
+      "decision": "PUBLISH",
+      "emitted": 41,
       "withheld": 0
     },
     {

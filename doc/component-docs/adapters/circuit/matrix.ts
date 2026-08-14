@@ -175,14 +175,19 @@ export const CIRCUIT_PUBLICATION_MATRIX: PublicationMatrix = {
   "reference.document.documentKind": "PUBLISH",
   "reference.footprint.packageId": "PUBLISH",
   "reference.footprint.name": "PUBLISH",
+  // Flipped from DENY: `footprint-previews/` (wave 6) is the emitter this was
+  // waiting on. The record page now renders the reviewed KiCad source path as
+  // provenance next to the rendered SVG preview it backs — see
+  // `core/render/record.ts`'s `componentReferencesSection()` and
+  // `ui/footprint-preview.tsx`. Note this is the `.kicad_mod` SOURCE path, not
+  // the preview asset URL (that is derived from `footprintName` alone).
+  "reference.footprint.path": "PUBLISH",
 
-  // Still denied: no renderer reads them yet. `reference.footprint.path` and
-  // `reference.package.recordIds` are inputs to a footprint-preview EMITTER
-  // that does not exist here, and `reference.model.*` needs reviewed
-  // `.wrl`/`.step` pairs, of which this repository has none. Publishing a
-  // field nothing renders is exactly what the matrix exists to prevent, so
-  // these flip when their consumer lands — not before.
-  "reference.footprint.path": "DENY",
+  // Still denied: no renderer reads them yet. `reference.package.recordIds`
+  // has no consumer, and `reference.model.*` needs reviewed `.wrl`/`.step`
+  // pairs, of which this repository has none. Publishing a field nothing
+  // renders is exactly what the matrix exists to prevent, so these flip when
+  // their consumer lands — not before.
   "reference.model.path": "DENY",
   "reference.model.offset": "DENY",
   "reference.model.rotation": "DENY",
