@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "pin_maps": [
+    {
+      "pin_map_id": "pinmap-umw-ao3401a-c347476",
+      "record_id": "rec-umw-ao3401a-c347476",
+      "symbol": "AO3401A_C347476",
+      "footprint": "SOT-23_L2.9-W1.3-P1.90-LS2.4-BR",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "G",
+          "footprint_pad": "1",
+          "function": "gate, Net-(Q1-G) (R11 pull-up to VBUS_IN, R12 series from STUSB4500 VBEN)"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "S",
+          "footprint_pad": "2",
+          "function": "source, VBUS_IN"
+        },
+        {
+          "symbol_pin": "3",
+          "name": "D",
+          "footprint_pad": "3",
+          "function": "drain, VBUS_OUT"
+        }
+      ],
+      "reviewed_by": "issue-108 worktree child (Claude Fable 5) foreground review against symbols/zudo-pd.kicad_sym AO3401A_C347476 (pin 1=G, pin 2=S, pin 3=D) and footprints/kicad/zudo-power.pretty/SOT-23_L2.9-W1.3-P1.90-LS2.4-BR.kicad_mod (pads 1,2,3); independent second-reviewer pass pending"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "interactions": [
+    {
+      "interaction_id": "int-high-diode-netlist",
+      "record_ids": ["rec-high-diode-smaj20a-c571370"],
+      "fact_ids": [
+        "fact-high-diode-smaj20a-polarity",
+        "fact-high-diode-smaj20a-standoff",
+        "fact-high-diode-smaj20a-clamp",
+        "fact-smaj20a-d5-nets"
+      ],
+      "conditions": "board-a-baseline places D5.1 (cathode) on VBUS_IN and D5.2 (anode) on GND: the post-#93-fix topology that replaced the removed D4 (USBLC6-2SC6). Primary polarity/ratings are retained; continuity-check that the assembled D5 orientation matches this net assignment before energization.",
+      "verdict": "NEEDS BENCH"
+    },
+    {
+      "interaction_id": "int-high-diode-bench",
+      "record_ids": ["rec-high-diode-smaj20a-c571370"],
+      "fact_ids": [
+        "fact-high-diode-smaj20a-identity",
+        "fact-high-diode-smaj20a-polarity",
+        "fact-high-diode-smaj20a-leakage",
+        "fact-high-diode-smaj20a-thermal"
+      ],
+      "conditions": "Verify reel label/body marking, numeric pad orientation and continuity, leakage/heating, and the board-a VBUS_IN surge waveform with controlled fixtures; primary table limits do not prove the as-built response.",
+      "verdict": "NEEDS BENCH"
+    }
+  ]
+}
