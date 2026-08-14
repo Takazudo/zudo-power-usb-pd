@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "pin_maps": [
+    {
+      "pin_map_id": "pinmap-lm2596s-adj",
+      "record_id": "rec-lm2596s-adj-c347423",
+      "symbol": "LM2596S-ADJ",
+      "footprint": "TO-263-5_L10.2-W8.9-P1.70-BR",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "VIN",
+          "footprint_pad": "1",
+          "function": "input supply; +15V rail on U2/U3/U4"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "Output",
+          "footprint_pad": "2",
+          "function": "switching output; U4 drives the D3/L3 switch node"
+        },
+        {
+          "symbol_pin": "3",
+          "name": "GND",
+          "footprint_pad": "3",
+          "function": "device ground; system GND on U2/U3, -13.5V rail on U4 (inverting)"
+        },
+        {
+          "symbol_pin": "4",
+          "name": "Feedback",
+          "footprint_pad": "4",
+          "function": "output voltage feedback divider tap"
+        },
+        {
+          "symbol_pin": "5",
+          "name": "ON/OFF",
+          "footprint_pad": "5",
+          "function": "shutdown input, ON when low or floating; tied to the device GND node on all three placements"
+        },
+        {
+          "symbol_pin": "6",
+          "name": "TAB",
+          "footprint_pad": "6",
+          "function": "package tab, thermally specified only; project nets tie it to the device GND node (system GND on U2/U3, -13.5V rail on U4)"
+        }
+      ],
+      "reviewed_by": "issue-110 author review; independent manager review pending"
+    }
+  ]
+}

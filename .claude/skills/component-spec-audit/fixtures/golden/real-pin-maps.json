@@ -93,6 +93,55 @@
       "trust_status": "PROJECT-LOCKED",
       "critical_pins": [],
       "reviewer": "x-wt-teams manager, merge-time parity lock: pin set re-reviewed against symbols/zudo-pd.kicad_sym and the footprint .kicad_mod named in the pin map (2-terminal part)"
+    },
+    {
+      "record_id": "rec-lm2596s-adj-c347423",
+      "pin_map_id": "pinmap-lm2596s-adj",
+      "canonical_sha256": "b6b4af62d5dbd2cd7007e92d1732c7be7562bd2f7e1011873f683ef88df899c7",
+      "evidence_fact_ids": [
+        "fact-lm2596-pinout",
+        "fact-lm2596-u4-inverting-nets"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [
+        {
+          "symbol_pin": "1",
+          "name": "VIN",
+          "footprint_pad": "1",
+          "function": "input supply; +15V rail on U2/U3/U4"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "Output",
+          "footprint_pad": "2",
+          "function": "switching output; U4 drives the D3/L3 switch node"
+        },
+        {
+          "symbol_pin": "3",
+          "name": "GND",
+          "footprint_pad": "3",
+          "function": "device ground; system GND on U2/U3, -13.5V rail on U4 (inverting)"
+        },
+        {
+          "symbol_pin": "4",
+          "name": "Feedback",
+          "footprint_pad": "4",
+          "function": "output voltage feedback divider tap"
+        },
+        {
+          "symbol_pin": "5",
+          "name": "ON/OFF",
+          "footprint_pad": "5",
+          "function": "shutdown input, ON when low or floating; tied to the device GND node on all three placements"
+        },
+        {
+          "symbol_pin": "6",
+          "name": "TAB",
+          "footprint_pad": "6",
+          "function": "package tab, thermally specified only; project nets tie it to the device GND node (system GND on U2/U3, -13.5V rail on U4)"
+        }
+      ],
+      "reviewer": "issue-110 author review; independent manager review pending"
     }
   ]
 }
