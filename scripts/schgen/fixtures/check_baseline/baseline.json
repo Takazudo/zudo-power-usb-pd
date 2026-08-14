@@ -1,0 +1,9 @@
+{
+  "board": "fixture",
+  "source": "synthetic fixture for check_baseline.py --self-test — not a real board",
+  "nets": {
+    "GND": ["U1.1", "R1.2", "C1.2"],
+    "VCC": ["U1.2", "R1.1", "C1.1"]
+  },
+  "unresolved": []
+}
