@@ -118,10 +118,23 @@ Pin-to-net, from the Board B spec:
 L3 (100 µH) returns to system GND, D3 (SS34) catches to `-13.5V OUT`, and C11
 (470 µF 25V) is the bulk capacitor across `-13.5V OUT` to GND. C9 (100 µF 50V) and
 C10 (100 nF) bridge the +15V input to the bootstrapped IC ground, so both see the
-full 28.5V input-to-output span rather than 15V.
+full **28.5V** input-to-output span rather than 15V
+(`fact-lm2596-u4-effective-input`). That 28.5V is also what the IC itself sees
+across its VIN and GND pins, leaving 11.5V to the 40V operating maximum and 16.5V to
+the 45V absolute maximum.
 
 Output voltage is -13.53V, using the same divider ratio as U2 (R5 10 kΩ, R6 1 kΩ,
 C33 22 nF feedforward).
+
+<Warning title="Inverting startup draws current-limit inrush from a current-limited source">
+`fact-lm2596-inverting-startup-current` records that inverting startup can draw input
+current **up to the switch current limit (roughly 4.5A) for 2 ms or more** until the
+output reaches nominal, and that current-limited input sources may fail to start the
+converter at all. Board B is fed from exactly such a source - the USB-PD 15V rail
+through the Board A load switch. The datasheet's own mitigations are a delayed-startup
+circuit and an enlarged input capacitor. Treat U4 startup as a design item to size and
+then measure, not as something that will come out right by itself.
+</Warning>
 
 <Warning title="The U4 tab is live at -13.5V">
 Because pin 3, pin 5 and the thermal tab are all bootstrapped to the negative output,
@@ -146,10 +159,13 @@ feedback current, and pick R_upper for the target:
 | 3.3V        | 1.7 kΩ  | 3.32V       |
 | 5V          | 3.0 kΩ  | 4.92V       |
 | 7.5V        | 5.1 kΩ  | 7.50V       |
-| 12V         | 8.7 kΩ  | 12.01V      |
+| 12V         | 8.7 kΩ  | 11.93V      |
 | 13.5V       | 10 kΩ   | 13.53V      |
 
 Use ±1% tolerance parts - the divider ratio lands directly on the output voltage.
+Separately, the part itself is specified to ±4% maximum over line and load
+(`fact-lm2596-output-tolerance`), and the 1.23V reference has its own 1.193V - 1.267V
+band, so the computed setpoints above are targets rather than guarantees.
 
 ## Feedback compensation network
 
@@ -270,9 +286,10 @@ Pin 5 (ON/OFF) ──→ System GND (0V)
 Pin 3 (IC GND)  ──→ System GND (0V)
 ```
 
-The IC ground pin is at 0V, so the ON/OFF threshold of roughly 1.3V above IC ground
-is also 1.3V in system terms. Tying to system GND is LOW, which is **enabled**;
-pulling above roughly 1.6V is HIGH, which is **shutdown**.
+The IC ground pin is at 0V, so the thresholds referenced to it are also the system
+thresholds. Per `fact-lm2596-onoff-thresholds` the typical threshold is 1.3V, with the
+regulator **guaranteed ON at 0.6V or below** and **guaranteed OFF at 2V or above**.
+Tying to system GND is LOW, which is enabled.
 
 ### Inverting buck-boost (U4)
 
@@ -285,15 +302,19 @@ Pin 3 (IC GND)  ──→ -13.5V output (bootstrapped)
 ```
 
 The critical difference: the IC ground pin is at -13.5V, not at system ground. The
-enable threshold of roughly 1.3V above IC ground therefore lands near -12.2V in
-system terms. **Connecting pin 5 to system GND would put it 13.5V above IC ground -
+thresholds, being referenced to that pin, all shift down by 13.5V: guaranteed ON at
+-12.9V or below, typical threshold at -12.2V, guaranteed OFF at -11.5V or above, all
+in system terms. **Connecting pin 5 to system GND would put it 13.5V above IC ground -
 that is a shutdown command, not an enable.** Tie it to IC ground, or leave it
 floating.
 
 | Topology           | IC GND sits at  | ON pin connection   | Enabled                     | Disabled                 |
 | ------------------ | --------------- | ------------------- | --------------------------- | ------------------------ |
-| **U2, U3 (buck)**  | System GND (0V) | System GND or float | &lt;1.3V (system ref)       | &gt;1.6V (system ref)    |
-| **U4 (inverting)** | -13.5V output   | IC GND or float     | &lt;-12.2V (system ref)     | &gt;-11.9V (system ref)  |
+| **U2, U3 (buck)**  | System GND (0V) | System GND or float | &lt;= 0.6V (system ref)     | &gt;= 2V (system ref)      |
+| **U4 (inverting)** | -13.5V output   | IC GND or float     | &lt;= -12.9V (system ref)   | &gt;= -11.5V (system ref)  |
+
+Guaranteed limits from `fact-lm2596-onoff-thresholds`; the typical threshold sits at
+1.3V above the IC ground pin, so -12.2V in system terms for U4.
 
 ### Why this matters
 
@@ -304,7 +325,7 @@ For always-on operation (what this project does):
 
 For shutdown control (not used here):
 
-- **U2, U3**: simple - pull the pin above 1.6V, system-ground referenced.
+- **U2, U3**: simple - pull the pin to 2V or above, system-ground referenced.
 - **U4**: needs an optocoupler or level shifter, because the control signal has to be
   referenced to a rail that moves. See TI application note SNVA722B.
 

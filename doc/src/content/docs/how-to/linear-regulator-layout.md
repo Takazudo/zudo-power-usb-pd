@@ -133,7 +133,10 @@ any positive rail.
    | U8 (-12V)  | C16 (470 nF), C24 (470 µF 35V) on `-13.5V OUT` | C19 (100 nF), C25 (470 µF 35V) on `Net-(U8-OUT)` |
 
    Placement distances: the ceramic within 5 mm of the input pad or output pad it
-   serves, the bulk electrolytic within 10 mm.
+   serves, the bulk electrolytic within 10 mm. Note the asymmetry in the current
+   spec - the U6 input pair is two electrolytics with no input ceramic, unlike the
+   470 nF that U7 and U8 each carry, so there is nothing to place close on that one
+   position.
 
    `fact-l7812cd2t-cap-input` calls for 0.33 µF or larger directly across the input
    terminals with the shortest possible leads; `fact-l7812cd2t-cap-output` records
