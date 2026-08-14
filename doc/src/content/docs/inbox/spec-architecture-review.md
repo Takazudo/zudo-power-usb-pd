@@ -319,4 +319,418 @@ pin-function tables.
 
 ## Board B
 
-*(Pending — filled by the Board B evidence-review sub-issue.)*
+### Inputs reviewed
+
+- `scripts/schgen/baselines/board-b.json` (netlist-derived doc-table baseline; its
+  output-stage nets are deliberately `unresolved` — see coverage limits)
+- `dc-dc-conversion.kicad_sch`, `linear-regulation.kicad_sch`, `output.kicad_sch` in
+  this worktree (as-fixed after the #93 edits, commit `1e053e1`)
+- Bundles: `component-lm2596s-adj-c347423`, `component-l7812cd2t-c13456`,
+  `component-l7805abd2t-c86206`, `component-cj7912-c94173`,
+  `component-ptc-smd1210p200tf-c20808`, `component-ptc-msmd110-33v-c70119`,
+  `component-ptc-bsmd1206-150-16v-c883133`, `component-sd05-c502527`,
+  `component-smaj15a-c571368`, `component-ss34-c8678`,
+  `component-cya1265-100uh-c19268674`, `component-project-passives`,
+  `component-faston-c591344`, `component-hdr-2541wr-2x08p-c5383092`,
+  `component-jst-b6b-xh-a`
+- Rules: `rule-rail-envelope`, `rule-u4-inverting-stress`, `rule-ldo-dropout-chain`,
+  `rule-pptc-vmax-vs-rail`, `rule-tvs-clamp-vs-absmax`,
+  `rule-inverting-startup-vs-pd-source`, `rule-ab-interface-current`,
+  `rule-evidence-chain`
+- Locked decisions: #90 A5/A6 (Board B dispositions and #93 rows 6–8) and the A↔B
+  interface contract
+
+### Locked items re-verified — baseline, bundles, schematic, and fix-commit agree
+
+| Locked item | Evidence checked | Result |
+|---|---|---|
+| DC-DC feedback dividers (13.53 / 7.503 / −13.53 V setpoints) | Sch values R1 `10k`/R2 `1k`, R3 `5.1k`/R4 `1k`, R5 `10k`/R6 `1k` (property reads, all matching `fact-lm2596-u2-r1` … `fact-lm2596-u4-r6`); `Vout = 1.23 × (1 + Rtop/Rbottom)` reproduces 13.53 / 7.503 / 13.53-magnitude (`fact-lm2596-u2-vout-setpoint`, `fact-lm2596-u3-vout-setpoint`, `fact-lm2596-u4-vout-setpoint-magnitude`); setpoint-vs-target errors +0.03 / +0.003 / −0.03 V (`calc-rail-u2/u3/u4-setpoint-error`); feedforward caps C31/C32/C33 22 nF placed across each high-side divider leg (`fact-c1729-topology`, baseline FB rows) | Consistent everywhere; all three magnitudes inside the 1.2–37 V ADJ range (`fact-lm2596-vout-adjust-range`). Rail truth stays NEEDS BENCH per `rule-rail-envelope` — tolerance-stack corners feed BB-5 |
+| U4 inverting referencing (LOCKED — verify only) | Baseline `-13.5V OUT` row (`U4.3 U4.5 U4.6 D3.2 C9.2 C10.2 C11.2 R6.2 …`), `GND` row (`L3.2`), `Net-(D3-K)` (`U4.2 D3.1 L3.1`); `fact-lm2596-u4-inverting-nets`; ON/OFF at 0 V relative to the device GND pin = ON (`fact-lm2596-onoff-thresholds`, `fact-lm2596-onoff-inverting-note`); catch-diode sense D3.1 = K on the switch node, D3.2 = A on the negative output — the manufacturer-documented inverting arrangement (`fact-lm2596-inverting-topology-support`) | Verified, not reopened. Inductor-to-system-GND / diode-to-output arrangement is the mirror of U2/U3, exactly as the sheet doc states |
+| #93 row 6 — `Net-(C16-Pad2)` → GND merge | Commit `1e053e1` message + diff (adds GND power symbol `#PWR054` to `linear-regulation.kicad_sch`); baseline `GND` row carries `C16.2 C24.1 C19.2 C25.1`; board-b-synth-power.md "Negative-rail decoupling" note | Applied at commit-diff + property level. Wire-level attach of all four plates is netlist-borne — open (no `kicad-cli`, see coverage limits) |
+| #93 row 7 — C9 swap to 100 µF 50 V | Sch C9 Value `100uF 50V`, `LCSC Part` C970687, Datasheet `lcsc.com/datasheet/C970687.pdf`, Footprint `CAP-SMD_BD8.0-L8.3-W8.3-LS9.0-FD` (the 8×10.2 can) | Applied in full. The placed lib_id string still reads `RVT1E101M0607_C22383804` (the replaced 25 V part's name) — cosmetic drift, folded into BB-14 |
+| #93 row 8 — C4/C22/C23 Value fix | All three read `470uF 10V` (property reads) | Applied. The deeper LCSC-field/drawn-symbol identity tangle is recorded by the bundle (`fact-c22383803-canonical-choice`) — BB-14 |
+| J5 A↔B interface contract | Pinout tables in board-split-decision.md, board-a-usb-pd-core.md, and board-b-synth-power.md are byte-identical (md5-verified this pass); J5 absent from every sheet, matching the "connector does not exist in the netlist yet" doc state; 1.6× derated margin arithmetic reproduced by `calc-ab-derated-margin-ratio` | Conformant. Margin stays NEEDS BENCH (`rule-ab-interface-current`: harness unbuilt, derating assumed) |
+| Output stage — Faston assignment + J10/J11 GND moat | Doc tables only: J6=−12V, J7=+12V, J8=+5V, J9=GND (`fact-faston-rail-assignment`); J10/J11 pins 9–14 six-pin GND moat, −12V on 15–16 far from signals (`fact-hdr-pin-pair-assignment`, `fact-hdr-gnd-moat-interactions`, `fact-hdr-misalignment-safety-note`) | Structure conforms to the Doepfer convention at doc level. **Not baselined**: every output-stage net is in `board-b.json`'s `unresolved` list, so no Ref.Pin verification exists — carried as a standing gap (coverage limits), with header key orientation NEEDS BENCH (`fact-hdr-keying-not-netlist-verifiable`) |
+| Electrolytic polarity on the resolved nets | Baseline pin sides: C21.1/C25.2 on the ±12 V outputs, C21.2/C25.1 on GND; C24.2 on `-13.5V OUT`, C24.1 on GND; C11.2 on `-13.5V OUT` | Positive-plate-to-higher-potential convention holds on every resolved electrolytic, including the negative-rail mirror pattern |
+
+### The two highest-leverage nets — +15 V input bus and the −13.5 V loop
+
+Board B's stress concentrates on the shared +15 V input bus (three converters, the
+C9/C10 bridge, and the only path a Board A clamp event can take into Board B) and on
+the −13.5 V loop, where U4's bootstrapped ground makes every voltage additive. This
+diagram is the net-level view behind BB-3/BB-5/BB-6/BB-7.
+
+```mermaid
+flowchart TD
+  J5["J5 pins 1-2\n+15V from Board A\n(3.0 A contract cap)"] -->|"+15V bus"| BUS["+15V -> +13.5V gen net\nC5/C7 100uF 25V\nC6/C8 100nF 50V"]
+  BUS --> U2["U2 buck -> +13.5V\nVIN sees 15 V"]
+  BUS --> U3["U3 buck -> +7.5V\nVIN sees 15 V"]
+  BUS --> U4["U4 inverting -> -13.5V\ndevice sees VIN + 13.53 V = 28.53 V\n45.93 V at the 32.4 V clamp table point"]
+  BUS ---|"C9 100uF 50V + C10 100nF 50V\nbridge +15V to -13.5V"| N135
+  U4 -->|"-13.5V OUT\n(U4 GND/ON-OFF/TAB ride here)"| N135["-13.5V rail\nC11 + C24 output bulk"]
+  U2 -->|"+13.5V OUT"| U6["U6 L7812\n1.5 V headroom vs 2.0 V typ dropout"]
+  U3 -->|"+7.5V OUT"| U7["U7 L7805\n0.5 V typ headroom at 5.0 V out"]
+  N135 --> U8["U8 CJ7912\ninput 1.0 V outside guaranteed band"]
+  U6 -->|"Net-(U6-OUT)"| PTC1["PTC1 SMD1210P200TF\nVmax 6 VDC on a 12 V rail"]
+  U7 -->|"Net-(U7-OUT)"| PTC2["PTC2 33 V - clears"]
+  U8 -->|"Net-(U8-OUT)"| PTC3["PTC3 16 V\n4 V nominal margin"]
+  PTC1 -->|"+12V rail (unresolved)"| OUT["TVS1/TVS2/TVS3, J6-J11\n(no Ref.Pin baseline)"]
+  PTC2 --> OUT
+  PTC3 --> OUT
+```
+
+### Findings — leads ranked by severity
+
+#### BB-1 — PTC1's 6 VDC maximum voltage sits on the +12 V rail: −6 V margin under normal operation, replacement required before any rail power-on (BLOCKER-class lead)
+
+The fitted RUILON `SMD1210P200TF` (LCSC C20808) is rated **Vmax 6 VDC** — the
+unsuffixed family member — while it protects the +12 V output. A tripped PPTC absorbs
+its full rail voltage, so every trip applies twice its rating; the datasheet's own
+cautions name arcing/flame as the exceed-Vmax failure mode. This is deterministic and
+primary-sourced on both sides (`fact-ptc1-vmax`, PRIMARY-SPEC, RUILON SMD1210 spec
+table + LCSC listing text; `fact-ptc1-vmax-margin` = −6 V, "BLOCKER - deterministic
+spec violation"; `calc-pptc1-vmax-margin` reproduces −6). The rule's refusal is
+explicit: *replace PTC1 with a part rated at or above the +12 V rail before any rail
+power-on* (`rule-pptc-vmax-vs-rail`). The passthrough corner is worse than nominal: a
+tripped PTC1 with U6 out of regulation can see up to ≈13.5 V.
+
+Replacement leads already in evidence: the same RUILON datasheet lists 16 V-suffixed
+siblings of adjacent current ratings (`SMD1210P150TF/16`, `SMD1210P110TF/16` — bundle
+SKILL.md, suffixed-variants note), and `components/ptc-12v.md` *already documents* the
+P150TF/16 (see BB-10). Trade-off to carry into wave-6: P150TF/16's 1.5 A hold leaves
+0.3 A of margin over the 1.2 A rail rating (vs the P200TF's 0.8 A,
+`fact-ptc1-ihold-margin`) and its 85 °C derated hold will sit proportionally lower
+(the P200TF's own 85 °C figure is 0.98 A, `fact-ptc1-hold-85c` — already below the
+1.2 A rail rating; see BB-8). Wave-6 owns the part pick; this pass records that **no
+currently-fitted-part disposition exists** — #90's protection-stage text predates the
+Vmax confirmation and the board-b doc still calls it an open data gap.
+
+Evidence: `fact-ptc1-vmax`, `fact-ptc1-vmax-margin`, `fact-ptc1-ihold`,
+`fact-ptc1-ihold-margin`, `fact-ptc1-hold-85c`, `calc-pptc1-vmax-margin`,
+`rule-pptc-vmax-vs-rail` (refusal text); sch property read PTC1 =
+`SMD1210P200TF`/C20808, fitted; locator: bundle SKILL.md suffixed-sibling paragraph.
+
+#### BB-2 — TVS2 SD05 stands off exactly 5 V on a rail whose guaranteed band tops at 5.2 V: zero margin at nominal, −0.2 V inside normal regulation (BLOCKER-class lead, locked deferral re-verified)
+
+`fact-sd05-standoff` (5 V, PRIMARY-SPEC) against the L7805's guaranteed output band
+(min 4.8 / max 5.2 V, `fact-l7805abd2t-vout-band`): margin is 0 V at 5.0 V and
+**−0.2 V at the 5.2 V band top** (`calc-tvs-sd05-standoff-vs-plus5`,
+`fact-sd05-plus5-margin` = 0, BLOCKER verdict) — the TVS can conduct inside normal
+regulation, with breakdown starting at 6 V min (`fact-sd05-breakdown`). The #90
+deferral ("replace with a ≥6 V-standoff part in the Board B design phase") is
+re-verified, not reopened: TVS2 is still fitted in the legacy sheet (property read,
+`dnp no`), which is consistent with the deferral scope. Three dated replacement
+candidates are already primary-sourced in the bundle (all retrieved 2026-08-14):
+
+| Candidate | LCSC | Standoff | Breakdown min | Margin at 5 V | Leakage at VRWM | Stock |
+|---|---|---|---|---|---|---|
+| MDD SMF6.0A | C123790 | 6 V | 6.67 V | 1.0 V | 400 µA | 148,360 |
+| Brightking SMAJ6.5A | C87267 | 6.5 V | 7.22 V | 1.5 V | 500 µA | 8,450 |
+| FOSAN SMAJ6.0A | C5353156 | 6 V | 6.67 V | 1.0 V | 800 µA | 6,400 |
+
+All three clear the 5.2 V band top with their breakdown minimum. Note for the wave-6
+pick: every candidate leaks 40–80× more than the SD05's 10 µA (`fact-sd05-leakage`) —
+a real but budgetable trade on a 500 mA rail.
+
+Evidence: fact IDs above plus `fact-cand-smf6-0a-*`, `fact-cand-smaj6-5a-*`,
+`fact-cand-smaj6-0a-*` (standoff/breakdown/clamp/leakage/stock rows),
+`rule-tvs-clamp-vs-absmax` (SD05 clause in conditions + refusal).
+
+#### BB-3 — a Board A clamp event puts U4's effective input 0.93 V past its 45 V absolute maximum; the #90 A2 justification "clamp stays inside the LM2596S abs-max (40 V)" does not hold for U4 and mislabels the 40 V operating maximum (HIGH lead, table-point-conditioned)
+
+U4's bootstrapped ground makes its device-seen input `VBUS + |VOUT|`
+(`fact-lm2596-u4-effective-input-setpoint` = 28.53 V nominal). Across the VBUS
+envelope (`calc-u4-effective-input-envelope` / `calc-u4-absmax-margin-envelope`):
+28.53 V at the 15 V contract (16.47 V of margin), 33.53 V at a 20 V mis-contract
+(11.47 V), and **45.93 V at the D5 SMAJ20A 32.4 V clamp table point — −0.93 V past
+the 45 V absolute maximum** (`fact-lm2596-vin-absmax`, PRIMARY-SPEC;
+`fact-high-diode-smaj20a-clamp`, PRIMARY-SPEC). Both compared values are
+primary-sourced; what keeps this a lead rather than a verdict is the waveform: 32.4 V
+is a 10/1000 µs table point, not the installed surge (`rule-u4-inverting-stress`,
+NEEDS BENCH).
+
+The #90 A2 text justifies the SMAJ20A with "the ≤32.4 V clamp stays inside the
+LM2596S abs-max (40 V)". Two defects, neither a reopen: (a) 40 V is the *operating*
+maximum (`fact-lm2596-vin-operating-max`); the absolute maximum is 45 V; (b) the
+comparison is correct for U2/U3 (VIN-to-GND sees 32.4 V directly, 12.6 V under 45 V,
+`calc-tvs-d5-clamp-vs-lm2596-vin-absmax`) but wrong in kind for U4, whose stress adds
+the output magnitude. This mirrors BA-2's finding shape (the #90 residual text audits
+one victim and misses another). C9/C10 (50 V, `fact-c970687-voltage`,
+`fact-c1711-voltage`) keep 4.07 V of margin at the same table point — thin but
+positive. Wave-6 input alongside BA-2's clamp-part options: a lower-clamp Board A part
+(SMBJ20A is already floated in #90) shrinks this overage at its source.
+
+Evidence: fact and calc IDs above; `fact-lm2596-u4-absmax-margin` (nominal 16.5 V),
+`rule-u4-inverting-stress` (conditions + refusal), #90 A2 justification text
+(board-split-decision.md, "Why a 20 V standoff" bullet).
+
+#### BB-4 — U4's inverting startup can demand ~4.5 A for ≥2 ms against a source capped at 3.0 A, and the datasheet's own mitigations are not designed in (HIGH lead)
+
+The LM2596 datasheet documents that inverting startup can draw input current up to
+the device current limit (typ 4.5 A, guaranteed up to 6.9 A at 25 °C,
+`fact-lm2596-current-limit`) for 2 ms or more, warns that **current-limited sources
+may not start correctly**, and recommends a delayed-startup circuit and enlarged CIN
+(`fact-lm2596-inverting-startup-current`, PRIMARY-SPEC). The project's source is
+capped at exactly the kind of limit the warning names: 3.0 A PD contract, shared by
+the receptacle and the A↔B interface (`fact-usb-type-c-009-rating-current`,
+`rule-inverting-startup-vs-pd-source`, `calc-inverting-startup-overdraw` = 1.5 A
+over). Neither mitigation exists in the sheets: U4's ON/OFF is hard-bootstrapped to
+its output rail (always-on, no delayed-enable node — baseline `-13.5V OUT` row), and
+the input bulk is C5‖C7 = 200 µF nominal with no sizing evidence against this event.
+Whether a real adapter folds back, hard-resets the contract, or rides through is
+source-dependent and unmeasured — no v4 board ever reached a live contract, so this
+failure mode has never been exercised. The testable prediction for the bench plan: a
+Board B that runs from a bench supply but fails or resets on a compliant 3 A PD
+source, worst with load attached, is this mechanism until proven otherwise. Note the
+closest historical record is v1's generic inrush scope note; no project doc records
+an observed instance, so this stays a forward-looking lead, not a diagnosis.
+
+Evidence: fact/calc IDs above; `rule-inverting-startup-vs-pd-source` (refusal);
+baseline rows `+15V -> +13.5V gen` (C5.1/C7.1), `-13.5V OUT` (U4.5);
+`fact-c22383804-capacitance`.
+
+#### BB-5 — the LDO dropout chain fails typical-value arithmetic at one node, has zero guaranteed margin at a second, and operates outside the guaranteed input band at the third; tolerance stacking makes all three worse (HIGH lead, NEEDS BENCH ×3 — locked deferral re-verified, math presented)
+
+Per `rule-ldo-dropout-chain` (all three depend on unverified upstream setpoints):
+
+- **U6 L7812 (+13.5 → +12 at 1.2 A):** headroom 1.5 V minus the 2.0 V typical 1 A
+  dropout = **−0.5 V** (`calc-ldo-7812-typ-dropout-deficit`), and DS0422 specifies
+  *no dropout at all* at the 1.2 A project load (`fact-l7812cd2t-dropout-1a2`).
+  Tolerance stack this pass adds: the LM2596's ±4 % line/load tolerance
+  (`fact-lm2596-output-tolerance`) puts the rail as low as 12.99 V, and the guaranteed
+  VFB minimum alone (1.193 V, `fact-lm2596-fb-vref-min`) gives 13.12 V — deficits of
+  −1.0 to −0.9 V against typical dropout. The 1.2 A setpoint decision stays **NEEDS
+  BENCH per the locked A5#1 deferral** — this is arithmetic input to that bench gate,
+  not a reopen.
+- **U7 L7805 (+7.5 → +5 at 0.5 A):** 0.5 V of headroom above the 2.0 V typical 1 A
+  dropout at the 5.0 V nominal output, shrinking to **0.3 V at the 5.2 V guaranteed
+  band top**, with no dropout maximum and no 0.5 A dropout row in DS0422
+  (`calc-ldo-7805-typ-dropout-headroom`, `fact-l7805abd2t-dropout-05a`) — zero
+  *guaranteed* input margin at 7.5 V. The plausible-but-unprovable half-current
+  benefit is exactly what the rule refuses to promote.
+- **U8 CJ7912 (−13.5 → −12 at 0.8 A):** the −13.5 V input sits **1.0 V outside** the
+  −14.5 to −27 V guaranteed operation band (`calc-ldo-cj7912-guarantee-shortfall`,
+  `fact-cj7912-vi-guarantee-band`); the 1.1 V typical dropout
+  (`fact-cj7912-dropout-typ`) is the only evidence it regulates at all, and the same
+  ±4 % stack (U4 rail at −12.99 V) eats even that typical margin (12 + 1.1 = 13.1 &gt;
+  12.99). Thermals compound it: 1.2 W at full load (`fact-cj7912-pd-full-load-mw`)
+  across R-th-JA 100 °C/W (`fact-cj7912-rthja`) is a **120 °C rise — Tj ≈ 145 °C
+  free-air at a 25 °C ambient, past the 125 °C operating top**
+  (`fact-cj7912-tj-rise-full-load`, `fact-cj7912-tj-operating-range`). Board B's
+  layout must budget copper relief, and that copper carries the −13.5 V net: the
+  TO-252 tab is the IN terminal (`fact-cj7912-pinout`, tab = pin 2 = IN; U8.2 on
+  `-13.5V OUT` in the baseline). Stability of the project cap network is also
+  unprovable from the Rev 2.0 datasheet (`fact-cj7912-stability-project-network`,
+  `fact-cj7912-esr-window-not-specified`).
+
+Evidence: fact/calc IDs above; `rule-ldo-dropout-chain` (conditions + refusal);
+board-b-synth-power.md LDO table (whose "OK" verdicts for U7/U8 are typical-value
+claims this arithmetic conditions).
+
+#### BB-6 — C5/C7 (25 V) on the +15 V bus: 10 V of margin at contract, 5 V at the 20 V edge, exceeded by 7.4 V at the clamp table point — and no ripple rating is retained for the bus they filter (MEDIUM lead)
+
+The two 100 µF input electrolytics (ACMECON, 25 V — `fact-c22383804-voltage`,
+`fact-c22383804-topology`) hold 10 V of margin at the 15 V contract
+(`fact-c22383804-rail-margin`) and 5 V at the 20 V mis-contract edge (#89 lead 6c,
+"lead-to-verify, no fix scheduled" — re-verified, still open). At the D5 32.4 V clamp
+table point that reaches Board B through the on-state Q1 path
+(`calc-tvs-d5-clamp-vs-lm2596-vin-absmax` conditions), the applied stress exceeds the
+rating by 7.4 V — transient-class, cap surge behavior unspecified. Their ripple duty
+is also unevidenced: the bus feeds two discontinuous-input-current bucks plus the
+inverting converter's switch-current pulses, and the bundle retains **no ripple-current
+fact at any frequency** for this part. Wave-6/layout option: the 35 V FOLLON 470 µF
+(C22387780) already used at five positions is a same-family upgrade path.
+
+Evidence: fact IDs above; sch property reads C5/C7 (`100uF`, C22383804);
+`rule-tvs-clamp-vs-absmax` (clamp-path conditions).
+
+#### BB-7 — the −13.5 V output capacitors carry ≈0.77 A RMS of discontinuous 150 kHz ripple, and no electrolytic on the board has a switching-frequency ripple rating (MEDIUM lead, NEEDS BENCH ×5)
+
+In an inverting buck-boost the output capacitors see the full catch-diode current
+minus the DC load — discontinuous, unlike U2/U3's LC-smoothed outputs (0.09 / 0.25 A
+p-p triangle, `fact-cya1265-ripple-13v5` / `fact-cya1265-ripple-7v5`). Conditioned
+arithmetic this pass adds (ideal CCM steady state, nominal setpoints, D =
+(13.53 + 0.55) ÷ (15 + 13.53 + 0.55) ≈ 0.48 using `fact-ss34-vf`): output-cap RMS
+ripple ≈ Iout × sqrt(D/(1−D)) ≈ **0.77 A at the 0.8 A rated load**, shared by
+C11‖C24. Against that: the only ripple identity retained on any of the five
+electrolytic lines is C11's family rating of ≈1.0 A **at 120 Hz** from a partial PDF
+extraction, with the 150 kHz figure "not given at all"
+(`fact-c2983319-ripple-esr-note`), and C9's 146 mA is likewise a 120 Hz line-frequency
+rating (`fact-c970687-ripple`). C4/C22/C23, C5/C7, and C14/C20/C21/C24/C25 retain no
+ripple fact whatsoever. ESR-driven self-heating at 150 kHz on the −13.5 V pair is
+therefore unbounded by any retained spec — bench thermal check or a rated-part
+substitution belongs in the Board B plan.
+
+Evidence: fact IDs above; `fact-lm2596-oscillator-frequency` (150 kHz);
+baseline `-13.5V OUT` row (C11.2, C24.2); arithmetic conditions stated inline.
+
+#### BB-8 — PTC3's 85 °C guaranteed hold (0.77 A) is below the 0.8 A rail rating, PTC2 retains no derating fact at all, and PTC3's voltage margin thins to 2.5 V in the passthrough corner (MEDIUM lead)
+
+Hold-current margins pass at 25 °C (0.8 / 0.6 / 0.7 A — `fact-ptc1-ihold-margin`,
+`fact-ptc2-ihold-margin`, `fact-ptc3-ihold-margin`), but the retained derating rows
+cross the rail budgets inside the rated ambient range: PTC3 holds only **0.77 A at
+85 °C** (`fact-ptc3-hold-85c`) vs its 0.8 A rail — linear interpolation puts the
+crossing near 82 °C, and CJ7912's 1.2 W dissipation is a local heat source next to it.
+PTC1's derated figure (0.98 A vs 1.2 A, crossing ≈72 °C) transfers to whatever
+replacement BB-1 selects. PTC2 has **no derating fact retained** (coverage gap).
+Enclosure ambient is unbounded by any spec — NEEDS BENCH (`fact-ptc3-cycling` also
+records ~33 % resistance shift after thermal shock and hold-current loss after
+repeated trips). On voltage, PTC3 passes: 4 V of margin vs nominal
+(`calc-pptc3-vmax-margin`) and ≈2.5 V against the worst passthrough corner (tripped
+with U8 passing its −13.5 V input through). PTC2's 28 V margin
+(`calc-pptc2-vmax-margin`) is untouched by any corner here.
+
+Evidence: fact/calc IDs above; `rule-pptc-vmax-vs-rail` (85 °C derating clause in
+conditions).
+
+#### BB-9 — TVS1/TVS3 margins re-derived at the guaranteed band edges: 2.4 V at the L7812 12.6 V band top; TVS3's orientation on the −12 V rail is not locked by any spec artifact (MEDIUM lead)
+
+The recorded 3 V / 25 % standoff margin for the SMAJ15A pair
+(`fact-smaj15a-margin-plus12`, `fact-smaj15a-margin-percent`) is computed at the
+12.0 V nominal. At the L7812's guaranteed band top (12.6 V,
+`fact-l7812cd2t-vout-band`) the margin is 2.4 V (19 %) — still clear, unlike the
+SD05's negative equivalent, and the breakdown minimum (16.7 V,
+`fact-smaj15a-breakdown`) stays 4.1 V above the band top. The open item is TVS3:
+its unidirectional orientation on a *negative* rail (cathode to 0 V, anode to −12 V)
+is "not yet locked by a generator spec" (`fact-smaj15a-tvs3-orientation`, NEEDS
+BENCH), and the output-stage baseline gap (coverage limits) means no Ref.Pin row
+exists to check it against — a reversed TVS3 would be forward-biased at −12 V. This
+is a required lock-point for the Board B schgen spec, not a detected defect.
+
+Evidence: fact IDs above; `fact-smaj15a-clamp` (24.4 V at 1 A);
+`rule-tvs-clamp-vs-absmax` (SMAJ15A clause).
+
+#### BB-10 — the PTC1 component doc page documents the 16 V sibling part, masking the 6 V blocker; two more protection-stage doc rows are stale in the same direction (MEDIUM lead, doc defect — agent-found issue #131 raised)
+
+`components/ptc-12v.md` is titled and specified as **SMD1210P150TF/16** (C7529589,
+1.5 A hold, V_max **16 V**) — a different orderable than the fitted
+SMD1210P200TF/C20808, and its 16 V row answers the exact question a reviewer would
+ask about BB-1 with the wrong part's number. `overview/board-b-synth-power.md`'s
+protection table still calls PTC1's rating "not confirmed … open data gap" (stale:
+the bundle has primary-confirmed 6 VDC), and `components/ptc-12v-neg.md` is titled
+`JK-nSMD100/16V` while the fitted PTC3 is BSMD1206-150-16V/C883133. All three are
+wave-3-or-earlier doc artifacts, not locked #90 decisions — fixable defects, raised
+as agent-found issue #131 rather than folded into the locked fix list.
+
+Evidence: `fact-ptc1-vmax` vs `doc/src/content/docs/components/ptc-12v.md` part
+table + Electrical Specifications rows; board-b-synth-power.md Protection Stage
+PTC1 row; ptc-12v-neg.md frontmatter title; sch property reads (PTC1/PTC3 identities).
+
+#### BB-11 — the doc net tables and baseline omit D1.2/D2.2 (the buck catch-diode ground returns) from every net row: two more pins in the never-guess gap, not flagged by the baseline's own unresolved list (LOW/MEDIUM lead, connectivity-record defect)
+
+For a buck, the catch diode's anode returns to GND. The board-b doc's U2/U3 GND rows
+list `U2.3 U2.5 U2.6 R2.1 C5.2 C6.2` (and the U3 mirror) but never place D1.2 or
+D2.2 on any net; the baseline reproduces the omission (its `GND` array has no D1/D2
+member, and `Net-(D1-K)`/`Net-(D2-K)` carry only pin 1). The baseline's own
+`unresolved` note 7 already flags five DC-DC pins as implied-but-unlisted (C3.2,
+C4.2, C11.1, R5.2, C33.2) — D1.2/D2.2 belong on that list and are absent from it.
+Contrast: U4's table row *does* place D3.2 (on `-13.5V OUT`), so the inverting
+converter's diode is recorded while the two bucks' are not. No mis-wiring is
+suspected (the pin-1 = K sense is consistent with the KiCad net names, and the DC-DC
+stage has no failure history) — the defect is that the canonical connectivity record
+is silently incomplete, which `check_baseline.py` will surface as "extra pins" the
+first time a real Board B spec wires them correctly.
+
+Evidence: board-b-synth-power.md U2/U3 net tables; `board-b.json` `GND` array +
+`unresolved` note 7; `fact-ss34-manufacturer` bundle placement rows (D1/D2/D3).
+
+#### BB-12 — the C11 rail discrepancy resolves toward the −13.5 V rail on three independent reads; inventory.json's function text is the outlier (LOW lead)
+
+`fact-c2983319-c11-net-discrepancy` (NEEDS BENCH) records the conflict: the doc's U4
+net table and the baseline put C11.2 on `/DC-DC Conversion/-13.5V OUT`, while
+`inventory.json` (line-c2983319) describes both C3 and C11 as "+13.5V DC-DC output
+bulk filter". This pass adds a geometry-adjacency probe of
+`dc-dc-conversion.kicad_sch`: C11 sits at (199.4, 97.8) — beside L3 (207.0, 88.9),
+D3 (215.9, 99.1), U4 (246.4, 91.4) and the `-13.5V OUT` label (174.0, 110.5) — while
+C3 sits at (82.6, 63.5) in U2's output area near the `+13.5V OUT` label. Adjacency
+is indication, not netlist proof (coverage limits), but doc + baseline + placement
+all agree against the inventory free-text, whose function string is accurate for C3
+only. The 11.5 V margin fact is unaffected (it was already computed against −13.5 V,
+`fact-c2983319-rail-margin`), and C11's polarity in the baseline matches the
+negative-rail mirror convention. Netlist-neutral fix candidate: correct the
+`line-c2983319` function text (or split per-refdes) at the next bundle edit window.
+
+Evidence: fact IDs above; baseline `-13.5V OUT` row; sheet coordinate reads
+(this pass); `inventory.json` line-c2983319 placements block.
+
+#### BB-13 — the placed LED symbol is uniform (pin 1 = cathode on all three), so the bundle's green-reversal warning applies to an unplaced library symbol; LED wiring is absent from the baseline entirely (LOW lead)
+
+`fact-c2289-polarity-note` warns the green LED symbol's pin numbering is reversed vs
+blue/red — but the placed instances (LED2 Green/C2289 on +12 V, LED3 Blue/C2288 on
++5 V, LED4 Red/C2286 on −12 V) all use the **same** lib symbol
+`zudo-pd:19-217_GHC-YR1S2_3T`, whose pins read C = 1 / A = 2
+(`symbols/zudo-pd.kicad_sym`, symbol block at line 5120), with footprint
+`zudo-pd:LED0603-RD` (present in `zudo-power.pretty`, unlike the missing `LED0603-FD`
+the note names). So no cross-instance asymmetry exists in the schematic; the residual
+risks are (a) whether each *physical* LED's cathode matches the shared symbol's pin-1
+convention — a BOM/CPL-rotation-stage check, per the note's own advice — and (b) that
+no LED or R7/R8/R9 far-end pin appears anywhere in the baseline (LED anode/cathode
+wiring, including LED4's orientation on the negative rail, is unverifiable in this
+pass). Drive currents sit below every luminous test point (9.9 mA vs 20 mA red/green,
+1.9 mA vs 5 mA blue — `fact-c2289-drive-current`, `fact-c2288-drive-current`,
+`fact-c2286-drive-current`, all NEEDS BENCH for brightness matching).
+
+Evidence: fact IDs above; sch property reads LED2/LED3/LED4 + R7/R8/R9; library pin
+read (this pass); baseline `Net-(U6/U7/U8-OUT)` rows (R7.1/R8.1/R9.1 only).
+
+#### BB-14 — symbol-name and identity drift across seven positions: ordering fields are consistent, lib_id strings are not (LOW lead, label drift)
+
+Same class as BA-9 (a future reviewer trusting the wrong label), netlist-neutral,
+candidates for the next KiCad edit window — none added to the locked #93 list:
+
+- **C9**: lib_id still `RVT1E101M0607_C22383804` (the replaced 25 V part's name)
+  while Value/LCSC/Datasheet/Footprint are all correctly swapped to C970687/50 V.
+- **R8**: lib_id `zudo-pd:0805W8F3300T5E` — a 330 Ω part-number-named symbol — with
+  Value `1k` and LCSC C17513 (1 kΩ, matching R7/R9's `0805W8J0102T5E`).
+- **C14/C20/C21/C24/C25**: lib_id `RVT1E471M1010-C3351` (a 25 V part's name) with
+  `LCSC Part` C22387780 (FOLLON 35 V, `fact-c22387780-voltage`); C3/C11 carry the
+  same symbol name plus a Datasheet link to C3351 while ordering C2983319.
+- **C4/C22/C23**: drawn symbol `RVT1A471M0607_C335982` (ROQANG 10 V) vs `LCSC Part`
+  C22383803 (ACMECON, actually 16 V per the current listing) — the bundle's canonical
+  pick resolves the direction (C335982 canonical, C22383803 alias;
+  `fact-c22383803-canonical-choice`, `fact-c22383803-schematic-lcsc-field`).
+- **J6–J9**: the Faston symbol embeds a hidden `LCSC Part` C305825 from its import
+  source vs the instances' C591344 (`fact-faston-symbol-lcsc-mismatch`).
+
+BOM/JLCPCB ordering reads the per-instance `LCSC Part` field, so none of this changes
+what gets built; the risk is review-time, exactly how the C4/C22/C23 16 V label once
+survived until #93. Evidence: sch property + lib_id reads (this pass) and the fact
+IDs above.
+
+### What this pass can and cannot catch
+
+**Can catch (and did):** deterministic arithmetic on retained primary facts (PPTC/TVS
+margins, effective-input envelopes, dropout deficits, tolerance stacks, derating
+crossings); baseline-vs-bundle-vs-doc-vs-inventory disagreements; property-level
+schematic state (values, LCSC fields, fitted/DNP, footprints, lib_id drift);
+fix-commit-diff evidence for the #93 rows; doc pages contradicting confirmed facts;
+gaps in the connectivity record itself (BB-11).
+
+**Cannot catch:**
+
+- **Wire-level netlist truth.** No `kicad-cli` on this machine (same limit as the
+  Board A pass): the #93 row-6 GND merge is verified only at commit-diff + symbol
+  level, the C11 rail assignment only by doc/baseline/adjacency agreement, and every
+  geometry-borne connection in the three sheets remains unproven. A fresh netlist
+  export diffed via `scripts/schgen/check_baseline.py` remains open.
+- **The entire output stage.** PTC1.2/PTC2.2/PTC3.2, TVS1–TVS3 pin nets, J6–J11,
+  LED2–LED4 and R7–R9 far ends are all in `board-b.json`'s `unresolved` list — no
+  Ref.Pin record exists, so this pass could assert nothing about post-PTC wiring,
+  TVS3 orientation (BB-9), the GND moat's physical pins, or J10-vs-J11 identity.
+  That gap is itself a carried finding: the Board B schgen spec must resolve these
+  before `check_baseline.py` can gate anything downstream.
+- **Anything bench-stage.** `rule-evidence-chain`: every stage from PCB orientation
+  through bench is OPEN; no rail has ever been energized from a negotiated contract.
+  Startup transients (BB-4), 150 kHz ripple heating (BB-7), dropout at real loads
+  (BB-5), clamp waveforms (BB-3), and enclosure-ambient derating (BB-8) are all
+  unmeasured.
+- **Facts the bundles do not retain:** PTC2 derating vs ambient; any electrolytic
+  ripple rating at 150 kHz; the LM2596 Figure 26 inverting output-current-capability
+  curve values; a CJ7912 output-voltage tolerance band (PTC3/TVS3 margins are
+  computed against the −12 V nominal only); SS34 VF-vs-temperature; primary ratings
+  for the Faston terminals (family 20 A figure UNVERIFIED) and the 2541WR header
+  (every electrical rating UNSOURCED).
+- **Layout-phase items.** Board B has no layout: CJ7912 copper relief on a tab that
+  carries −13.5 V (BB-5), TO-263 pours, PTC placement vs heat sources (BB-8), header
+  key orientation vs the red-stripe convention, and the A↔B harness build are all
+  future-plan scope.
