@@ -1,16 +1,1017 @@
 {
   "schema_version": 1,
   "generator_specs": [
-    { "board": "board-a", "spec": "scripts/schgen/board_a_spec.py" },
-    { "board": "board-b", "spec": "scripts/schgen/board_b_spec.py" }
+    {
+      "board": "board-a",
+      "spec": "scripts/schgen/board_a_spec.py"
+    },
+    {
+      "board": "board-b",
+      "spec": "scripts/schgen/board_b_spec.py"
+    }
   ],
   "assertions": {
-    "orderable_lines": 0,
-    "fitted_lines": 0,
-    "dnp_or_hand_fit_lines": 0,
-    "fitted_placements": 0,
-    "dnp_placements": 0
+    "orderable_lines": 41,
+    "fitted_lines": 40,
+    "dnp_or_hand_fit_lines": 2,
+    "fitted_placements": 79,
+    "dnp_placements": 4
   },
-  "exclusions": [],
-  "lines": []
+  "exclusions": [
+    {
+      "board": "board-a",
+      "refdes": "J2",
+      "reason": "bare-copper 1x4 pogo pad debug/programming header; no orderable/LCSC line"
+    },
+    {
+      "board": "board-a",
+      "refdes": "J3",
+      "reason": "bare-copper 1x8 pogo pad debug/programming header; no orderable/LCSC line"
+    },
+    {
+      "board": "board-a",
+      "refdes": "TP1",
+      "reason": "bare-copper test pad; no orderable/LCSC line"
+    },
+    {
+      "board": "board-a",
+      "refdes": "TP2",
+      "reason": "bare-copper test pad; no orderable/LCSC line"
+    },
+    {
+      "board": "board-a",
+      "refdes": "TP6",
+      "reason": "bare-copper test pad; no orderable/LCSC line"
+    },
+    {
+      "board": "board-b",
+      "refdes": "TP3",
+      "reason": "bare-copper test pad; no orderable/LCSC line"
+    },
+    {
+      "board": "board-b",
+      "refdes": "TP4",
+      "reason": "bare-copper test pad; no orderable/LCSC line"
+    },
+    {
+      "board": "board-b",
+      "refdes": "TP5",
+      "reason": "bare-copper test pad; no orderable/LCSC line"
+    },
+    {
+      "board": "board-b",
+      "refdes": "P1",
+      "reason": "ATT/PDOK 2-pin provision, DNP/bare-copper; exact connector form pending the wave-6 decision task"
+    }
+  ],
+  "lines": [
+    {
+      "line_id": "line-c2678061",
+      "mpn": "STUSB4500QTR",
+      "manufacturer": "ST (STMicroelectronics)",
+      "lcsc": "C2678061",
+      "package": "QFN-24_L4.0-W4.0-P0.50-BL-EP2.8",
+      "owner_skill": "component-stusb4500qtr",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "USB-PD sink controller, negotiates the 15V PD contract",
+      "placements": [
+        {
+          "board": "board-a",
+          "refdes": "U1",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c456012",
+      "mpn": "USB-TYPE-C-009",
+      "manufacturer": "SHOU HAN",
+      "lcsc": "C456012",
+      "package": "TYPE-C-SMD_TYPE-C-6P",
+      "owner_skill": "component-usb-type-c-009-c456012",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "USB Type-C receptacle, 6-pin SMD, PD sink input",
+      "placements": [
+        {
+          "board": "board-a",
+          "refdes": "J1",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c347476",
+      "mpn": "AO3401A",
+      "manufacturer": "UMW",
+      "lcsc": "C347476",
+      "package": "SOT-23_L2.9-W1.3-P1.90-LS2.4-BR",
+      "owner_skill": "component-umw-ao3401a-c347476",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "P-channel MOSFET load switch, gates VBUS_OUT from U1",
+      "placements": [
+        {
+          "board": "board-a",
+          "refdes": "Q1",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c571370",
+      "mpn": "SMAJ20A",
+      "manufacturer": "High Diode",
+      "lcsc": "C571370",
+      "package": "D-FLAT_L4.3-W2.6-LS5.3-RD",
+      "owner_skill": "component-high-diode-smaj20a-c571370",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "20V-standoff TVS diode, VBUS_IN surge/overvoltage clamp",
+      "placements": [
+        {
+          "board": "board-a",
+          "refdes": "D5",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c25803",
+      "mpn": "0603WAF1003T5E",
+      "manufacturer": "UNI-ROYAL",
+      "lcsc": "C25803",
+      "package": "R0603",
+      "owner_skill": "component-project-passives",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "100 kOhm resistor, U1 VBEN pull-up network",
+      "placements": [
+        {
+          "board": "board-a",
+          "refdes": "R11",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c23206",
+      "mpn": "0603WAF5602T5E",
+      "manufacturer": "UNI-ROYAL",
+      "lcsc": "C23206",
+      "package": "R0603",
+      "owner_skill": "component-project-passives",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "56 kOhm resistor, U1 VBEN pull-up network",
+      "placements": [
+        {
+          "board": "board-a",
+          "refdes": "R12",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c23179",
+      "mpn": "0603WAF4700T5E",
+      "manufacturer": "UNI-ROYAL",
+      "lcsc": "C23179",
+      "package": "R0603",
+      "owner_skill": "component-project-passives",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "470 Ohm resistor, VBUS_VS_DISCH discharge path (pin 18)",
+      "placements": [
+        {
+          "board": "board-a",
+          "refdes": "R13",
+          "dnp": false
+        },
+        {
+          "board": "board-a",
+          "refdes": "R14",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c23162",
+      "mpn": "0603WAF4701T5E",
+      "manufacturer": "UNI-ROYAL",
+      "lcsc": "C23162",
+      "package": "R0603",
+      "owner_skill": "component-project-passives",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "4.7 kOhm resistor, U1 SCL/SDA I2C pull-up",
+      "placements": [
+        {
+          "board": "board-a",
+          "refdes": "R15",
+          "dnp": false
+        },
+        {
+          "board": "board-a",
+          "refdes": "R16",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c23186",
+      "mpn": "0603WAF5101T5E",
+      "manufacturer": "UNI-ROYAL",
+      "lcsc": "C23186",
+      "package": "R0603",
+      "owner_skill": "component-project-passives",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "5.1 kOhm 0603 resistor; DNP CC-line Rd placement on Board A, fitted DC-DC feedback-divider placement on Board B",
+      "placements": [
+        {
+          "board": "board-a",
+          "refdes": "R17",
+          "dnp": true
+        },
+        {
+          "board": "board-a",
+          "refdes": "R18",
+          "dnp": true
+        },
+        {
+          "board": "board-b",
+          "refdes": "R3",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c21189",
+      "mpn": "0603WAF0000T5E",
+      "manufacturer": "UNI-ROYAL",
+      "lcsc": "C21189",
+      "package": "R0603",
+      "owner_skill": "component-project-passives",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "0 Ohm link resistor, CC-line debounce net jumper",
+      "placements": [
+        {
+          "board": "board-a",
+          "refdes": "R19",
+          "dnp": false
+        },
+        {
+          "board": "board-a",
+          "refdes": "R20",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c13585",
+      "mpn": "CL31A106KBHNNNE",
+      "manufacturer": "Samsung Electro-Mechanics",
+      "lcsc": "C13585",
+      "package": "C1206",
+      "owner_skill": "component-project-passives",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "10 uF ceramic capacitor, VBUS_IN bulk decoupling",
+      "placements": [
+        {
+          "board": "board-a",
+          "refdes": "C1",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c1711",
+      "mpn": "CC0805KRX7R9BB104",
+      "manufacturer": "YAGEO",
+      "lcsc": "C1711",
+      "package": "C0805",
+      "owner_skill": "component-project-passives",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "100 nF ceramic capacitor, general decoupling across U1/DC-DC/LDO stages",
+      "placements": [
+        {
+          "board": "board-a",
+          "refdes": "C2",
+          "dnp": false
+        },
+        {
+          "board": "board-a",
+          "refdes": "C35",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "C6",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "C8",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "C10",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "C17",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "C18",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "C19",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c15849",
+      "mpn": "CL10A105KB8NNNC",
+      "manufacturer": "Samsung Electro-Mechanics",
+      "lcsc": "C15849",
+      "package": "C0603",
+      "owner_skill": "component-project-passives",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "1 uF ceramic capacitor, U1 VREG_2V7/VREG_1V2 decoupling",
+      "placements": [
+        {
+          "board": "board-a",
+          "refdes": "C30",
+          "dnp": false
+        },
+        {
+          "board": "board-a",
+          "refdes": "C34",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c144397",
+      "mpn": "B6B-XH-A(LF)(SN)",
+      "manufacturer": "JST",
+      "lcsc": "C144397",
+      "package": "CONN-TH_B6B-XH-A-6P",
+      "owner_skill": "component-jst-b6b-xh-a",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "6-pin JST XH board-to-board interface connector (+15V x2, ATT, PDOK, GND x2)",
+      "placements": [
+        {
+          "board": "board-a",
+          "refdes": "J4",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "J5",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c85382",
+      "mpn": "PESD24VS1UB",
+      "manufacturer": "Nexperia",
+      "lcsc": "C85382",
+      "package": "SOD-523",
+      "owner_skill": "component-pesd24vs1ub-c85382",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "Unidirectional ESD/TVS diode, CC-line DNP protection provision",
+      "placements": [
+        {
+          "board": "board-a",
+          "refdes": "D6",
+          "dnp": true
+        },
+        {
+          "board": "board-a",
+          "refdes": "D7",
+          "dnp": true
+        }
+      ]
+    },
+    {
+      "line_id": "line-c347423",
+      "mpn": "LM2596S-ADJ",
+      "manufacturer": "UMW",
+      "lcsc": "C347423",
+      "package": "TO-263-5_L10.2-W8.9-P1.70-BR",
+      "owner_skill": "component-lm2596s-adj-c347423",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "Adjustable buck/inverting DC-DC converter IC, intermediate-rail generation",
+      "placements": [
+        {
+          "board": "board-b",
+          "refdes": "U2",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "U3",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "U4",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c19268674",
+      "mpn": "CYA1265-100UH",
+      "manufacturer": "SHOU HAN",
+      "lcsc": "C19268674",
+      "package": "IND-SMD_L13.8-W12.8",
+      "owner_skill": "component-cya1265-100uh-c19268674",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "100 uH power inductor, DC-DC converter energy storage",
+      "placements": [
+        {
+          "board": "board-b",
+          "refdes": "L1",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "L2",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "L3",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c8678",
+      "mpn": "SS34",
+      "manufacturer": "MDD (Microdiode Semiconductor)",
+      "lcsc": "C8678",
+      "package": "SMA_L4.3-W2.6-LS5.2-RD",
+      "owner_skill": "component-ss34-c8678",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "40V/3A Schottky diode, DC-DC converter freewheeling/rectifier",
+      "placements": [
+        {
+          "board": "board-b",
+          "refdes": "D1",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "D2",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "D3",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c2983319",
+      "mpn": "GVT1E477M0810CNVC",
+      "manufacturer": "HRK",
+      "lcsc": "C2983319",
+      "package": "CAP-SMD_BD10.0-L10.3-W10.3-LS11.0-FD",
+      "owner_skill": "component-project-passives",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "470 uF 25V aluminum electrolytic capacitor, +13.5V DC-DC output bulk filter",
+      "placements": [
+        {
+          "board": "board-b",
+          "refdes": "C3",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "C11",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c22383803",
+      "mpn": "RVT1C471M0607",
+      "manufacturer": "ACMECON",
+      "lcsc": "C22383803",
+      "package": "CAP-SMD_BD6.3-L6.6-W6.6-FD",
+      "owner_skill": "component-project-passives",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "470 uF 10V aluminum electrolytic capacitor, +7.5V DC-DC output bulk filter",
+      "placements": [
+        {
+          "board": "board-b",
+          "refdes": "C4",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "C22",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "C23",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c22383804",
+      "mpn": "RVT1E101M0607",
+      "manufacturer": "ACMECON",
+      "lcsc": "C22383804",
+      "package": "CAP-SMD_BD6.3-L6.6-W6.6-LS7.3-FD",
+      "owner_skill": "component-project-passives",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "100 uF aluminum electrolytic capacitor, DC-DC output filter",
+      "placements": [
+        {
+          "board": "board-b",
+          "refdes": "C5",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "C7",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c970687",
+      "mpn": "RVT1H101M0810",
+      "manufacturer": "DMBJ",
+      "lcsc": "C970687",
+      "package": "CAP-SMD_BD8.0-L8.3-W8.3-LS9.0-FD",
+      "owner_skill": "component-project-passives",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "100 uF 50V aluminum electrolytic capacitor, -13.5V DC-DC output bulk filter (28.5V nominal / 33.5V edge-case bridging rating)",
+      "placements": [
+        {
+          "board": "board-b",
+          "refdes": "C9",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c1729",
+      "mpn": "CL21B223KBANNNC",
+      "manufacturer": "Samsung Electro-Mechanics",
+      "lcsc": "C1729",
+      "package": "C0805",
+      "owner_skill": "component-project-passives",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "22 nF ceramic capacitor, DC-DC feedforward compensation",
+      "placements": [
+        {
+          "board": "board-b",
+          "refdes": "C31",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "C32",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "C33",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c25804",
+      "mpn": "0603WAF1002T5E",
+      "manufacturer": "UNI-ROYAL",
+      "lcsc": "C25804",
+      "package": "R0603",
+      "owner_skill": "component-project-passives",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "10 kOhm resistor, DC-DC feedback divider bottom resistor",
+      "placements": [
+        {
+          "board": "board-b",
+          "refdes": "R1",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "R5",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c21190",
+      "mpn": "0603WAF1001T5E",
+      "manufacturer": "UNI-ROYAL",
+      "lcsc": "C21190",
+      "package": "R0603",
+      "owner_skill": "component-project-passives",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "1 kOhm resistor, DC-DC feedback divider bottom resistor",
+      "placements": [
+        {
+          "board": "board-b",
+          "refdes": "R2",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "R4",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "R6",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c13456",
+      "mpn": "L7812CD2T",
+      "manufacturer": "ST (STMicroelectronics)",
+      "lcsc": "C13456",
+      "package": "TO-263-2_L10.0-W9.1-P5.08-LS15.2-TL",
+      "owner_skill": "component-l7812cd2t-c13456",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "+12V linear regulator, final +12V output stage",
+      "placements": [
+        {
+          "board": "board-b",
+          "refdes": "U6",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c86206",
+      "mpn": "L7805ABD2T",
+      "manufacturer": "ST (STMicroelectronics)",
+      "lcsc": "C86206",
+      "package": "TO-263-2_L10.0-W9.2-P5.08-LS15.3-TL-CW",
+      "owner_skill": "component-l7805abd2t-c86206",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "+5V linear regulator, final +5V output stage",
+      "placements": [
+        {
+          "board": "board-b",
+          "refdes": "U7",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c94173",
+      "mpn": "CJ7912",
+      "manufacturer": "JSCJ",
+      "lcsc": "C94173",
+      "package": "TO-252-3_L6.5-W5.8-P4.58-BL",
+      "owner_skill": "component-cj7912-c94173",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "-12V linear regulator, final -12V output stage",
+      "placements": [
+        {
+          "board": "board-b",
+          "refdes": "U8",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c20808",
+      "mpn": "SMD1210P200TF",
+      "manufacturer": "RUILON",
+      "lcsc": "C20808",
+      "package": "F1210",
+      "owner_skill": "component-ptc-smd1210p200tf-c20808",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "2A-hold PTC resettable fuse, +12V output overcurrent protection",
+      "placements": [
+        {
+          "board": "board-b",
+          "refdes": "PTC1",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c70119",
+      "mpn": "mSMD110-33V",
+      "manufacturer": "TECHFUSE",
+      "lcsc": "C70119",
+      "package": "F1812",
+      "owner_skill": "component-ptc-msmd110-33v-c70119",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "1.1A-hold PTC resettable fuse, +5V output overcurrent protection",
+      "placements": [
+        {
+          "board": "board-b",
+          "refdes": "PTC2",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c883133",
+      "mpn": "BSMD1206-150-16V",
+      "manufacturer": "BHFUSE",
+      "lcsc": "C883133",
+      "package": "F1206",
+      "owner_skill": "component-ptc-bsmd1206-150-16v-c883133",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "1.5A-hold PTC resettable fuse, -12V output overcurrent protection",
+      "placements": [
+        {
+          "board": "board-b",
+          "refdes": "PTC3",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c571368",
+      "mpn": "SMAJ15A",
+      "manufacturer": "High Diode",
+      "lcsc": "C571368",
+      "package": "D-FLAT_L4.3-W2.6-LS5.3-RD",
+      "owner_skill": "component-smaj15a-c571368",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "15V-standoff TVS diode, +12V/-12V output overvoltage protection",
+      "placements": [
+        {
+          "board": "board-b",
+          "refdes": "TVS1",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "TVS3",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c502527",
+      "mpn": "SD05",
+      "manufacturer": "MDD (Microdiode Semiconductor)",
+      "lcsc": "C502527",
+      "package": "SOD-323_L1.8-W1.3-LS2.5-FD",
+      "owner_skill": "component-sd05-c502527",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "TVS diode, +5V output overvoltage protection",
+      "placements": [
+        {
+          "board": "board-b",
+          "refdes": "TVS2",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c22387780",
+      "mpn": "EFVH035ADA471M10B0",
+      "manufacturer": "FOLLON",
+      "lcsc": "C22387780",
+      "package": "CAP-SMD_BD10.0-L10.3-W10.3-LS11.0-FD",
+      "owner_skill": "component-project-passives",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "470 uF aluminum electrolytic capacitor, LDO output/protection-stage decoupling",
+      "placements": [
+        {
+          "board": "board-b",
+          "refdes": "C14",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "C20",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "C21",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "C24",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "C25",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c1623",
+      "mpn": "CL10B474KA8NNNC",
+      "manufacturer": "Samsung Electro-Mechanics",
+      "lcsc": "C1623",
+      "package": "C0603",
+      "owner_skill": "component-project-passives",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "470 nF ceramic capacitor, LDO output decoupling",
+      "placements": [
+        {
+          "board": "board-b",
+          "refdes": "C15",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "C16",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c17513",
+      "mpn": "0805W8F1001T5E",
+      "manufacturer": "UNI-ROYAL",
+      "lcsc": "C17513",
+      "package": "R0805",
+      "owner_skill": "component-project-passives",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "1 kOhm resistor, LED current-limit",
+      "placements": [
+        {
+          "board": "board-b",
+          "refdes": "R7",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "R8",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "R9",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c2289",
+      "mpn": "KT-0603YG",
+      "manufacturer": "Hubei KENTO Elec",
+      "lcsc": "C2289",
+      "package": "LED0603-RD",
+      "owner_skill": "component-project-passives",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "0603 LED, +12V rail status indicator",
+      "placements": [
+        {
+          "board": "board-b",
+          "refdes": "LED2",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c2288",
+      "mpn": "KT-0603B",
+      "manufacturer": "Hubei KENTO Elec",
+      "lcsc": "C2288",
+      "package": "LED0603-RD",
+      "owner_skill": "component-project-passives",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "0603 LED, +5V rail status indicator",
+      "placements": [
+        {
+          "board": "board-b",
+          "refdes": "LED3",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c2286",
+      "mpn": "KT-0603R",
+      "manufacturer": "Hubei KENTO Elec",
+      "lcsc": "C2286",
+      "package": "LED0603-RD",
+      "owner_skill": "component-project-passives",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "0603 LED, -12V rail status indicator",
+      "placements": [
+        {
+          "board": "board-b",
+          "refdes": "LED4",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c591344",
+      "mpn": "63951-1",
+      "manufacturer": "TE Connectivity",
+      "lcsc": "C591344",
+      "package": "CONN-TH_1217754-1",
+      "owner_skill": "component-faston-c591344",
+      "identity_state": "UNRESOLVED",
+      "source_state": "AVAILABLE",
+      "function": "FASTON 250 through-hole quick-connect terminal, output rail power tab",
+      "placements": [
+        {
+          "board": "board-b",
+          "refdes": "J6",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "J7",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "J8",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "J9",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c5383092",
+      "mpn": "2541WR-2X08P",
+      "manufacturer": "HanElectricity",
+      "lcsc": "C5383092",
+      "package": "HDR-TH_16P-P2.54-H-M-R2-C8-S2.54",
+      "owner_skill": "component-hdr-2541wr-2x08p-c5383092",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "16-pin 2.54mm dual-row through-hole header, Eurorack power bus connector",
+      "placements": [
+        {
+          "board": "board-b",
+          "refdes": "J10",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "J11",
+          "dnp": false
+        }
+      ]
+    }
+  ]
 }
