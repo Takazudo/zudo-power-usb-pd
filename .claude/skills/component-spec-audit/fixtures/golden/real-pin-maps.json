@@ -56,6 +56,43 @@
         }
       ],
       "reviewer": "issue-109 worktree child (Claude Fable 5), project-asset review only"
+    },
+    {
+      "record_id": "rec-ss34-c8678",
+      "pin_map_id": "pinmap-ss34-c8678",
+      "canonical_sha256": "d672114c07f67bef7f280a874f18020596a2f18e56dd16a56435ac7f8f546003",
+      "evidence_fact_ids": [
+        "fact-ss34-manufacturer",
+        "fact-ss34-vrrm"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [
+        {
+          "symbol_pin": "1",
+          "name": "K",
+          "footprint_pad": "1",
+          "function": "cathode"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "A",
+          "footprint_pad": "2",
+          "function": "anode"
+        }
+      ],
+      "reviewer": "x-wt-teams manager, merge-time parity lock: pin set re-reviewed against symbols/zudo-pd.kicad_sym and the footprint .kicad_mod named in the pin map (2-terminal part)"
+    },
+    {
+      "record_id": "rec-cya1265-100uh-c19268674",
+      "pin_map_id": "pinmap-cya1265-100uh-c19268674",
+      "canonical_sha256": "6a6cccd68fcbbfd10deb84e29dcddf05a2b63dc39dc9c5babce2a5afab332b6b",
+      "evidence_fact_ids": [
+        "fact-cya1265-manufacturer",
+        "fact-cya1265-inductance"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [],
+      "reviewer": "x-wt-teams manager, merge-time parity lock: pin set re-reviewed against symbols/zudo-pd.kicad_sym and the footprint .kicad_mod named in the pin map (2-terminal part)"
     }
   ]
 }
