@@ -306,6 +306,180 @@ this pass) — the TVS2 row above links straight to the JLCPCB catalog page inst
 
 </Info>
 
+### TVS polarity and connection rules
+
+All three TVS positions use **unidirectional** parts, so orientation is functional, not
+cosmetic. The cathode is the marked end — the color band denotes it
+(`fact-smaj15a-polarity`).
+
+| Position | Rail | Cathode (pin 1) | Anode (pin 2) |
+|----------|------|-----------------|---------------|
+| TVS1 | +12 V | +12 V rail | GND |
+| TVS2 | +5 V | +5 V rail | GND |
+| TVS3 | −12 V | **GND** | **−12 V rail** |
+
+TVS3 is the reversed one, and that reversal is a **locked** spec point rather than a
+layout preference: decision `tvs3-orientation` (`scripts/schgen/decisions.json`) requires
+`board_b_spec.py` to carry it as explicit pin-to-net rows, which it does — `TVS3.1` on
+`GND`, `TVS3.2` on `-12V rail`. Fitted the other way round, a unidirectional TVS on a
+negative rail is forward-biased at −12 V: a dead short through one diode drop across the
+rail, from the moment the board powers up. Nothing was *wrong* before this lock — the
+orientation had simply never been captured by any spec artifact (finding BB-9), which is
+precisely the state in which an assembly error goes unnoticed.
+
+Correctly oriented, TVS3 stands off 15 V against the rail's 12.0 V nominal — 3 V / 25 %
+margin (`fact-smaj15a-margin-plus12`, `fact-smaj15a-margin-percent`) — and its 16.7 V
+breakdown minimum stays 4.1 V above 12.6 V, the band-edge proxy used for the CJ7912-fed
+−12 V rail (`fact-l7812cd2t-vout-band`'s 12.6 V maximum, borrowed as the magnitude proxy
+since no equivalent band is retained for the CJ7912).
+
+### TVS placement and verification
+
+A TVS only clamps what it sits next to: trace inductance between the transient and the
+diode develops its own voltage, so a correctly chosen part placed far from the load still
+lets the spike through.
+
+1. Place each TVS as close to the protected load as the layout allows.
+2. Short, wide traces — parasitic inductance of that path is the quantity being minimized.
+3. Anode straight to the ground plane, with a short low-impedance return.
+4. TVS goes **after** the PTC in the chain, matching the
+   `Net-(U6-OUT) -> PTC1 -> +12V rail -> TVS1.1` ordering in `board_b_spec.py`.
+
+No heatsinking is needed at any of the three positions. Steady-state dissipation is
+≈75 µW (15 V × the 5 µA leakage maximum, `fact-smaj15a-leakage`) and lower still at the
+12 V rail; the 400 W figure (`fact-smaj15a-pppm`) is peak **pulse** power on a 10/1000 µs
+waveform, and the SMA package's own thermal mass covers events that brief. Repetitive
+surges are a different question — consult the datasheet derating curves if the
+application sees them.
+
+Bench verification, per fitted part:
+
+| Check | Expected |
+|-------|----------|
+| Reverse breakdown | ≥16.7 V (`fact-smaj15a-breakdown`: 16.7–18.5 V) |
+| Leakage at the 15 V standoff point | ≤5 µA |
+| Visual: cathode band orientation | Matches the table above — **decisive for TVS3** |
+| Visual: solder joints, package integrity | No cold joints, no cracking |
+
+Full clamping verification needs a surge generator and is out of scope for a bench
+bring-up.
+
+### Choosing a different SMAJ standoff
+
+| Part | Standoff | Breakdown (min) | Clamp (VC) | Typical use |
+|------|----------|-----------------|------------|-------------|
+| SMAJ12A | 12 V | 13.3 V | 19.9 V | Lower-voltage rails |
+| **SMAJ15A** | **15 V** | **16.7 V** | **24.4 V** (at 16.4 A) | **±12 V rails — TVS1/TVS3 here** |
+| SMAJ18A | 18 V | 20.0 V | 29.2 V | Higher-voltage rails |
+| SMAJ24A | 24 V | 26.7 V | 38.9 V | 24 V systems |
+
+Only the SMAJ15A row is primary-sourced in this project's evidence base
+(`fact-smaj15a-standoff`, `fact-smaj15a-breakdown`, `fact-smaj15a-clamp`). The sibling
+rows are family reference values and must be re-confirmed against the specific
+manufacturer's datasheet before any of them is fitted.
+
+Selection rule: **working voltage × 1.2, then take the next standoff up.** A 12 V rail
+wants 14.4 V and lands on SMAJ15A; a 15 V rail wants 18 V and lands on SMAJ18A. Note that
+the clamp voltage rises with the standoff, so take the *lowest* standoff that still clears
+the rail's own upper band edge — every extra volt of standoff is an extra volt the
+downstream parts must survive during a real event. TVS2's replacement (decision (a)) is
+this rule applied on the +5 V rail: SD05's 5 V standoff sat exactly at the rail's nominal
+and *below* the L7805's guaranteed 5.2 V band top, so it could conduct during normal
+regulation.
+
+### PTC1 and the L7812 current-limit cascade
+
+The design intent worth recording is that **PTC1 is a backstop, not the primary limiter.**
+The two protections work on different timescales: a linear regulator's current limit is
+electronic and acts essentially at once, with thermal shutdown following as the die heats,
+whereas a PTC is a thermal device that must warm for seconds before it trips. U6 therefore
+reacts first, and in ordinary fault handling PTC1 rarely reaches its trip point at all. It
+exists for the case where U6's own protection is bypassed or defeated — a shorted pass
+element, or a fault that does not route through the regulator.
+
+The PTC1 column below is sourced (`fact-ptc1b-ihold`, `fact-ptc1b-itrip`); the U6 column
+deliberately states no threshold, for the reason in the warning that follows.
+
+| Rail current | PTC1 state | U6's role |
+|--------------|------------|-----------|
+| 0–1.20 A (design budget) | Below hold | Normal regulation |
+| 1.20–1.50 A | Still below the 1.50 A hold | Normal regulation; rail headroom being consumed |
+| 1.50–3.00 A | Above hold, warming toward trip over seconds | U6's own limiting engages on a far shorter timescale, so it acts first |
+| ≥3.00 A | Trips at the 3.00 A trip point | Rail stays off until the fault clears and PTC1 cools |
+
+<Warning title="U6's own limit thresholds are not in this project's evidence base">
+
+The L7812CD2T bundle (`.claude/skills/component-l7812cd2t-c13456`) retains **no**
+current-limit figure and **no** thermal-shutdown temperature — only a `TJ` operating range
+of 0–125 °C. Values such as "≈2.2 A current limit" and "150 °C thermal shutdown" have
+circulated in this project's older component pages and are unsourced here. The *ordering*
+in the cascade above is sound and is the reason the design works; the regulator-side
+thresholds must come from DS0422 or a bench measurement before anyone designs against a
+specific number.
+
+</Warning>
+
+### PTC1 voltage drop and acceptance testing
+
+A PTC's series resistance shows up directly as output droop, so it is a budget item, not a
+free protection layer. **The fitted part's resistance is not in the evidence base:**
+`SMD1210P150TF/16` (C7529589) has confirmed hold, trip, and voltage figures but no
+retained initial or post-trip resistance. The C20808 sibling's numbers (Ri min 0.015 Ω,
+R1 max 0.07 Ω) belong to a different part and must not be substituted for it. The drop is
+therefore a bench measurement, and this is the gate:
+
+| Test | Procedure | Pass criterion |
+|------|-----------|----------------|
+| Normal drop | Load +12 V at its 1.2 A budget; measure across PTC1 | ≤50 mV — a project budget (≈42 mΩ at 1.2 A), not a datasheet-derived expectation. Record the measured value |
+| Overload trip | Load past the 3.00 A trip point, or short the rail downstream of PTC1 | PTC1 trips and output current collapses; record the time to trip |
+| Reset | Remove the overload, let the part cool, re-measure | Rail returns and the normal-drop measurement repeats within tolerance |
+
+Two numbers are worth tracking over the board's life, because PTC resistance rises with
+trip cycles: the normal-operation drop (a growing drop is *the* wear indicator) and the
+reset time after a trip. Separately, `fact-ptc1b-hold-85c` records that **no 85 °C-derated
+hold figure is retained** for the `/16` variant, so hot-enclosure hold current is another
+bench item — the same class of open question already flagged for PTC3 (finding BB-8).
+
+### PTC1 failure modes
+
+**Wear-out — the normal one.** After many trip cycles the initial resistance creeps up,
+hold current drifts down, and trip time lengthens. The part still protects, at degraded
+specs. It surfaces as a slower reset and a larger normal-operation voltage drop, which is
+why that drop is the number to track.
+
+**Stuck open — rare.** The +12 V rail goes dead with no backup on that rail. The symptom
+is unambiguous (no +12 V at J7 or the Eurorack headers) and the fix is replacing PTC1.
+
+**Stuck closed — rarer.** PTC1 stops protecting, but it is the outermost of four layers,
+not the only one: U6's current limiting, U6's thermal shutdown, U2's LM2596S-ADJ current
+limiting, and the USB-PD source's own protection all remain. This is the failure mode that
+matters least — which is the same point the cascade above makes from the other direction.
+
+### PTC2 hold-current rationale on the +5 V rail
+
+PTC2 (mSMD110-33V, C70119) holds at **1.10 A** and trips at **2.20 A**
+(`fact-ptc2-ihold`, `fact-ptc2-itrip`) on a rail budgeted at **0.5 A**, so the hold
+current sits 1.1 A / 0.5 A = **2.2×** above the budget. The gap is deliberate:
+
+- 0.5 A is the specified rail budget, so a 1.1 A hold leaves better than 2× headroom for
+  power-on surge and brief spikes without nuisance trips.
+- A sustained draw above 1.1 A trips PTC2 rather than pushing U7 or the +7.5 V DC-DC stage
+  into their own limits — the PTC, not the regulator, sets the ceiling here.
+- 33 V against a 5 V rail is 28 V of voltage margin (`fact-ptc2-vmax-margin`), so this
+  position carries none of the voltage-rating exposure that made PTC1's original part a
+  blocker.
+
+<Note title="Why the 1.5 A target figure does not apply here">
+
+Older writing frames this as "1.1 A hold for a 1.5 A target". 1.5 A is a capability of the
+L78xx package family; it is neither this project's +5 V budget (0.5 A) nor a figure
+retained in the L7805ABD2T bundle, which records `iout-rating` as 0.5 A. If a future
+consumer genuinely needs more than 1.1 A sustained on +5 V, that is a rail-budget change —
+re-derive the DC-DC stage, the LDO thermal budget, and the PTC together, not the PTC
+alone.
+
+</Note>
+
 ## Output Connectors
 
 ### J6–J9 — Faston rail terminals
@@ -319,6 +493,58 @@ this pass) — the TVS2 row above links straight to the JLCPCB catalog page inst
 
 Unambiguous 1:1 rail assignment — each Faston terminal's two tabs are tied to
 the same net.
+
+#### Mating connectors
+
+The fitted part (TE `63951-1`, LCSC C591344) is a FASTON 250 tab — 6.35 mm × 0.8 mm
+blade, right-angle THT (`fact-faston-tab-dimensions`) — so it mates with standard
+FASTON 250 receptacles:
+
+| Type | Wire size | Insulation | Typical source |
+|------|-----------|------------|----------------|
+| Crimp receptacle | 18–22 AWG | Fully insulated | Electronics distributors |
+| Quick-disconnect | 18–22 AWG | Partially insulated | Hardware stores |
+| Wire-to-board cable | Pre-made | Various | Custom cable assemblies |
+
+Prefer fully-insulated crimp receptacles on 18 AWG for the lowest resistance and the most
+current capacity. Cable-side parts are not on the PCBA BOM.
+
+<Caution>
+
+`63951-1` is a bare tab on two THT solder legs with **no** mechanical retention feature —
+no barb, no locking lance (`fact-faston-thru-hole-retention`; locking lances belong to the
+separate FASTIN-FASTON housing family). Every insertion and extraction force at the
+receptacle transmits straight into those solder joints, and no pull-out force is published
+for the part. Treat repeated field mating as a solder-joint fatigue question and give the
+pads generous copper.
+
+</Caution>
+
+#### Why a single GND terminal is enough
+
+J9 is the only GND return for all three rails, which looks under-provisioned next to three
+separate supply tabs. It is not:
+
+1. In a Eurorack system every module's GND lands on the busboard anyway — the busboard
+   already commons all of them, so a second board-side GND tab buys nothing electrically.
+2. Worst-case combined return is the sum of the three rail budgets, 1.2 A + 0.8 A + 0.5 A
+   = **2.5 A** — and that sum is itself conservative, since the ±12 V returns partly
+   cancel in practice.
+3. Fewer terminals means less wiring and fewer crimps to get wrong.
+4. It matches how common Eurorack busboard designs are wired.
+
+<Warning title="No verified per-part current rating for these tabs">
+
+`fact-faston-current-rating-family` records **20 A**, but as a TE FASTON .250/.187/.110
+*series* Performance Data figure that is not broken out per MPN — and its provenance is
+`UNVERIFIED`, verdict `UNSOURCED`, because te.com could not be retrieved. The derived
+per-tab margins (`fact-faston-j7-plus12v-margin` and siblings) inherit that status and are
+all `NEEDS BENCH`. Headroom over 2.5 A is plainly generous, but do not quote a specific
+terminal ampere rating in an order document or any safety claim until a primary source is
+in hand. A 7 A figure appears in this project's older component pages; it has no source at
+all.
+
+</Warning>
 
 ### J10/J11 — 2×8 Eurorack power headers
 
