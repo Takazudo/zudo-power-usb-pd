@@ -16,6 +16,14 @@ contract.
 - `board_a_spec.py`, `board_b_spec.py` (not yet created) — per-board
   `COMPONENTS` / `NETS` / `NO_CONNECT` tables. Edit these, not the
   `.kicad_sch` directly, once they exist.
+- `decisions.json` — the wave-6 decision lock for epic #86 (part swaps,
+  provisions, dispositions the board specs must implement), with rationale and
+  fact-ID evidence per decision. Machine-consumable source of truth; issue
+  bodies #124/#125/#126 mirror it.
+- `check_decisions.py` — offline validator for `decisions.json`: schema shape,
+  required decision keys, and resolution of every evidence ID against the
+  component-bundle / integration-rule fact base. Run:
+  `python3 scripts/schgen/check_decisions.py`.
 - `schgen_core.py` — shared generator: reads symbols from
   `symbols/zudo-pd.kicad_sym`, places components, and emits global labels for
   every net (no drawn wires) plus no-connect markers.
