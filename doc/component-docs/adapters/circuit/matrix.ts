@@ -20,7 +20,7 @@
  *     the opposite of led-lamp's reasoning for PUBLISH here. Stays DENY.
  *   - the `reference.footprint.path` / `reference.model.*` fields — each
  *     started DENY because zudo-pd had neither reviewed assets nor an
- *     emitter for it, and each flipped to PUBLISH once both existed: assets
+ *     emitter for them, and each flipped to PUBLISH once both existed: assets
  *     appearing before that review fail loudly on `publishRequired` rather
  *     than publishing themselves, so a flip is only ever safe in hindsight.
  *     See the inline comment at each field for its own landing wave.
