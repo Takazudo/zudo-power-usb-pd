@@ -259,6 +259,13 @@ export type PublicPackageModel = {
 export type PublicFootprintReference = {
   readonly packageId: SafeText;
   readonly footprintName: SafeText;
+  /**
+   * The reviewed `.kicad_mod` source path, repo-root-relative — provenance
+   * for the rendered footprint preview, not the preview asset URL itself
+   * (which is derived from `footprintName`; see `matrix.ts`'s
+   * `reference.footprint.path`).
+   */
+  readonly footprintPath: SafeText;
   readonly model: PublicPackageModel | null;
   readonly modelUnresolvedReason: SafeText | null;
 };

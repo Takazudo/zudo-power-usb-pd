@@ -14,7 +14,9 @@
     "scan:components": "node --experimental-strip-types component-docs/cli/scan.ts",
     "test:components": "node --experimental-strip-types --test \"component-docs/tests/*.test.ts\"",
     "dev:components": "node --experimental-strip-types component-docs/cli/generate.ts --watch",
-    "b4push": "pnpm check && pnpm test:components && pnpm build && pnpm check:components && pnpm scan:components",
+    "generate:footprint-previews": "node --experimental-strip-types component-docs/footprint-previews/generate.ts",
+    "check:footprint-previews": "node --experimental-strip-types component-docs/footprint-previews/check.ts",
+    "b4push": "pnpm check && pnpm test:components && pnpm check:footprint-previews && pnpm build && pnpm check:components && pnpm scan:components",
     "format:md": "../scripts/mdx-format.sh --write \"src/content/docs/**/*.{md,mdx}\" --ignore \"node_modules/**,dist/**,build/**,.git/**,worktrees/**,src/content/docs/components/**\"",
     "format:md:check": "../scripts/mdx-format.sh --check \"src/content/docs/**/*.{md,mdx}\" --ignore \"node_modules/**,dist/**,build/**,.git/**,worktrees/**,src/content/docs/components/**\"",
     "prepare": "cd .. && lefthook install --reset-hooks-path"

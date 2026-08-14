@@ -192,7 +192,16 @@ export function canonicalFootprint(entry: IndexedRecord): string {
   return name;
 }
 
-async function readPackage(footprintName: string, recordId: string): Promise<CircuitPackageReference> {
+/**
+ * Exported so `footprint-previews/selection.ts` can build packages straight
+ * from `canonicalFootprint()` + this function, without routing through
+ * `readCircuitReferenceContract()` (which also resolves the — separately
+ * curated — `documentSelections` half). Reusing this rather than
+ * reimplementing it keeps the footprint-side safety (`containedFile()`
+ * containment, the `REFERENCE_LIMITS.footprintBytes` cap, `SAFE_BASENAME`,
+ * `footprintPath`) defined exactly once.
+ */
+export async function readPackage(footprintName: string, recordId: string): Promise<CircuitPackageReference> {
   const footprintFile = await containedFile(FOOTPRINT_ROOT, `${footprintName}.kicad_mod`, recordId);
   const footprintStat = await lstat(footprintFile);
   if (footprintStat.size > REFERENCE_LIMITS.footprintBytes) {

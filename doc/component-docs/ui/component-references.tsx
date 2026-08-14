@@ -6,6 +6,7 @@ import {
   decodeComponentReferencesDescriptor,
   type ComponentReferencesDescriptor,
 } from "../core/reference-descriptor.ts";
+import { FootprintPreview } from "./footprint-preview.tsx";
 
 export type ComponentReferencesProps = { readonly descriptor: string };
 
@@ -61,14 +62,11 @@ function FootprintCard({ footprint }: { readonly footprint: ComponentReferencesD
       <h3 className="zld-component-references__card-heading">Footprint preview</h3>
       {footprint.resolved
         ? (
-          <figure className="zld-component-references__footprint">
-            <div className="zld-component-references__footprint-frame">
-              <a href={footprint.assetUrl}>
-                <img src={footprint.assetUrl} alt={`Footprint preview for ${footprint.name}`} />
-              </a>
-            </div>
-            <figcaption>{footprint.name}</figcaption>
-          </figure>
+          <FootprintPreview
+            assetUrl={footprint.assetUrl}
+            footprintName={footprint.name}
+            footprintPath={footprint.path}
+          />
         )
         : (
           <>

@@ -159,12 +159,15 @@ describe("record page — structure", () => {
   it("renders an explicit unresolved card rather than dropping one", () => {
     // The whole point of the optional-card fork. `senseRecord` has no curated
     // document and no reviewed 3D model — both cards must still be produced,
-    // each naming why it is unresolved.
+    // each naming why it is unresolved. The footprint card is NOT part of
+    // this fork: wave 6's footprint-preview generator covers every selected
+    // record's package, so it always resolves (see `record.ts`'s
+    // `componentReferencesSection()`).
     const descriptor = descriptorOn(sensePage);
     assert.equal(descriptor.document.resolved, false);
     assert.equal(descriptor.model.resolved, false);
-    assert.equal(descriptor.footprint.resolved, false);
-    for (const card of [descriptor.document, descriptor.footprint, descriptor.model]) {
+    assert.equal(descriptor.footprint.resolved, true);
+    for (const card of [descriptor.document, descriptor.model]) {
       assert.ok(!card.resolved && card.reason.length > 0);
     }
   });

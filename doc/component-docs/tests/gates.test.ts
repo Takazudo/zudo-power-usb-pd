@@ -256,7 +256,8 @@ describe("the canary set cannot quietly become empty", () => {
     // No provider key for any of these: they are derived from the KiCad
     // footprint file and the package-collapse join rather than read out of a
     // bundle field, so there is no provider value to load with a canary.
-    "reference.footprint.path": "",
+    // `reference.footprint.path` moved to PUBLISH in wave 6 (footprint-preview
+    // generator landed) and left this list — see `matrix.ts`.
     "reference.model.path": "",
     "reference.model.offset": "",
     "reference.model.rotation": "",
@@ -266,7 +267,7 @@ describe("the canary set cannot quietly become empty", () => {
 
   it("covers every denied field in the committed matrix", () => {
     const denied = FIELD_KEYS.filter((key) => CIRCUIT_PUBLICATION_MATRIX[key] === "DENY");
-    assert.equal(denied.length, 16, "the number of denied fields moved without review");
+    assert.equal(denied.length, 15, "the number of denied fields moved without review");
 
     for (const key of denied) {
       const providerKey = PROVIDER_KEY_FOR_DENIED_FIELD[key];

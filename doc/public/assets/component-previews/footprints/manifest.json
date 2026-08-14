@@ -1,0 +1,336 @@
+{
+  "formatVersion": 1,
+  "renderer": {
+    "image": "kicad/kicad@sha256:e638b79b0321f29395a5b783e94bb9f3c73303e8da15da27b8f5cb4b67a37729",
+    "version": "9.0.9"
+  },
+  "export": {
+    "layers": [
+      "F.Cu",
+      "F.Silkscreen",
+      "F.Fabrication",
+      "F.Courtyard"
+    ],
+    "theme": "KiCad Default",
+    "options": [
+      "--black-and-white"
+    ],
+    "textPolicy": "suppress-all-fp-text-in-temporary-library",
+    "postprocessor": "repository-svg-normalizer-v1"
+  },
+  "canonicalInputSha256": "35538bc5e7cdcd88c816e5b7605c8d967329c5425614f78c6089f0bec40b99be",
+  "generatedOutputSha256": "4e1bb7a255a10e9a3d2351aa7d8df168e28724bfdcda3c9b20bbf9679ac65258",
+  "packages": [
+    {
+      "packageId": "QFN-24_L4.0-W4.0-P0.50-BL-EP2.8",
+      "footprintName": "QFN-24_L4.0-W4.0-P0.50-BL-EP2.8",
+      "footprintPath": "footprints/kicad/zudo-power.pretty/QFN-24_L4.0-W4.0-P0.50-BL-EP2.8.kicad_mod",
+      "recordIds": [
+        "rec-stusb4500qtr"
+      ],
+      "assetPath": "/assets/component-previews/footprints/QFN-24_L4.0-W4.0-P0.50-BL-EP2.8.svg",
+      "canonicalInputSha256": "d5dda4f8c2a19ab1af8c7d7f41fa3e71266576f15902b9fa89f530992fc2ab52",
+      "generatedOutputSha256": "8b525edc4d94fb3f2fb214beccaf8876c8b310641334fb7c7db67d50a363f5e0"
+    },
+    {
+      "packageId": "TYPE-C-SMD_TYPE-C-6P",
+      "footprintName": "TYPE-C-SMD_TYPE-C-6P",
+      "footprintPath": "footprints/kicad/zudo-power.pretty/TYPE-C-SMD_TYPE-C-6P.kicad_mod",
+      "recordIds": [
+        "rec-usb-type-c-009-c456012"
+      ],
+      "assetPath": "/assets/component-previews/footprints/TYPE-C-SMD_TYPE-C-6P.svg",
+      "canonicalInputSha256": "3317badc13cf1ebdc71b32928900324e35dfaae49cf80c0a982f152414ed9e5d",
+      "generatedOutputSha256": "f178891df330c0818fce9b2c4e6ffd81d4dc265e8fea7e4de4f94c12b0b18772"
+    },
+    {
+      "packageId": "SOT-23_L2.9-W1.3-P1.90-LS2.4-BR",
+      "footprintName": "SOT-23_L2.9-W1.3-P1.90-LS2.4-BR",
+      "footprintPath": "footprints/kicad/zudo-power.pretty/SOT-23_L2.9-W1.3-P1.90-LS2.4-BR.kicad_mod",
+      "recordIds": [
+        "rec-umw-ao3401a-c347476"
+      ],
+      "assetPath": "/assets/component-previews/footprints/SOT-23_L2.9-W1.3-P1.90-LS2.4-BR.svg",
+      "canonicalInputSha256": "f1ab886d39e66c3b9fbb9e11f3e3742ae97f7c1905ecd7dda204c50f6c7149f6",
+      "generatedOutputSha256": "8e98c796653fccbd767d4d54afdac73c6f29bcaad2c4e99d36d21edb8583cf5a"
+    },
+    {
+      "packageId": "D-FLAT_L4.3-W2.6-LS5.3-RD",
+      "footprintName": "D-FLAT_L4.3-W2.6-LS5.3-RD",
+      "footprintPath": "footprints/kicad/zudo-power.pretty/D-FLAT_L4.3-W2.6-LS5.3-RD.kicad_mod",
+      "recordIds": [
+        "rec-high-diode-smaj20a-c571370",
+        "rec-smaj15a-c571368",
+        "rec-cand-smaj6-5a-c87267"
+      ],
+      "assetPath": "/assets/component-previews/footprints/D-FLAT_L4.3-W2.6-LS5.3-RD.svg",
+      "canonicalInputSha256": "c768df008f273937e0c1917371b107357c987336b6463f83f99c86119965afde",
+      "generatedOutputSha256": "f77f780c29959b496271743e2d1094b7b9f0afff6d980423bc2e1e8fcab5332b"
+    },
+    {
+      "packageId": "R0603",
+      "footprintName": "R0603",
+      "footprintPath": "footprints/kicad/zudo-power.pretty/R0603.kicad_mod",
+      "recordIds": [
+        "rec-c25803",
+        "rec-c23206",
+        "rec-c23179",
+        "rec-c23162",
+        "rec-c25804",
+        "rec-c21190",
+        "rec-c23186",
+        "rec-c21189"
+      ],
+      "assetPath": "/assets/component-previews/footprints/R0603.svg",
+      "canonicalInputSha256": "517c473bffdaf565582754201adb0569e584733d70d3da0431cbb4c7fdf19da8",
+      "generatedOutputSha256": "68599e9a50d072a73e5597c438ca48b040401ed8591e621c1dc5bfb2a6cd8884"
+    },
+    {
+      "packageId": "R0805",
+      "footprintName": "R0805",
+      "footprintPath": "footprints/kicad/zudo-power.pretty/R0805.kicad_mod",
+      "recordIds": [
+        "rec-c17513"
+      ],
+      "assetPath": "/assets/component-previews/footprints/R0805.svg",
+      "canonicalInputSha256": "124329c68d9b5e8064a3f633bc9b7b32f0b98aaed3961c68b55f960b50b99ca3",
+      "generatedOutputSha256": "5afce3d2b9dc039e7ae10e1eec70958b6a3cc228983df917f4eefd453460f1b2"
+    },
+    {
+      "packageId": "C1206",
+      "footprintName": "C1206",
+      "footprintPath": "footprints/kicad/zudo-power.pretty/C1206.kicad_mod",
+      "recordIds": [
+        "rec-c13585"
+      ],
+      "assetPath": "/assets/component-previews/footprints/C1206.svg",
+      "canonicalInputSha256": "67ea9493c7e0a28c7b487eb295911faecd914bc7170b3378aeffaa883bdd8364",
+      "generatedOutputSha256": "080bea8a4e66faf272ff132e6dd8cd55db38ed3b5cb1d468860a0045b120461b"
+    },
+    {
+      "packageId": "C0603",
+      "footprintName": "C0603",
+      "footprintPath": "footprints/kicad/zudo-power.pretty/C0603.kicad_mod",
+      "recordIds": [
+        "rec-c15849",
+        "rec-c1623"
+      ],
+      "assetPath": "/assets/component-previews/footprints/C0603.svg",
+      "canonicalInputSha256": "8311b08999bbe90beb4e794912ed4f97b80ac01b824c59a7e6006952a778c99d",
+      "generatedOutputSha256": "e9c0ed3390a67d61548e1406af04d7ac2d76ce7153c558bc90779c1044150e49"
+    },
+    {
+      "packageId": "C0805",
+      "footprintName": "C0805",
+      "footprintPath": "footprints/kicad/zudo-power.pretty/C0805.kicad_mod",
+      "recordIds": [
+        "rec-c1711",
+        "rec-c1729"
+      ],
+      "assetPath": "/assets/component-previews/footprints/C0805.svg",
+      "canonicalInputSha256": "8ab2f48f35c761be907bbbd5f767e8512a219fadd29c2c7dfdfa27ecc9c82924",
+      "generatedOutputSha256": "68dfe4e3d42ac6b4c4a8bb368bee6c662639ecdbad0f538d08f8da52880809c0"
+    },
+    {
+      "packageId": "CAP-SMD_BD10.0-L10.3-W10.3-LS11.0-FD",
+      "footprintName": "CAP-SMD_BD10.0-L10.3-W10.3-LS11.0-FD",
+      "footprintPath": "footprints/kicad/zudo-power.pretty/CAP-SMD_BD10.0-L10.3-W10.3-LS11.0-FD.kicad_mod",
+      "recordIds": [
+        "rec-c2983319",
+        "rec-c22387780"
+      ],
+      "assetPath": "/assets/component-previews/footprints/CAP-SMD_BD10.0-L10.3-W10.3-LS11.0-FD.svg",
+      "canonicalInputSha256": "6d823c54e01a4947f499b095852cff85ca448cff08853ed91cf057f977f449a8",
+      "generatedOutputSha256": "50dbf5ad20280f58d6639c4f8116b04972b47838e674ca77b19488c232a21d28"
+    },
+    {
+      "packageId": "CAP-SMD_BD6.3-L6.6-W6.6-FD",
+      "footprintName": "CAP-SMD_BD6.3-L6.6-W6.6-FD",
+      "footprintPath": "footprints/kicad/zudo-power.pretty/CAP-SMD_BD6.3-L6.6-W6.6-FD.kicad_mod",
+      "recordIds": [
+        "rec-c335982"
+      ],
+      "assetPath": "/assets/component-previews/footprints/CAP-SMD_BD6.3-L6.6-W6.6-FD.svg",
+      "canonicalInputSha256": "72cae5a1ba003f9a20132cc5b43e88f2b5833121a81c218750886585dfbb64b5",
+      "generatedOutputSha256": "a579e3c2cb3fe74d7bd3f3f7f8e6ed567c88ab2bd962c819947ffb26daa5ff7d"
+    },
+    {
+      "packageId": "CAP-SMD_BD8.0-L8.3-W8.3-LS9.0-FD",
+      "footprintName": "CAP-SMD_BD8.0-L8.3-W8.3-LS9.0-FD",
+      "footprintPath": "footprints/kicad/zudo-power.pretty/CAP-SMD_BD8.0-L8.3-W8.3-LS9.0-FD.kicad_mod",
+      "recordIds": [
+        "rec-c970687"
+      ],
+      "assetPath": "/assets/component-previews/footprints/CAP-SMD_BD8.0-L8.3-W8.3-LS9.0-FD.svg",
+      "canonicalInputSha256": "0279f64ed89348d13273e4d145d133153ce42c10190f933fc1a89d482836c1e0",
+      "generatedOutputSha256": "40a9515c458a28ee81e8a7d7d8c8b4d36daa20671515962440be6d0822823f06"
+    },
+    {
+      "packageId": "LED0603-RD",
+      "footprintName": "LED0603-RD",
+      "footprintPath": "footprints/kicad/zudo-power.pretty/LED0603-RD.kicad_mod",
+      "recordIds": [
+        "rec-c2289",
+        "rec-c2288",
+        "rec-c2286"
+      ],
+      "assetPath": "/assets/component-previews/footprints/LED0603-RD.svg",
+      "canonicalInputSha256": "213f23bbf9cf7aa5e33de5cab263a87430627b3a7268cbbdb40f0168f74a6a06",
+      "generatedOutputSha256": "ac735189a945e7d5d89b32daa7dcaa84b6928ca89fea93bec78856ef7f2828fd"
+    },
+    {
+      "packageId": "CONN-TH_B6B-XH-A-6P",
+      "footprintName": "CONN-TH_B6B-XH-A-6P",
+      "footprintPath": "footprints/kicad/zudo-power.pretty/CONN-TH_B6B-XH-A-6P.kicad_mod",
+      "recordIds": [
+        "rec-jst-b6b-xh-a"
+      ],
+      "assetPath": "/assets/component-previews/footprints/CONN-TH_B6B-XH-A-6P.svg",
+      "canonicalInputSha256": "02ad3f74e01ede246387f75c878dc819beb16e51ff8714e712961acadfd8884b",
+      "generatedOutputSha256": "316450f5841c9f5156c3aafaca1ea5c0c335f3415052857fd6639cf8b76b25ad"
+    },
+    {
+      "packageId": "SOD-523_L1.2-W0.8-LS1.6-RD",
+      "footprintName": "SOD-523_L1.2-W0.8-LS1.6-RD",
+      "footprintPath": "footprints/kicad/zudo-power.pretty/SOD-523_L1.2-W0.8-LS1.6-RD.kicad_mod",
+      "recordIds": [
+        "rec-pesd24vs1ub-c85382"
+      ],
+      "assetPath": "/assets/component-previews/footprints/SOD-523_L1.2-W0.8-LS1.6-RD.svg",
+      "canonicalInputSha256": "915b7766b1fc2984de3368d7eec81bd63f42cf76b07a30dc3bac6da44c62ff6f",
+      "generatedOutputSha256": "0e86b6559ca0629d03fbb9128aec4ec1caffd19d672d85ef47cd6baa2b61dd6e"
+    },
+    {
+      "packageId": "SOD-123_L2.8-W1.8-LS3.7-RD",
+      "footprintName": "SOD-123_L2.8-W1.8-LS3.7-RD",
+      "footprintPath": "footprints/kicad/zudo-power.pretty/SOD-123_L2.8-W1.8-LS3.7-RD.kicad_mod",
+      "recordIds": [
+        "rec-bzt52c11-c92321"
+      ],
+      "assetPath": "/assets/component-previews/footprints/SOD-123_L2.8-W1.8-LS3.7-RD.svg",
+      "canonicalInputSha256": "6f57bb0a19e474d0f76f23648b1d273647a609ce42d4991c7c6e6eb8345a6bcd",
+      "generatedOutputSha256": "1da055f5d2dfcebe5117d43ab6a4fffb29c87bf9c007c32f9c02f3cdebfa0e55"
+    },
+    {
+      "packageId": "TO-263-5_L10.2-W8.9-P1.70-BR",
+      "footprintName": "TO-263-5_L10.2-W8.9-P1.70-BR",
+      "footprintPath": "footprints/kicad/zudo-power.pretty/TO-263-5_L10.2-W8.9-P1.70-BR.kicad_mod",
+      "recordIds": [
+        "rec-lm2596s-adj-c347423"
+      ],
+      "assetPath": "/assets/component-previews/footprints/TO-263-5_L10.2-W8.9-P1.70-BR.svg",
+      "canonicalInputSha256": "5f5b11e831ef08838c45a28b394c3bd289596973c486b1ef1330ab6298aaa808",
+      "generatedOutputSha256": "cd5c4ad46b5508886068f069d2860d8a47e9ac67f1bdaf72c73f9c1805b339fd"
+    },
+    {
+      "packageId": "IND-SMD_L13.8-W12.8",
+      "footprintName": "IND-SMD_L13.8-W12.8",
+      "footprintPath": "footprints/kicad/zudo-power.pretty/IND-SMD_L13.8-W12.8.kicad_mod",
+      "recordIds": [
+        "rec-cya1265-100uh-c19268674"
+      ],
+      "assetPath": "/assets/component-previews/footprints/IND-SMD_L13.8-W12.8.svg",
+      "canonicalInputSha256": "8583ace1bc9edcb5846d9375ef060c3cf1a09fa17160740cc5f05c7699d59221",
+      "generatedOutputSha256": "ea2482436375faef1b61095a36a59f434f81bbfa84397e6bc0c1a240f46e7fde"
+    },
+    {
+      "packageId": "SMA_L4.3-W2.6-LS5.2-RD",
+      "footprintName": "SMA_L4.3-W2.6-LS5.2-RD",
+      "footprintPath": "footprints/kicad/zudo-power.pretty/SMA_L4.3-W2.6-LS5.2-RD.kicad_mod",
+      "recordIds": [
+        "rec-ss34-c8678"
+      ],
+      "assetPath": "/assets/component-previews/footprints/SMA_L4.3-W2.6-LS5.2-RD.svg",
+      "canonicalInputSha256": "b8208e9f8a088cd8ed57dbb7868141b91eacabceefc63ab194198571dc3f1ab1",
+      "generatedOutputSha256": "afdccdd4be3d50af3fb9cb782f576a8eb581fd2d603304c115845ac66119e118"
+    },
+    {
+      "packageId": "TO-263-2_L10.0-W9.1-P5.08-LS15.2-TL",
+      "footprintName": "TO-263-2_L10.0-W9.1-P5.08-LS15.2-TL",
+      "footprintPath": "footprints/kicad/zudo-power.pretty/TO-263-2_L10.0-W9.1-P5.08-LS15.2-TL.kicad_mod",
+      "recordIds": [
+        "rec-l7812cd2t-c13456"
+      ],
+      "assetPath": "/assets/component-previews/footprints/TO-263-2_L10.0-W9.1-P5.08-LS15.2-TL.svg",
+      "canonicalInputSha256": "5236fe735b45084377aa356c3d5a77b5fef290ee18c830c188654f704adb381d",
+      "generatedOutputSha256": "5586a58fcd2a34609d1029bffb6760cec1d853e711e3093f1fed8c137b51888e"
+    },
+    {
+      "packageId": "TO-263-2_L10.0-W9.2-P5.08-LS15.3-TL-CW",
+      "footprintName": "TO-263-2_L10.0-W9.2-P5.08-LS15.3-TL-CW",
+      "footprintPath": "footprints/kicad/zudo-power.pretty/TO-263-2_L10.0-W9.2-P5.08-LS15.3-TL-CW.kicad_mod",
+      "recordIds": [
+        "rec-l7805abd2t-c86206"
+      ],
+      "assetPath": "/assets/component-previews/footprints/TO-263-2_L10.0-W9.2-P5.08-LS15.3-TL-CW.svg",
+      "canonicalInputSha256": "8c27511f8f51c1b4bef0595ceb8439095a5503d33f59a0d5752853c56a60ffd3",
+      "generatedOutputSha256": "bc4bea8be511571f1d94d77e9b2f44d0955af6549768088bdc9161852ffbf189"
+    },
+    {
+      "packageId": "TO-252-3_L6.5-W5.8-P4.58-BL",
+      "footprintName": "TO-252-3_L6.5-W5.8-P4.58-BL",
+      "footprintPath": "footprints/kicad/zudo-power.pretty/TO-252-3_L6.5-W5.8-P4.58-BL.kicad_mod",
+      "recordIds": [
+        "rec-cj7912-c94173"
+      ],
+      "assetPath": "/assets/component-previews/footprints/TO-252-3_L6.5-W5.8-P4.58-BL.svg",
+      "canonicalInputSha256": "c461b0731f04238dd3a270ed2c92bf6e65c98adac7886cabdc9ad6f6feb7d8f8",
+      "generatedOutputSha256": "309536684930aac9b1298907f2448d44000f49e76c2db1d2a7301a580ff1a8f7"
+    },
+    {
+      "packageId": "F1210",
+      "footprintName": "F1210",
+      "footprintPath": "footprints/kicad/zudo-power.pretty/F1210.kicad_mod",
+      "recordIds": [
+        "rec-ptc-smd1210p150tf16-c7529589"
+      ],
+      "assetPath": "/assets/component-previews/footprints/F1210.svg",
+      "canonicalInputSha256": "039b5777d89f2fb2da73200786b7c41688506488f470d539ec56f39d813db6ab",
+      "generatedOutputSha256": "4fdb5e13a51f3026a0e203a77057f0c54f1989fadf27cef63e2d09b2e4f9e347"
+    },
+    {
+      "packageId": "F1812",
+      "footprintName": "F1812",
+      "footprintPath": "footprints/kicad/zudo-power.pretty/F1812.kicad_mod",
+      "recordIds": [
+        "rec-ptc-msmd110-33v-c70119"
+      ],
+      "assetPath": "/assets/component-previews/footprints/F1812.svg",
+      "canonicalInputSha256": "5f457248875293f1178979d082ebdc65f4ab6450427dc5e223528f09a5be2a74",
+      "generatedOutputSha256": "bfe9db88ef38c220537bb8bae011e8cd4cfca4b40d260e135ff16548b2274a46"
+    },
+    {
+      "packageId": "F1206",
+      "footprintName": "F1206",
+      "footprintPath": "footprints/kicad/zudo-power.pretty/F1206.kicad_mod",
+      "recordIds": [
+        "rec-ptc-bsmd1206-150-16v-c883133"
+      ],
+      "assetPath": "/assets/component-previews/footprints/F1206.svg",
+      "canonicalInputSha256": "747551544e783caebac46a3adb09e68af50113a4224c5ca87938700b5fb19d13",
+      "generatedOutputSha256": "f9fea0b43ca0c6bf769717936a1e6713ec19592e64a3f7a879b63ef6cc566482"
+    },
+    {
+      "packageId": "CONN-TH_1217754-1",
+      "footprintName": "CONN-TH_1217754-1",
+      "footprintPath": "footprints/kicad/zudo-power.pretty/CONN-TH_1217754-1.kicad_mod",
+      "recordIds": [
+        "rec-faston-c591344"
+      ],
+      "assetPath": "/assets/component-previews/footprints/CONN-TH_1217754-1.svg",
+      "canonicalInputSha256": "210658d08ee92f9c75dce350df0249eec591e670ab450eebee6304c96855b4a1",
+      "generatedOutputSha256": "4ac014b3b7f68e48950401f5f59021f280ceb53b55a799477c2dee32009ced6a"
+    },
+    {
+      "packageId": "HDR-TH_16P-P2.54-H-M-R2-C8-S2.54",
+      "footprintName": "HDR-TH_16P-P2.54-H-M-R2-C8-S2.54",
+      "footprintPath": "footprints/kicad/zudo-power.pretty/HDR-TH_16P-P2.54-H-M-R2-C8-S2.54.kicad_mod",
+      "recordIds": [
+        "rec-hdr-2541wr-2x08p-c5383092"
+      ],
+      "assetPath": "/assets/component-previews/footprints/HDR-TH_16P-P2.54-H-M-R2-C8-S2.54.svg",
+      "canonicalInputSha256": "389578b8d35beca800472b34489b0681cdbd05b23dc2002364d9b1d94a1e606a",
+      "generatedOutputSha256": "fdd39f20a32b45c2b76d2347a3181df4d073aeef623079a77c5f3062c6873a34"
+    }
+  ]
+}

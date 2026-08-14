@@ -300,6 +300,7 @@ function projectFootprint(
   const identity = {
     packageId: policy.publishRequired("reference.footprint.packageId", safeText(entry.packageId, { field: `${at}.packageId` })),
     footprintName: policy.publishRequired("reference.footprint.name", safeText(entry.footprintName, { field: `${at}.footprintName` })),
+    footprintPath: policy.publishRequired("reference.footprint.path", safeText(entry.footprintPath, { field: `${at}.footprintPath` })),
   };
   if (entry.model === undefined) {
     const reason = entry.modelUnresolvedReason;

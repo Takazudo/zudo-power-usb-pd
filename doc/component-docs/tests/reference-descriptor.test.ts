@@ -26,10 +26,13 @@ const resolvedModel = {
   scale: { x: 1, y: 1, z: 1 },
 } as const;
 
+const resolvedFootprintPath = "footprints/kicad/zudo-power.pretty/PKG-FIXTURE.kicad_mod";
+
 /** Everything resolved — led-lamp's only shape, and this fork's happy path. */
 const descriptor = createComponentReferencesDescriptor({
   document: resolvedDocument,
   footprintName: "PKG-FIXTURE",
+  footprintPath: resolvedFootprintPath,
   footprintPreview: { available: true },
   model: resolvedModel,
 });
@@ -38,6 +41,7 @@ const descriptor = createComponentReferencesDescriptor({
 const unresolved = createComponentReferencesDescriptor({
   document: { unresolvedReason: "No single document has been reviewed yet." },
   footprintName: "PKG-FIXTURE",
+  footprintPath: resolvedFootprintPath,
   footprintPreview: { unresolvedReason: "No footprint preview image is generated yet." },
   model: { unresolvedReason: "The KiCad footprint names no 3D model." },
 });
@@ -87,6 +91,7 @@ describe("component references descriptor", () => {
     const documentOnly = createComponentReferencesDescriptor({
       document: resolvedDocument,
       footprintName: "PKG-FIXTURE",
+      footprintPath: resolvedFootprintPath,
       footprintPreview: { unresolvedReason: "not generated" },
       model: { unresolvedReason: "no reviewed WRL" },
     });

@@ -23,10 +23,12 @@
  * deploy workflow after `pnpm build`.
  */
 
-import { relative, sep } from "node:path";
+import { readFile, readdir } from "node:fs/promises";
+import { join, relative, sep } from "node:path";
 
 import { readCanaries } from "../adapters/circuit/canaries.ts";
-import { CONTENT_ROOT, DIST_ROOT, GENERATED_ROOT } from "../adapters/circuit/paths.ts";
+import { CONTENT_ROOT, DIST_ROOT, FOOTPRINT_ROOT, GENERATED_ROOT } from "../adapters/circuit/paths.ts";
+import { sha256 } from "../footprint-previews/hash.ts";
 import {
   assertNoLeaks,
   assertPositiveControls,
@@ -68,7 +70,32 @@ async function main(): Promise<void> {
   const handAuthored = (await readScanTargets(CONTENT_ROOT, "content")).filter(
     (target) => !target.label.startsWith(generatedPrefix),
   );
-  const canaries = subtractPublishedElsewhere(harvested, handAuthored);
+
+  /**
+   * A handful of records (e.g. `component-faston-c591344`) have no real
+   * manufacturer datasheet and cite the project's own committed KiCad
+   * footprint file as their evidentiary "document" instead — see
+   * `document_title: "zudo-pd canonical KiCad footprint …"` in their
+   * `sources.json`. That source's retained-copy `sha256` is a DENIED canary
+   * (`matrix.ts` `source.sha256`), but its value is the hash of the SAME
+   * bytes this feature's manifest also hashes as `canonicalInputSha256` —
+   * bytes that are independently, fully public via the committed
+   * `footprints/kicad/**` files, the raw GitHub URL already printed on that
+   * record's page, and `reference.footprint.path` (PUBLISH). Flagging that
+   * hash as a leak would flag content this project already decided to
+   * publish under a different field, so it is subtracted here exactly like a
+   * hand-authored page's independently-published values.
+   */
+  const footprintFiles = (await readdir(FOOTPRINT_ROOT)).filter((name) => name.endsWith(".kicad_mod"));
+  const footprintHashes = await Promise.all(
+    footprintFiles.map(async (name) => sha256(await readFile(join(FOOTPRINT_ROOT, name)))),
+  );
+  const publiclyHashedFootprints = {
+    label: "footprints/kicad/zudo-power.pretty (independently PUBLISH via reference.footprint.path)",
+    text: footprintHashes.join("\n"),
+  };
+
+  const canaries = subtractPublishedElsewhere(harvested, [...handAuthored, publiclyHashedFootprints]);
 
   const targets = await readScanTargets(DIST_ROOT, "dist");
   assertRequiredRoutes(targets, [...REQUIRED_ROUTE_FRAGMENTS], "dist");
