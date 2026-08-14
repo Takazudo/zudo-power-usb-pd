@@ -1,0 +1,37 @@
+{
+  "board": "board-a",
+  "source": "doc/src/content/docs/overview/board-a-usb-pd-core.md (Net-connectivity table, fixed circuit) cross-checked against doc/src/content/docs/inbox/board-split-decision.md (locked #90 fix list)",
+  "notes": [
+    "Derived from the netlist-derived doc tables, NOT re-derived from .kicad_sch wire geometry.",
+    "The old netlist's ground net is named RST; the source doc already documents it under its normalized name GND, so no further rename is needed here.",
+    "Pin tokens strip parenthetical pin-name glosses from the doc (e.g. doc 'U6.1(IN)' -> baseline 'U6.1'); the token itself is always Ref.PinNumberOrName."
+  ],
+  "nets": {
+    "VBUS_IN": ["J1.A9", "J1.B9", "U1.24", "C1.2", "C2.2", "R14.1", "R11.2", "Q1.2", "J3.4", "D5.1"],
+    "CC1": ["J1.A5", "U1.2", "R17.1", "R19.2", "D6.1"],
+    "CC2": ["J1.B5", "U1.4", "R18.1", "R20.2", "D7.1"],
+    "CC1DB": ["U1.1", "R19.1", "J3.1"],
+    "CC2DB": ["U1.5", "R20.1", "J3.2"],
+    "VBUS_VS_DISCH": ["U1.18", "R14.2", "TP6.1"],
+    "VBEN": ["U1.16", "R12.1", "J3.8"],
+    "Net-(Q1-G)": ["Q1.1", "R11.1", "R12.2", "C35.1"],
+    "VBUS_OUT": ["Q1.3", "R13.1", "TP1.1", "J4.1", "J4.2"],
+    "Net-(U1-DISCH)": ["U1.9", "R13.2"],
+    "VREG_2V7": ["U1.23", "C30.2", "R15.2", "R16.2", "J3.3"],
+    "Net-(U1-VREG_1V2)": ["U1.21", "C34.1"],
+    "SCL-pin1": ["U1.7", "R15.1", "J2.1"],
+    "SDA-pin2": ["U1.8", "R16.1", "J2.2"],
+    "ATT": ["U1.11", "J3.6", "J4.3"],
+    "PDOK": ["U1.20", "J3.7", "J4.4"],
+    "GND": [
+      "U1.6", "U1.10", "U1.12", "U1.13", "U1.22", "U1.25",
+      "J1.7", "J1.A12", "J1.B12",
+      "C1.1", "C2.1", "C30.1", "C34.2", "C35.2",
+      "R17.2", "R18.2",
+      "TP2.1", "J2.3", "J3.5",
+      "D5.2", "D6.2", "D7.2",
+      "J4.5", "J4.6"
+    ]
+  },
+  "unresolved": []
+}
