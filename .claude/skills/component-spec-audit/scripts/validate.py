@@ -212,8 +212,12 @@ def expected_mpn(symbol, value, lcsc, mpn_from_value):
     return symbol
 
 
-def generator_specs(data, schema, root):
-    """Resolve the declared board/spec pairs, or None when no spec file exists yet."""
+def generator_specs(data, schema, root, *, staged=True):
+    """Resolve the declared board/spec pairs that exist on disk, or None when no
+    spec file exists yet. While the boards are being built, staged mode tolerates
+    a per-board absence (the caller restricts every generator-derived check to the
+    present boards and prints a STAGED-SKIP); strict mode still fails closed on a
+    partially present pair."""
     declared = data["generator_specs"]
     require(isinstance(declared, list) and declared, "inventory: generator_specs must be a nonempty list")
     boards = project(schema, "boards")
@@ -221,11 +225,12 @@ def generator_specs(data, schema, root):
         required_keys(item, ("board", "spec"), "inventory generator spec")
     require([item["board"] for item in declared] == boards, f"inventory: generator_specs must declare exactly {boards} in order")
     pairs = [(item["board"], root / item["spec"]) for item in declared]
-    present = [path.is_file() for _board, path in pairs]
-    if not any(present):
+    present_pairs = [(board, path) for board, path in pairs if path.is_file()]
+    absent = [str(path) for _board, path in pairs if not path.is_file()]
+    if not present_pairs:
         return None
-    require(all(present), f"inventory: generator specs partially present {[str(path) for _board, path in pairs if not path.is_file()]}")
-    return pairs
+    require(not absent or staged, f"inventory: generator specs partially present {absent}")
+    return present_pairs
 
 
 def generator_inventory(pairs, schema):
@@ -255,8 +260,9 @@ def validate_inventory(data, schema, *, staged=True, root=None):
     root = root or ROOT
     required_keys(data, ("schema_version", "generator_specs", "assertions", "exclusions", "lines"), "inventory")
     boards = project(schema, "boards")
-    pairs = generator_specs(data, schema, root)
+    pairs = generator_specs(data, schema, root, staged=staged)
     require(pairs is not None or staged, "inventory: strict mode requires the generator specs")
+    present_boards = boards if pairs is None else [board for board, _path in pairs]
     assertions = data["assertions"]
     required_keys(assertions, schema["inventory_assertions"], "inventory assertions")
     require(all(isinstance(assertions[key], int) and assertions[key] >= 0 for key in assertions), "inventory assertions: counts must be non-negative integers")
@@ -293,16 +299,25 @@ def validate_inventory(data, schema, *, staged=True, root=None):
     require(len({line["lcsc"] for line in lines}) == len(lines), "inventory: duplicate LCSC ownership")
 
     if pairs is not None:
+        # All generator-derived parity is restricted to the boards whose spec is
+        # present; with every spec on disk this is the full board list and the
+        # checks below are exhaustive.
         generated, blank = generator_inventory(pairs, schema)
-        require(set(generated) == {line["lcsc"] for line in lines}, "inventory: LCSC identity differs from generator specs")
+        expected_lcsc = {
+            line["lcsc"] for line in lines
+            if any(item["board"] in present_boards for item in line["placements"])
+        }
+        require(set(generated) == expected_lcsc, "inventory: LCSC identity differs from generator specs")
         for line in lines:
+            if line["lcsc"] not in generated:
+                continue
             expected = generated[line["lcsc"]]
             require(line["mpn"] == expected["mpn"], f"{line['line_id']}: wrong MPN against generator")
             require(line["package"] == expected["package"], f"{line['line_id']}: wrong package against generator")
             want = {(item["board"], item["refdes"], item["dnp"]) for item in expected["placements"]}
-            got = {(item["board"], item["refdes"], item["dnp"]) for item in line["placements"]}
+            got = {(item["board"], item["refdes"], item["dnp"]) for item in line["placements"] if item["board"] in present_boards}
             require(got == want, f"{line['line_id']}: board/refdes or DNP mismatch")
-        exclusions = {(item["board"], item["refdes"]) for item in data["exclusions"]}
+        exclusions = {(item["board"], item["refdes"]) for item in data["exclusions"] if item["board"] in present_boards}
         require(exclusions == set(blank), "inventory: bare-copper exclusions differ from blank-LCSC generator entries")
     else:
         generated = None
@@ -846,6 +861,8 @@ def validate_pin_assets(aggregate, inventory, generated, schema, symbols_path=No
         if record["line_id"] is None:
             continue  # an unplaced candidate has no generator placement to lock against
         line = lines[record["line_id"]]
+        if line["lcsc"] not in generated:
+            continue  # staged: the line's only placements are on a board whose spec is absent
         generator_symbols = generated[line["lcsc"]]["symbols"]
         require(len(generator_symbols) == 1, f"{record['record_id']}: conflicting generator symbols")
         symbol = next(iter(generator_symbols))
@@ -1229,9 +1246,14 @@ def validate_all(*, staged=True, online=False, refresh_source_ids=None, skipped=
 
     inventory_path = REFS / "inventory.json"
     if inventory_path.is_file():
-        lines, generated = validate_inventory(load(inventory_path), schema, staged=staged, root=ROOT)
+        inventory_data = load(inventory_path)
+        lines, generated = validate_inventory(inventory_data, schema, staged=staged, root=ROOT)
         if generated is None:
             skipped.append("generator specs are absent: inventory-to-generator identity, placement/DNP, exclusion, and KiCad pin-asset parity were not checked")
+        else:
+            absent_boards = [item["board"] for item in inventory_data["generator_specs"] if not (ROOT / item["spec"]).is_file()]
+            if absent_boards:
+                skipped.append(f"generator specs for {absent_boards} are absent: their placements, exclusions, and KiCad pin-asset parity were not checked")
     else:
         require(staged, f"{inventory_path}: inventory is required in strict mode")
         skipped.append("references/inventory.json is absent: the whole central identity lock was not checked")
