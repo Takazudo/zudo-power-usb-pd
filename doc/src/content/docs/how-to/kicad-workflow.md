@@ -60,7 +60,11 @@ printing `PASS`/`FAIL`. It degrades gracefully (prints `SKIPPED`, exits 0) when
 
 ```bash
 python3 scripts/schgen/check_decisions.py    # validates scripts/schgen/decisions.json
-python3 scripts/schgen/check_baseline.py     # diffs a spec's NETS against its locked baseline
+
+# diff each spec's NETS against its locked baseline (with the allow-list of
+# intentional deltas) — the same invocations CI runs:
+python3 scripts/schgen/check_baseline.py scripts/schgen/board_a_spec.py scripts/schgen/baselines/board-a.json --allow scripts/schgen/baselines/board-a-allowed-deltas.json
+python3 scripts/schgen/check_baseline.py scripts/schgen/board_b_spec.py scripts/schgen/baselines/board-b.json --allow scripts/schgen/baselines/board-b-allow.json
 ```
 
 `decisions.json` is the machine-consumable record of every wave-6 component-level
@@ -76,9 +80,9 @@ change during a spec edit fails loudly instead of silently drifting.
 
 Open the regenerated schematic in KiCad's Eeschema at least once (ERC, visual sanity)
 before committing. **Commit the spec module and the regenerated `.kicad_sch` together —
-never one without the other**, so `git diff --exit-code boards/` after a regen-from-clean
-stays clean (the regen-idempotency invariant CI can enforce once a board has a PCB
-layout — see `scripts/schgen/README.md`, "What CI checks instead").
+never one without the other**, so a regen-from-clean leaves `boards/` unchanged (the
+regen-idempotency invariant CI enforces today on every PR — see
+`scripts/schgen/README.md`, "What CI checks").
 
 ### Smoke-testing the generator itself
 
