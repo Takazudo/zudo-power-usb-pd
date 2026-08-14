@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "interactions": [
+    {
+      "interaction_id": "int-umw-ao3401a-netlist",
+      "record_ids": ["rec-umw-ao3401a-c347476"],
+      "fact_ids": [
+        "fact-umw-ao3401a-gate-network",
+        "fact-umw-ao3401a-gate-resistor-values",
+        "fact-umw-ao3401a-vgs",
+        "fact-umw-ao3401a-body-diode"
+      ],
+      "conditions": "board-a-baseline asserts Q1.1 (gate) on Net-(Q1-G) with R11.1, R12.2 and C35.1; R11 100 kOhm pulls the gate to VBUS_IN for default-off, R12 56 kOhm carries the STUSB4500 VBEN (U1.16) drive. Q1.2 (source) sits on VBUS_IN. Q1.3 (drain) sits on VBUS_OUT with R13.1, TP1.1 and the future board-a J4.1/J4.2 (+15V) connector pins. Verify the exported netlist, symbol/footprint mapping and as-built orientation once Board A KiCad assets are acquired; reversed source/drain or a gate-source excursion beyond +/-12 V is a deterministic blocker (see int-umw-ao3401a-pdo3-exposure for the calculated PDO3 exposure).",
+      "verdict": "NEEDS BENCH"
+    },
+    {
+      "interaction_id": "int-umw-ao3401a-bench",
+      "record_ids": ["rec-umw-ao3401a-c347476"],
+      "fact_ids": [
+        "fact-umw-ao3401a-rdson",
+        "fact-umw-ao3401a-threshold",
+        "fact-umw-ao3401a-thermal",
+        "fact-umw-ao3401a-soa"
+      ],
+      "conditions": "Scope VGS, VDS, inrush and steady current with the STUSB4500-negotiated VBUS_IN (15 V target, and 20 V if PDO3 is still enabled); confirm off leakage/body-diode direction, load regulation into the board-b DC-DC stage, case temperature and SOA margin with the intended J4/board-b downstream load.",
+      "verdict": "NEEDS BENCH"
+    },
+    {
+      "interaction_id": "int-umw-ao3401a-pdo3-exposure",
+      "record_ids": ["rec-umw-ao3401a-c347476"],
+      "fact_ids": [
+        "fact-umw-ao3401a-vgs",
+        "fact-umw-ao3401a-vgs-pdo3-margin",
+        "fact-umw-ao3401a-gate-network",
+        "fact-umw-ao3401a-gate-resistor-values"
+      ],
+      "conditions": "Epic-investigation finding: on a factory-default (unreprogrammed) STUSB4500 NVM, PDO3 (20 V) has highest priority and a 20 V-capable PD source negotiates it before any 15V-only reprogram is applied (doc/src/content/docs/inbox/nvm-programming.md). With VBEN asserted and VBUS_IN at 20 V, the Q1 gate divider (R11 100k/R12 56k) puts Vgs at approximately -12.82 V (fact-umw-ao3401a-vgs-pdo3-margin), exceeding the AO3401A's +/-12 V gate absolute maximum (fact-umw-ao3401a-vgs) by about 0.82 V. This bundle records the numbers only; the wave-6 decision task decides the provision (NVM reprogram-before-first-attach gate, a resistor-value change, an added clamp/limiter, or another mitigation).",
+      "verdict": "NEEDS BENCH"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "skill": "component-umw-ao3401a-c347476",
+  "records": [
+    {
+      "record_id": "rec-umw-ao3401a-c347476",
+      "line_id": "line-c347476",
+      "candidate_id": null,
+      "kind": "standalone",
+      "parent_record_id": null,
+      "mpn": "AO3401A",
+      "manufacturer": "UMW",
+      "lcsc": "C347476",
+      "package": "SOT-23_L2.9-W1.3-P1.90-LS2.4-BR",
+      "source_ids": [
+        "src-umw-ao3401a-c347476-datasheet",
+        "src-ao3401a-board-a-baseline",
+        "src-ao3401a-usb-pd-input-sch"
+      ],
+      "fact_ids": [
+        "fact-umw-ao3401a-manufacturer",
+        "fact-umw-ao3401a-pinout",
+        "fact-umw-ao3401a-vds",
+        "fact-umw-ao3401a-vgs",
+        "fact-umw-ao3401a-current",
+        "fact-umw-ao3401a-rdson",
+        "fact-umw-ao3401a-threshold",
+        "fact-umw-ao3401a-body-diode",
+        "fact-umw-ao3401a-thermal",
+        "fact-umw-ao3401a-soa",
+        "fact-umw-ao3401a-gate-network",
+        "fact-umw-ao3401a-gate-resistor-values",
+        "fact-umw-ao3401a-vgs-pdo3-margin"
+      ],
+      "interaction_ids": [
+        "int-umw-ao3401a-netlist",
+        "int-umw-ao3401a-bench",
+        "int-umw-ao3401a-pdo3-exposure"
+      ],
+      "open_domains": [
+        "application SOA/thermal/inrush behavior",
+        "generated connectivity versus symbol/footprint/as-built confirmation"
+      ]
+    }
+  ]
+}

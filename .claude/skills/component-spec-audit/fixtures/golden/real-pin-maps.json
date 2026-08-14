@@ -394,6 +394,111 @@
         }
       ],
       "reviewer": "issue-113 worktree child (Claude Fable 5), datasheet-figure review; negative-regulator pin order is polarity-critical and differs from 78xx"
+    },
+    {
+      "record_id": "rec-umw-ao3401a-c347476",
+      "pin_map_id": "pinmap-umw-ao3401a-c347476",
+      "canonical_sha256": "3af3ebf6ea9a57386fcfe0ecc53724e9a3223fc14bc47c6ce197975a297f8c08",
+      "evidence_fact_ids": [
+        "fact-umw-ao3401a-manufacturer",
+        "fact-umw-ao3401a-pinout"
+      ],
+      "trust_status": "TRUSTED",
+      "critical_pins": [
+        {
+          "symbol_pin": "1",
+          "name": "G",
+          "footprint_pad": "1",
+          "function": "gate, Net-(Q1-G) (R11 pull-up to VBUS_IN, R12 series from STUSB4500 VBEN)"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "S",
+          "footprint_pad": "2",
+          "function": "source, VBUS_IN"
+        },
+        {
+          "symbol_pin": "3",
+          "name": "D",
+          "footprint_pad": "3",
+          "function": "drain, VBUS_OUT"
+        }
+      ],
+      "reviewer": "issue-108 worktree child (Claude Fable 5) foreground review against symbols/zudo-pd.kicad_sym AO3401A_C347476 (pin 1=G, pin 2=S, pin 3=D) and footprints/kicad/zudo-power.pretty/SOT-23_L2.9-W1.3-P1.90-LS2.4-BR.kicad_mod (pads 1,2,3, all-primary evidence); independent second-reviewer pass pending"
+    },
+    {
+      "record_id": "rec-high-diode-smaj20a-c571370",
+      "pin_map_id": "pinmap-high-diode-smaj20a-c571370",
+      "canonical_sha256": "4b6d8e7efebc8b99a92213795ae457e0d53e9c6cc20e883e070ab1780b73a5e7",
+      "evidence_fact_ids": [
+        "fact-high-diode-smaj20a-manufacturer",
+        "fact-high-diode-smaj20a-polarity"
+      ],
+      "trust_status": "TRUSTED",
+      "critical_pins": [
+        {
+          "symbol_pin": "1",
+          "name": "C",
+          "footprint_pad": "1",
+          "function": "cathode, D5.1 on VBUS_IN"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "A",
+          "footprint_pad": "2",
+          "function": "anode, D5.2 on GND"
+        }
+      ],
+      "reviewer": "issue-108 worktree child (Claude Fable 5) foreground review against symbols/zudo-pd.kicad_sym SMAJ20A_C571370 (pin 1=C, pin 2=A, all-primary evidence) and footprints/kicad/zudo-power.pretty/D-FLAT_L4.3-W2.6-LS5.3-RD.kicad_mod (pads 1,2); independent second-reviewer pass pending"
+    },
+    {
+      "record_id": "rec-jst-b6b-xh-a",
+      "pin_map_id": "pinmap-jst-b6b-xh-a",
+      "canonical_sha256": "ea17b874989c073b1f1e159d5f50a3f7ac676fed4a1bddf9b91eebbe9c3a3ee8",
+      "evidence_fact_ids": [
+        "fact-jst-b6b-xh-a-locked-contract",
+        "fact-jst-b6b-xh-a-identity"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "+15V, conductor A (paired with pin 2); identical role at J4 board-a and J5 board-b"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "+15V, conductor B (paired with pin 1); identical role at J4 board-a and J5 board-b"
+        },
+        {
+          "symbol_pin": "3",
+          "name": "3",
+          "footprint_pad": "3",
+          "function": "ATT, open-drain active-low (STUSB4500 U1.11/ATTACH); identical role at J4 board-a and J5 board-b"
+        },
+        {
+          "symbol_pin": "4",
+          "name": "4",
+          "footprint_pad": "4",
+          "function": "PDOK, open-drain active-low (STUSB4500 U1.20/POWER_OK2); identical role at J4 board-a and J5 board-b"
+        },
+        {
+          "symbol_pin": "5",
+          "name": "5",
+          "footprint_pad": "5",
+          "function": "GND, conductor A (paired return); identical role at J4 board-a and J5 board-b"
+        },
+        {
+          "symbol_pin": "6",
+          "name": "6",
+          "footprint_pad": "6",
+          "function": "GND, conductor B (paired return); identical role at J4 board-a and J5 board-b"
+        }
+      ],
+      "reviewer": "issue-108 worktree child (Claude Fable 5) foreground review against board-split-decision.md's LOCKED Pinout table; PROJECT-LOCKED because evidence is the project's own locked interface decision, not manufacturer-primary pin-1 identification, and no KiCad symbol/footprint exists yet to cross-check; independent second-reviewer pass pending"
     }
   ]
 }

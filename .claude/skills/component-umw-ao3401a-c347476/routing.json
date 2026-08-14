@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "routes": [
+    {
+      "route_id": "route-umw-ao3401a-c347476",
+      "record_id": "rec-umw-ao3401a-c347476",
+      "aliases": {
+        "mpn": ["AO3401A"],
+        "lcsc": ["C347476"],
+        "manufacturer": ["UMW", "UMW (Youtai Semiconductor)", "Youtai Semiconductor"],
+        "function": ["P-channel load-switch MOSFET", "board-a load switch"]
+      },
+      "positive": [
+        "AO3401A C347476",
+        "C347476",
+        "UMW AO3401A",
+        "P-channel load-switch MOSFET AO3401A"
+      ],
+      "negative": [
+        "generic AO3401A C999001",
+        "AOS AO3401A C999101",
+        "Alpha and Omega AO3401A C999104"
+      ]
+    }
+  ]
+}
