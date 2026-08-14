@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "skill": "component-hdr-2541wr-2x08p-c5383092",
+  "records": [
+    {
+      "record_id": "rec-hdr-2541wr-2x08p-c5383092",
+      "line_id": "line-c5383092",
+      "candidate_id": null,
+      "kind": "standalone",
+      "parent_record_id": null,
+      "mpn": "2541WR-2X08P",
+      "manufacturer": "HanElectricity",
+      "lcsc": "C5383092",
+      "package": "HDR-TH_16P-P2.54-H-M-R2-C8-S2.54",
+      "source_ids": [
+        "src-hdr-hanelec-drawing",
+        "src-hdr-lcsc-catalog",
+        "src-hdr-kicad-symbol",
+        "src-hdr-kicad-footprint",
+        "src-hdr-board-b-synthpower-doc",
+        "src-hdr-board-b-baseline",
+        "src-hdr-bom-v040"
+      ],
+      "fact_ids": [
+        "fact-hdr-manufacturer",
+        "fact-hdr-lcsc-identity",
+        "fact-hdr-voltage-rating",
+        "fact-hdr-current-rating-per-contact",
+        "fact-hdr-dielectric-withstand",
+        "fact-hdr-temperature-range",
+        "fact-hdr-contact-material-plating",
+        "fact-hdr-drill-diameter-note",
+        "fact-hdr-pin-pair-assignment",
+        "fact-hdr-gnd-moat-interactions",
+        "fact-hdr-keying-not-netlist-verifiable",
+        "fact-hdr-misalignment-safety-note",
+        "fact-hdr-current-margin-plus12v",
+        "fact-hdr-current-margin-minus12v",
+        "fact-hdr-current-margin-plus5v"
+      ],
+      "interaction_ids": [
+        "int-hdr-current-vs-rail",
+        "int-hdr-gnd-moat-key"
+      ],
+      "open_domains": [
+        "electrical ratings vs the +12V/1.2A, +5V/0.5A, -12V/0.8A rail current budgets",
+        "PCB footprint dimensional fit (drill diameter) and pin/pad geometry",
+        "physical key/polarization orientation",
+        "pin-pair rail assignment, GND moat, and board-b baseline connectivity"
+      ]
+    }
+  ]
+}

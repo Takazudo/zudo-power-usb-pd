@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "routes": [
+    {
+      "route_id": "route-hdr-2541wr-2x08p",
+      "record_id": "rec-hdr-2541wr-2x08p-c5383092",
+      "aliases": {
+        "mpn": [
+          "2541WR-2X08P"
+        ],
+        "lcsc": [
+          "C5383092"
+        ],
+        "manufacturer": [
+          "HanElectricity"
+        ],
+        "function": [
+          "2x8 Eurorack power header",
+          "16-pin dual-row THT header",
+          "J10/J11 Eurorack power connector"
+        ]
+      },
+      "positive": [
+        "2541WR-2X08P",
+        "C5383092",
+        "HanElectricity 2541WR-2X08P",
+        "2x8 Eurorack power header C5383092",
+        "audit C5383092 GND moat"
+      ],
+      "negative": [
+        "2541WR-2x06P",
+        "C5383091",
+        "2541WV-2x08P",
+        "C5383108",
+        "63951-1",
+        "C591344",
+        "TE Connectivity 63951-1"
+      ]
+    }
+  ]
+}

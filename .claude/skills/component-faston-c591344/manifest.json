@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "skill": "component-faston-c591344",
+  "records": [
+    {
+      "record_id": "rec-faston-c591344",
+      "line_id": "line-c591344",
+      "candidate_id": null,
+      "kind": "standalone",
+      "parent_record_id": null,
+      "mpn": "63951-1",
+      "manufacturer": "TE Connectivity",
+      "lcsc": "C591344",
+      "package": "CONN-TH_1217754-1",
+      "source_ids": [
+        "src-faston-te-mirror-spec",
+        "src-faston-lcsc-catalog",
+        "src-faston-te-primary-attempt",
+        "src-faston-catalog-1654369-1",
+        "src-faston-lcsc-c305825-catalog",
+        "src-faston-kicad-symbol",
+        "src-faston-kicad-footprint",
+        "src-faston-board-b-synthpower-doc",
+        "src-faston-board-b-baseline",
+        "src-faston-bom-v040"
+      ],
+      "fact_ids": [
+        "fact-faston-manufacturer",
+        "fact-faston-lcsc-identity",
+        "fact-faston-1217754-1-alias-identity",
+        "fact-faston-symbol-lcsc-mismatch",
+        "fact-faston-tab-dimensions",
+        "fact-faston-current-rating-family",
+        "fact-faston-plus12v-rail-current",
+        "fact-faston-minus12v-rail-current",
+        "fact-faston-plus5v-rail-current",
+        "fact-faston-j7-plus12v-margin",
+        "fact-faston-j6-minus12v-margin",
+        "fact-faston-j8-plus5v-margin",
+        "fact-faston-thru-hole-retention",
+        "fact-faston-rail-assignment",
+        "fact-faston-baseline-unresolved"
+      ],
+      "interaction_ids": [
+        "int-faston-rail-margins",
+        "int-faston-baseline-gap"
+      ],
+      "open_domains": [
+        "KiCad symbol/footprint naming alias (1217754-1 / LCSC C305825)",
+        "electrical ratings vs the +12V/1.2A, +5V/0.5A, -12V/0.8A rail current budgets",
+        "mechanical form and THT retention",
+        "rail assignment and board-b baseline connectivity"
+      ]
+    }
+  ]
+}

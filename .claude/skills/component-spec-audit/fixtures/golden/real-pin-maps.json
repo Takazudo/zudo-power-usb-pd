@@ -142,6 +142,78 @@
         }
       ],
       "reviewer": "issue-110 author review; independent manager review pending"
+    },
+    {
+      "record_id": "rec-faston-c591344",
+      "pin_map_id": "pinmap-faston-c591344",
+      "canonical_sha256": "518cacce61c6be104e6550e4388696f4fe95b09d5b77a6c9395ede7b9dbb8e0e",
+      "evidence_fact_ids": [
+        "fact-faston-symbol-lcsc-mismatch"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [
+        {
+          "symbol_pin": "1",
+          "name": "1",
+          "footprint_pad": "1",
+          "function": "FASTON tab terminal, THT solder leg 1 (electrically the same node as pin 2 per board-b-synth-power.md: 'each Faston terminal's two tabs are tied to the same net')"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "2",
+          "footprint_pad": "2",
+          "function": "FASTON tab terminal, THT solder leg 2 (same net as pin 1)"
+        }
+      ],
+      "reviewer": "issue-116 worktree child (Claude Fable 5), project KiCad symbol/footprint asset review against symbols/zudo-pd.kicad_sym and footprints/kicad/zudo-power.pretty/CONN-TH_1217754-1.kicad_mod (2-terminal part)"
+    },
+    {
+      "record_id": "rec-hdr-2541wr-2x08p-c5383092",
+      "pin_map_id": "pinmap-hdr-2541wr-2x08p",
+      "canonical_sha256": "bf6d47f540039b7670eecc9f31752d5bd5ff0ed43a6a8d3176234384f0116641",
+      "evidence_fact_ids": [
+        "fact-hdr-pin-pair-assignment"
+      ],
+      "trust_status": "NEEDS BENCH",
+      "critical_pins": [
+        {
+          "symbol_pin": "7",
+          "name": "7",
+          "footprint_pad": "7",
+          "function": "+12V rail (pin-pair 7-8)"
+        },
+        {
+          "symbol_pin": "8",
+          "name": "8",
+          "footprint_pad": "8",
+          "function": "+12V rail (pin-pair 7-8)"
+        },
+        {
+          "symbol_pin": "9",
+          "name": "9",
+          "footprint_pad": "9",
+          "function": "GND moat (pin-pair 9-10)"
+        },
+        {
+          "symbol_pin": "14",
+          "name": "14",
+          "footprint_pad": "14",
+          "function": "GND moat (pin-pair 13-14)"
+        },
+        {
+          "symbol_pin": "15",
+          "name": "15",
+          "footprint_pad": "15",
+          "function": "-12V rail (pin-pair 15-16)"
+        },
+        {
+          "symbol_pin": "16",
+          "name": "16",
+          "footprint_pad": "16",
+          "function": "-12V rail (pin-pair 15-16)"
+        }
+      ],
+      "reviewer": "issue-116 worktree child (Claude Fable 5), project KiCad symbol/footprint asset review against symbols/zudo-pd.kicad_sym and footprints/kicad/zudo-power.pretty/HDR-TH_16P-P2.54-H-M-R2-C8-S2.54.kicad_mod; net-pair assignment reviewed against board-b-synth-power.md pin table; key orientation and Ref.Pin-level baseline confirmation remain NEEDS BENCH"
     }
   ]
 }
