@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "routes": [
+    {
+      "route_id": "route-l7805abd2t-c86206",
+      "record_id": "rec-l7805abd2t-c86206",
+      "aliases": {
+        "mpn": ["L7805ABD2T", "L7805ABD2T-TR", "L7805AB"],
+        "lcsc": ["C86206"],
+        "manufacturer": ["ST (STMicroelectronics)", "STMicroelectronics", "ST"],
+        "function": [
+          "+5V linear regulator, final +5V output stage",
+          "+5V LDO",
+          "5 V precision positive voltage regulator"
+        ]
+      },
+      "positive": [
+        "check L7805ABD2T dropout headroom",
+        "audit C86206",
+        "board-b U7 +5V LDO L7805ABD2T",
+        "L7805ABD2T-TR thermal data"
+      ],
+      "negative": [
+        "L7805CD2T",
+        "L7805CV output voltage",
+        "L7805ACD2T-TR",
+        "LM7805 dropout",
+        "L78L05ABUTR",
+        "L7805ABV"
+      ]
+    }
+  ]
+}
