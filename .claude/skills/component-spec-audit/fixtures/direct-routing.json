@@ -1,5 +1,170 @@
 {
   "schema_version": 1,
   "contract": "For each line, validator constructs literal positive queries for exact MPN, exact LCSC, manufacturer plus MPN, and function plus MPN; every query must resolve directly and uniquely. The negative query must resolve no line. Exactly one case per inventory line, in both staged and strict mode.",
-  "cases": []
+  "cases": [
+    {
+      "line_id": "line-c2678061",
+      "negative": "STUSB4500QTR C999001"
+    },
+    {
+      "line_id": "line-c456012",
+      "negative": "USB-TYPE-C-009 C999002"
+    },
+    {
+      "line_id": "line-c347476",
+      "negative": "AO3401A C999003"
+    },
+    {
+      "line_id": "line-c571370",
+      "negative": "SMAJ20A C999004"
+    },
+    {
+      "line_id": "line-c25803",
+      "negative": "0603WAF1003T5E C999005"
+    },
+    {
+      "line_id": "line-c23206",
+      "negative": "0603WAF5602T5E C999006"
+    },
+    {
+      "line_id": "line-c23179",
+      "negative": "0603WAF4700T5E C999007"
+    },
+    {
+      "line_id": "line-c23162",
+      "negative": "0603WAF4701T5E C999008"
+    },
+    {
+      "line_id": "line-c23186",
+      "negative": "0603WAF5101T5E C999009"
+    },
+    {
+      "line_id": "line-c21189",
+      "negative": "0603WAF0000T5E C999010"
+    },
+    {
+      "line_id": "line-c13585",
+      "negative": "CL31A106KBHNNNE C999011"
+    },
+    {
+      "line_id": "line-c1711",
+      "negative": "CC0805KRX7R9BB104 C999012"
+    },
+    {
+      "line_id": "line-c15849",
+      "negative": "CL10A105KB8NNNC C999013"
+    },
+    {
+      "line_id": "line-c144397",
+      "negative": "B6B-XH-A(LF)(SN) C999014"
+    },
+    {
+      "line_id": "line-c85382",
+      "negative": "PESD24VS1UB C999015"
+    },
+    {
+      "line_id": "line-c347423",
+      "negative": "LM2596S-ADJ C999016"
+    },
+    {
+      "line_id": "line-c19268674",
+      "negative": "CYA1265-100UH C999017"
+    },
+    {
+      "line_id": "line-c8678",
+      "negative": "SS34 C999018"
+    },
+    {
+      "line_id": "line-c2983319",
+      "negative": "GVT1E477M0810CNVC C999019"
+    },
+    {
+      "line_id": "line-c22383803",
+      "negative": "RVT1C471M0607 C999020"
+    },
+    {
+      "line_id": "line-c22383804",
+      "negative": "RVT1E101M0607 C999021"
+    },
+    {
+      "line_id": "line-c970687",
+      "negative": "RVT1H101M0810 C999022"
+    },
+    {
+      "line_id": "line-c1729",
+      "negative": "CL21B223KBANNNC C999023"
+    },
+    {
+      "line_id": "line-c25804",
+      "negative": "0603WAF1002T5E C999024"
+    },
+    {
+      "line_id": "line-c21190",
+      "negative": "0603WAF1001T5E C999025"
+    },
+    {
+      "line_id": "line-c13456",
+      "negative": "L7812CD2T C999026"
+    },
+    {
+      "line_id": "line-c86206",
+      "negative": "L7805ABD2T C999027"
+    },
+    {
+      "line_id": "line-c94173",
+      "negative": "CJ7912 C999028"
+    },
+    {
+      "line_id": "line-c20808",
+      "negative": "SMD1210P200TF C999029"
+    },
+    {
+      "line_id": "line-c70119",
+      "negative": "mSMD110-33V C999030"
+    },
+    {
+      "line_id": "line-c883133",
+      "negative": "BSMD1206-150-16V C999031"
+    },
+    {
+      "line_id": "line-c571368",
+      "negative": "SMAJ15A C999032"
+    },
+    {
+      "line_id": "line-c502527",
+      "negative": "SD05 C999033"
+    },
+    {
+      "line_id": "line-c22387780",
+      "negative": "EFVH035ADA471M10B0 C999034"
+    },
+    {
+      "line_id": "line-c1623",
+      "negative": "CL10B474KA8NNNC C999035"
+    },
+    {
+      "line_id": "line-c17513",
+      "negative": "0805W8F1001T5E C999036"
+    },
+    {
+      "line_id": "line-c2289",
+      "negative": "KT-0603YG C999037"
+    },
+    {
+      "line_id": "line-c2288",
+      "negative": "KT-0603B C999038"
+    },
+    {
+      "line_id": "line-c2286",
+      "negative": "KT-0603R C999039"
+    },
+    {
+      "line_id": "line-c591344",
+      "negative": "63951-1 C999040"
+    },
+    {
+      "line_id": "line-c5383092",
+      "negative": "2541WR-2X08P C999041"
+    }
+  ]
 }
