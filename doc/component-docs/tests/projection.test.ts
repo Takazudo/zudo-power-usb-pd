@@ -432,17 +432,10 @@ describe("URL publication", () => {
     assert.equal(JSON.stringify(report).includes("fixture.example.com"), false);
   });
 
-  it("denies an unsafe citation URL without failing the whole build", () => {
-    // led-lamp's equivalent test expects a hard `UNSAFE_VALUE` failure here,
-    // because that build also curates one document reference per record
-    // (`projectRecordReference`) and a malformed CURATED URL is a
-    // data-integrity bug worth halting over. zudo-pd has no such feature —
-    // no 3D assets, `references.ts` is not ported, `record.reference` is
-    // always `null` (see `core/view-model.ts`) — so this URL only ever
-    // reaches the regular per-source citation path (`projectSourceUrl`),
-    // which fails closed PER SOURCE, not per build: the record still
-    // publishes, this one source's `url` is `null`, and the denial is
-    // recorded in the preflight report.
+  it("fails closed when the curated document URL is unsafe", () => {
+    // The curated document is the one URL the page presents AS the component's
+    // authoritative reference, so a malformed one is a data-integrity bug
+    // worth halting over — unlike a citation, which fails per source below.
     const index = indexEvidence(fixtureInventory(), [
       fixtureBundle({
         sources: (sources) =>
@@ -453,14 +446,41 @@ describe("URL publication", () => {
           ),
       }),
     ], fixtureIntegrationRules());
+    assert.throws(
+      () => projectIndex(index, new PublicationPolicy(FIXTURE_MATRIX, FIXTURE_SELECTION)),
+      (error: unknown) =>
+        error instanceof ComponentDocsError &&
+        error.code === "UNSAFE_VALUE" &&
+        error.detail.sourceId === "src-driver-primary",
+    );
+  });
+
+  it("denies an unsafe citation URL without failing the whole build", () => {
+    // `src-driver-gone` is cited but never curated as the document, so this
+    // URL only reaches the regular per-source citation path
+    // (`projectSourceUrl`), which fails closed PER SOURCE rather than per
+    // build: the record still publishes, this one source's `url` is `null`,
+    // and the denial is recorded in the preflight report.
+    const index = indexEvidence(fixtureInventory(), [
+      fixtureBundle({
+        sources: (sources) =>
+          sources.map((source) =>
+            source.source_id === "src-driver-gone"
+              ? { ...source, authoritative_url: "javascript:alert(1)" }
+              : source,
+          ),
+      }),
+    ], fixtureIntegrationRules());
     const policy = new PublicationPolicy(FIXTURE_MATRIX, FIXTURE_SELECTION);
     const model = projectIndex(index, policy);
 
     const driver = model.records.find((entry) => entry.identity.recordId === "rec-driver");
     assert.ok(driver);
-    const poisoned = driver.sources.find((entry) => entry.sourceId === "src-driver-primary");
+    const poisoned = driver.sources.find((entry) => entry.sourceId === "src-driver-gone");
     assert.ok(poisoned);
     assert.equal(poisoned.url, null);
+    // The curated document, on a different source, is unaffected.
+    assert.notEqual(driver.reference.document, null);
 
     const report = policy.buildReport({
       viewModelVersion: model.version,
@@ -471,7 +491,7 @@ describe("URL publication", () => {
       selectedSlugs: [],
       counts: {},
     });
-    const denied = report.urls.find((entry) => entry.sourceId === "src-driver-primary");
+    const denied = report.urls.find((entry) => entry.sourceId === "src-driver-gone");
     assert.equal(denied?.decision, "DENY");
     assert.equal(denied?.reason, "SCHEME_NOT_ALLOWED");
   });
