@@ -7,13 +7,20 @@ Understanding overcurrent protection design for modular synthesizer power suppli
 
 ## Overview
 
-This power supply uses a **three-layer protection strategy** that exceeds most commercial synth power supplies:
+This power supply uses a **PTC-only, four-layer protection strategy** that
+exceeds most commercial synth power supplies — there are no backup fuses (see
+[Bill of Materials](../overview/bom.md), "PTC-only design"):
 
 1. **USB-PD adapter protection** (input side, 15V)
-2. **PTC resettable fuses** (auto-reset overload protection, per rail)
-3. **Fast-blow backup fuses** (catastrophic short protection, per rail)
+2. **DC-DC converter current limiting** (~3-5A, protects against circuit shorts)
+3. **Linear regulator inherent protection** (current limiting + thermal shutdown, per rail)
+4. **PTC resettable fuses** (auto-reset overload protection, per rail)
 
-This multi-stage approach provides both convenience (auto-reset) and safety (fast protection).
+This multi-stage approach provides both convenience (auto-reset) and safety,
+without the maintenance burden of a fast-blow backup fuse the regulators'
+built-in current limiting makes unnecessary — see
+[This Design: Multi-Layer Protection](#this-design-multi-layer-protection)
+below.
 
 ## Protection Methods Comparison
 
@@ -313,10 +320,11 @@ This inherent protection means **the linear regulator acts as a "smart current l
 
 ### -12V Rail (0.8A design target, 1A regulator max)
 
-**Selected PTC: C2830246 - JK-nSMD100/16V**
+**Selected PTC: C883133 - BSMD1206-150-16V**
 
-- **Hold current**: 1.0A
-- **Trip current**: ~2.0A (typical, 2x hold)
+- **Hold current**: 1.5A (85°C-derated hold is 0.77A — sits just under the 0.8A
+  budget; NEEDS BENCH, see [Board B: Protection Stage](../overview/board-b-synth-power.md#protection-stage))
+- **Trip current**: ~3A (typical, 2x hold)
 - **Package**: 1206
 - **Purpose**: Protect regulator with margin
 - **Recovery**: Auto-reset in 30-60 seconds
@@ -510,11 +518,6 @@ This design is informed by research into commercial Eurorack power supplies:
 - Traditional fuses preferred for reliability
 - PTCs controversial due to slower response
 - Multi-stage protection recommended for production designs
-
-### Research Documents
-
-- Doepfer A100 protection research: `__inbox/1230_0122-research-doepfer-a100-power-protection.md`
-- Eurorack overcurrent protection research: `__inbox/1230_0127-research-eurorack-overcurrent-protection.md`
 
 ## Conclusion
 

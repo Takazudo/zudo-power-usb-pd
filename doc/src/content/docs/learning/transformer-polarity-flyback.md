@@ -7,7 +7,20 @@ Understanding transformer dot notation and why connecting a flyback transformer 
 
 ## The Question
 
-When designing the LM2586 flyback converter circuit for voltage inversion (+15V → -15V), a critical question came up:
+<Warning title="Historical: the LM2586 flyback approach described here was never built">
+
+This page's worked example is an **abandoned early design** — a flyback
+converter using the LM2586 for voltage inversion, explored before the project
+settled on its actual negative-rail topology: an LM2596S-ADJ run in an
+inverting buck-boost configuration (+15V → -13.5V → -12V, no transformer, no
+LM2586). See [Practical Example](#practical-example-lm2586-flyback-circuit-historical-reference)
+below for the full context. The transformer polarity/dot-notation teaching
+above and below is general knowledge and still correct.
+
+</Warning>
+
+While exploring that abandoned LM2586 flyback converter circuit for voltage
+inversion, a critical question came up:
 
 > "About this transformer, is the direction important? Is it common knowledge of transformers?"
 
@@ -207,7 +220,7 @@ Before PCB assembly:
 
 ### Where Polarity is Critical
 
-1. **Flyback converters** (like our LM2586 circuit) - polarity determines output sign
+1. **Flyback converters** (like the abandoned LM2586 example above) - polarity determines output sign
 2. **Push-pull converters** - wrong phasing causes shoot-through and damage
 3. **Forward converters** - affects reset winding operation
 4. **Current transformers** - reversed polarity gives wrong current direction

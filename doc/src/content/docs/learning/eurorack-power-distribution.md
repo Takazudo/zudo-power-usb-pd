@@ -398,9 +398,9 @@ Sources:
 
 ### Related Documentation
 
-- **Protection Strategy**: `/doc/docs/learning/protection-fuse-strategy.md`
-- **Bill of Materials**: `/doc/docs/overview/bom.md`
-- **Circuit Diagrams**: `/doc/docs/overview/circuit-diagrams.mdx`
+- **Protection Strategy**: [Protection Fuse Strategy](./protection-fuse-strategy.md)
+- **Bill of Materials**: [Bill of Materials](../overview/bom.md)
+- **Circuit Diagrams**: [Circuit Diagrams](../overview/circuit-diagrams.mdx)
 
 ### Further Reading
 
