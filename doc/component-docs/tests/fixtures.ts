@@ -207,10 +207,12 @@ function source(input: SourceInput): PublicSource {
  * A record's curated references.
  *
  * Both optional halves default to unresolved so the renderer's stated-reason
- * branch is exercised without a caller opting in. The real corpus reaches that
- * branch on the model half for every record (no reviewed `.wrl`/`.step` pair
- * exists anywhere) and on the document half for `rec-c335982` alone. Passing
- * `document` exercises the resolved branch the other 40 records take.
+ * branch is exercised without a caller opting in. This is the ONLY corpus that
+ * still reaches that branch on the model half: since wave 7 sourced a pair for
+ * all 27 packages, the real corpus resolves every model, and these fixtures
+ * are what keeps the unresolved path from rotting (see `model-viewer.test.ts`).
+ * The document half is unresolved for `rec-c335982` alone in the real corpus;
+ * passing `document` exercises the resolved branch the other 40 records take.
  */
 function referenceFor(
   input: {

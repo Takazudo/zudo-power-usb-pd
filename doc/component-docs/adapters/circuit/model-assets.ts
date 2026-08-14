@@ -21,7 +21,7 @@ import { assertNotSymlink } from "../../core/emit.ts";
 import { byCodeUnit } from "../../core/ids.ts";
 import { readEvidenceIndex } from "./index.ts";
 import { DOC_ROOT, REPO_ROOT } from "./paths.ts";
-import { assertSafePreviewAssetName } from "./references.ts";
+import { assertSafePreviewAssetName, type CircuitPackageReference } from "./references.ts";
 import { CIRCUIT_SELECTION } from "./selection.ts";
 
 export const MODEL_PUBLIC_ROOT = join(
@@ -47,7 +47,20 @@ export type ModelAssetResult = {
 
 export async function buildModelAssetPlan(): Promise<readonly ModelAssetPlanEntry[]> {
   const index = await readEvidenceIndex();
-  const packages = index.references?.packages;
+  return planModelAssets(index.references?.packages);
+}
+
+/**
+ * The publication plan for a resolved package set.
+ *
+ * Split out from `buildModelAssetPlan()` so the two counts it separates — the
+ * asserted package count and the merely-reported model count — can be tested
+ * against a package set carrying an unresolved model, which the real corpus
+ * (27 of 27 sourced) cannot currently produce.
+ */
+export function planModelAssets(
+  packages: readonly CircuitPackageReference[] | undefined,
+): readonly ModelAssetPlanEntry[] {
   // The reviewed package count, read from the selection rather than written as
   // a literal here — the same reason `references.ts` reads it (a promotion that
   // changes the package set has to be acknowledged in one reviewed place).

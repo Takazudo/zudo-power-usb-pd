@@ -51,9 +51,9 @@ export const DENIED_PROVIDER_KEYS: readonly string[] = [
   // --- zudo-pd's additional matrix denials ---------------------------------
   // `record.ownerSkill`/`integration.ownerSkill` are denied here (see
   // `matrix.ts`): `claudeResources` is `false`, so no `/docs/claude-skills/`
-  // route exists to link back to. The `reference.*` denials have no provider
-  // JSON counterpart to canary — that whole feature (WRL/STEP 3D previews) is
-  // not ported, since zudo-pd has no 3D assets at all.
+  // route exists to link back to. The remaining `reference.*` denials have no
+  // provider JSON counterpart to canary — they are derived from the KiCad
+  // library rather than from an evidence bundle field.
   "owner_skill",
 ];
 
