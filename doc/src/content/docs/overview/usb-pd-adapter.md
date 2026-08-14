@@ -11,7 +11,7 @@ hands the switched rail to [Board B](./board-b-synth-power.md).
 
 Across four JLCPCB PCBA orders (0.1.0 → 0.4.0) **no board has ever completed a USB-PD
 negotiation with any adapter** — see the
-[failure history](../inbox/current-status.md#failure-history-v1--v4) and
+[failure history](../inbox/current-status.md#failure-history-v1-→-v4) and
 [v4 USB-PD Failure Diagnosis](../inbox/v4-pd-failure-diagnosis.md). Everything below is a
 **requirement and a shortlist**, not a compatibility report. Nothing on this page has
 been validated against working hardware.

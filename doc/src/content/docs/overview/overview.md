@@ -40,7 +40,7 @@ adapter leaves headroom for conversion losses.
 
 Nothing below has ever been measured on hardware. All four JLCPCB orders (0.1.0 → 0.4.0)
 died at the USB-PD front end before the conversion chain was ever powered — see the
-[failure history](../inbox/current-status.md#failure-history-v1--v4). Treat these as
+[failure history](../inbox/current-status.md#failure-history-v1-→-v4). Treat these as
 design intent to be verified at bring-up.
 
 </Warning>

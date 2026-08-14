@@ -38,7 +38,7 @@ byte-identical to the same block in the Board A doc).
 |---|---|---|
 | Carries | STUSB4500, USB-C receptacle, load switch, NVM programming pads | DC-DC converters, LDOs, protection, Eurorack + Faston outputs |
 | Reusable elsewhere | Yes — generic "USB-PD 15 V sink module" | No — synth-specific rails and connectors |
-| Component cost | Low (~$0.45, dominated by one $2.50 IC) | High (~$3.51 — see [Bill of Materials and Cost Split](#bill-of-materials-and-cost-split)) |
+| Component cost | Low (~$2.90, dominated by one $2.50 IC) | High (~$4.98 — see [Bill of Materials and Cost Split](#bill-of-materials-and-cost-split)) |
 | Re-order cost when it fails | Small board, few Extended parts | Larger board, most of the design's Extended-part and hand-solder load |
 
 This project has failed USB-PD negotiation on **four consecutive JLCPCB
@@ -592,8 +592,8 @@ complexity. Figures below are the existing single-board
 
 | Board | Stages carried | Component subtotal | Source |
 |-------|-----------------|---------------------|--------|
-| Board A | USB-PD (STUSB4500, load switch, USB-C receptacle, ESD/TVS, resistors/caps) | **~$0.45** | [BOM](./bom.md) Stage 1 |
-| **Board B** | DC-DC ($2.09) + LDO ($0.37) + Protection ($0.77) + Output ($0.28) | **~$3.51** | [BOM](./bom.md) Stages 2–5 |
+| Board A | USB-PD (STUSB4500, load switch, USB-C receptacle, ESD/TVS, resistors/caps) | **~$2.90** | [BOM](./bom.md) Stage 1 |
+| **Board B** | DC-DC ($2.24) + LDO ($0.64) + Protection ($0.82) + Output ($1.28) | **~$4.98** | [BOM](./bom.md) Stages 2–5 |
 
 Both boards additionally carry one A↔B interface connector (JST B6B-XH-A,
 LCSC C144397, a few cents each) — negligible next to the totals above.
@@ -614,7 +614,7 @@ LCSC C144397, a few cents each) — negligible next to the totals above.
 | Load-switch MOSFET | Q1 AO3401A | $0.02 | 1 | A |
 
 U1 (STUSB4500) is Board A's single priciest part, but Board B still carries
-**~8× Board A's total component cost** — and, more importantly for
+**~1.7× Board A's total component cost** — and, more importantly for
 manufacturing cost, nearly all of the design's physically large/hand-solder-
 candidate parts (electrolytics up to 10.2mm tall, THT Faston tabs, THT 2×8
 headers) and distinct Extended-part-fee line items (JLCPCB charges
@@ -685,8 +685,8 @@ carried into this doc, with its locked disposition from
 - [Mechanical Design](./mechanical-design.md) — component heights driving
   Board B's enclosure/heatsink design
 - [Circuit Diagrams](./circuit-diagrams.mdx) — schemdraw-generated diagrams
-  for the DC-DC ([D2](./circuit-diagrams.mdx#diagram2-usb-pd-15v--135v-buck-converter-lm2596s-adj-1)/[D3](./circuit-diagrams.mdx#diagram3-15v--75v-buck-converter-lm2596s-adj-2-u3)/[D4](./circuit-diagrams.mdx#diagram4-15v---135v-inverting-buck-boost-lm2596s-adj-u4))
-  and LDO ([D5](./circuit-diagrams.mdx#diagram5-135v--12v-linear-regulator-l7812-u6)/[D6](./circuit-diagrams.mdx#diagram6-75v--5v-linear-regulator-l7805-u7)/[D7](./circuit-diagrams.mdx#diagram7--135v---12v-linear-regulator-cj7912-u8))
+  for the DC-DC ([D2](./circuit-diagrams.mdx#diagram2-usb-pd-15v-→-13-5v-buck-converter-lm2596s-adj-1)/[D3](./circuit-diagrams.mdx#diagram3-15v-→-7-5v-buck-converter-lm2596s-adj-2-u3)/[D4](./circuit-diagrams.mdx#diagram4-15v-→--13-5v-inverting-buck-boost-lm2596s-adj-u4))
+  and LDO ([D5](./circuit-diagrams.mdx#diagram5-13-5v-→-12v-linear-regulator-l7812-u6)/[D6](./circuit-diagrams.mdx#diagram6-7-5v-→-5v-linear-regulator-l7805-u7)/[D7](./circuit-diagrams.mdx#diagram7--13-5v-→--12v-linear-regulator-cj7912-u8))
   stages, still valid for Board B
 - [Net-Table + Mermaid Convention](../how-to/net-table-convention.md) — the
   documentation convention followed above

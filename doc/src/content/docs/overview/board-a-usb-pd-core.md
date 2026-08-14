@@ -274,7 +274,7 @@ flowchart TD
 
 Because Q1 stays off until `VBEN` asserts, `TP1` (`VBUS_OUT`) reads 0 V during NVM
 programming — that is correct behavior, not a fault. See the bring-up tip under
-[Test points](#test-points).
+[Test points](#nvm-programming-interface-debug-pads-and-test-points-test-points).
 
 ## Component list, LCSC parts, and rough cost
 
@@ -536,5 +536,5 @@ test points accessible and silkscreened for bring-up on whatever host this ends 
 - [STUSB4500 Pin Cheat-Sheet](../inbox/stusb4500-pinout.md) — per-pin rationale for U1
 - [Net-Table + Mermaid Convention](../how-to/net-table-convention.md) — the documentation convention used above
 - [Bill of Materials](./bom.md) — general JLCPCB fee structure and the (currently full single-board) BOM
-- STUSB4500 (U1) is documented throughout this page; the [Q1 load switch (AO3401A) gate network](#load-switch-q1-gate-network-and-soft-start) and [J1 USB-C connector substitution options](#j1-substitution-options) are documented above; SMAJ15A (cloned pattern for D5) is documented on [Board B's Protection Stage](./board-b-synth-power.md#protection-stage); USBLC6-2SC6 (D4, removed) — see the [deltas above](#deltas-vs-the-current-single-board-circuit) for removal background
+- STUSB4500 (U1) is documented throughout this page; the [Q1 load switch (AO3401A) gate network](#load-switch-q1-gate-network-and-soft-start) and [J1 USB-C connector substitution options](#component-list-lcsc-parts-and-rough-cost-j1-substitution-options) are documented above; SMAJ15A (cloned pattern for D5) is documented on [Board B's Protection Stage](./board-b-synth-power.md#protection-stage); USBLC6-2SC6 (D4, removed) — see the [deltas above](#deltas-vs-the-current-single-board-circuit) for removal background
 - `.claude/skills/component-bzt52c11-c92321` — full primary-sourced evidence bundle for D8; [generated component records](/docs/components/) index the validated evidence for every part on both boards
