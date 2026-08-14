@@ -45,7 +45,7 @@ describe("catalog", () => {
       const { identity } = record;
       assert.match(
         catalogPage,
-        new RegExp(`\\[${escape(identity.mpn)}\\]\\(/docs/components/records/records/${identity.slug}/\\)`),
+        new RegExp(`\\[${escape(identity.mpn)}\\]\\(/docs/components/records/${identity.slug}/\\)`),
         `${identity.recordId} is not linked from the catalog`,
       );
       assert.ok(
@@ -62,7 +62,7 @@ describe("catalog", () => {
       catalogPage,
       new RegExp(
         `audited as part of \\[\`${FIXTURE_IDS.driverRecord}\`\\]` +
-          `\\(/docs/components/records/records/${FIXTURE_IDS.driverSlug}/\\)`,
+          `\\(/docs/components/records/${FIXTURE_IDS.driverSlug}/\\)`,
       ),
     );
   });
@@ -202,7 +202,7 @@ describe("record page — structure", () => {
     assert.match(
       sensePage,
       new RegExp(
-        `\\[\`${FIXTURE_IDS.driverRecord}\`\\]\\(/docs/components/records/records/` +
+        `\\[\`${FIXTURE_IDS.driverRecord}\`\\]\\(/docs/components/records/` +
           `${FIXTURE_IDS.driverSlug}/\\)`,
       ),
     );
@@ -299,7 +299,7 @@ describe("record page — evidence semantics", () => {
     // Cross-record input crosses to the owning page and says whose it is.
     assert.ok(
       driverPage.includes(
-        `[\`${FIXTURE_IDS.foreignDependency}\`](/docs/components/records/records/` +
+        `[\`${FIXTURE_IDS.foreignDependency}\`](/docs/components/records/` +
           `${FIXTURE_IDS.senseSlug}/#${FIXTURE_IDS.foreignDependency}) on RLP25FEER200`,
       ),
     );
@@ -360,7 +360,7 @@ describe("record page — evidence semantics", () => {
     assert.ok(driverPage.includes(`\`${FIXTURE_IDS.driverRecord}\` (this record)`));
     assert.ok(
       driverPage.includes(
-        `[\`${FIXTURE_IDS.senseRecord}\`](/docs/components/records/records/${FIXTURE_IDS.senseSlug}/)`,
+        `[\`${FIXTURE_IDS.senseRecord}\`](/docs/components/records/${FIXTURE_IDS.senseSlug}/)`,
       ),
     );
   });
@@ -520,7 +520,7 @@ describe("records index", () => {
   it("lists every record and points comparison at the catalog", () => {
     const page = renderRecordsIndex(model.records).contents;
     assert.equal(page.split("\n")[0], "---");
-    assert.ok(page.includes("(/docs/components/records/catalog/)"));
+    assert.ok(page.includes("(/docs/components/catalog/)"));
     for (const record of model.records) {
       assert.ok(page.includes(`\`${record.identity.recordId}\``));
     }
@@ -538,7 +538,7 @@ describe("catalog anchor contract", () => {
     assert.ok(catalogPage.includes('<EvidenceAnchor id="catalog-index" />'));
     // The record page links back to its own row on that page.
     assert.ok(
-      driverPage.includes(`(/docs/components/records/catalog/#${FIXTURE_IDS.driverRecord})`),
+      driverPage.includes(`(/docs/components/catalog/#${FIXTURE_IDS.driverRecord})`),
     );
   });
 });

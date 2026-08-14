@@ -46,14 +46,12 @@ export const CONTENT_ROOT = join(DOC_ROOT, "src", "content", "docs");
 /**
  * The exclusively-owned generated tree.
  *
- * Re-rooted one level down from led-lamp's `join(CONTENT_ROOT, "components")`:
- * `doc/src/content/docs/components/` already holds 17 hand-written pages
- * (including `index.mdx`), and `core/emit.ts` treats any unmarked `.mdx`
- * under the owned root as a fatal `PATH_CONTAINMENT`. Nothing outside this
- * directory is ever written, and everything inside it is regenerated from
- * evidence.
+ * Matches led-lamp's `join(CONTENT_ROOT, "components")` exactly. Nothing
+ * outside this directory is ever written, and everything inside it is
+ * regenerated from evidence — `core/emit.ts` treats any unmarked `.mdx`
+ * under the owned root as a fatal `PATH_CONTAINMENT`.
  */
-export const GENERATED_ROOT = join(CONTENT_ROOT, "components", "records");
+export const GENERATED_ROOT = join(CONTENT_ROOT, "components");
 
 /** Committed, deterministic publication preflight report. */
 export const PREFLIGHT_FILE = join(DOC_ROOT, "component-docs", "preflight.json");

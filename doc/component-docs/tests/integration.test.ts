@@ -363,12 +363,12 @@ describe("integration page", () => {
 
   it("links every rule to its records and facts, and marks the unpublished one", () => {
     assert.ok(
-      page.includes(`(/docs/components/records/records/${FIXTURE_IDS.driverSlug}/)`),
+      page.includes(`(/docs/components/records/${FIXTURE_IDS.driverSlug}/)`),
       "a spanned record is not linked",
     );
     assert.ok(
       page.includes(
-        `(/docs/components/records/records/${FIXTURE_IDS.driverSlug}/#${FIXTURE_IDS.crossRecordFact})`,
+        `(/docs/components/records/${FIXTURE_IDS.driverSlug}/#${FIXTURE_IDS.crossRecordFact})`,
       ),
       "a cited fact is not linked to its anchor",
     );

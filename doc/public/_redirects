@@ -1,0 +1,16 @@
+# Redirects for the components-docs-restructure un-nesting (issue #137).
+#
+# The generated component tree moved from `components/records/{...}` up to
+# `components/{...}`. `doc/plugins/copy-public-plugin.mjs` copies `public/`
+# flat into `dist/`, and Cloudflare Workers static assets honours
+# `dist/_redirects`.
+#
+# Do NOT add a rule for `/docs/components/records` itself — that path is
+# simultaneously the OLD generated landing route and the NEW Records
+# sub-index route. A redirect there would 301 a live page off the site.
+/docs/components/records/records/*    /docs/components/records/:splat  301
+/docs/components/records/records      /docs/components/records         301
+/docs/components/records/catalog      /docs/components/catalog         301
+/docs/components/records/catalog/     /docs/components/catalog/        301
+/docs/components/records/integration  /docs/components/integration     301
+/docs/components/records/integration/ /docs/components/integration/    301

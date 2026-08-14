@@ -317,7 +317,7 @@ export function createMdxComponents(lang: Locale | string = defaultLocale) {
     HtmlPreview: HtmlPreviewWrapper,
     // Component-docs evidence bindings (`doc/component-docs/`) — the three
     // components generated component-record pages under
-    // `/docs/components/records/` reference. `core/mdx.ts`'s
+    // `/docs/components/` reference. `core/mdx.ts`'s
     // `ALLOWED_COMPONENT_ATTRIBUTES` must stay in sync with this map: a name
     // in one and not the other renders as literal text and silently
     // swallows what it wraps.

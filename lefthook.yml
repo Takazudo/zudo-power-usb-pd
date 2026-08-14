@@ -6,7 +6,7 @@ pre-commit:
       # are byte-exact against `check:components`'s drift check. Formatting
       # them at commit time would drift them from the next `generate:components`
       # run and turn CI red on every PR touching the tree.
-      exclude: 'doc/src/content/docs/components/records/**'
+      exclude: 'doc/src/content/docs/components/**'
       stage_fixed: true
       run: ./scripts/mdx-format.sh --write {staged_files}
 

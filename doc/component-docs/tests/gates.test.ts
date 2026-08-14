@@ -220,7 +220,7 @@ describe("relationships stay visible on the page, not just in the model", () => 
           const page = pages.get(record.identity.slug);
           assert.ok(page);
           assert.ok(
-            page.includes(`/docs/components/records/records/${target}/#${dependency}`),
+            page.includes(`/docs/components/records/${target}/#${dependency}`),
             `${fact.factId} does not link to ${dependency} on ${target}`,
           );
         }

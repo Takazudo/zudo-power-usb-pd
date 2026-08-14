@@ -42,9 +42,9 @@ import {
  * wrongly-rooted directory.
  */
 const REQUIRED_ROUTE_FRAGMENTS = [
-  "components/records/index",
-  "components/records/catalog",
-  "components/records/integration",
+  "components/index",
+  "components/catalog",
+  "components/integration",
 ] as const;
 
 /**
