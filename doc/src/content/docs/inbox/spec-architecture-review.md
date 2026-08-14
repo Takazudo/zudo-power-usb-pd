@@ -396,8 +396,9 @@ tripped PTC1 with U6 out of regulation can see up to ≈13.5 V.
 
 Replacement leads already in evidence: the same RUILON datasheet lists 16 V-suffixed
 siblings of adjacent current ratings (`SMD1210P150TF/16`, `SMD1210P110TF/16` — bundle
-SKILL.md, suffixed-variants note), and `components/ptc-12v.md` *already documents* the
-P150TF/16 (see BB-10). Trade-off to carry into wave-6: P150TF/16's 1.5 A hold leaves
+SKILL.md, suffixed-variants note), and the legacy `components/ptc-12v.md` page (since
+deleted; the content now lives in `overview/board-b-synth-power.md`'s Protection Stage
+table) *already documented* the P150TF/16 (see BB-10). Trade-off to carry into wave-6: P150TF/16's 1.5 A hold leaves
 0.3 A of margin over the 1.2 A rail rating (vs the P200TF's 0.8 A,
 `fact-ptc1-ihold-margin`) and its 85 °C derated hold will sit proportionally lower
 (the P200TF's own 85 °C figure is 0.98 A, `fact-ptc1-hold-85c` — already below the
@@ -602,19 +603,23 @@ Evidence: fact IDs above; `fact-smaj15a-clamp` (24.4 V at 1 A);
 
 #### BB-10 — the PTC1 component doc page documents the 16 V sibling part, masking the 6 V blocker; two more protection-stage doc rows are stale in the same direction (MEDIUM lead, doc defect — agent-found issue #131 raised)
 
-`components/ptc-12v.md` is titled and specified as **SMD1210P150TF/16** (C7529589,
+`components/ptc-12v.md` was titled and specified as **SMD1210P150TF/16** (C7529589,
 1.5 A hold, V_max **16 V**) — a different orderable than the fitted
-SMD1210P200TF/C20808, and its 16 V row answers the exact question a reviewer would
+SMD1210P200TF/C20808, and its 16 V row answered the exact question a reviewer would
 ask about BB-1 with the wrong part's number. `overview/board-b-synth-power.md`'s
-protection table still calls PTC1's rating "not confirmed … open data gap" (stale:
-the bundle has primary-confirmed 6 VDC), and `components/ptc-12v-neg.md` is titled
-`JK-nSMD100/16V` while the fitted PTC3 is BSMD1206-150-16V/C883133. All three are
+protection table still called PTC1's rating "not confirmed … open data gap" (stale:
+the bundle has primary-confirmed 6 VDC), and `components/ptc-12v-neg.md` was titled
+`JK-nSMD100/16V` while the fitted PTC3 is BSMD1206-150-16V/C883133. All three were
 wave-3-or-earlier doc artifacts, not locked #90 decisions — fixable defects, raised
-as agent-found issue #131 rather than folded into the locked fix list.
+as agent-found issue #131 rather than folded into the locked fix list. (Update:
+`components/ptc-12v.md` and `components/ptc-12v-neg.md` were deleted in the
+components-docs-restructure purge, #136; `overview/board-b-synth-power.md`'s
+Protection Stage table now carries the corrected PTC1/PTC3 figures directly.)
 
-Evidence: `fact-ptc1-vmax` vs `doc/src/content/docs/components/ptc-12v.md` part
-table + Electrical Specifications rows; board-b-synth-power.md Protection Stage
-PTC1 row; ptc-12v-neg.md frontmatter title; sch property reads (PTC1/PTC3 identities).
+Evidence: `fact-ptc1-vmax` vs `doc/src/content/docs/components/ptc-12v.md` (deleted,
+see above) part table + Electrical Specifications rows; board-b-synth-power.md
+Protection Stage PTC1 row; ptc-12v-neg.md (deleted) frontmatter title; sch property
+reads (PTC1/PTC3 identities).
 
 #### BB-11 — the doc net tables and baseline omit D1.2/D2.2 (the buck catch-diode ground returns) from every net row: two more pins in the never-guess gap, not flagged by the baseline's own unresolved list (LOW/MEDIUM lead, connectivity-record defect)
 

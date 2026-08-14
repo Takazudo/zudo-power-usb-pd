@@ -61,11 +61,10 @@ bench evidence.
 
 ## Human component reference
 
-zudo-pd does not yet generate per-record component pages, so there is no
-`/docs/components/records/` projection of this bundle. Until that exists, the
-human-facing references are the hand-written
-[STUSB4500 component page](/docs/components/stusb4500), the
+The hand-authored `components/stusb4500.md` page was deleted in the
+components-docs-restructure purge (#136); its content moved into the
 [Board A overview](/docs/overview/board-a-usb-pd-core) (net table this bundle's
-interactions assert), the [STUSB4500 pinout guide](/docs/inbox/stusb4500-pinout), and the
+interactions assert). Other human-facing references are the
+[STUSB4500 pinout guide](/docs/inbox/stusb4500-pinout) and the
 [NVM programming setup](/docs/inbox/nvm-programming). Where any of those disagree with
 this bundle's JSON files, the JSON bundle is correct.

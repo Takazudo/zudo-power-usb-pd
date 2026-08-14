@@ -107,7 +107,7 @@ Voltage
 
 <Info title="Current Design Uses USBLC6-2SC6">
 
-The v1.1 design uses **[USBLC6-2SC6](../components/usblc6-2sc6.md)** (D4) instead of ESDA25L for CC line protection. USBLC6-2SC6 provides:
+The v1.1 design uses **USBLC6-2SC6** (D4) instead of ESDA25L for CC line protection (D4 was later removed entirely in the 2-board split — see [Board A's deltas](../overview/board-a-usb-pd-core.md#deltas-vs-the-current-single-board-circuit)). USBLC6-2SC6 provides:
 
 - Lower clamping voltage (~17V vs ~44V)
 - Additional VBUS protection channel
@@ -320,8 +320,8 @@ Each TVS is matched to the voltage of the line it protects.
 
 ## See Also
 
-- [USBLC6-2SC6 Documentation](../components/usblc6-2sc6.md) - Full component specifications
-- [ESDA25L Documentation](../components/esda25l.md) - Legacy component (replaced by USBLC6-2SC6)
-- [SMAJ15A Documentation](../components/smaj15a.md) - VBUS protection TVS
-- [SD05 Documentation](../components/sd05.md) - 5V rail protection TVS
+- [USBLC6-2SC6 removal background](../overview/board-a-usb-pd-core.md#deltas-vs-the-current-single-board-circuit) - D4 was deleted entirely in the 2-board split, not relocated
+- ESDA25L - Legacy component (replaced by USBLC6-2SC6, then USBLC6-2SC6 itself removed; no current design page)
+- [SMAJ15A (Protection Stage)](../overview/board-b-synth-power.md#protection-stage) - VBUS protection TVS
+- [SD05 (Protection Stage)](../overview/board-b-synth-power.md#protection-stage) - 5V rail protection TVS (superseded by SMAJ6.5A — see decision (a))
 - [USB Type-C Pinout](./usb-type-c-pinout.md) - Understanding CC and other pins
