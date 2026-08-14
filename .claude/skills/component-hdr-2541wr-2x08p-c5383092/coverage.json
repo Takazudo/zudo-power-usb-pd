@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "coverage": [
+    {
+      "coverage_id": "cov-hdr-identity",
+      "record_id": "rec-hdr-2541wr-2x08p-c5383092",
+      "domain": "manufacturer and MPN identity (LCSC C5383092)",
+      "status": "COVERED",
+      "reason": "LCSC's own distributor catalog page names manufacturer HanElectricity and MPN 2541WR-2x08P for C5383092 (x/X casing variance only), matching the v0.4.0 as-ordered BOM row -- the CONFIRMED distributor-identity lane closes this domain",
+      "fact_ids": [
+        "fact-hdr-lcsc-identity"
+      ],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-hdr-electrical",
+      "record_id": "rec-hdr-2541wr-2x08p-c5383092",
+      "domain": "electrical ratings vs the +12V/1.2A, +5V/0.5A, -12V/0.8A rail current budgets",
+      "status": "OPEN",
+      "reason": "voltage/current/dielectric/temperature/material ratings come from a mirror-hosted, generic-position-count manufacturer drawing with no primary confirmation, so the per-rail margin calculations stay nominal until a bench/thermal check",
+      "fact_ids": [
+        "fact-hdr-manufacturer",
+        "fact-hdr-voltage-rating",
+        "fact-hdr-current-rating-per-contact",
+        "fact-hdr-dielectric-withstand",
+        "fact-hdr-temperature-range",
+        "fact-hdr-contact-material-plating",
+        "fact-hdr-current-margin-plus12v",
+        "fact-hdr-current-margin-minus12v",
+        "fact-hdr-current-margin-plus5v"
+      ],
+      "blocking_fact_ids": [
+        "fact-hdr-manufacturer",
+        "fact-hdr-voltage-rating",
+        "fact-hdr-current-rating-per-contact",
+        "fact-hdr-dielectric-withstand",
+        "fact-hdr-temperature-range",
+        "fact-hdr-contact-material-plating",
+        "fact-hdr-current-margin-plus12v",
+        "fact-hdr-current-margin-minus12v",
+        "fact-hdr-current-margin-plus5v"
+      ]
+    },
+    {
+      "coverage_id": "cov-hdr-mechanical",
+      "record_id": "rec-hdr-2541wr-2x08p-c5383092",
+      "domain": "PCB footprint dimensional fit (drill diameter) and pin/pad geometry",
+      "status": "OPEN",
+      "reason": "the manufacturer's generic-family drawing recommends a 1.02mm PCB hole while the project's committed footprint uses ~1.10mm; not yet reconciled against an exact 2x08P drawing or bench-fit checked",
+      "fact_ids": [
+        "fact-hdr-drill-diameter-note"
+      ],
+      "blocking_fact_ids": [
+        "fact-hdr-drill-diameter-note"
+      ]
+    },
+    {
+      "coverage_id": "cov-hdr-keying",
+      "record_id": "rec-hdr-2541wr-2x08p-c5383092",
+      "domain": "physical key/polarization orientation",
+      "status": "OPEN",
+      "reason": "the doc explicitly states the 2x8 shrouded key/polarization-slot orientation is not verifiable from the netlist or any KiCad asset; it stands as a layout-phase checklist item",
+      "fact_ids": [
+        "fact-hdr-keying-not-netlist-verifiable"
+      ],
+      "blocking_fact_ids": [
+        "fact-hdr-keying-not-netlist-verifiable"
+      ]
+    },
+    {
+      "coverage_id": "cov-hdr-connectivity",
+      "record_id": "rec-hdr-2541wr-2x08p-c5383092",
+      "domain": "pin-pair rail assignment, GND moat, and board-b baseline connectivity",
+      "status": "OPEN",
+      "reason": "the doc-level pin-pair table is not promoted into the Ref.Pin-granularity board-b.json baseline, which explicitly lists GATE rail, CV rail, and GND(output stage) as unresolved for J10/J11 because J10 vs J11 physical-pin identity is not disambiguated",
+      "fact_ids": [
+        "fact-hdr-pin-pair-assignment",
+        "fact-hdr-gnd-moat-interactions",
+        "fact-hdr-misalignment-safety-note"
+      ],
+      "blocking_fact_ids": [
+        "fact-hdr-pin-pair-assignment",
+        "fact-hdr-gnd-moat-interactions",
+        "fact-hdr-misalignment-safety-note"
+      ]
+    }
+  ]
+}

@@ -964,7 +964,7 @@
       "lcsc": "C591344",
       "package": "CONN-TH_1217754-1",
       "owner_skill": "component-faston-c591344",
-      "identity_state": "UNRESOLVED",
+      "identity_state": "VERIFIED",
       "source_state": "AVAILABLE",
       "function": "FASTON 250 through-hole quick-connect terminal, output rail power tab",
       "placements": [
