@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "interactions": [
+    {
+      "interaction_id": "int-bzt52c11-gate-clamp",
+      "record_ids": [
+        "rec-bzt52c11-c92321"
+      ],
+      "fact_ids": [
+        "fact-bzt52c11-vz-window",
+        "fact-bzt52c11-knee-margin-15v",
+        "fact-bzt52c11-d8-orientation"
+      ],
+      "conditions": "D8 across the Q1 gate-source (cathode on VBUS_IN, anode on Net-(Q1-G)) bounds |Vgs| to the 10.4-11.6 V window in every reachable state that would otherwise exceed the AO3401A +/-12 V Vgs abs-max (unprogrammed 20 V PDO3 attach: -12.82 V unclamped; D5 clamp event with VBEN asserted: -20.77 V unclamped), with clamp current R12-limited to ~161 uA at 20 V and ~382 uA at 32.4 V per dec-e-q1-20v-gate-guard; sub-knee behavior at the 15 V operating point and gate soft-start with the added junction capacitance are the recorded bench residuals",
+      "verdict": "NEEDS BENCH"
+    }
+  ]
+}

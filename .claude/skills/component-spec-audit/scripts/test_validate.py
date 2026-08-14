@@ -119,10 +119,31 @@ class ComponentSpecValidatorTests(unittest.TestCase):
         with self.assertRaisesRegex(validator.ContractError, "placement count differs from reviewed assertion"):
             validator.validate_inventory(changed, self.schema, staged=True, root=validator.SYNTHETIC)
 
-    def test_partially_present_generator_specs_fail_closed(self):
+    def test_partially_present_generator_specs_staged_vs_strict(self):
+        # While the boards are being built, each board's spec lands in its own
+        # worktree, so staged mode validates the present board fully and leaves
+        # the absent board's placements unchecked (validate_all prints the
+        # STAGED-SKIP). Strict mode still fails closed on a partial pair.
         changed = copy.deepcopy(self.synthetic_data)
         changed["generator_specs"][1] = {"board": "board-b", "spec": "absent_board_b_spec.py"}
+        lines, generated = validator.validate_inventory(changed, self.schema, staged=True, root=validator.SYNTHETIC)
+        self.assertEqual(len(lines), 3)
+        # generated covers exactly the lines with a board-a placement; the
+        # board-b-only line is not silently invented from the absent spec.
+        self.assertEqual(set(generated), {"C23186", "C144397"})
+        self.assertTrue(all(item["board"] == "board-a" for entry in generated.values() for item in entry["placements"]))
         with self.assertRaisesRegex(validator.ContractError, "partially present"):
+            validator.validate_inventory(changed, self.schema, staged=False, root=validator.SYNTHETIC)
+
+    def test_partially_present_spec_still_catches_present_board_dnp_flip(self):
+        # The staged tolerance must not weaken checks on the board that IS
+        # present: flipping R17's reviewed DNP still mismatches the generator.
+        changed = copy.deepcopy(self.synthetic_data)
+        changed["generator_specs"][1] = {"board": "board-b", "spec": "absent_board_b_spec.py"}
+        validator.set_target(changed, "lines.line-c23186.placements.0.dnp", False)
+        changed["assertions"]["fitted_placements"] += 1
+        changed["assertions"]["dnp_placements"] -= 1
+        with self.assertRaisesRegex(validator.ContractError, "board/refdes or DNP mismatch"):
             validator.validate_inventory(changed, self.schema, staged=True, root=validator.SYNTHETIC)
 
     def test_generator_specs_must_declare_the_project_boards(self):

@@ -11,10 +11,10 @@
     }
   ],
   "assertions": {
-    "orderable_lines": 40,
-    "fitted_lines": 39,
+    "orderable_lines": 41,
+    "fitted_lines": 40,
     "dnp_or_hand_fit_lines": 2,
-    "fitted_placements": 79,
+    "fitted_placements": 80,
     "dnp_placements": 4
   },
   "exclusions": [
@@ -133,6 +133,24 @@
         {
           "board": "board-a",
           "refdes": "D5",
+          "dnp": false
+        }
+      ]
+    },
+    {
+      "line_id": "line-c92321",
+      "mpn": "BZT52C11-7-F",
+      "manufacturer": "Diodes Incorporated",
+      "lcsc": "C92321",
+      "package": "SOD-123_L2.8-W1.8-LS3.7-RD",
+      "owner_skill": "component-bzt52c11-c92321",
+      "identity_state": "VERIFIED",
+      "source_state": "AVAILABLE",
+      "function": "11V zener diode, Q1 gate-source clamp",
+      "placements": [
+        {
+          "board": "board-a",
+          "refdes": "D8",
           "dnp": false
         }
       ]
@@ -392,7 +410,7 @@
       "mpn": "PESD24VS1UB",
       "manufacturer": "Nexperia",
       "lcsc": "C85382",
-      "package": "SOD-523",
+      "package": "SOD-523_L1.2-W0.8-LS1.6-RD",
       "owner_skill": "component-pesd24vs1ub-c85382",
       "identity_state": "VERIFIED",
       "source_state": "AVAILABLE",

@@ -627,7 +627,7 @@
     {
       "record_id": "rec-pesd24vs1ub-c85382",
       "pin_map_id": "pinmap-pesd24vs1ub-c85382",
-      "canonical_sha256": "fe24b39f57e4f667b2fc9d7e09c66279f548c1a1a81c6a1b3dbbb6c28e49a8f1",
+      "canonical_sha256": "bf0233b53f4729263287405255c3ed94d3cb2cdee2e0772fa48fb5365a6a4582",
       "evidence_fact_ids": [
         "fact-pesd24vs1ub-manufacturer",
         "fact-pesd24vs1ub-identity"
@@ -647,7 +647,7 @@
           "function": "anode"
         }
       ],
-      "reviewer": "x-wt-teams manager, merge-time parity lock: 2-terminal TVS/ESD pin set re-reviewed against the bundle pin map and the KiCad symbol/footprint it names"
+      "reviewer": "x-wt-teams manager, merge-time parity lock: 2-terminal TVS/ESD pin set re-reviewed against the bundle pin map and the KiCad symbol/footprint it names; footprint field normalized to the real SOD-523_L1.2-W0.8-LS1.6-RD kicad_mod name by child-124 (board-a generator activation)"
     },
     {
       "record_id": "rec-ptc-smd1210p200tf-c20808",
@@ -1060,6 +1060,31 @@
       "trust_status": "PROJECT-LOCKED",
       "critical_pins": [],
       "reviewer": "issue-125 worktree child (Claude Fable 5), foreground review against the existing RVT1A471M0607_C335982 symbol and CAP-SMD_BD6.3-L6.6-W6.6-FD footprint"
+    },
+    {
+      "record_id": "rec-bzt52c11-c92321",
+      "pin_map_id": "pinmap-bzt52c11-c92321",
+      "canonical_sha256": "d43e89f644e713894901cfcd3bfb40773f6ce5807bd2148021f9c3458f85bf0d",
+      "evidence_fact_ids": [
+        "fact-bzt52c11-polarity",
+        "fact-bzt52c11-d8-orientation"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [
+        {
+          "symbol_pin": "1",
+          "name": "K",
+          "footprint_pad": "1",
+          "function": "cathode (band end); board-a D8: VBUS_IN = Q1 source"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "A",
+          "footprint_pad": "2",
+          "function": "anode; board-a D8: Net-(Q1-G) = Q1 gate"
+        }
+      ],
+      "reviewer": "issue-124 worktree child (Claude Fable 5), DS18004 polarity + generator-spec lock review"
     }
   ]
 }
