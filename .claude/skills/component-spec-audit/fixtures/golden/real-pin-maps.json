@@ -499,6 +499,156 @@
         }
       ],
       "reviewer": "issue-108 worktree child (Claude Fable 5) foreground review against board-split-decision.md's LOCKED Pinout table; PROJECT-LOCKED because evidence is the project's own locked interface decision, not manufacturer-primary pin-1 identification, and no KiCad symbol/footprint exists yet to cross-check; independent second-reviewer pass pending"
+    },
+    {
+      "record_id": "rec-smaj15a-c571368",
+      "pin_map_id": "pinmap-smaj15a-c571368",
+      "canonical_sha256": "9b5387bac8d9af7c5c7daf7e7208af40c46a458c2dc66a8d53c4c06dcc888855",
+      "evidence_fact_ids": [
+        "fact-smaj15a-manufacturer",
+        "fact-smaj15a-identity"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [
+        {
+          "symbol_pin": "1",
+          "name": "C",
+          "footprint_pad": "1",
+          "function": "cathode (color band end)"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "A",
+          "footprint_pad": "2",
+          "function": "anode"
+        }
+      ],
+      "reviewer": "x-wt-teams manager, merge-time parity lock: 2-terminal TVS/ESD pin set re-reviewed against the bundle pin map and the KiCad symbol/footprint it names"
+    },
+    {
+      "record_id": "rec-sd05-c502527",
+      "pin_map_id": "pinmap-sd05-c502527",
+      "canonical_sha256": "a7e7e418e1922ad5e84b5bc870d2bb4fda38f196ab73adb415f6ff52b2da74a8",
+      "evidence_fact_ids": [
+        "fact-sd05-manufacturer",
+        "fact-sd05-identity"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [
+        {
+          "symbol_pin": "1",
+          "name": "A",
+          "footprint_pad": "1",
+          "function": "anode"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "K",
+          "footprint_pad": "2",
+          "function": "cathode (band end)"
+        }
+      ],
+      "reviewer": "x-wt-teams manager, merge-time parity lock: 2-terminal TVS/ESD pin set re-reviewed against the bundle pin map and the KiCad symbol/footprint it names"
+    },
+    {
+      "record_id": "rec-cand-smf6-0a-c123790",
+      "pin_map_id": "pinmap-cand-smf6-0a-c123790",
+      "canonical_sha256": "2a6658173444910269f5880d7f0036021c37075fe6f5267f5c19ba2713bb0a4f",
+      "evidence_fact_ids": [
+        "fact-cand-smf6-0a-manufacturer",
+        "fact-cand-smf6-0a-identity"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [
+        {
+          "symbol_pin": "1",
+          "name": "K",
+          "footprint_pad": "1",
+          "function": "cathode (band end)"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "A",
+          "footprint_pad": "2",
+          "function": "anode"
+        }
+      ],
+      "reviewer": "x-wt-teams manager, merge-time parity lock: 2-terminal TVS/ESD pin set re-reviewed against the bundle pin map and the KiCad symbol/footprint it names"
+    },
+    {
+      "record_id": "rec-cand-smaj6-5a-c87267",
+      "pin_map_id": "pinmap-cand-smaj6-5a-c87267",
+      "canonical_sha256": "ab3f14df60a02383698be17b6aecb5c8a6c8785ea772ea88b06dc0e8fbc5311d",
+      "evidence_fact_ids": [
+        "fact-cand-smaj6-5a-manufacturer",
+        "fact-cand-smaj6-5a-identity"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [
+        {
+          "symbol_pin": "1",
+          "name": "C",
+          "footprint_pad": "1",
+          "function": "cathode (band end)"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "A",
+          "footprint_pad": "2",
+          "function": "anode"
+        }
+      ],
+      "reviewer": "x-wt-teams manager, merge-time parity lock: 2-terminal TVS/ESD pin set re-reviewed against the bundle pin map and the KiCad symbol/footprint it names"
+    },
+    {
+      "record_id": "rec-cand-smaj6-0a-c5353156",
+      "pin_map_id": "pinmap-cand-smaj6-0a-c5353156",
+      "canonical_sha256": "15ec67bb896faed6188ff41ed9b6efc76f10df287f441aad85fcde3022573973",
+      "evidence_fact_ids": [
+        "fact-cand-smaj6-0a-manufacturer",
+        "fact-cand-smaj6-0a-identity"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [
+        {
+          "symbol_pin": "1",
+          "name": "C",
+          "footprint_pad": "1",
+          "function": "cathode (band end)"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "A",
+          "footprint_pad": "2",
+          "function": "anode"
+        }
+      ],
+      "reviewer": "x-wt-teams manager, merge-time parity lock: 2-terminal TVS/ESD pin set re-reviewed against the bundle pin map and the KiCad symbol/footprint it names"
+    },
+    {
+      "record_id": "rec-pesd24vs1ub-c85382",
+      "pin_map_id": "pinmap-pesd24vs1ub-c85382",
+      "canonical_sha256": "fe24b39f57e4f667b2fc9d7e09c66279f548c1a1a81c6a1b3dbbb6c28e49a8f1",
+      "evidence_fact_ids": [
+        "fact-pesd24vs1ub-manufacturer",
+        "fact-pesd24vs1ub-identity"
+      ],
+      "trust_status": "PROJECT-LOCKED",
+      "critical_pins": [
+        {
+          "symbol_pin": "1",
+          "name": "K",
+          "footprint_pad": "1",
+          "function": "cathode (marking bar indicates pin 1)"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "A",
+          "footprint_pad": "2",
+          "function": "anode"
+        }
+      ],
+      "reviewer": "x-wt-teams manager, merge-time parity lock: 2-terminal TVS/ESD pin set re-reviewed against the bundle pin map and the KiCad symbol/footprint it names"
     }
   ]
 }
