@@ -74,6 +74,8 @@ export const CIRCUIT_SELECTION: InstanceSelection = {
     "rec-jst-b6b-xh-a",
     // component-pesd24vs1ub-c85382
     "rec-pesd24vs1ub-c85382",
+    // component-bzt52c11-c92321 (decision e: D8 gate-clamp zener)
+    "rec-bzt52c11-c92321",
     // component-lm2596s-adj-c347423
     "rec-lm2596s-adj-c347423",
     // component-cya1265-100uh-c19268674
@@ -181,6 +183,9 @@ export const CIRCUIT_SELECTION: InstanceSelection = {
     // component-pesd24vs1ub-c85382
     "src-pesd24vs1ub-nexperia-primary", // rec-pesd24vs1ub-c85382
     "src-pesd24vs1ub-lcsc-identity", // rec-pesd24vs1ub-c85382
+    // component-bzt52c11-c92321 (decision e: D8 gate-clamp zener)
+    "src-bzt52c11-diodes-primary", // rec-bzt52c11-c92321
+    "src-bzt52c11-lcsc-identity", // rec-bzt52c11-c92321
     // component-lm2596s-adj-c347423
     "src-lm2596-umw-ds", // rec-lm2596s-adj-c347423
     "src-lm2596-schematic-dcdc", // rec-lm2596s-adj-c347423
@@ -332,6 +337,9 @@ export const CIRCUIT_SELECTION: InstanceSelection = {
     // component-pesd24vs1ub-c85382
     "src-pesd24vs1ub-nexperia-primary",
     "src-pesd24vs1ub-lcsc-identity",
+    // component-bzt52c11-c92321 (decision e: D8 gate-clamp zener)
+    "src-bzt52c11-diodes-primary",
+    "src-bzt52c11-lcsc-identity",
     // component-lm2596s-adj-c347423
     "src-lm2596-umw-ds",
     "src-lm2596-schematic-dcdc",

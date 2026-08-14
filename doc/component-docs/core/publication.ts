@@ -136,9 +136,9 @@ export const FIELD_KEYS = [
   // --- corpus aggregates ---------------------------------------------------
   "corpus.counts",
   // --- assets --------------------------------------------------------------
+  // (led-lamp's `asset.footprintPreview` / `asset.modelPreview` keys are not
+  // ported: the 3D/preview feature has no emitter here — see view-model.ts.)
   "asset.datasheetPdf",
-  "asset.footprintPreview",
-  "asset.modelPreview",
   "asset.binary",
 ] as const;
 
@@ -379,6 +379,22 @@ export class PublicationPolicy {
       fail("STALE_SELECTION", "selection names instances the provider does not have", {
         missingRecords: missingRecords.sort(byCodeUnit),
         missingSources: missingSources.sort(byCodeUnit),
+      });
+    }
+    // The `expect` counts pin BOTH sides. Selection-side first: a selection
+    // list that is shorter than the asserted corpus is exactly how a new
+    // bundle's record once shipped with no published page — the provider had
+    // it, the counts were bumped, and only the ID list was left behind.
+    if (this.#selection.expect.records !== this.#selection.recordIds.length) {
+      fail("STALE_SELECTION", "selection record count does not match the asserted corpus", {
+        expected: this.#selection.expect.records,
+        actual: this.#selection.recordIds.length,
+      });
+    }
+    if (this.#selection.expect.sources !== this.#selection.sourceIds.length) {
+      fail("STALE_SELECTION", "selection source count does not match the asserted corpus", {
+        expected: this.#selection.expect.sources,
+        actual: this.#selection.sourceIds.length,
       });
     }
     if (this.#selection.expect.records !== availableRecordIds.length) {

@@ -283,6 +283,19 @@ export function fitLabel(dnp: boolean): SafeText {
 }
 
 /**
+ * Line-level fit label that refuses to flatten a mixed line.
+ *
+ * One line can be fitted on one board and DNP on another; labelling that line
+ * with either single state would tell a reader building one of the boards the
+ * wrong thing, so a mixed line says so and defers to the per-placement table.
+ */
+export function lineFitLabel(dnp: boolean, placements: readonly PublicPlacement[]): SafeText {
+  const states = new Set(placements.map((placement) => placement.dnp));
+  if (states.size > 1) return literal("Mixed — see per-placement fit");
+  return fitLabel(dnp);
+}
+
+/**
  * How much of a record's coverage is unresolved.
  *
  * The denominator is the point. A bare "0 open" invites the reading "nothing

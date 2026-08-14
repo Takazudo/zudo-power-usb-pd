@@ -35,7 +35,7 @@ import { readProviderJson } from "./read.ts";
  * proven structurally instead — see the module comment in `core/scan.ts`.
  */
 export const DENIED_PROVIDER_KEYS: readonly string[] = [
-  // --- the eight led-lamp's matrix denies ---------------------------------
+  // --- the seven led-lamp's matrix denies ---------------------------------
   "sha256",
   "evidence_extract",
   "alternate_authoritative_url",

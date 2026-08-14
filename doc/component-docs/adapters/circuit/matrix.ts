@@ -184,8 +184,6 @@ export const CIRCUIT_PUBLICATION_MATRIX: PublicationMatrix = {
   // Same reason as the `reference.*` block above: no 3D/document reference
   // feature is ported, so these assets never exist to publish.
   "asset.datasheetPdf": "DENY",
-  "asset.footprintPreview": "DENY",
-  "asset.modelPreview": "DENY",
   // No catch-all binary publication is permitted.
   "asset.binary": "DENY",
 };

@@ -119,6 +119,7 @@ function identity(input: IdentityInput): PublicRecordIdentity {
     placements: (input.placements ?? [["board-l", "U1"]]).map(([board, refdes]) => ({
       board: t(board),
       refdes: t(refdes),
+      dnp: input.dnp ?? false,
     })),
   };
 }
@@ -297,11 +298,6 @@ function model(
     provider: { id: t("fixture-provider"), contractVersion: 1 },
     corpus: corpus(records),
     records,
-    // Always empty, matching the real circuit adapter: zudo-pd has no 3D
-    // assets, so `references.ts` is not ported and no record ever has a
-    // footprint reference to preview (every fixture record's own `reference`
-    // is `null` too).
-    packagePreviews: [],
     integration,
   };
 }

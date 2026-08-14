@@ -11,6 +11,9 @@
  *     `shell: true`;
  *   - cwd is the repository root (the validator resolves its own paths from
  *     `__file__`, so this is belt-and-braces, not a requirement);
+ *   - `--strict` always: CI's PR gate runs the validator in strict mode, so
+ *     the doc build must validate under the same contract — a bare (staged)
+ *     invocation here could pass on evidence the PR gate rejects;
  *   - `--online` is never passed: generation must work with no network, and
  *     the online mode mutates retained evidence.
  */
@@ -46,9 +49,9 @@ export function createPythonValidator(options: PythonValidatorOptions = {}): Val
     const versionCheck = await assertPythonVersion(pythonBin, cwd);
     if (versionCheck) return versionCheck;
 
-    const command = [pythonBin, scriptPath];
+    const command = [pythonBin, scriptPath, "--strict"];
     try {
-      const { stdout, stderr } = await execFileAsync(pythonBin, [scriptPath], {
+      const { stdout, stderr } = await execFileAsync(pythonBin, [scriptPath, "--strict"], {
         cwd,
         maxBuffer: 16 * 1024 * 1024,
         windowsHide: true,

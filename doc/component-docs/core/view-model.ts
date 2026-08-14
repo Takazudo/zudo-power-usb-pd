@@ -65,10 +65,16 @@ export type CorpusSummary = {
   readonly dnpOrHandFitLines: number;
 };
 
-/** Where a record's part is placed on a board. */
+/**
+ * Where a record's part is placed on a board. `dnp` is per-placement truth:
+ * one line can be fitted on one board and DNP on another (board-a R17/R18 are
+ * DNP provisions while board-b R3 is fitted, all on the same 5.1k line), so
+ * fit state must survive to each row, not only as a line-level rollup.
+ */
 export type PublicPlacement = {
   readonly board: SafeText;
   readonly refdes: SafeText;
+  readonly dnp: boolean;
 };
 
 /** Identity of one orderable line, as published. */
@@ -228,31 +234,15 @@ export type PublicDocumentReference = {
   readonly documentKind: PublicDocumentKind;
 };
 
-export type PublicTransform3d = {
-  readonly x: number;
-  readonly y: number;
-  readonly z: number;
-};
-
-/** A safe local WRL descriptor, derived from one canonical KiCad footprint. */
-export type PublicFootprintReference = {
-  readonly packageId: SafeText;
-  readonly footprintName: SafeText;
-  readonly footprintPath: SafeText;
-  readonly modelPath: SafeText;
-  readonly offset: PublicTransform3d;
-  readonly rotation: PublicTransform3d;
-  readonly scale: PublicTransform3d;
-};
-
+/**
+ * The led-lamp 3D/footprint-preview seam (`PublicTransform3d`,
+ * `PublicFootprintReference`, `PublicPackagePreview`, `packagePreviews`,
+ * the `asset.*` field keys) was deliberately NOT ported: zudo-pd has no 3D
+ * assets and the types had no constructor here. Re-porting starts from
+ * led-lamp's view-model.ts, not from a vestigial copy in this file.
+ */
 export type PublicRecordReference = {
   readonly document: PublicDocumentReference;
-  readonly footprint: PublicFootprintReference;
-};
-
-/** The deduplicated renderer input; records retain lookup through packageId. */
-export type PublicPackagePreview = PublicFootprintReference & {
-  readonly recordIds: readonly SafeText[];
 };
 
 /** One published record page's complete data. */
@@ -265,11 +255,10 @@ export type PublicRecord = {
   readonly interactions: readonly PublicInteraction[];
   readonly pinMaps: readonly PublicPinMap[];
   /**
-   * `null` always for zudo-pd: `PublicFootprintReference` requires
-   * `modelPath`/`offset`/`rotation`/`scale`, and this project has no 3D
-   * assets at all (no `.wrl`/`.step` audit pairs — see `matrix.ts`, which
-   * denies every `reference.document.*`/`reference.footprint.*`/
-   * `reference.model.*` field).
+   * `null` always for zudo-pd: this project publishes no reviewed
+   * single-document shortcut (see `matrix.ts`, which denies every
+   * `reference.document.*` field, and `selection.ts`, whose
+   * `documentSelections` is deliberately empty).
    */
   readonly reference: PublicRecordReference | null;
 };
@@ -359,7 +348,5 @@ export type PublicViewModel = {
   readonly corpus: CorpusSummary;
   /** Deterministically ordered: inventory-line order, parents before children. */
   readonly records: readonly PublicRecord[];
-  /** Exactly the unique packages referenced by records, in first-record order. */
-  readonly packagePreviews: readonly PublicPackagePreview[];
   readonly integration: readonly PublicIntegrationRule[];
 };

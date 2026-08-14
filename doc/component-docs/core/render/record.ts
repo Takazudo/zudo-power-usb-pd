@@ -78,6 +78,7 @@ import {
   fitLabel,
   glossFor,
   integrationRoute,
+  lineFitLabel,
   openDomainSummary,
   orderedFactClasses,
   ownerSkillOf,
@@ -244,7 +245,7 @@ function identitySection(record: PublicRecord): RootContent[] {
       // search their way here by the other name.
       ...(aliases.length === 0 ? [] : [field("Also known as", termList(aliases))]),
       ...(ownerSkill === null ? [] : [field("Owner skill", [code(ownerSkill)])]),
-      field("Fit", [text(fitLabel(identity.dnp))]),
+      field("Fit", [text(lineFitLabel(identity.dnp, identity.placements))]),
       field("Identity state", [text(identity.identityState)]),
       field("Source state", [text(identity.sourceState)]),
       field("Coverage", [text(openDomainSummary(record.coverage))]),
@@ -271,9 +272,14 @@ function placementSection(record: PublicRecord): RootContent[] {
         ),
       ),
     ]),
-    table(
-      [literal("Board"), literal("Reference designator")],
-      placements.map((placement) => [[text(placement.board)], [code(placement.refdes)]]),
+    scrollableTable(
+      "placements",
+      [literal("Board"), literal("Reference designator"), literal("Fit")],
+      placements.map((placement) => [
+        [text(placement.board)],
+        [code(placement.refdes)],
+        [text(fitLabel(placement.dnp))],
+      ]),
     ),
   ];
 }
@@ -1031,9 +1037,11 @@ function termList(terms: readonly SafeText[]): PhrasingContent[] {
  * `/docs/components/records/` — the landing page the `records/` directory needs.
  *
  * This site's navigation is its filesystem: a directory without an `index.mdx`
- * has no landing page and does not present correctly in the sidebar. The
- * package's `CategoryNav` component only takes a top-level category name, so it
- * cannot list a nested directory — hence a hand-built list here.
+ * has no landing page and does not present correctly in the sidebar. (This
+ * project's `CategoryNav` wrapper resolves `category` as a slug path, nested
+ * directories included — the landing page uses it that way — but this page
+ * wants names AND record IDs per entry, which the card grid does not carry,
+ * hence a hand-built list.)
  *
  * Kept deliberately thin. The catalog is where records are compared; this page
  * exists to be the category's front door and to get a reader to the right one,
