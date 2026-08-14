@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "interactions": [
+    {
+      "interaction_id": "int-usb-type-c-009-cc-stusb4500",
+      "record_ids": ["rec-usb-type-c-009-c456012"],
+      "fact_ids": [
+        "fact-usb-type-c-009-cc-pins",
+        "fact-usb-type-c-009-cc-topology",
+        "fact-usb-type-c-009-pad-set"
+      ],
+      "conditions": "Post-fix board-a topology routes J1.A5/J1.B5 directly to STUSB4500 U1.2/U1.4 with 0-ohm R19/R20 jumpers into the debounce nets, DNP R17/R18 Rd provisions (STUSB4500 presents its internal Rd) and DNP D6/D7 ESD provisions; PD negotiation requires intact CC continuity through the receptacle — continuity-map both CC pads with no cable and both plug orientations on the dead v4 boards before any board-a order",
+      "verdict": "NEEDS BENCH"
+    },
+    {
+      "interaction_id": "int-usb-type-c-009-vbus-in",
+      "record_ids": ["rec-usb-type-c-009-c456012"],
+      "fact_ids": [
+        "fact-usb-type-c-009-rating-voltage",
+        "fact-usb-type-c-009-rating-current",
+        "fact-usb-type-c-009-pd-contract-stress",
+        "fact-usb-type-c-009-vbus-topology"
+      ],
+      "conditions": "J1.A9/J1.B9 feed VBUS_IN shared with U1 VBUS sense/discharge, C1 10 uF and C2 100 nF decoupling, D5 SMAJ20A 20 V-standoff TVS, R14 470-ohm discharge path, Q1 load-switch input and R11 VBEN divider; the negotiated 15 V / 3 A contract exceeds the mirror-stated 5 V rating and uses the full 3 A rating — verify thermal and contact behavior at 15 V on the bench",
+      "verdict": "NEEDS BENCH"
+    }
+  ]
+}

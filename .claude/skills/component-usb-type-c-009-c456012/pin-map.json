@@ -1,17 +1,12 @@
 {
   "schema_version": 1,
-  "contract": "One lock per committed pin map. canonical_sha256 locks the reviewed symbol/footprint/pin set, evidence_fact_ids cite same-record evidence, and trust_status must match that evidence: TRUSTED requires a primary-source-confirmed closure, UNSOURCED requires at least one UNSOURCED or unavailable-source fact. Empty until component bundles land; strict mode requires exact pin-map parity.",
-  "locks": [
+  "pin_maps": [
     {
-      "record_id": "rec-usb-type-c-009-c456012",
       "pin_map_id": "pinmap-usb-type-c-009",
-      "canonical_sha256": "4c193736d33eb9f46e64dfd472470e746fa0e427f926c1cefa53c7c6462f9509",
-      "evidence_fact_ids": [
-        "fact-usb-type-c-009-pad-set",
-        "fact-usb-type-c-009-cc-pins"
-      ],
-      "trust_status": "PROJECT-LOCKED",
-      "critical_pins": [
+      "record_id": "rec-usb-type-c-009-c456012",
+      "symbol": "USB-TYPE-C-009",
+      "footprint": "TYPE-C-SMD_TYPE-C-6P",
+      "pins": [
         {
           "symbol_pin": "7",
           "name": "EH",
@@ -55,7 +50,7 @@
           "function": "ground return duplicate contact"
         }
       ],
-      "reviewer": "issue-109 worktree child (Claude Fable 5), project-asset review only"
+      "reviewed_by": "project KiCad symbol/footprint lock (easyeda2kicad import); physical contact equivalence NEEDS BENCH"
     }
   ]
 }
