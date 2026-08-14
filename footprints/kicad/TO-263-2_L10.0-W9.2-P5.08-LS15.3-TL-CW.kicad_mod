@@ -24,7 +24,7 @@
 	(fp_circle (center -6.45 -5.00) (end -6.42 -5.00) (layer F.Fab) (width 0.06))
 	(fp_circle (center -2.30 -4.00) (end -2.10 -4.00) (layer F.SilkS) (width 0.40))
 	(fp_circle (center -6.35 -2.54) (end -5.95 -2.54) (layer Cmts.User) (width 0.80))
-	(model "${EASYEDA2KICAD}/easyeda2kicad.3dshapes/TO-263-2_L10.2-W8.7-H4.5-LS15.2-P2.54.wrl"
+	(model "${KIPRJMOD}/../../footprints/kicad/zudo-pd.3dshapes/TO-263-2_L10.2-W8.7-H4.5-LS15.2-P2.54.wrl"
 		(offset (xyz 1.380 0.000 -0.000))
 		(scale (xyz 1 1 1))
 		(rotate (xyz 0 0 90))

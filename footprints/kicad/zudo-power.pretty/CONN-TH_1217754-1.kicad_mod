@@ -19,7 +19,7 @@
 	(fp_circle (center -1.10 -3.64) (end -1.07 -3.64) (layer F.Fab) (width 0.06))
 	(fp_circle (center -0.00 -2.54) (end 0.30 -2.54) (layer F.Fab) (width 0.60))
 	(fp_circle (center -0.00 2.54) (end 0.30 2.54) (layer F.Fab) (width 0.60))
-	(model "${EASYEDA2KICAD}/easyeda2kicad.3dshapes/CONN-TH_1217754-1.wrl"
+	(model "${KIPRJMOD}/../../footprints/kicad/zudo-pd.3dshapes/CONN-TH_63951-1.wrl"
 		(offset (xyz 0.000 -7.000 0.000))
 		(scale (xyz 1 1 1))
 		(rotate (xyz 0 0 0))

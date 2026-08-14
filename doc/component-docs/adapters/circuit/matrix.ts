@@ -11,20 +11,20 @@
  * refactoring. Denied fields are the ones that leak audit machinery,
  * distribution-controlled content, or internal review state.
  *
- * This is a port of led-lamp's matrix with two zudo-pd-specific extensions,
- * both DENY:
+ * This is a port of led-lamp's matrix with two zudo-pd-specific extensions:
  *
  *   - `record.ownerSkill` / `integration.ownerSkill` — zudo-pd runs with
  *     `claudeResources: false` (see `doc/src/config/settings.ts`), so
  *     `/docs/claude-skills/<name>/` does not exist as a route. Publishing the
  *     owner-skill name would be a dead reciprocal link, not an existing one —
- *     the opposite of led-lamp's reasoning for PUBLISH here.
- *   - the `reference.model.*` / `reference.footprint.path` /
- *     `reference.package.recordIds` fields — zudo-pd has no `.wrl`/`.step`
- *     audit pairs and no footprint-preview emitter yet, so nothing here ever
- *     produces a value for them. They stay DENY until the assets and the
- *     emitter land, and a model appearing before that decision is reviewed
- *     fails loudly on `publishRequired` rather than publishing itself.
+ *     the opposite of led-lamp's reasoning for PUBLISH here. Stays DENY.
+ *   - the `reference.footprint.path` / `reference.model.*` fields — each
+ *     started DENY because zudo-pd had neither reviewed assets nor an
+ *     emitter for them, and each flipped to PUBLISH once both existed: assets
+ *     appearing before that review fail loudly on `publishRequired` rather
+ *     than publishing themselves, so a flip is only ever safe in hindsight.
+ *     See the inline comment at each field for its own landing wave.
+ *     `reference.package.recordIds` has no emitter yet and stays DENY.
  */
 
 import type { PublicationMatrix } from "../../core/publication.ts";
@@ -183,15 +183,21 @@ export const CIRCUIT_PUBLICATION_MATRIX: PublicationMatrix = {
   // the preview asset URL (that is derived from `footprintName` alone).
   "reference.footprint.path": "PUBLISH",
 
-  // Still denied: no renderer reads them yet. `reference.package.recordIds`
-  // has no consumer, and `reference.model.*` needs reviewed `.wrl`/`.step`
-  // pairs, of which this repository has none. Publishing a field nothing
-  // renders is exactly what the matrix exists to prevent, so these flip when
-  // their consumer lands — not before.
-  "reference.model.path": "DENY",
-  "reference.model.offset": "DENY",
-  "reference.model.rotation": "DENY",
-  "reference.model.scale": "DENY",
+  // Flipped from DENY, same precondition as `reference.footprint.path` above:
+  // `ui/component-references.tsx`'s `ModelCard`/`ResolvedModel` (a static
+  // "Open the VRML model" link, not the interactive WebGL viewer — that is a
+  // separate, later port) was already the emitter waiting on assets. Wave 7
+  // (`footprints/kicad/zudo-pd.3dshapes/`) landed a reviewed `.wrl`/`.step`
+  // pair for every package `easyeda2kicad` could supply against the central
+  // inventory's LCSC ids (27 of 27 — see the wave-7 coverage manifest). A
+  // package `readPackage()` still cannot resolve renders its unresolved card
+  // exactly as before; this flip only stops denying the ones that did.
+  "reference.model.path": "PUBLISH",
+  "reference.model.offset": "PUBLISH",
+  "reference.model.rotation": "PUBLISH",
+  "reference.model.scale": "PUBLISH",
+
+  // Still denied: no renderer reads this yet.
   "reference.package.recordIds": "DENY",
 
   "corpus.counts": "PUBLISH",

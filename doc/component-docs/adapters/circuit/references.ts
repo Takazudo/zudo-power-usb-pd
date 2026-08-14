@@ -13,10 +13,14 @@
  * `CircuitPackageReference` carries `modelPath`/`offset`/`rotation`/`scale` as
  * required fields.
  *
- * zudo-pd has zero `.wrl`/`.step` files. Its footprints either carry no
- * `(model …)` line at all or point at `${EASYEDA2KICAD}` / a stale `tmp/`
- * path, neither of which resolves to anything committed. Porting led-lamp's
- * version verbatim would fail every record on the first footprint.
+ * At the time this fork was written, zudo-pd had zero `.wrl`/`.step` files:
+ * every footprint either carried no `(model …)` line at all or pointed at
+ * `${EASYEDA2KICAD}` / a stale `tmp/` path, none of which resolved to
+ * anything committed. Porting led-lamp's version verbatim would have failed
+ * every record on the first footprint. Wave 7 later sourced a reviewed pair
+ * for every package `easyeda2kicad` could supply one for (27 of 27 published
+ * packages), but the fork stands: a package the tool genuinely cannot supply
+ * a model for is not a hypothetical this design has to keep tolerating.
  *
  * So the model half is resolved OPTIONALLY here: every check led-lamp performs
  * still runs, and every one of them is still fatal for a model that claims to

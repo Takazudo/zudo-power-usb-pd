@@ -315,9 +315,10 @@ function projectFootprint(
       modelUnresolvedReason: safeText(reason, { field: `${at}.modelUnresolvedReason` }),
     };
   }
-  // Not reachable while `MODEL_ROOT` holds no assets. When it does, the
-  // `reference.model.*` decisions are still DENY until reviewed, and
-  // `publishRequired` fails here rather than publishing them by default.
+  // Reachable since wave 7 landed reviewed `.wrl`/`.step` pairs in
+  // `MODEL_ROOT` and `reference.model.*` flipped to PUBLISH in matrix.ts.
+  // Before that, this branch was dead: `publishRequired` failed here rather
+  // than publish a field nothing supplied a value for.
   return {
     ...identity,
     model: {

@@ -2,12 +2,15 @@
  * The reference contract against the REAL corpus.
  *
  * led-lamp's version of this file asserts a curated document for every record
- * and a resolved WRL for every package. Only the first half holds here, and
- * only for 40 of 41 records, so the same questions are asked in both
- * directions: a curated record must produce the reviewed label and its
- * source's own URL, an excepted or model-less one must reach an explicitly
- * unresolved state that names its reason, and the collapse figure is
- * retargeted from led-lamp's 32 records → 22 packages to zudo-pd's 41 → 27.
+ * and a resolved WRL for every package. The document half holds for 40 of 41
+ * records here (one honest gap, see below); the model half was a documented
+ * exception through wave 6 (zero `.wrl`/`.step` files existed) and now also
+ * holds in full since wave 7 sourced one for every package — so the same
+ * questions are asked in both directions: a curated record must produce the
+ * reviewed label and its source's own URL, an excepted one must reach an
+ * explicitly unresolved state that names its reason, and the collapse figure
+ * is retargeted from led-lamp's 32 records → 22 packages to zudo-pd's
+ * 41 → 27.
  */
 
 import assert from "node:assert/strict";
@@ -265,28 +268,35 @@ describe("KiCad preview manifest", () => {
   });
 });
 
-describe("the 3D model is optional, and says why", () => {
-  it("leaves every package model unresolved with a stated reason", () => {
-    // This repository has no `.wrl`/`.step` files at all. led-lamp's
-    // `readPackage()` would fail the build on the first footprint.
+describe("the 3D model is optional, and best-effort resolved it in full", () => {
+  it("resolves a reviewed model for every package (27 of 27, wave 7)", () => {
+    // Wave 7 sourced a reviewed `.wrl`/`.step` pair via `easyeda2kicad` for
+    // every package the tool could supply one for, against the central
+    // inventory's LCSC ids — including the 3 packages that previously carried
+    // no `(model …)` line at all. The real corpus therefore has zero
+    // unresolved packages today; `readPackage()`'s unresolved branches (no
+    // `(model …)` line, or one pointing outside `MODEL_ROOT`) stay live code
+    // for whatever a future promoted/candidate part cannot supply, but this
+    // corpus no longer exercises either case — see the wave-7 coverage
+    // manifest for the one LCSC substitution that made this possible
+    // (`CAP-SMD_BD10.0-L10.3-W10.3-LS11.0-FD`'s first inventory line returns a
+    // mismatched, undersized model; its sibling line does not).
     for (const entry of references.packages) {
-      assert.equal(entry.model, undefined, `${entry.packageId} resolved a model that cannot exist`);
-      assert.ok(
-        (entry.modelUnresolvedReason ?? "").length > 0,
-        `${entry.packageId} is model-unresolved with no reason`,
-      );
+      assert.notEqual(entry.model, undefined, `${entry.packageId} did not resolve a model`);
+      assert.equal(entry.modelUnresolvedReason, undefined, `${entry.packageId} has a stale unresolved reason`);
+      const modelPath = String(entry.model?.modelPath);
+      assert.match(modelPath, /^footprints\/kicad\/zudo-pd\.3dshapes\/[^/]+\.wrl$/u, entry.packageId);
+      for (const axis of ["x", "y", "z"] as const) {
+        for (const transform of [entry.model?.offset, entry.model?.rotation, entry.model?.scale]) {
+          assert.equal(typeof transform?.[axis], "number", entry.packageId);
+          assert.ok(Number.isFinite(transform?.[axis]), entry.packageId);
+        }
+      }
     }
     for (const record of model.records) {
-      assert.equal(record.reference.footprint.model, null);
-      assert.notEqual(record.reference.footprint.modelUnresolvedReason, null);
+      assert.notEqual(record.reference.footprint.model, null);
+      assert.equal(record.reference.footprint.modelUnresolvedReason, null);
     }
-  });
-
-  it("distinguishes a missing model line from one pointing outside the repo", () => {
-    // The two real cases, kept apart so the page says which one applies.
-    const reasons = new Set(references.packages.map((entry) => entry.modelUnresolvedReason));
-    assert.ok([...reasons].some((reason) => reason === "The KiCad footprint names no 3D model."));
-    assert.ok([...reasons].some((reason) => reason?.includes("EASYEDA2KICAD")));
   });
 });
 
