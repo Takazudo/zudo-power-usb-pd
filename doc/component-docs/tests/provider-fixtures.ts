@@ -390,6 +390,7 @@ export const FIXTURE_SELECTION: InstanceSelection = {
     { recordId: "rec-sense", sourceId: "src-sense-primary", documentKind: "specification" },
     { recordId: "rec-handfit", sourceId: "src-handfit-distributor", documentKind: "drawing" },
   ],
+  documentExceptions: [],
   expect: { records: 3, sources: 4, integrationRules: 3, footprintPackages: 3 },
 };
 
@@ -432,7 +433,15 @@ export function withFixtureReferences(index: EvidenceIndex): EvidenceIndex {
   const packageByRecordId = new Map(
     packages.map((entry) => [entry.recordIds[0] as string, entry]),
   );
-  const references: CircuitReferenceContract = { documentsByRecordId, packages, packageByRecordId };
+  const documentUnresolvedReasonByRecordId = new Map(
+    FIXTURE_SELECTION.documentExceptions.map((entry) => [entry.recordId, entry.reason]),
+  );
+  const references: CircuitReferenceContract = {
+    documentsByRecordId,
+    documentUnresolvedReasonByRecordId,
+    packages,
+    packageByRecordId,
+  };
   return { ...index, references };
 }
 

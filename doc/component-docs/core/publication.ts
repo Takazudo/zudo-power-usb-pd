@@ -163,14 +163,34 @@ export type InstanceSelection = {
    */
   readonly linkableSourceIds: readonly string[];
   /**
-   * One reviewed PDF-representing source for every selected record. This is an
-   * audit decision, not a URL heuristic or a request to perform network I/O at
+   * One reviewed PDF-representing source per curated record. This is an audit
+   * decision, not a URL heuristic or a request to perform network I/O at
    * generation time.
    */
   readonly documentSelections: readonly {
     readonly recordId: string;
     readonly sourceId: string;
     readonly documentKind: "datasheet" | "specification" | "drawing";
+  }[];
+  /**
+   * Records the same audit deliberately left WITHOUT a document, each naming
+   * why in its own words.
+   *
+   * Together with `documentSelections` this partitions `recordIds` exactly:
+   * every selected record is either curated or explicitly excepted, never
+   * neither and never both. That is what keeps a partially-curated corpus
+   * fail-closed — adding a component cannot quietly produce a page whose
+   * document card is missing for no stated reason, because the corpus check
+   * below refuses a record that appears in neither list.
+   *
+   * The reason travels with the record rather than living as one global
+   * string, because the honest reasons differ: "the manufacturer publishes no
+   * document for this part" and "nobody has reviewed one yet" are different
+   * facts and a reader is owed the right one.
+   */
+  readonly documentExceptions: readonly {
+    readonly recordId: string;
+    readonly reason: string;
   }[];
   /** Asserted corpus counts; a mismatch means the selection went stale. */
   readonly expect: {
@@ -299,19 +319,40 @@ export class PublicationPolicy {
       }
       documentRecords.add(document.recordId);
     }
-    // An entirely empty `documentSelections` is a deliberate opt-out of the
-    // curated single-document shortcut, not an incomplete review: zudo-pd
-    // denies every `reference.document.*` field (no reviewed WRL/STEP audit
-    // pairs exist to back a curated reference — see `matrix.ts`), so no
-    // adapter here ever produces a non-empty `documentSelections` to check.
-    // The completeness rule stays load-bearing for the case the feature IS
-    // used: a provider that selects a document for SOME records but not
-    // others still fails closed here, exactly as before.
-    if (selection.documentSelections.length > 0) {
-      const recordsWithoutDocument = selection.recordIds.filter((id) => !documentRecords.has(id));
-      if (recordsWithoutDocument.length > 0 || documentRecords.size !== selection.recordIds.length) {
-        fail("PUBLICATION_POLICY", "every selected record must have exactly one document selection", {
-          recordsWithoutDocument: recordsWithoutDocument.sort(byCodeUnit),
+    const exceptedRecords = new Set<string>();
+    for (const exception of selection.documentExceptions) {
+      if (!this.#recordIds.has(exception.recordId)) {
+        fail("PUBLICATION_POLICY", "document exception is outside the selected corpus", {
+          recordId: exception.recordId,
+        });
+      }
+      if (documentRecords.has(exception.recordId) || exceptedRecords.has(exception.recordId)) {
+        fail("PUBLICATION_POLICY", `record ${exception.recordId} is both curated and excepted`, {
+          recordId: exception.recordId,
+        });
+      }
+      // An exception without a reason is the failure mode this whole list
+      // exists to prevent: it would render a blank unresolved card that says
+      // nothing, which is indistinguishable from a bug.
+      if (exception.reason.trim() === "") {
+        fail("PUBLICATION_POLICY", `document exception for ${exception.recordId} states no reason`, {
+          recordId: exception.recordId,
+        });
+      }
+      exceptedRecords.add(exception.recordId);
+    }
+    // Both lists empty is the deliberate whole-feature opt-out (the state this
+    // adapter shipped in before the document audit landed). Once EITHER list
+    // has an entry the audit has begun, and from then on it must cover the
+    // corpus exactly: a record in neither list is an unreviewed gap, not an
+    // opt-out.
+    if (selection.documentSelections.length > 0 || exceptedRecords.size > 0) {
+      const uncoveredRecords = selection.recordIds.filter(
+        (id) => !documentRecords.has(id) && !exceptedRecords.has(id),
+      );
+      if (uncoveredRecords.length > 0) {
+        fail("PUBLICATION_POLICY", "every selected record must be curated or explicitly excepted", {
+          uncoveredRecords: uncoveredRecords.sort(byCodeUnit),
         });
       }
     }

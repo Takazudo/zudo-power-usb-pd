@@ -662,43 +662,43 @@
     {
       "key": "reference.document.sourceId",
       "decision": "PUBLISH",
-      "emitted": 0,
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "reference.document.documentTitle",
       "decision": "PUBLISH",
-      "emitted": 0,
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "reference.document.label",
       "decision": "PUBLISH",
-      "emitted": 0,
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "reference.document.authorityClass",
       "decision": "PUBLISH",
-      "emitted": 0,
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "reference.document.url",
       "decision": "PUBLISH",
-      "emitted": 0,
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "reference.document.availability",
       "decision": "PUBLISH",
-      "emitted": 0,
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "reference.document.documentKind",
       "decision": "PUBLISH",
-      "emitted": 0,
+      "emitted": 40,
       "withheld": 0
     },
     {
@@ -758,7 +758,7 @@
     {
       "key": "asset.datasheetPdf",
       "decision": "PUBLISH",
-      "emitted": 0,
+      "emitted": 40,
       "withheld": 0
     },
     {

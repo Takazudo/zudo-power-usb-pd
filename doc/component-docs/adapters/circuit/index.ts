@@ -245,10 +245,19 @@ function projectRecordReference(
   }
   const document = references.documentsByRecordId.get(recordId);
   if (document === undefined) {
+    const reason = references.documentUnresolvedReasonByRecordId.get(recordId);
+    if (reason === undefined) {
+      // Unreachable while `PublicationPolicy` holds the partition, and checked
+      // anyway: a record that reached here with neither a document nor a
+      // reason would render a card that states nothing at all.
+      fail("ADAPTER_CONTRACT", "record has neither a curated document nor a stated reason", {
+        recordId,
+      });
+    }
     return {
       document: null,
       documentUnresolvedReason: safeText(
-        DOCUMENT_UNRESOLVED_REASON,
+        reason,
         { field: `${recordId}.reference.documentUnresolvedReason` },
       ),
       footprint: projectFootprint(footprint, policy),
@@ -282,15 +291,6 @@ function projectRecordReference(
     footprint: projectFootprint(footprint, policy),
   };
 }
-
-/**
- * Why no record has a curated document today. Stated once here rather than in
- * the renderer, because the reason is a fact about the committed selection —
- * `CIRCUIT_SELECTION.documentSelections` is empty — not about presentation.
- */
-const DOCUMENT_UNRESOLVED_REASON =
-  "No single document has been reviewed as this component's authoritative PDF yet. " +
-  "Every source this record cites is listed in full under Sources.";
 
 function projectFootprint(
   entry: CircuitPackageReference,

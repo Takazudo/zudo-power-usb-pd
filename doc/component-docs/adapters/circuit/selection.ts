@@ -19,15 +19,13 @@
  * (C335982, C7529589, C87267 -- the fitted C22387780 sources were already
  * selected), and the wave-6 inventory itself swapped 4 lines for 4.
  *
- * `documentSelections` is empty pending curation: the reference machinery IS
- * ported and reads it, but choosing the one PDF-representing source per record
- * is a human audit that has not been done here yet. Every record therefore
- * renders an explicitly unresolved "Selected document" card naming that
- * reason, rather than a guessed shortcut or a missing section. See
- * `core/publication.ts`'s `PublicationPolicy` constructor: the "every selected
- * record needs exactly one document selection" completeness check is
- * conditioned on `documentSelections` being non-empty, so a PARTIAL curation
- * still fails closed — it is all-or-nothing, not opt-in per record.
+ * `documentSelections` and `documentExceptions` are the curated document audit
+ * (#143). Together they partition `recordIds` exactly — 40 records name one
+ * reviewed PDF-representing source, 1 names why it has none — and
+ * `core/publication.ts`'s `PublicationPolicy` constructor refuses a record
+ * that appears in neither or in both. So the audit is per-record opt-in
+ * without being partial: a component added tomorrow fails the build until
+ * someone decides which of the two lists it belongs in.
  *
  * `linkableSourceIds` is a SEPARATE, narrower opt-in: selecting a source
  * publishes its title, revision, locator and availability; it does not by
@@ -38,6 +36,63 @@
  */
 
 import type { InstanceSelection } from "../../core/publication.ts";
+
+/**
+ * Committed evidence for how the document selection below was reached.
+ *
+ * Deliberately not consumed by generation: a docs build must stay offline.
+ *
+ * ## This audit is narrower than led-lamp's, and says so
+ *
+ * led-lamp's equivalent constant carries `downloadedPdfSourceIds` — sources it
+ * retrieved and parsed live, so its selection was based on observed content
+ * rather than URL spelling. This audit did NOT re-retrieve anything. It was
+ * performed against the evidence bundles' recorded metadata: each source's
+ * `authority_class`, `availability`, `document_title`, `locator`,
+ * `evidence_extract`, `refresh_policy` and locked `sha256`. That is weaker
+ * evidence and is named as such rather than dressed up as a live check —
+ * `method` is the field that keeps the two apart if the lists are ever
+ * compared.
+ *
+ * The bundles are a sound basis for it: `component-spec-audit`'s validator
+ * already refuses a HASH-LOCKED source whose bytes no longer match its
+ * `sha256`, so "this ID names a fixed document, not a live HTML page" is a
+ * property the evidence contract enforces, not one this file assumes. Every
+ * one of the 40 selected sources is HASH-LOCKED with a non-sentinel hash.
+ *
+ * Re-auditing at led-lamp's strength means performing the retrieval and
+ * updating this artifact and the selection in one review.
+ */
+export const CIRCUIT_DOCUMENT_VERIFICATION = {
+  checkedOn: "2026-08-15",
+  expectedContent: "PDF",
+  method: "EVIDENCE_BUNDLE_METADATA",
+  /**
+   * The four selected sources that are MANUFACTURER_MIRROR rather than
+   * MANUFACTURER_PRIMARY. Each is the best document that exists for its part,
+   * and each record's card publishes `authorityClass` verbatim, so the page
+   * tells the reader it is reading a mirror. Listed here because "why is this
+   * one not primary?" is the first question a re-auditor will ask.
+   */
+  mirrorSourceIds: [
+    "src-faston-te-mirror-spec",
+    "src-hdr-hanelec-drawing",
+    "src-stusb-ds12499",
+    "src-usb-type-c-009-mirror-spec",
+  ],
+  /**
+   * Selected sources whose `sources.json` records a per-source `Referer` — the
+   * host serves them only when the request carries it, so a reader following
+   * the published link directly may be refused. Exactly one source in the
+   * whole corpus is in this state. It is selected anyway because the same URL
+   * is already published in that record's Sources list, so withholding the
+   * reviewed label would hide the manufacturer's only document without
+   * sparing the reader the gate. Revisit if an ungated mirror appears.
+   */
+  refererGatedSourceIds: ["src-usb-type-c-009-mirror-spec"],
+  /** Records the audit deliberately left without a document — see below. */
+  unresolvedRecordIds: ["rec-c335982"],
+} as const;
 
 export const CIRCUIT_SELECTION: InstanceSelection = {
   recordIds: [
@@ -409,7 +464,138 @@ export const CIRCUIT_SELECTION: InstanceSelection = {
     "src-hdr-bom-v040",
   ],
 
-  documentSelections: [],
+  /**
+   * The reviewed document per record, in `recordIds` order.
+   *
+   * `documentKind` is hand-curated here and lives in no skill file, because it
+   * is a claim about what the document IS, and the evidence bundles record
+   * what it SAYS. It follows the document's own self-description, never the
+   * source ID's suffix: `src-cya1265-datasheet` is a "Specification For
+   * Approval" and `src-ptc2-msmd110-datasheet` is a "Specification Sheet", so
+   * both are `specification` despite the `-datasheet` in their IDs.
+   */
+  documentSelections: [
+    // component-stusb4500qtr
+    // DS12499 Rev 8 via a web.archive.org `id_` raw-byte replay of ST's own
+    // PDF path. Two dated direct-from-st.com attempts failed (2026-08-02,
+    // 2026-08-14) with control fetches proving egress was up, so the document
+    // is blocked, not withdrawn. led-lamp selected this same source ID and URL
+    // as its STUSB4500 datasheet.
+    { recordId: "rec-stusb4500qtr", sourceId: "src-stusb-ds12499", documentKind: "datasheet" },
+    // component-usb-type-c-009-c456012
+    // Manufacturer-authored "FOR APPROVAL" sheet hosted by the distributor.
+    // sohantech.com publishes no TYPE-C 6P page and no PDF at all, so this is
+    // not a convenience copy of a primary — it is the only manufacturer
+    // document that exists. See `refererGatedSourceIds` above.
+    { recordId: "rec-usb-type-c-009-c456012", sourceId: "src-usb-type-c-009-mirror-spec", documentKind: "specification" },
+    // component-umw-ao3401a-c347476
+    { recordId: "rec-umw-ao3401a-c347476", sourceId: "src-umw-ao3401a-c347476-datasheet", documentKind: "datasheet" },
+    // component-high-diode-smaj20a-c571370
+    { recordId: "rec-high-diode-smaj20a-c571370", sourceId: "src-smaj20a-c571370-primary", documentKind: "datasheet" },
+    // component-project-passives
+    // The nine UNI-ROYAL lines share one "Thick Film Chip Resistors" spec
+    // document; each record cites it under its own source ID, so each selects
+    // its own. Same document, same kind, nine reviewed entries — matching
+    // led-lamp, which classifies this exact document as a specification.
+    { recordId: "rec-c25803", sourceId: "src-c25803-uniroyal", documentKind: "specification" },
+    { recordId: "rec-c23206", sourceId: "src-c23206-uniroyal", documentKind: "specification" },
+    { recordId: "rec-c23179", sourceId: "src-c23179-uniroyal", documentKind: "specification" },
+    { recordId: "rec-c23162", sourceId: "src-c23162-uniroyal", documentKind: "specification" },
+    { recordId: "rec-c25804", sourceId: "src-c25804-uniroyal", documentKind: "specification" },
+    { recordId: "rec-c21190", sourceId: "src-c21190-uniroyal", documentKind: "specification" },
+    { recordId: "rec-c17513", sourceId: "src-c17513-uniroyal", documentKind: "specification" },
+    { recordId: "rec-c23186", sourceId: "src-c23186-uniroyal", documentKind: "specification" },
+    { recordId: "rec-c21189", sourceId: "src-c21189-uniroyal", documentKind: "specification" },
+    // The four Samsung MLCCs each cite a per-part reference sheet (`-page`)
+    // and the family MLCC catalog (`-catalog`). The per-part sheet is the
+    // record's own document; the catalog describes the series.
+    { recordId: "rec-c13585", sourceId: "src-c13585-page", documentKind: "specification" },
+    { recordId: "rec-c15849", sourceId: "src-c15849-page", documentKind: "specification" },
+    { recordId: "rec-c1711", sourceId: "src-c1711-yageo", documentKind: "specification" },
+    { recordId: "rec-c1623", sourceId: "src-c1623-page", documentKind: "specification" },
+    { recordId: "rec-c1729", sourceId: "src-c1729-page", documentKind: "specification" },
+    { recordId: "rec-c2983319", sourceId: "src-c2983319-datasheet", documentKind: "datasheet" },
+    // rec-c335982 is excepted — see `documentExceptions`.
+    { recordId: "rec-c970687", sourceId: "src-c970687-datasheet", documentKind: "datasheet" },
+    { recordId: "rec-c22387780", sourceId: "src-c22387780-datasheet", documentKind: "datasheet" },
+    { recordId: "rec-c2289", sourceId: "src-c2289-datasheet", documentKind: "datasheet" },
+    { recordId: "rec-c2288", sourceId: "src-c2288-datasheet", documentKind: "datasheet" },
+    { recordId: "rec-c2286", sourceId: "src-c2286-datasheet", documentKind: "datasheet" },
+    // component-jst-b6b-xh-a
+    // Both cited sources are the same eXH.pdf at different locators; the
+    // general-specifications one is the document, the header-dimensions one a
+    // fragment of it. led-lamp classifies this same PDF as a specification.
+    { recordId: "rec-jst-b6b-xh-a", sourceId: "src-jst-xh-catalog", documentKind: "specification" },
+    // component-pesd24vs1ub-c85382
+    { recordId: "rec-pesd24vs1ub-c85382", sourceId: "src-pesd24vs1ub-nexperia-primary", documentKind: "datasheet" },
+    // component-bzt52c11-c92321 (decision e: D8 gate-clamp zener)
+    { recordId: "rec-bzt52c11-c92321", sourceId: "src-bzt52c11-diodes-primary", documentKind: "datasheet" },
+    // component-lm2596s-adj-c347423
+    { recordId: "rec-lm2596s-adj-c347423", sourceId: "src-lm2596-umw-ds", documentKind: "datasheet" },
+    // component-cya1265-100uh-c19268674 — "Specification For Approval"
+    { recordId: "rec-cya1265-100uh-c19268674", sourceId: "src-cya1265-datasheet", documentKind: "specification" },
+    // component-ss34-c8678
+    { recordId: "rec-ss34-c8678", sourceId: "src-ss34-datasheet", documentKind: "datasheet" },
+    // component-l7812cd2t-c13456 / component-l7805abd2t-c86206
+    // Six fragments each, all of ST's DS0422. The ordering-information
+    // fragment is the one that binds the exact order code to the record, so
+    // it stands for the datasheet.
+    { recordId: "rec-l7812cd2t-c13456", sourceId: "src-l7812cd2t-ds0422-identity", documentKind: "datasheet" },
+    { recordId: "rec-l7805abd2t-c86206", sourceId: "src-l7805abd2t-ds0422-identity", documentKind: "datasheet" },
+    // component-cj7912-c94173 — same six-fragment shape, one JSCJ PDF
+    { recordId: "rec-cj7912-c94173", sourceId: "src-cj7912-ds-identity", documentKind: "datasheet" },
+    // The three PTCs land on two kinds because their documents describe
+    // themselves differently: SMD1210 and BSMD1206 are series datasheets,
+    // mSMD110-33V is a "Specification Sheet".
+    { recordId: "rec-ptc-smd1210p150tf16-c7529589", sourceId: "src-ptc1b-smd1210-datasheet", documentKind: "datasheet" },
+    { recordId: "rec-ptc-msmd110-33v-c70119", sourceId: "src-ptc2-msmd110-datasheet", documentKind: "specification" },
+    { recordId: "rec-ptc-bsmd1206-150-16v-c883133", sourceId: "src-ptc3-bsmd1206-datasheet", documentKind: "datasheet" },
+    // component-smaj15a-c571368
+    { recordId: "rec-smaj15a-c571368", sourceId: "src-smaj15a-hdiode-primary", documentKind: "datasheet" },
+    // component-sd05-c502527 (decision a replacement)
+    { recordId: "rec-cand-smaj6-5a-c87267", sourceId: "src-cand-smaj6-5a-brightking-primary", documentKind: "datasheet" },
+    // component-faston-c591344
+    // TE's own per-part product specification for 63951-1 (ACTIVE, printed
+    // 2024-09-22), mirrored by the distributor because te.com answers 403 to
+    // automated retrieval. Preferred over the 2010 FASTON section catalog,
+    // which is a family document rather than this MPN's.
+    { recordId: "rec-faston-c591344", sourceId: "src-faston-te-mirror-spec", documentKind: "specification" },
+    // component-hdr-2541wr-2x08p-c5383092
+    // A single-sheet engineering drawing — dimensions, PCB layout and a notes
+    // block — so `drawing`, the one record that earns that label. It covers
+    // the 2541WR-2xXXP family generically; the exact 16-position identity is
+    // bound by the distributor source, which stays in Sources.
+    { recordId: "rec-hdr-2541wr-2x08p-c5383092", sourceId: "src-hdr-hanelec-drawing", documentKind: "drawing" },
+  ],
+
+  /**
+   * The one record the audit could not honestly give a document.
+   *
+   * `rec-c335982` (ROQANG RVT1A471M0607, the 470 µF bulk electrolytic) cites
+   * exactly one source in the whole corpus: an LCSC product-detail page,
+   * `DISTRIBUTOR_IDENTITY`, retained as raw HTML for its JSON-LD identity
+   * block. There is no manufacturer document behind it — not gated, not
+   * mirrored, not stale: absent. A distributor listing is not a datasheet, and
+   * none of the three `DOCUMENT_LABELS` would be true of it.
+   *
+   * The two shortcuts that would make this card resolve are both refused on
+   * purpose. Widening the label allowlist would let a catalog row be presented
+   * as the component's authoritative document on every future record too.
+   * Deriving a PDF URL from `C335982` is forbidden outright — `core/url.ts`
+   * publishes only URLs the evidence recorded, never ones the projection
+   * guessed. So the card states the gap, and the LCSC page stays visible under
+   * Sources where its authority class is printed next to it.
+   */
+  documentExceptions: [
+    {
+      recordId: "rec-c335982",
+      reason:
+        "No manufacturer document exists for this part in the project's evidence. " +
+        "Its only source is an LCSC distributor product listing, which records the " +
+        "part's identity but is not a datasheet or specification. It is published in " +
+        "full under Sources.",
+    },
+  ],
 
   expect: {
     records: 41,

@@ -27,7 +27,10 @@
  * optional for the same reason in the opposite direction: `documentSelections`
  * is curated per record, and a record with no manufacturer document at all
  * (`rec-c335982` has one `DISTRIBUTOR_IDENTITY` source and no datasheet) must
- * be able to say so rather than block the build.
+ * be able to say so rather than block the build. Optional is not unchecked:
+ * every such record is named in `documentExceptions` with its own reason, and
+ * `PublicationPolicy` refuses a corpus where the two lists do not partition
+ * `recordIds` exactly.
  *
  * A model that IS present and local is validated exactly as strictly as in
  * led-lamp — the relaxation is only about absence, never about trust.
@@ -81,6 +84,12 @@ export type CircuitPackageReference = {
 
 export type CircuitReferenceContract = {
   readonly documentsByRecordId: ReadonlyMap<string, CircuitDocumentReference>;
+  /**
+   * Why a record has no entry in `documentsByRecordId`, in the reviewer's own
+   * words. Exactly complementary to that map — `PublicationPolicy` refuses a
+   * selection where any record is in neither or in both.
+   */
+  readonly documentUnresolvedReasonByRecordId: ReadonlyMap<string, string>;
   readonly packages: readonly CircuitPackageReference[];
   readonly packageByRecordId: ReadonlyMap<string, CircuitPackageReference>;
 };
@@ -100,6 +109,7 @@ export async function readCircuitReferenceContract(
   selection: InstanceSelection,
 ): Promise<CircuitReferenceContract> {
   const documentsByRecordId = selectDocuments(index, selection);
+  const documentUnresolvedReasonByRecordId = selectDocumentExceptions(index, selection);
   const packageByRecordId = new Map<string, CircuitPackageReference>();
   const packagesByName = new Map<string, CircuitPackageReference>();
   let aggregateModelBytes = 0;
@@ -142,7 +152,7 @@ export async function readCircuitReferenceContract(
       actual: packages.length,
     });
   }
-  return { documentsByRecordId, packages, packageByRecordId };
+  return { documentsByRecordId, documentUnresolvedReasonByRecordId, packages, packageByRecordId };
 }
 
 export function selectDocuments(
@@ -170,6 +180,29 @@ export function selectDocuments(
       source,
       documentKind: selected.documentKind,
     });
+  }
+  return result;
+}
+
+/**
+ * The reviewed reasons for the records the audit left without a document.
+ *
+ * Resolved against the index for the same reason `selectDocuments` is: an
+ * exception naming a record the provider no longer carries is a stale
+ * selection, and a stale selection must fail rather than be skipped.
+ */
+export function selectDocumentExceptions(
+  index: EvidenceIndex,
+  selection: InstanceSelection,
+): ReadonlyMap<string, string> {
+  const result = new Map<string, string>();
+  for (const exception of selection.documentExceptions) {
+    if (!index.recordById.has(exception.recordId)) {
+      fail("STALE_SELECTION", "document exception does not resolve to a record", {
+        recordId: exception.recordId,
+      });
+    }
+    result.set(exception.recordId, exception.reason);
   }
   return result;
 }

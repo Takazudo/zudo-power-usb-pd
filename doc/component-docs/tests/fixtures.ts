@@ -206,10 +206,11 @@ function source(input: SourceInput): PublicSource {
 /**
  * A record's curated references.
  *
- * Both optional halves default to unresolved, because that is what the real
- * corpus produces today: `documentSelections` is empty and no reviewed
- * `.wrl`/`.step` pair exists. Passing `document` exercises the resolved
- * branch, which the renderer must handle before #143 curates it for real.
+ * Both optional halves default to unresolved so the renderer's stated-reason
+ * branch is exercised without a caller opting in. The real corpus reaches that
+ * branch on the model half for every record (no reviewed `.wrl`/`.step` pair
+ * exists anywhere) and on the document half for `rec-c335982` alone. Passing
+ * `document` exercises the resolved branch the other 40 records take.
  */
 function referenceFor(
   input: {
