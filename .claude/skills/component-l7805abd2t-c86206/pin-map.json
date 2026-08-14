@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "pin_maps": [
+    {
+      "pin_map_id": "pinmap-l7805abd2t-c86206",
+      "record_id": "rec-l7805abd2t-c86206",
+      "symbol": "L7805ABD2T-TR",
+      "footprint": "TO-263-2_L10.0-W9.2-P5.08-LS15.3-TL-CW",
+      "pins": [
+        {
+          "symbol_pin": "1",
+          "name": "IN",
+          "footprint_pad": "1",
+          "function": "input lead (DS0422 Figure 2 D2PAK top view: lower lead = INPUT)"
+        },
+        {
+          "symbol_pin": "2",
+          "name": "GND",
+          "footprint_pad": "2",
+          "function": "ground tab (DS0422 Figure 2: tab = GND, middle lead position cut; this footprint numbers the 9.00 x 10.20 mm tab pad 2)"
+        },
+        {
+          "symbol_pin": "3",
+          "name": "OUT",
+          "footprint_pad": "3",
+          "function": "output lead (DS0422 Figure 2 D2PAK top view: upper lead = OUTPUT)"
+        }
+      ],
+      "reviewed_by": "child-112 (issue #112), against KiCad symbol L7805ABD2T-TR, zudo-power.pretty footprint pads, and DS0422 Figure 2"
+    }
+  ]
+}

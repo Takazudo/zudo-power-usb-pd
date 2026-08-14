@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "coverage": [
+    {
+      "coverage_id": "cov-l7812cd2t-identity",
+      "record_id": "rec-l7812cd2t-c13456",
+      "domain": "identity",
+      "status": "COVERED",
+      "reason": "exact orderable identity (manufacturer + D2PAK order code L7812CD2T-TR) confirmed from DS0422 Table 27",
+      "fact_ids": ["fact-l7812cd2t-manufacturer", "fact-l7812cd2t-order-code"],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-l7812cd2t-pinout",
+      "record_id": "rec-l7812cd2t-c13456",
+      "domain": "pinout",
+      "status": "COVERED",
+      "reason": "D2PAK terminal functions confirmed from DS0422 Figure 2 (tab = GND, upper lead = OUTPUT, lower lead = INPUT); number binding carried by the project KiCad symbol/footprint pair",
+      "fact_ids": ["fact-l7812cd2t-pinout"],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-l7812cd2t-abs-max-input",
+      "record_id": "rec-l7812cd2t-c13456",
+      "domain": "abs-max-input",
+      "status": "COVERED",
+      "reason": "absolute maximum DC input voltage 35 V (VO = 5 to 18 V versions) confirmed from DS0422 Table 1",
+      "fact_ids": ["fact-l7812cd2t-vin-absmax"],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-l7812cd2t-thermal-resistance",
+      "record_id": "rec-l7812cd2t-c13456",
+      "domain": "thermal-resistance",
+      "status": "COVERED",
+      "reason": "package-level RthJC 3 degC/W and RthJA 62.5 degC/W (D2PAK) recorded from DS0422 Table 2 together with the L78xxC operating junction range; Table 2 states no FR4/copper-area mounting condition, so board-level thermal closure belongs to the Board B layout plan",
+      "fact_ids": ["fact-l7812cd2t-rthjc", "fact-l7812cd2t-rthja", "fact-l7812cd2t-tj-op-range"],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-l7812cd2t-capacitor-stability",
+      "record_id": "rec-l7812cd2t-c13456",
+      "domain": "capacitor-stability",
+      "status": "COVERED",
+      "reason": "DS0422 stability requirements recorded: 0.33 uF (or larger, low HF impedance) input bypass when far from the supply filter; no output capacitor required for stability (0.1 uF used in the characterization setup improves transient response)",
+      "fact_ids": ["fact-l7812cd2t-cap-input", "fact-l7812cd2t-cap-output"],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-l7812cd2t-electrical-output",
+      "record_id": "rec-l7812cd2t-c13456",
+      "domain": "electrical-output",
+      "status": "COVERED",
+      "reason": "output voltage limits recorded from DS0422 Table 15: 11.5/12/12.5 V at TJ = 25 degC and 11.4/12/12.6 V over the guarantee band (IO = 5 mA to 1 A, VI = 14.5 to 25 V)",
+      "fact_ids": ["fact-l7812cd2t-vout-25c", "fact-l7812cd2t-vout-band"],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-l7812cd2t-dropout-operating-point",
+      "record_id": "rec-l7812cd2t-c13456",
+      "domain": "dropout-operating-point",
+      "status": "OPEN",
+      "reason": "1.5 V calculated headroom (13.5 V rail minus 12.0 V output) vs a 2 V dropout figure that is typical-only and specified only at IO = 1 A, TJ = 25 degC; DS0422 guarantees regulation only for VI = 14.5 to 25 V and IO <= 1 A, so the project operating point (13.5 V in, 1.2 A out) sits outside every guaranteed condition and cannot be closed from the datasheet in either direction; the bench gate from board-split decision A5 row 1 stays open",
+      "fact_ids": [
+        "fact-l7812cd2t-dropout-typ-1a",
+        "fact-l7812cd2t-dropout-1a2",
+        "fact-l7812cd2t-vin-rail",
+        "fact-l7812cd2t-iout-rating",
+        "fact-l7812cd2t-headroom",
+        "fact-l7812cd2t-vout-band"
+      ],
+      "blocking_fact_ids": ["fact-l7812cd2t-dropout-1a2", "fact-l7812cd2t-headroom"]
+    }
+  ]
+}
