@@ -38,7 +38,7 @@ mismatch fails the build.
 | `doc/component-docs/` | this feature | all generator code, tests, this document |
 | `doc/src/content/docs/components/` | **generator, exclusively** | committed; never hand-edit; every file is rewritten from evidence |
 | `doc/component-docs/preflight.json` | generator | committed, deterministic, reviewable |
-| `doc/pages/_mdx-components.ts` | site | carries the three evidence-component registrations; must stay in sync with `core/mdx.ts` `ALLOWED_COMPONENT_ATTRIBUTES` (guarded by `tests/presentation.test.ts`) |
+| `doc/src/chrome-bindings.tsx` | site | carries the evidence-component registrations (`mdxExtras`); must stay in sync with `core/mdx.ts` `ALLOWED_COMPONENT_ATTRIBUTES` (guarded by `tests/presentation.test.ts`) |
 | `doc/src/styles/global.css` | site | an appended presentation block for the generated pages (`.zld-evidence-*`) |
 | `.claude/skills/**` | evidence owners | **read-only** to this feature |
 
@@ -288,7 +288,7 @@ evidence-read side; emit is idempotent (a second run reports `0 written`).
 The landing page's `CategoryNav` targets `components` — this project's
 wrapper resolves `category` as a slug path. The three evidence components
 (`EvidenceAnchor`, `EvidenceDetails`, `EvidenceTable`) are registered in
-`doc/pages/_mdx-components.ts`; that registry and
+`doc/src/chrome-bindings.tsx`; that registry and
 `ALLOWED_COMPONENT_ATTRIBUTES` must change together, and
 `tests/presentation.test.ts` enforces it.
 

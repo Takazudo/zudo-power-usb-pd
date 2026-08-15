@@ -69,10 +69,11 @@ When the user provides a local docs URL like `http://localhost:4321/docs/...`:
   - `footprints/` → `/footprints/<name>.svg` (footprint layout SVGs)
   - `footprint-imgs/` → `/footprint-imgs/<name>.png` (footprint preview PNGs)
   - `datasheets/` (PDF), `img/`, `kicad/`, `favicon.ico`
-- `src/config/settings.ts` — site name, nav, features, schemes
-- `pages/`, `src/components/`, `plugins/` — framework internals (do NOT
-  hand-edit; they come from the zudo-doc scaffold)
-- `zfb.config.ts`, `wrangler.toml` — build + deploy config
+- `pages/` — two package-owned route stubs (`index.tsx`,
+  `docs/[[...slug]].tsx`); everything else is injected by `@takazudo/zudo-doc`
+- `src/chrome-bindings.tsx` — MDX component registry for generated pages
+- `zfb.config.ts` — the entire site config (one `zudoDoc({...})` call: site
+  name, nav, features, adapter), plus `wrangler.toml` for deploy
 
 ## Authoring Rules (Markdown / MDX)
 
@@ -128,7 +129,7 @@ When the user provides a local docs URL like `http://localhost:4321/docs/...`:
    No `/pj/zudo-pd/` base prefix.
 10. **Sidebar / nav** — there is NO `sidebars.js`. Sidebar order comes from each
     page's `sidebar_position` frontmatter; the 6 header tabs are configured in
-    `src/config/settings.ts` (`headerNav`). To add a page, just create the file
+    `zfb.config.ts` (`headerNav`). To add a page, just create the file
     with a `title` + `sidebar_position`.
 
 ## MDX Syntax Rules
@@ -238,7 +239,7 @@ What is wired up:
 2. **Docs subdomain** is set in `doc/wrangler.toml`
    (`[[env.production.routes]]` → `pattern = "pd.takazudomodular.com"`). The apex
    `takazudomodular.com` is the main site, so docs live on the `pd.` subdomain.
-   `siteUrl` in `src/config/settings.ts` is kept in sync.
+   `siteUrl` in `zfb.config.ts` is kept in sync.
 3. **Custom domain** — `custom_domain = true` makes wrangler provision the
    Workers custom domain + DNS record automatically (the `takazudomodular.com`
    zone must be on the same Cloudflare account as `CLOUDFLARE_ACCOUNT_ID`).

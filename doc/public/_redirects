@@ -1,8 +1,8 @@
 # Redirects for the components-docs-restructure un-nesting (issue #137).
 #
 # The generated component tree moved from `components/records/{...}` up to
-# `components/{...}`. `doc/plugins/copy-public-plugin.mjs` copies `public/`
-# flat into `dist/`, and Cloudflare Workers static assets honours
+# `components/{...}`. zfb's native publicDir handling (zfb 2.5.1) copies
+# `public/` flat into `dist/`, and Cloudflare Workers static assets honours
 # `dist/_redirects`.
 #
 # Do NOT add a rule for `/docs/components/records` itself — that path is

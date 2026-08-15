@@ -24,7 +24,7 @@ export type PreviewEnlargeDialogProps = {
  * A `transform` on the dialog would establish a containing block for its
  * `position: fixed` descendants, which would trap `.zld-preview-dialog__close`
  * at the dialog's corner instead of the viewport's. Same constraint, and same
- * value, as `DIALOG_STYLE` in `src/components/image-enlarge.tsx`.
+ * value, as the package-owned image-enlarge dialog in `@takazudo/zudo-doc`.
  */
 const ENLARGE_DIALOG_STYLE = {
   position: "fixed",
