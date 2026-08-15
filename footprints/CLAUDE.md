@@ -61,6 +61,31 @@ longer exists.
 
 > Every `.kicad_mod` file must exist in BOTH `footprints/kicad/*.kicad_mod` (source of truth) AND `footprints/kicad/zudo-power.pretty/*.kicad_mod` (KiCad library resolution path). A file only in the master dir will NOT resolve when KiCad opens the PCB. The Quick Workflow `cp *.kicad_mod zudo-power.pretty/` step is mandatory, not optional.
 
+## Courtyards are generated, not hand-drawn
+
+Every `.kicad_mod` carries an `F.CrtYd` rectangle produced by
+`footprints/scripts/gen_courtyards.py`. Do not hand-edit courtyard geometry —
+change the script (or the pads/body artwork it derives from) and re-run it.
+
+```bash
+python3 footprints/scripts/gen_courtyards.py --check   # report drift, write nothing
+python3 footprints/scripts/gen_courtyards.py           # rewrite in place, both locations
+```
+
+The rule is IPC-7351 density-B: the courtyard is the bounding box of **every pad
+plus every body graphic**, expanded by 0.25 mm, drawn at 0.05 mm width. It is a
+plain rectangle on purpose — a courtyard is a DRC keepout, not artwork, and a
+body-shaped outline can end up *smaller* than the pads it is meant to protect.
+
+That is exactly what the library had before: most footprints carried no courtyard
+at all, and the four that did (inherited from easyeda2kicad) drew it around the
+body only, so it did not enclose their own pads — `CAP-SMD_BD8.0` had a ±4.15 mm
+courtyard over pads reaching ±5.095 mm. Silkscreen and fab artwork are untouched
+by the script, including the chamfer that marks electrolytic polarity.
+
+Both output locations are written in one pass, so the dual-location sync rule
+below is satisfied automatically.
+
 ## Hand-created footprints
 
 Some parts do not exist in LCSC or EasyEDA. For those, create the footprint by hand rather than running `easyeda2kicad`.

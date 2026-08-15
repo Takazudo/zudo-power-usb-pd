@@ -20,6 +20,10 @@
 	(fp_circle (center -1.60 0.80) (end -1.57 0.80) (layer F.Fab) (width 0.06))
 	(fp_arc (start 0.73 -0.42) (end 0.00 -0.84) (angle -60.00) (layer F.SilkS) (width 0.08))
 	(fp_arc (start -0.73 0.42) (end 0.00 0.84) (angle -60.00) (layer F.SilkS) (width 0.08))
+	(fp_line (start -2.52 -1.34) (end 2.52 -1.34) (layer F.CrtYd) (width 0.05))
+	(fp_line (start 2.52 -1.34) (end 2.52 1.34) (layer F.CrtYd) (width 0.05))
+	(fp_line (start 2.52 1.34) (end -2.52 1.34) (layer F.CrtYd) (width 0.05))
+	(fp_line (start -2.52 1.34) (end -2.52 -1.34) (layer F.CrtYd) (width 0.05))
 	(model "${KIPRJMOD}/../../footprints/kicad/zudo-pd.3dshapes/F1206_L3.2-W1.7-H0.6.wrl"
 		(offset (xyz 0.000 -0.000 -0.000))
 		(scale (xyz 1 1 1))

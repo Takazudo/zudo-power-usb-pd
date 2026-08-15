@@ -1,43 +1,59 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0.0000 0.0000 3.6830 3.2258" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0.0000 0.0000 3.9624 3.5306" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
 <g style="fill:#000000; fill-opacity:1.0000;stroke:#000000; stroke-opacity:1.0000;
 stroke-linecap:round; stroke-linejoin:round;"
  transform="translate(0 0) scale(1 1)">
 <path style="fill:#000000; fill-opacity:1.0000; stroke:none;fill-rule:evenodd;"
-d="M 3.3000,0.2750
-3.3000,1.0750
-2.3000,1.0750
-2.3000,0.2750
+d="M 3.5750,0.4250
+3.5750,1.2250
+2.5750,1.2250
+2.5750,0.4250
 Z" />
 <path style="fill:#000000; fill-opacity:1.0000; stroke:none;fill-rule:evenodd;"
-d="M 1.0000,1.2250
-1.0000,2.0250
-0.0000,2.0250
-0.0000,1.2250
+d="M 1.2750,1.3750
+1.2750,2.1750
+0.2750,2.1750
+0.2750,1.3750
 Z" />
 <path style="fill:#000000; fill-opacity:1.0000; stroke:none;fill-rule:evenodd;"
-d="M 3.3000,2.1750
-3.3000,2.9750
-2.3000,2.9750
-2.3000,2.1750
+d="M 3.5750,2.3250
+3.5750,3.1250
+2.5750,3.1250
+2.5750,2.3250
 Z" />
 </g>
 <g style="fill:none;
 stroke:#000000; stroke-width:0.2500; stroke-opacity:1;
 stroke-linecap:round; stroke-linejoin:round;">
-<path d="M0.9500 0.9850
-L0.9500 0.1250
+<path d="M1.2250 1.1350
+L1.2250 0.2750
 " />
-<path d="M0.9500 0.1250
-L1.9500 0.1250
+<path d="M1.2250 0.2750
+L2.2250 0.2750
 " />
-<path d="M2.3500 1.9350
-L2.3500 1.3050
+<path d="M2.6250 2.0850
+L2.6250 1.4550
 " />
-<path d="M0.9500 3.1250
-L0.9500 2.2550
+<path d="M1.2250 3.2750
+L1.2250 2.4050
 " />
-<path d="M0.9500 3.1250
-L1.9500 3.1250
+<path d="M1.2250 3.2750
+L2.2250 3.2750
+" />
+</g>
+<g style="fill:none;
+stroke:#000000; stroke-width:0.0500; stroke-opacity:1;
+stroke-linecap:round; stroke-linejoin:round;">
+<path d="M0.0250 0.0250
+L3.8250 0.0250
+" />
+<path d="M3.8250 0.0250
+L3.8250 3.5250
+" />
+<path d="M3.8250 3.5250
+L0.0250 3.5250
+" />
+<path d="M0.0250 3.5250
+L0.0250 0.0250
 " />
 </g>
 </svg>

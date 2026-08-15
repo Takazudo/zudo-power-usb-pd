@@ -1,91 +1,85 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0.0000 0.0000 10.1854 8.5852" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0.0000 0.0000 10.7188 8.9916" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
 <g style="fill:#000000; fill-opacity:1.0000;stroke:#000000; stroke-opacity:1.0000;
 stroke-linecap:round; stroke-linejoin:round;"
  transform="translate(0 0) scale(1 1)">
 <path style="fill:#000000; fill-opacity:1.0000; stroke:none;fill-rule:evenodd;"
-d="M 3.6100,3.6750
-3.6100,4.9350
-0.0000,4.9350
-0.0000,3.6750
+d="M 3.8800,3.8750
+3.8800,5.1350
+0.2700,5.1350
+0.2700,3.8750
 Z" />
 <path style="fill:#000000; fill-opacity:1.0000; stroke:none;fill-rule:evenodd;"
-d="M 10.1900,3.6750
-10.1900,4.9350
-6.5800,4.9350
-6.5800,3.6750
+d="M 10.4600,3.8750
+10.4600,5.1350
+6.8500,5.1350
+6.8500,3.8750
 Z" />
 </g>
 <g style="fill:none;
 stroke:#000000; stroke-width:0.1500; stroke-opacity:1;
 stroke-linecap:round; stroke-linejoin:round;">
-<path d="M9.3250 3.5250
-L9.3250 0.0750
+<path d="M9.5950 3.7250
+L9.5950 0.2750
 " />
-<path d="M9.3250 0.0750
-L2.6050 0.0750
+<path d="M9.5950 0.2750
+L2.8750 0.2750
 " />
-<path d="M2.6050 0.0750
-L0.8650 1.8150
+<path d="M2.8750 0.2750
+L1.1350 2.0150
 " />
-<path d="M0.8650 1.8150
-L0.8650 3.5250
+<path d="M1.1350 2.0150
+L1.1350 3.7250
 " />
-<path d="M9.3250 5.0850
-L9.3250 8.5350
+<path d="M9.5950 5.2850
+L9.5950 8.7350
 " />
-<path d="M9.3250 8.5350
-L2.6050 8.5350
+<path d="M9.5950 8.7350
+L2.8750 8.7350
 " />
-<path d="M2.6050 8.5350
-L0.8650 6.7950
+<path d="M2.8750 8.7350
+L1.1350 6.9950
 " />
-<path d="M0.8650 6.7950
-L0.8650 5.0850
+<path d="M1.1350 6.9950
+L1.1350 5.2850
 " />
 </g>
 <g style="fill:none;
 stroke:#000000; stroke-width:0.0600; stroke-opacity:1;
 stroke-linecap:round; stroke-linejoin:round;">
-<circle cx="0.5450" cy="8.4550" r="0.0300" />
+<circle cx="0.8150" cy="8.6550" r="0.0300" />
 <path style="fill:#000000; fill-opacity:1.0000; stroke:none;fill-rule:evenodd;"
-d="M 8.9959,2.5206
-7.9999,2.5206
-7.9999,2.2716
-8.9959,2.2716
+d="M 9.2659,2.7206
+8.2699,2.7206
+8.2699,2.4716
+9.2659,2.4716
 Z" />
 <path style="fill:#000000; fill-opacity:1.0000; stroke:none;fill-rule:evenodd;"
-d="M 2.1899,2.5206
-1.1939,2.5206
-1.1939,2.2716
-2.1899,2.2716
+d="M 2.4599,2.7206
+1.4639,2.7206
+1.4639,2.4716
+2.4599,2.4716
 Z" />
 <path style="fill:#000000; fill-opacity:1.0000; stroke:none;fill-rule:evenodd;"
-d="M 1.8164,3.2261
-1.5674,3.2261
-1.5674,1.5661
-1.8164,1.5661
+d="M 2.0864,3.4261
+1.8374,3.4261
+1.8374,1.7661
+2.0864,1.7661
 Z" />
 </g>
 <g style="fill:none;
 stroke:#000000; stroke-width:0.0500; stroke-opacity:1;
 stroke-linecap:round; stroke-linejoin:round;">
-<path d="M9.2450 8.4550
-L9.2450 0.1550
+<path d="M0.0250 0.0250
+L10.7050 0.0250
 " />
-<path d="M9.2450 0.1550
-L2.6050 0.1550
+<path d="M10.7050 0.0250
+L10.7050 8.9850
 " />
-<path d="M2.6050 0.1550
-L0.9450 1.8150
+<path d="M10.7050 8.9850
+L0.0250 8.9850
 " />
-<path d="M0.9450 1.8150
-L0.9450 6.7950
-" />
-<path d="M0.9450 6.7950
-L2.6050 8.4550
-" />
-<path d="M2.6050 8.4550
-L9.2450 8.4550
+<path d="M0.0250 8.9850
+L0.0250 0.0250
 " />
 </g>
 </svg>

@@ -26,6 +26,10 @@
 	(pad 1 smd rect (at -1.93 0.00 180.00) (size 2.07 2.06) (layers F.Cu F.Paste F.Mask))
 	(pad 2 smd rect (at 1.93 0.00 180.00) (size 2.07 2.06) (layers F.Cu F.Paste F.Mask))
 	(fp_circle (center -2.50 1.35) (end -2.47 1.35) (layer F.Fab) (width 0.06))
+	(fp_line (start -3.21 -1.61) (end 3.21 -1.61) (layer F.CrtYd) (width 0.05))
+	(fp_line (start 3.21 -1.61) (end 3.21 1.63) (layer F.CrtYd) (width 0.05))
+	(fp_line (start 3.21 1.63) (end -3.21 1.63) (layer F.CrtYd) (width 0.05))
+	(fp_line (start -3.21 1.63) (end -3.21 -1.61) (layer F.CrtYd) (width 0.05))
 	(model "${EASYEDA2KICAD}/easyeda2kicad.3dshapes/DO-214AC_L4.3-W2.7-LS5.0-RD.wrl"
 		(offset (xyz -0.000 -0.000 -0.000))
 		(scale (xyz 1 1 1))

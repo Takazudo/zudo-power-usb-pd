@@ -21,6 +21,10 @@
 	(fp_circle (center -5.00 -3.00) (end -4.97 -3.00) (layer F.Fab) (width 0.06))
 	(fp_circle (center -2.92 2.15) (end -2.62 2.15) (layer Cmts.User) (width 0.60))
 	(fp_arc (start -2.77 2.52) (end -2.76 2.33) (angle 357.13) (layer F.SilkS) (width 0.40))
+	(fp_line (start -5.55 -3.34) (end 5.55 -3.34) (layer F.CrtYd) (width 0.05))
+	(fp_line (start 5.55 -3.34) (end 5.55 2.77) (layer F.CrtYd) (width 0.05))
+	(fp_line (start 5.55 2.77) (end -5.55 2.77) (layer F.CrtYd) (width 0.05))
+	(fp_line (start -5.55 2.77) (end -5.55 -3.34) (layer F.CrtYd) (width 0.05))
 	(model "${EASYEDA2KICAD}/easyeda2kicad.3dshapes/TO-220-3_L10.0-W4.5-P2.54-L.wrl"
 		(offset (xyz 0.000 0.650 5.000))
 		(scale (xyz 1 1 1))

@@ -1,70 +1,86 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0.0000 0.0000 3.0226 1.6256" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0.0000 0.0000 3.4290 2.0320" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
 <g style="fill:#000000; fill-opacity:1.0000;stroke:#000000; stroke-opacity:1.0000;
 stroke-linecap:round; stroke-linejoin:round;"
  transform="translate(0 0) scale(1 1)">
 <path style="fill:#000000; fill-opacity:1.0000; stroke:none;fill-rule:evenodd;"
-d="M 2.7150,1.2250
-1.9150,1.2250
-1.9150,0.4250
-2.7150,0.4250
+d="M 2.9150,1.4250
+2.1150,1.4250
+2.1150,0.6250
+2.9150,0.6250
 Z" />
 <path style="fill:#000000; fill-opacity:1.0000; stroke:none;fill-rule:evenodd;"
-d="M 1.2150,1.2250
-0.4150,1.2250
-0.4150,0.4250
-1.2150,0.4250
+d="M 1.4150,1.4250
+0.6150,1.4250
+0.6150,0.6250
+1.4150,0.6250
 Z" />
 </g>
 <g style="fill:none;
 stroke:#000000; stroke-width:0.1500; stroke-opacity:1;
 stroke-linecap:round; stroke-linejoin:round;">
-<path d="M1.7850 1.1550
-L1.7750 1.1550
+<path d="M1.9850 1.3550
+L1.9750 1.3550
 " />
-<path d="M1.7750 1.1550
-L1.4450 0.8250
+<path d="M1.9750 1.3550
+L1.6450 1.0250
 " />
-<path d="M1.7850 0.4750
-L1.7850 0.4850
+<path d="M1.9850 0.6750
+L1.9850 0.6850
 " />
-<path d="M1.7850 0.4850
-L1.4450 0.8250
+<path d="M1.9850 0.6850
+L1.6450 1.0250
 " />
-<path d="M1.7850 0.4750
-L1.7850 1.1550
+<path d="M1.9850 0.6750
+L1.9850 1.3550
 " />
-<path d="M1.8050 0.0750
-L2.9550 0.0750
+<path d="M2.0050 0.2750
+L3.1550 0.2750
 " />
-<path d="M1.8050 1.5750
-L2.9550 1.5750
+<path d="M2.0050 1.7750
+L3.1550 1.7750
 " />
-<path d="M2.9550 0.0750
-L2.9550 1.5550
+<path d="M3.1550 0.2750
+L3.1550 1.7550
 " />
-<path d="M1.4250 1.5750
-L0.3750 1.5750
+<path d="M1.6250 1.7750
+L0.5750 1.7750
 " />
-<path d="M0.0750 1.1750
-L0.0750 1.2750
+<path d="M0.2750 1.3750
+L0.2750 1.4750
 " />
-<path d="M0.0750 1.2750
-L0.3750 1.5750
+<path d="M0.2750 1.4750
+L0.5750 1.7750
 " />
-<path d="M0.0750 0.4750
-L0.0750 1.1750
+<path d="M0.2750 0.6750
+L0.2750 1.3750
 " />
-<path d="M0.0750 0.4750
-L0.0750 0.3750
+<path d="M0.2750 0.6750
+L0.2750 0.5750
 " />
-<path d="M0.0750 0.3750
-L0.3750 0.0750
+<path d="M0.2750 0.5750
+L0.5750 0.2750
 " />
-<path d="M1.4250 0.0750
-L0.3750 0.0750
+<path d="M1.6250 0.2750
+L0.5750 0.2750
 " />
-<path d="M1.7850 0.8250
-L1.4450 0.8250
+<path d="M1.9850 1.0250
+L1.6450 1.0250
+" />
+</g>
+<g style="fill:none;
+stroke:#000000; stroke-width:0.0500; stroke-opacity:1;
+stroke-linecap:round; stroke-linejoin:round;">
+<path d="M0.0250 0.0250
+L3.4050 0.0250
+" />
+<path d="M3.4050 0.0250
+L3.4050 2.0250
+" />
+<path d="M3.4050 2.0250
+L0.0250 2.0250
+" />
+<path d="M0.0250 2.0250
+L0.0250 0.0250
 " />
 </g>
 </svg>

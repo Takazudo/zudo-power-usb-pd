@@ -1,42 +1,58 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0.0000 0.0000 5.7150 4.1910" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0.0000 0.0000 6.1214 4.5974" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
 <g style="fill:#000000; fill-opacity:1.0000;stroke:#000000; stroke-opacity:1.0000;
 stroke-linecap:round; stroke-linejoin:round;"
  transform="translate(0 0) scale(1 1)">
 <path style="fill:#000000; fill-opacity:1.0000; stroke:none;fill-rule:evenodd;"
-d="M 4.0100,3.8550
-4.0100,0.3550
-5.4200,0.3550
-5.4200,3.8550
+d="M 4.2100,4.0550
+4.2100,0.5550
+5.6200,0.5550
+5.6200,4.0550
 Z" />
 <path style="fill:#000000; fill-opacity:1.0000; stroke:none;fill-rule:evenodd;"
-d="M 0.3100,3.8550
-0.3100,0.3550
-1.7200,0.3550
-1.7200,3.8550
+d="M 0.5100,4.0550
+0.5100,0.5550
+1.9200,0.5550
+1.9200,4.0550
 Z" />
 </g>
 <g style="fill:none;
 stroke:#000000; stroke-width:0.1500; stroke-opacity:1;
 stroke-linecap:round; stroke-linejoin:round;">
-<path d="M0.0750 0.3050
-L0.0750 3.8650
+<path d="M0.2750 0.5050
+L0.2750 4.0650
 " />
-<path d="M5.6550 0.3250
-L5.6550 3.8850
+<path d="M5.8550 0.5250
+L5.8550 4.0850
 " />
-<path d="M1.5950 4.1350
-L0.3250 4.1350
+<path d="M1.7950 4.3350
+L0.5250 4.3350
 " />
-<path d="M4.1350 4.1350
-L5.4050 4.1350
+<path d="M4.3350 4.3350
+L5.6050 4.3350
 " />
-<path d="M0.3250 0.0750
-L1.6350 0.0750
+<path d="M0.5250 0.2750
+L1.8350 0.2750
 " />
-<path d="M5.4050 0.0750
-L4.1350 0.0750
+<path d="M5.6050 0.2750
+L4.3350 0.2750
 " />
-<path d="M2.8650 2.7350 A0.3256 0.3256 0.0 0 0 2.8596 2.0940" />
-<path d="M2.8650 1.4750 A0.3256 0.3256 0.0 0 0 2.8704 2.1160" />
+<path d="M3.0650 2.9350 A0.3256 0.3256 0.0 0 0 3.0596 2.2940" />
+<path d="M3.0650 1.6750 A0.3256 0.3256 0.0 0 0 3.0704 2.3160" />
+</g>
+<g style="fill:none;
+stroke:#000000; stroke-width:0.0500; stroke-opacity:1;
+stroke-linecap:round; stroke-linejoin:round;">
+<path d="M0.0250 0.0250
+L6.1050 0.0250
+" />
+<path d="M6.1050 0.0250
+L6.1050 4.5850
+" />
+<path d="M6.1050 4.5850
+L0.0250 4.5850
+" />
+<path d="M0.0250 4.5850
+L0.0250 0.0250
+" />
 </g>
 </svg>

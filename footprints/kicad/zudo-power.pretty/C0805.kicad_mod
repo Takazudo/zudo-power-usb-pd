@@ -22,6 +22,10 @@
 	(fp_arc (start 1.81 -0.75) (end 1.81 -0.90) (angle 90.00) (layer F.SilkS) (width 0.15))
 	(fp_arc (start -1.81 0.75) (end -1.96 0.75) (angle -90.00) (layer F.SilkS) (width 0.15))
 	(fp_arc (start -1.81 -0.75) (end -1.81 -0.90) (angle -90.00) (layer F.SilkS) (width 0.15))
+	(fp_line (start -2.21 -1.15) (end 2.21 -1.15) (layer F.CrtYd) (width 0.05))
+	(fp_line (start 2.21 -1.15) (end 2.21 1.15) (layer F.CrtYd) (width 0.05))
+	(fp_line (start 2.21 1.15) (end -2.21 1.15) (layer F.CrtYd) (width 0.05))
+	(fp_line (start -2.21 1.15) (end -2.21 -1.15) (layer F.CrtYd) (width 0.05))
 	(model "${KIPRJMOD}/../../footprints/kicad/zudo-pd.3dshapes/C0805_L2.0-W1.3-H1.3.wrl"
 		(offset (xyz -1.410 -0.000 -0.000))
 		(scale (xyz 1 1 1))
