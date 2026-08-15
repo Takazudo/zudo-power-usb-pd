@@ -545,14 +545,17 @@ fact at any frequency** for this part. Wave-6/layout option: the 35 V FOLLON 470
 Evidence: fact IDs above; sch property reads C5/C7 (`100uF`, C22383804);
 `rule-tvs-clamp-vs-absmax` (clamp-path conditions).
 
-#### BB-7 — the −13.5 V output capacitors carry ≈0.77 A RMS of discontinuous 150 kHz ripple; the exceedance found on the as-built two-can bank is resolved by a third parallel can (MEDIUM lead, NEEDS BENCH ×5)
+#### BB-7 — the −13.5 V output capacitors carry ≈0.81 A RMS of discontinuous 150 kHz ripple; the exceedance found on the as-built two-can bank is resolved by a third parallel can (MEDIUM lead, NEEDS BENCH ×5)
 
 In an inverting buck-boost the output capacitors see the full catch-diode current
 minus the DC load — discontinuous, unlike U2/U3's LC-smoothed outputs (0.09 / 0.25 A
 p-p triangle, `fact-cya1265-ripple-13v5` / `fact-cya1265-ripple-7v5`). Conditioned
-arithmetic this pass adds (ideal CCM steady state, nominal setpoints, D =
-(13.53 + 0.55) ÷ (15 + 13.53 + 0.55) ≈ 0.48 using `fact-ss34-vf`): output-cap RMS
-ripple ≈ Iout × sqrt(D/(1−D)) ≈ **0.77 A at the 0.8 A rated load**. The 0.8 A figure is
+arithmetic (ideal CCM steady state, nominal setpoints), crediting both the SS34
+catch-diode drop (`fact-ss34-vf`) and the LM2596's own switch saturation voltage
+(`fact-lm2596-vsat`, 1.16 V typ):
+
+D = (13.53 + 0.55) ÷ (15 − 1.16 + 13.53 + 0.55) ≈ **0.504**, giving output-cap RMS
+ripple ≈ Iout × sqrt(D/(1−D)) ≈ **0.807 A at the 0.8 A rated load**. The 0.8 A figure is
 the published −12 V rail contract, deliberately retained rather than shaved to a
 smaller "expected" draw — see decision `neg-rail-cap-bank` in
 `scripts/schgen/decisions.json`.
@@ -569,7 +572,8 @@ ESR was wrong too: ~0.035 Ω against a tan-δ-implied **~0.51 Ω**
 </Warning>
 
 With the FOLLON line's own ESR/ripple facts added (issue #155), the as-built two-can
-bank (C11‖C24) turned out to be at or over rating: dividing the ≈0.77 A by the two
+bank (C11‖C24) turned out to be at or over rating: dividing the then-current ≈0.77 A
+(the earlier Vsat-free basis — these two as-built figures are left on it) by the two
 parts' 1/ESR gave **C11 ≈362 mA against its 312 mA rating (≈1.16× over)** and **C24
 ≈408 mA against its 403 mA rating (≈1.01×, at the limit)**
 (`fact-c22387780-installed-ripple-exceedance`). C9's 146 mA rating is a separate,
@@ -586,11 +590,11 @@ ripple fact at all, and C970687 (C9)'s 146 mA is a 120 Hz line-frequency figure*
 
 The −13.5 V output bank is now **C11 ‖ C24 ‖ C12** (C12 = a second FOLLON C22387780,
 470 µF/35 V, added in parallel on the rail; C11 is unchanged on its Φ8 land — see
-`fact-c2983319-case-size` and issue #150). The same 1/ESR split, now over three cans,
-puts **C11 at 236.92 mA = 75.9 % of its 312 mA rating** and **C24 = C12 at 266.54 mA =
-66.1 % of their 403 mA rating** (`fact-c2983319-c11-ripple-share-3can`,
-`fact-c22387780-can-ripple-share-3can`) — both inside the 85 % sizing bar. Output bulk
-on the rail rises 940 µF → 1410 µF.
+`fact-c2983319-case-size` and issue #150). The same 1/ESR split, now over three cans
+and on the Vsat-inclusive 0.807 A basis, puts **C11 at 248.28 mA = 79.6 % of its
+312 mA rating** and **C24 = C12 at 279.31 mA = 69.3 % of their 403 mA rating**
+(`fact-c2983319-c11-ripple-share-3can`, `fact-c22387780-can-ripple-share-3can`) — both
+inside the 85 % sizing bar. Output bulk on the rail rises 940 µF → 1410 µF.
 
 The bench caveat carried with the original split is unchanged and still applies: the
 split uses 120 Hz max-ESR because neither datasheet publishes ESR at 150 kHz.
@@ -599,17 +603,31 @@ are pessimistic while the ratio between two same-technology, similar-size cans i
 trustworthy part. This is a resize against retained ratings, not a bench measurement —
 the installed ripple at C11/C24/C12 is still **NEEDS BENCH** (issue #155).
 
-One model input is known to lean the other way: the D ≈ 0.48 derivation credits the
-SS34 catch-diode drop but assumes a zero-volt switch, and no LM2596 switch-saturation
-fact is retained — including Vsat raises D and every per-can share by several percent
-in the non-conservative direction (the dominant omission in the model; the neglected
-inductor-ripple term is far smaller). The 85 % sizing bar exists to absorb exactly
-this class of omission; retaining the Vsat fact and tightening the arithmetic is
-tracked as issue #171.
-
 </Tip>
 
+<Note title="Issue #171 resolved — the model now credits the LM2596 switch">
+
+The earlier D ≈ 0.48 derivation credited the SS34 catch-diode drop but assumed a
+zero-volt switch, and no LM2596 switch-saturation fact was retained. Reading the
+hash-locked UMW datasheet's Electrical Characteristics 10.2 table gives **Saturation
+Voltage `VSAT` = 1.16 V typical at `IOUT` = 3 A** (Notes 7/8), with a guaranteed
+maximum of 1.4 V at 25 °C and 1.5 V over the full operating temperature range — now
+retained as `fact-lm2596-vsat` and `fact-lm2596-vsat-max`.
+
+Folding it in moved D from ≈0.484 to ≈0.504 and the ripple from 0.775 A to **0.807 A**,
+which is what the shares above are computed on. At the guaranteed **maximum** Vsat the
+ripple reaches 0.817 A, putting C11 at 80.6 % and C24 = C12 at 70.2 % — still inside
+the bar the 85 % target set. C11 is the binding member of the bank: at typical Vsat the
++15 V input would have to sag to **13.29 V** before C11 hits 85 % (C24/C12 not until
+10.36 V). No retained fact bounds the +15 V rail low, so no low-line number is asserted
+here; that axis rides with the existing bench item rather than an assumed figure. The
+remaining neglected term is the inductor ripple, which is far smaller and runs the
+conservative way.
+
+</Note>
+
 Evidence: fact IDs above; `fact-lm2596-oscillator-frequency` (150 kHz);
+`fact-lm2596-vsat` / `fact-lm2596-vsat-max` (switch saturation voltage);
 baseline `-13.5V OUT` row (C11.2, C24.2, C12.2); decision `neg-rail-cap-bank`
 (`scripts/schgen/decisions.json`); arithmetic conditions stated inline.
 
