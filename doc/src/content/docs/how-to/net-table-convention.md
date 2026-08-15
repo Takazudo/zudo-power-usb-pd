@@ -98,7 +98,7 @@ above.
 flowchart TD
   IN13V5["+13.5V IN\n(from DC-DC stage)"] -->|"/DC-DC Conversion/+13.5V OUT"\nC14.1 C20.1| U6["U6 L7812CD2T\n+12V LDO"]
   IN7V5["+7.5V IN\n(from DC-DC stage)"] -->|"/DC-DC Conversion/+7.5V OUT"\nC15.1 C22.1| U7["U7 L7805ABD2T\n+5V LDO"]
-  IN13V5N["-13.5V IN\n(from DC-DC stage)"] -->|"/DC-DC Conversion/-13.5V OUT"\nC16.1 C24.2| U8["U8 CJ7912\n-12V LDO"]
+  IN13V5N["-13.5V IN\n(from DC-DC stage)"] -->|"/DC-DC Conversion/-13.5V OUT"\nC16.1 C24.2 C12.2| U8["U8 CJ7912\n-12V LDO"]
 
   U6 -->|"Net-(U6-OUT)"| PTC1["PTC1 polyfuse\n1.5A hold / SMD1210P150TF/16"]
   U7 -->|"Net-(U7-OUT)"| PTC2["PTC2 polyfuse\n1.1A hold / mSMD110-33V"]
@@ -134,7 +134,7 @@ flowchart TD
 |-----|--------------------------|------------|
 | `/DC-DC Conversion/+13.5V OUT` | `U6.1 C14.1 C20.1` (also carries DC-DC-stage pins `L1.2 R1.2 C3.1 C31.2` and test pad `TP3.1`, omitted here) | LDO input for +12V rail; `U6.1` = IN pin; `C14.1`/`C20.1` = 470 µF/35V input bulk caps |
 | `/DC-DC Conversion/+7.5V OUT` | `U7.1 C15.1 C22.1` (also `L2.2 R3.1 C4.1 C32.2`, `TP4.1`, omitted here) | LDO input for +5V rail; `U7.1` = IN pin; `C15.1` = 470 nF, `C22.1` = 470 µF/10V |
-| `/DC-DC Conversion/-13.5V OUT` | `U8.2 C16.1 C24.2` (also `U4.3 U4.5 U4.6 D3.2 C9.2 C10.2 C11.2 R6.2`, `TP5.1`, omitted here) | LDO input for -12V rail; `U8.2` = VIN pin; `C16.1` = 470 nF, `C24.2` = 470 µF/35V |
+| `/DC-DC Conversion/-13.5V OUT` | `U8.2 C16.1 C24.2 C12.2` (also `U4.3 U4.5 U4.6 D3.2 C9.2 C10.2 C11.2 R6.2`, `TP5.1`, omitted here) | LDO input for -12V rail; `U8.2` = VIN pin; `C16.1` = 470 nF, `C24.2`/`C12.2` = 470 µF/35V output bank (C12 added by decision `neg-rail-cap-bank`) |
 | `Net-(U6-OUT)` | `U6.3 C17.2 C21.1 R7.1 PTC1.1` | +12V LDO output before polyfuse; `C17.2` = 100 nF output bypass, `C21.1` = 470 µF/35V, `R7.1` = LED resistor |
 | `Net-(U7-OUT)` | `U7.3 C18.1 C23.1 R8.1 PTC2.1` | +5V LDO output before polyfuse; `C18.1` = 100 nF output bypass, `C23.1` = 470 µF/10V |
 | `Net-(U8-OUT)` | `U8.3 C19.1 C25.2 R9.1 PTC3.1` | -12V LDO output before polyfuse; `C19.1` = 100 nF output bypass, `C25.2` = 470 µF/35V |
@@ -144,7 +144,7 @@ flowchart TD
 | `Net-(R7-LED2)` | `R7.2 LED2.1` | +12V indicator LED anode node; `R7.2` = resistor output, `LED2.1` = LED anode (LED2 uses reversed pin numbering: pin 1 = A) |
 | `Net-(R8-LED3)` | `R8.2 LED3.2` | +5V indicator LED anode node; `LED3.2` = LED anode |
 | `Net-(R9-LED4)` | `R9.2 LED4.1` | -12V indicator LED cathode node; `LED4.1` = LED cathode (LED4 conducts from GND into the -12V network) |
-| `GND` (filtered to this stage) | `U6.4 U7.2 U8.1 C14.2 C15.2 C17.1 C18.2 C20.2 C21.2 C22.2 C23.2 C16.2 C24.1 C19.2 C25.1 LED2.2 LED3.1 LED4.2 TVS1.2 TVS2.2 TVS3.1` | Common ground; LDO GND pins, all bulk/bypass cap negatives, LED cathodes/anodes, TVS return pins. `GND` is shared board-wide — this row omits DC-DC-stage, interface, and output-connector GND pins also on the net |
+| `GND` (filtered to this stage) | `U6.4 U7.2 U8.1 C14.2 C15.2 C17.1 C18.2 C20.2 C21.2 C22.2 C23.2 C16.2 C24.1 C19.2 C25.1 C12.1 LED2.2 LED3.1 LED4.2 TVS1.2 TVS2.2 TVS3.1` | Common ground; LDO GND pins, all bulk/bypass cap negatives, LED cathodes/anodes, TVS return pins. `GND` is shared board-wide — this row omits DC-DC-stage, interface, and output-connector GND pins also on the net |
 
 <Note>
 Pin numbers follow the spec module's `COMPONENTS`/`NETS` tables, which match the

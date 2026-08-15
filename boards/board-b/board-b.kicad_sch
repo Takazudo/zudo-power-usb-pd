@@ -6365,6 +6365,63 @@
 		)
 	)
 	(symbol
+		(lib_id "zudo-pd:EFVH035ADA471M10B0")
+		(at 38.1 393.7 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "0d953362-1964-53b0-8cbc-bf4891d416b0")
+		(property "Reference" "C12"
+			(at 50.8 391.16 0)
+			(effects
+				(font (size 1.27 1.27))
+			)
+		)
+		(property "Value" "470uF 35V"
+			(at 38.1 401.32 0)
+			(effects
+				(font (size 1.27 1.27))
+			)
+		)
+		(property "Footprint" "zudo-pd:CAP-SMD_BD10.0-L10.3-W10.3-LS11.0-FD"
+			(at 38.1 393.7 0)
+			(effects
+				(font (size 1.27 1.27))
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 38.1 393.7 0)
+			(effects
+				(font (size 1.27 1.27))
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C22387780"
+			(at 38.1 401.32 0)
+			(effects
+				(font (size 1.27 1.27))
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "f1d1eb32-4af1-52dc-ac3d-68d148b44ad4")
+		)
+		(pin "2"
+			(uuid "ff62a325-0c42-5590-834e-69589636356a")
+		)
+		(instances
+			(project "board-b"
+				(path "/3d627066-684f-577a-80b2-2a76742d5147"
+					(reference "C12")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "zudo-pd:2541WR-2X08P")
 		(at 139.7 393.7 0)
 		(unit 1)
@@ -7066,6 +7123,15 @@
 		)
 		(uuid "50749838-ebfc-590d-b4d5-84dd78cbe33d")
 	)
+	(global_label "/DC-DC Conversion/-13.5V OUT"
+		(shape passive)
+		(at 38.1 397.51 270)
+		(effects
+			(font (size 1.27 1.27))
+			(justify right)
+		)
+		(uuid "34be3eaa-6f55-586a-b8e5-9839f8a7e2f4")
+	)
 	(global_label "Net-(U4-Feedback)"
 		(shape passive)
 		(at 331.47 53.34 180)
@@ -7416,6 +7482,15 @@
 			(justify left)
 		)
 		(uuid "277ecb77-d67f-5420-8545-217d5890971a")
+	)
+	(global_label "GND"
+		(shape passive)
+		(at 38.1 389.89 90)
+		(effects
+			(font (size 1.27 1.27))
+			(justify left)
+		)
+		(uuid "79c5cc8a-cdbe-5ba5-a34d-4fbdaeb2f9a4")
 	)
 	(global_label "GND"
 		(shape passive)

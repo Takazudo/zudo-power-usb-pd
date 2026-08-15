@@ -3,7 +3,7 @@
   "source_issue": 123,
   "locked_date": "2026-08-14",
   "review_report": "doc/src/content/docs/inbox/spec-architecture-review.md",
-  "required_decision_keys": ["a", "b", "c", "d", "e", "f", "g", "p1-form", "tvs3-orientation", "bb3-disposition", "ba2-disposition"],
+  "required_decision_keys": ["a", "b", "c", "d", "e", "f", "g", "p1-form", "tvs3-orientation", "bb3-disposition", "ba2-disposition", "neg-rail-cap-bank"],
   "notes": "Machine-consumable wave-6 decision lock for epic #86 / plan #101. Issue bodies #124/#125/#126 mirror these decisions; this file is the source of truth. Validate with scripts/schgen/check_decisions.py. Statuses: LOCKED = spec-able pick the downstream spec must implement; NO-SPEC-CHANGE-NEEDS-BENCH = recorded math, explicitly no spec change; DISPOSITION = accepted residual / recorded options, no part change.",
   "decisions": [
     {
@@ -284,6 +284,35 @@
         "fact-umw-ao3401a-vds",
         "rule-tvs-clamp-vs-absmax",
         "fact-stusb-ds12499-primary-attempt"
+      ]
+    },
+    {
+      "key": "neg-rail-cap-bank",
+      "id": "dec-neg-rail-cap-bank",
+      "title": "-13.5V output-cap bank: add C12 (470uF/35V FOLLON C22387780) in parallel; C11 stays C2983319 on its Phi 8 land",
+      "status": "LOCKED",
+      "applies_to": [
+        "#162",
+        "board_b_spec"
+      ],
+      "decision": "Add C12 = FOLLON EFVH035ADA471M10B0, LCSC C22387780, 470 uF / 35 V, Phi 10 x 10.5 case, fitted, in parallel on the '/DC-DC Conversion/-13.5V OUT' net (C12.2 on the rail, C12.1 on GND), at spec coordinate (38.1, 393.7). C11 is NOT swapped: it stays GVT1E477M0810CNVC / C2983319 on its Phi 8 CAP-SMD_BD8.0-L8.3-W8.3-LS9.0-FD land. The -13.5V output bank becomes C11 || C24 || C12 = 1410 uF total. No new symbol, footprint, inventory line, source, or candidate record is created -- C12 reuses the existing C22387780 line already fitted at C5/C7/C14/C20/C21/C24/C25.",
+      "rationale": "Sizing target: every -13.5V output electrolytic at or below 85% of its 150 kHz-derated ripple rating at the rated load. LOAD DUTY: the worst-case 0.8 A is retained, not reduced -- -12V/0.8A is the published rail contract (board-b-synth-power.md product-rail line) and the whole downstream chain is already sized to it (PTC3 1.50 A hold, CJ7912 dropout evaluated at 0.8 A, the GND-return budget summing 1.2+0.8+0.5 A); nothing limits a user's module draw below the rated figure, so sizing to a smaller expected load would silently derate the published rail. The 0.77 A ripple figure is also ideal-CCM (Iout*sqrt(D/(1-D)), D~0.48) and is not conservative in every direction: the DOMINANT omission is the LM2596 switch-saturation voltage (no Vsat fact retained -- issue #171), which raises D and every per-can share by several percent; the neglected inductor-ripple term is far smaller. The 85% bar absorbs this class of omission; #171 tracks retaining the fact and tightening the arithmetic. ARITHMETIC: at 150 kHz ESR dominates each branch, so ripple divides as 1/ESR; retained max-ESR is 0.5079413077400916 Ohm (C2983319) vs 0.4515033846578592 Ohm (C22387780), an exact 1.125 ratio at identical 470 uF, giving an 8/26 : 9/26 : 9/26 split of 0.77 A -- C11 236.92 mA against its 312 mA rating (75.9%) and each of C24/C12 266.54 mA against 403 mA (66.1%). The same model reproduces the as-built two-can numbers exactly (362.35 mA / 1.16x and 407.65 mA / 1.01x), which anchors it. The 120 Hz-ESR caveat is carried: electrolytic ESR falls and flattens with frequency, so the absolute Ohm values are pessimistic while the RATIO between two same-technology, similar-size cans is the trustworthy part. VOLTAGE: the bank is deliberately mixed -- C11 at 25 V has 11.5 V margin on the 13.5 V-magnitude rail, C24/C12 at 35 V have 21.5 V; the weakest member passes at 1.85x the rail. RUNNERS-UP: (2) swapping C11 to a third C22387780 gives 63.7% per can but reverts C11's footprint Phi 8 -> Phi 10, undoing the just-landed issue #150 land correction whose own evidence names the Phi 8 land as the digit-for-digit match, and forces a rewrite of the Phi 8 comment in board_b_spec.py -- 12 points of margin nobody needs at that price; (3) swapping C11 without adding a can leaves 385 mA per can = 95.5%, which fails the 85% bar outright. A brand-new, not-yet-evidenced part was never reached because an evidenced-part bank clears the bar. ACCEPTED TRADE: output bulk rises 940 uF -> 1410 uF, which LENGTHENS the current-limited inverting-startup transient (~50% more charge to move at the same ~4.5 A limit, already 1.5 A over the 3.0 A PD contract) -- and PD sources fault on SUSTAINED overcurrent, so a longer window is the risk axis, not a higher peak. rule-inverting-startup-vs-pd-source already gates this domain NEEDS BENCH; the enlarged bank widens that existing bench item rather than opening a new one. STOCK: this raises the C22387780 count to 8 pieces/board against the 935-unit stock noted LOW by decision (d) at 7 pieces -- re-verify stock at order time. RESIDUAL: the installed ripple at C11/C24/C12 is still a bench measurement (BB-7); this decision resizes against the retained ratings, it does not measure.",
+      "evidence": [
+        "fact-c2983319-ripple-hf-derate",
+        "fact-c22387780-ripple-hf-derate",
+        "fact-c2983319-esr-120hz",
+        "fact-c22387780-esr-120hz",
+        "fact-c2983319-c11-ripple-share-3can",
+        "fact-c22387780-can-ripple-share-3can",
+        "fact-c22387780-installed-ripple-exceedance",
+        "fact-c2983319-case-size",
+        "fact-c22387780-case-size",
+        "fact-c2983319-rail-margin",
+        "fact-c22387780-margin-ldo-input",
+        "fact-lm2596-oscillator-frequency",
+        "fact-lm2596-inverting-startup-current",
+        "calc-inverting-startup-overdraw",
+        "rule-inverting-startup-vs-pd-source"
       ]
     }
   ]

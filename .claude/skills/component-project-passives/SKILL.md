@@ -26,7 +26,7 @@ Several vendor datasheets for the electrolytics/LEDs are vector-embedded PDFs th
 
 Every electrolytic carries a `voltage-rating-vs-rail` (or equivalent) COVERED coverage entry with a CALCULATED margin fact, using the exact per-refdes net from `board-b-synth-power.md`'s netlist-derived tables where that is more precise than inventory.json's line-level function text (e.g. C22383803's C4/C22 sit on +7.5V while C23 sits on +5V; C22383804's C5/C7 sit on the +15V input bus, not a DC-DC output). **C970687 (C9) is the one exception**: per issue #117's explicit scope, its cross-rail bridging-voltage math (28.5V nominal / 33.5V edge case, from the LM2596S-ADJ inverting buck-boost topology) is owned by `component-lm2596s-adj`; this record carries only C970687's own 50V manufacturer rating.
 
-**Open item**: `rec-c2983319`'s C11 placement has a documented conflict between inventory.json's function text (+13.5V DC-DC output) and `board-b-synth-power.md`'s U4 net table (which lists C11.2 on -13.5V OUT) -- not resolved in this pass; see `fact-c2983319-c11-net-discrepancy`.
+C11's placement conflict between inventory.json's old function text (+13.5V DC-DC output) and `board-b-synth-power.md`'s U4 net table (C11.2 on -13.5V OUT) is RESOLVED: C11 sits on -13.5V OUT, per `fact-c2983319-c11-net-discrepancy`. The -13.5V output-cap bank is C11 (HRK C2983319, Phi 8 land) || C24 || C12 (both FOLLON C22387780, Phi 10 land), per decision `neg-rail-cap-bank`.
 
 ## C4/C22/C23 canonical-LCSC decision
 

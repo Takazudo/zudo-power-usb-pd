@@ -351,7 +351,7 @@ pin-function tables.
 | #93 row 8 — C4/C22/C23 Value fix | All three read `470uF 10V` (property reads) | Applied. The deeper LCSC-field/drawn-symbol identity tangle is recorded by the bundle (`fact-c22383803-canonical-choice`) — BB-14 |
 | J5 A↔B interface contract | Pinout tables in board-split-decision.md, board-a-usb-pd-core.md, and board-b-synth-power.md are byte-identical (md5-verified this pass); J5 absent from every sheet, matching the "connector does not exist in the netlist yet" doc state; 1.6× derated margin arithmetic reproduced by `calc-ab-derated-margin-ratio` | Conformant. Margin stays NEEDS BENCH (`rule-ab-interface-current`: harness unbuilt, derating assumed) |
 | Output stage — Faston assignment + J10/J11 GND moat | Doc tables only: J6=−12V, J7=+12V, J8=+5V, J9=GND (`fact-faston-rail-assignment`); J10/J11 pins 9–14 six-pin GND moat, −12V on 15–16 far from signals (`fact-hdr-pin-pair-assignment`, `fact-hdr-gnd-moat-interactions`, `fact-hdr-misalignment-safety-note`) | Structure conforms to the Doepfer convention at doc level. **Not baselined**: every output-stage net is in `board-b.json`'s `unresolved` list, so no Ref.Pin verification exists — carried as a standing gap (coverage limits), with header key orientation NEEDS BENCH (`fact-hdr-keying-not-netlist-verifiable`) |
-| Electrolytic polarity on the resolved nets | Baseline pin sides: C21.1/C25.2 on the ±12 V outputs, C21.2/C25.1 on GND; C24.2 on `-13.5V OUT`, C24.1 on GND; C11.2 on `-13.5V OUT` | Positive-plate-to-higher-potential convention holds on every resolved electrolytic, including the negative-rail mirror pattern |
+| Electrolytic polarity on the resolved nets | Baseline pin sides: C21.1/C25.2 on the ±12 V outputs, C21.2/C25.1 on GND; C24.2 on `-13.5V OUT`, C24.1 on GND; C11.2 on `-13.5V OUT`; C12.2 on `-13.5V OUT`, C12.1 on GND (decision `neg-rail-cap-bank`, mirrors C24) | Positive-plate-to-higher-potential convention holds on every resolved electrolytic, including the negative-rail mirror pattern |
 
 ### The two highest-leverage nets — +15 V input bus and the −13.5 V loop
 
@@ -367,7 +367,7 @@ flowchart TD
   BUS --> U3["U3 buck -> +7.5V\nVIN sees 15 V"]
   BUS --> U4["U4 inverting -> -13.5V\ndevice sees VIN + 13.53 V = 28.53 V\n45.93 V at the 32.4 V clamp table point"]
   BUS ---|"C9 100uF 50V + C10 100nF 50V\nbridge +15V to -13.5V"| N135
-  U4 -->|"-13.5V OUT\n(U4 GND/ON-OFF/TAB ride here)"| N135["-13.5V rail\nC11 + C24 output bulk"]
+  U4 -->|"-13.5V OUT\n(U4 GND/ON-OFF/TAB ride here)"| N135["-13.5V rail\nC11 + C24 + C12 output bulk"]
   U2 -->|"+13.5V OUT"| U6["U6 L7812\n1.5 V headroom vs 2.0 V typ dropout"]
   U3 -->|"+7.5V OUT"| U7["U7 L7805\n0.5 V typ headroom at 5.0 V out"]
   N135 --> U8["U8 CJ7912\ninput 1.0 V outside guaranteed band"]
@@ -545,45 +545,73 @@ fact at any frequency** for this part. Wave-6/layout option: the 35 V FOLLON 470
 Evidence: fact IDs above; sch property reads C5/C7 (`100uF`, C22383804);
 `rule-tvs-clamp-vs-absmax` (clamp-path conditions).
 
-#### BB-7 — the −13.5 V output capacitors carry ≈0.77 A RMS of discontinuous 150 kHz ripple, and no electrolytic on the board has a switching-frequency ripple rating (MEDIUM lead, NEEDS BENCH ×5)
+#### BB-7 — the −13.5 V output capacitors carry ≈0.77 A RMS of discontinuous 150 kHz ripple; the exceedance found on the as-built two-can bank is resolved by a third parallel can (MEDIUM lead, NEEDS BENCH ×5)
 
 In an inverting buck-boost the output capacitors see the full catch-diode current
 minus the DC load — discontinuous, unlike U2/U3's LC-smoothed outputs (0.09 / 0.25 A
 p-p triangle, `fact-cya1265-ripple-13v5` / `fact-cya1265-ripple-7v5`). Conditioned
 arithmetic this pass adds (ideal CCM steady state, nominal setpoints, D =
 (13.53 + 0.55) ÷ (15 + 13.53 + 0.55) ≈ 0.48 using `fact-ss34-vf`): output-cap RMS
-ripple ≈ Iout × sqrt(D/(1−D)) ≈ **0.77 A at the 0.8 A rated load**, shared by
-C11‖C24.
+ripple ≈ Iout × sqrt(D/(1−D)) ≈ **0.77 A at the 0.8 A rated load**. The 0.8 A figure is
+the published −12 V rail contract, deliberately retained rather than shaved to a
+smaller "expected" draw — see decision `neg-rail-cap-bank` in
+`scripts/schgen/decisions.json`.
 
-<Warning title="Updated by issue #150 — the ≈1.0 A rating this paragraph relied on was wrong">
+<Warning title="Updated by issue #150 — the ≈1.0 A rating the original review relied on was wrong">
 
-The C11 figure below (≈1.0 A at 120 Hz, from a partial PDF extraction) was **wrong by
+The C11 figure the original arithmetic used (≈1.0 A at 120 Hz, from a partial PDF extraction) was **wrong by
 ~4×**. Reading the hash-locked HRK datasheet directly gives 240 mA rms at 120 Hz/105 °C,
 with a published frequency multiplier of ×1.30 at 10 kHz and above — so the real rating
 at the LM2596's 150 kHz is **312 mA** (`fact-c2983319-ripple-hf-derate`). The recorded
 ESR was wrong too: ~0.035 Ω against a tan-δ-implied **~0.51 Ω**
 (`fact-c2983319-esr-120hz`), ~14× out. Both errors ran in the non-conservative direction.
 
-This inverts the conclusion. Against the ≈0.77 A shared by C11‖C24, even a generous
-equal split puts ~0.39 A through C11 versus a 312 mA rating — **roughly 1.25× over**, and
-worse if C11's higher ESR pulls a larger share. C24's FOLLON line still retains no ripple
-fact, so the split cannot be bounded from retained evidence. This is no longer "unbounded
-by any retained spec"; it is a quantified apparent exceedance and needs a real
-sizing decision, not just a bench thermal check.
-
 </Warning>
 
-Against that: the only ripple identity retained on any of the five
-electrolytic lines is C11's family rating of ≈1.0 A **at 120 Hz** from a partial PDF
-extraction, with the 150 kHz figure "not given at all"
-(`fact-c2983319-ripple-esr-note`), and C9's 146 mA is likewise a 120 Hz line-frequency
-rating (`fact-c970687-ripple`). C4/C22/C23, C5/C7, and C14/C20/C21/C24/C25 retain no
-ripple fact whatsoever. ESR-driven self-heating at 150 kHz on the −13.5 V pair is
-therefore unbounded by any retained spec — bench thermal check or a rated-part
-substitution belongs in the Board B plan.
+With the FOLLON line's own ESR/ripple facts added (issue #155), the as-built two-can
+bank (C11‖C24) turned out to be at or over rating: dividing the ≈0.77 A by the two
+parts' 1/ESR gave **C11 ≈362 mA against its 312 mA rating (≈1.16× over)** and **C24
+≈408 mA against its 403 mA rating (≈1.01×, at the limit)**
+(`fact-c22387780-installed-ripple-exceedance`). C9's 146 mA rating is a separate,
+120 Hz line-frequency figure (`fact-c970687-ripple`) and is not part of this split.
+
+Ripple-identity coverage across the board's five electrolytic groups — C3/C11, C9,
+C4/C22/C23, C5/C7, and C14/C20/C21/C24/C25 — is still partial, which is what the
+heading's NEEDS BENCH ×5 counts: the C2983319 and C22387780 lines now carry real
+150 kHz-derated ratings (issues #150/#155), but **C335982 (C4/C22/C23) retains no
+ripple fact at all, and C970687 (C9)'s 146 mA is a 120 Hz line-frequency figure**
+(`fact-c970687-ripple`) with no switching-frequency bound — those gaps remain open.
+
+<Tip title="Resolved by decision neg-rail-cap-bank — a third can added in parallel">
+
+The −13.5 V output bank is now **C11 ‖ C24 ‖ C12** (C12 = a second FOLLON C22387780,
+470 µF/35 V, added in parallel on the rail; C11 is unchanged on its Φ8 land — see
+`fact-c2983319-case-size` and issue #150). The same 1/ESR split, now over three cans,
+puts **C11 at 236.92 mA = 75.9 % of its 312 mA rating** and **C24 = C12 at 266.54 mA =
+66.1 % of their 403 mA rating** (`fact-c2983319-c11-ripple-share-3can`,
+`fact-c22387780-can-ripple-share-3can`) — both inside the 85 % sizing bar. Output bulk
+on the rail rises 940 µF → 1410 µF.
+
+The bench caveat carried with the original split is unchanged and still applies: the
+split uses 120 Hz max-ESR because neither datasheet publishes ESR at 150 kHz.
+Aluminium-electrolytic ESR falls and flattens with frequency, so the absolute Ω values
+are pessimistic while the ratio between two same-technology, similar-size cans is the
+trustworthy part. This is a resize against retained ratings, not a bench measurement —
+the installed ripple at C11/C24/C12 is still **NEEDS BENCH** (issue #155).
+
+One model input is known to lean the other way: the D ≈ 0.48 derivation credits the
+SS34 catch-diode drop but assumes a zero-volt switch, and no LM2596 switch-saturation
+fact is retained — including Vsat raises D and every per-can share by several percent
+in the non-conservative direction (the dominant omission in the model; the neglected
+inductor-ripple term is far smaller). The 85 % sizing bar exists to absorb exactly
+this class of omission; retaining the Vsat fact and tightening the arithmetic is
+tracked as issue #171.
+
+</Tip>
 
 Evidence: fact IDs above; `fact-lm2596-oscillator-frequency` (150 kHz);
-baseline `-13.5V OUT` row (C11.2, C24.2); arithmetic conditions stated inline.
+baseline `-13.5V OUT` row (C11.2, C24.2, C12.2); decision `neg-rail-cap-bank`
+(`scripts/schgen/decisions.json`); arithmetic conditions stated inline.
 
 #### BB-8 — PTC3's 85 °C guaranteed hold (0.77 A) is below the 0.8 A rail rating, PTC2 retains no derating fact at all, and PTC3's voltage margin thins to 2.5 V in the passthrough corner (MEDIUM lead)
 
