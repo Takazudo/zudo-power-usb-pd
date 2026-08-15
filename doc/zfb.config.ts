@@ -48,11 +48,17 @@ const localeRecord = Object.fromEntries(
   Object.entries(settings.locales).map(([code, locale]) => [code, { dir: locale.dir }]),
 );
 
+// Plugin descriptors are bare module specifiers, not imported functions —
+// zfb evaluates this config with esbuild `--platform=neutral`, so pulling a
+// plugin's `node:fs`/`node:path` graph in here would fail the config load.
+// zudo-doc 5.x ships these three as package-owned plugins; the local
+// `plugins/*-plugin.mjs` shims that used to wrap the old
+// `@takazudo/zudo-doc/integrations/*` runners are gone.
 const integrationPlugins = [
   ...(settings.claudeResources
     ? [
         {
-          name: "./plugins/claude-resources-plugin.mjs",
+          name: "@takazudo/zudo-doc/plugins/claude-resources",
           options: {
             claudeDir: settings.claudeResources.claudeDir,
             projectRoot: settings.claudeResources.projectRoot,
@@ -64,7 +70,7 @@ const integrationPlugins = [
   ...(settings.docHistory
     ? [
         {
-          name: "./plugins/doc-history-plugin.mjs",
+          name: "@takazudo/zudo-doc/plugins/doc-history",
           options: {
             docsDir: settings.docsDir,
             locales: localeRecord,
@@ -74,7 +80,7 @@ const integrationPlugins = [
       ]
     : []),
   {
-    name: "./plugins/search-index-plugin.mjs",
+    name: "@takazudo/zudo-doc/plugins/search-index",
     options: {
       docsDir: settings.docsDir,
       locales: localeRecord,
