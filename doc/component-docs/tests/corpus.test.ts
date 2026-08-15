@@ -53,9 +53,9 @@ describe("the corpus normalizes to the figures the epic states", () => {
     assert.equal(model.corpus.dnpOrHandFitLines, 2);
   });
 
-  it("counts 126 sources, 469 facts, 147 coverage domains, 36 interactions", () => {
+  it("counts 126 sources, 471 facts, 147 coverage domains, 36 interactions", () => {
     assert.equal(model.corpus.sources, 126);
-    assert.equal(model.corpus.facts, 469);
+    assert.equal(model.corpus.facts, 471);
     assert.equal(model.corpus.coverageDomains, 147);
     assert.equal(model.corpus.interactions, 36);
   });
@@ -69,7 +69,7 @@ describe("the corpus normalizes to the figures the epic states", () => {
   it("publishes every instance without duplicating or dropping one", () => {
     assert.equal(model.records.length, 41);
     assert.equal(sum(model.records, (entry) => entry.sources.length), 126);
-    assert.equal(sum(model.records, (entry) => entry.facts.length), 469);
+    assert.equal(sum(model.records, (entry) => entry.facts.length), 471);
     assert.equal(sum(model.records, (entry) => entry.coverage.length), 147);
     assert.equal(sum(model.records, (entry) => entry.pinMaps.length), 41);
     assert.equal(
@@ -105,7 +105,7 @@ describe("the corpus normalizes to the figures the epic states", () => {
       assert.equal(new Set(anchors).size, anchors.length, entry.identity.slug);
       total += anchors.length;
     }
-    assert.equal(total, 41 + 126 + 469 + 147 + 39 + 41);
+    assert.equal(total, 41 + 126 + 471 + 147 + 39 + 41);
 
     // Record-scoped anchors stay globally unique — each belongs to one page.
     const scoped = model.records.flatMap((entry) => [
@@ -233,7 +233,7 @@ describe("the real records the epic calls out", () => {
 
   it("keeps numeric, string and structured fact values in their own shapes", () => {
     const values = model.records.flatMap((entry) => entry.facts).map((fact) => fact.value);
-    assert.equal(values.filter((value) => typeof value === "number").length, 253);
+    assert.equal(values.filter((value) => typeof value === "number").length, 255);
     assert.equal(values.filter((value) => typeof value === "string").length, 208);
     assert.equal(values.filter((value) => Array.isArray(value)).length, 8);
 

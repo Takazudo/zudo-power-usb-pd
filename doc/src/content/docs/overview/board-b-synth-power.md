@@ -276,13 +276,17 @@ netlist.
 
 The −13.5V output-cap bank was `C11 ‖ C24` at 940 µF total. Per [BB-7 in the
 spec-architecture review](../inbox/spec-architecture-review.md), splitting the
-≈0.77 A output-cap ripple across just those two cans put both at or over their
-150 kHz-derated ripple rating (C11 ≈1.16×, C24 ≈1.01×). Decision `neg-rail-cap-bank`
-adds a third can, **C12** (a second FOLLON C22387780, 470 µF/35 V, reusing the same
-line already fitted at C14/C20/C21/C24/C25), in parallel: `C12.2` on
+≈0.77 A output-cap ripple then in the record across just those two cans put both at or
+over their 150 kHz-derated ripple rating (C11 ≈1.16×, C24 ≈1.01×). Decision
+`neg-rail-cap-bank` adds a third can, **C12** (a second FOLLON C22387780, 470 µF/35 V,
+reusing the same line already fitted at C14/C20/C21/C24/C25), in parallel: `C12.2` on
 `/DC-DC Conversion/-13.5V OUT`, `C12.1` on `GND` — mirroring C24's pin sense exactly.
 The bank becomes **C11 ‖ C24 ‖ C12 = 1410 µF**, and the three-way split puts every can
-inside the 85% sizing bar (C11 75.9%, C24 = C12 66.1%). The bench caveat is
+inside the 85% sizing bar (C11 79.6%, C24 = C12 69.3%). Those shares are on the
+tightened ripple basis issue #171 produced: the duty cycle now credits the LM2596's
+1.16 V typical switch saturation voltage (`fact-lm2596-vsat`) as well as the SS34
+diode drop, raising the ripple from ≈0.77 A to **≈0.807 A** (0.817 A at the
+guaranteed maximum Vsat, where C11 reaches 80.6%). The bench caveat is
 unchanged: the split uses 120 Hz ESR ratios because neither datasheet publishes ESR at
 150 kHz — the ratios are trustworthy, the absolute ohm values are pessimistic — and the
 installed ripple is still an open bench item (issue #155).

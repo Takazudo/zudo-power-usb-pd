@@ -33,6 +33,8 @@
         "fact-lm2596-onoff-inverting-note",
         "fact-lm2596-current-limit",
         "fact-lm2596-oscillator-frequency",
+        "fact-lm2596-vsat",
+        "fact-lm2596-vsat-max",
         "fact-lm2596-inverting-topology-support",
         "fact-lm2596-inverting-startup-current",
         "fact-lm2596-thermal",
