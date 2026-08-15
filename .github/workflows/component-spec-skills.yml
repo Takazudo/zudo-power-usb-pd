@@ -103,6 +103,8 @@ jobs:
         run: python3 scripts/schgen/check_decisions.py
       - name: Courtyards enclose every pad (footprint library)
         run: python3 footprints/scripts/gen_courtyards.py --check
+      - name: Bare-copper footprints carry CPL/BOM exclusion attrs
+        run: python3 footprints/scripts/check_bare_copper_attrs.py
 
   # The doc-engine suite (~9k lines under doc/component-docs/tests/) is the
   # only guard on the TypeScript projection — including the two-place MDX
