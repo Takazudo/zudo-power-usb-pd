@@ -21,7 +21,8 @@
     "check:models": "node --experimental-strip-types component-docs/cli/models.ts --check",
     "test:model-viewer:browser": "node component-docs/scripts/model-viewer-browser-smoke.mjs",
     "check:built-component-references": "node scripts/check-built-component-references.mjs",
-    "b4push": "pnpm check && pnpm test:components && pnpm check:footprint-previews && pnpm check:models && pnpm build && pnpm check:built-component-references && pnpm check:components && pnpm scan:components",
+    "check:fragment-links": "node component-docs/scripts/check-built-fragment-links.mjs",
+    "b4push": "pnpm check && pnpm test:components && pnpm check:footprint-previews && pnpm check:models && pnpm build && pnpm check:built-component-references && pnpm check:fragment-links && pnpm check:components && pnpm scan:components",
     "format:md": "../scripts/mdx-format.sh --write \"src/content/docs/**/*.{md,mdx}\" --ignore \"node_modules/**,dist/**,build/**,.git/**,worktrees/**,src/content/docs/components/**\"",
     "format:md:check": "../scripts/mdx-format.sh --check \"src/content/docs/**/*.{md,mdx}\" --ignore \"node_modules/**,dist/**,build/**,.git/**,worktrees/**,src/content/docs/components/**\"",
     "prepare": "cd .. && lefthook install --reset-hooks-path"
