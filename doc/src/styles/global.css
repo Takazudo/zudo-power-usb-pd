@@ -17,10 +17,15 @@
 @import "@takazudo/zudo-doc/features.css";
 
 /* Scan this project's own source for Tailwind utility classes. Broad globs on
-   purpose: the doc rescaffold moves files between these trees, and a glob that
-   names a directory the rescaffold deletes silently stops contributing
-   candidates instead of failing. `src/content/**` is the load-bearing one —
-   MDX bodies carry utility classes in raw JSX. */
+   purpose: a glob naming a directory that later disappears silently stops
+   contributing candidates instead of failing, so these name trees rather than
+   specific subdirectories.
+
+   Only `src/**` actually contributes today (the hero link in
+   chrome-bindings.tsx). The corpus carries zero class attributes and
+   component-docs/ui styles exclusively via `.zld-*` rules below — the other
+   three globs are forward coverage for when that stops being true, not
+   descriptions of current usage. */
 @source "src/content/**/*.{mdx,md}";
 @source "src/**/*.{tsx,ts,jsx,js}";
 @source "pages/**/*.{tsx,ts,jsx,js}";
@@ -40,6 +45,12 @@
  * loose form (all 95 items in this corpus today) and the tight form, which is
  * what a future item authored without surrounding blank lines would produce.
  *
+ * `[disabled]` narrows it for free: GFM always emits task checkboxes disabled,
+ * so a genuine interactive checkbox authored inside a list item keeps its
+ * marker instead of silently losing it. `list-style-type` (not the shorthand)
+ * because only the type is being suppressed — the shorthand would also reset
+ * `-image` and `-position`.
+ *
  * WHY THIS WORKS, AND HOW IT WOULD SILENTLY BREAK: ordinary markers are not
  * set by any class rule — the MDX pipeline emits the declaration INLINE on the
  * list itself (`<ul style="padding-left:2em;list-style-type:disc">`). This rule
@@ -49,9 +60,9 @@
  * this stylesheet and every task item silently gets its disc back.
  * ======================================== */
 
-.zd-content li:has(> p > input[type="checkbox"]),
-.zd-content li:has(> input[type="checkbox"]) {
-  list-style: none;
+.zd-content li:has(> p > input[type="checkbox"][disabled]),
+.zd-content li:has(> input[type="checkbox"][disabled]) {
+  list-style-type: none;
 }
 
 /* ========================================

@@ -38,6 +38,10 @@ import {
 import { createChrome } from "@takazudo/zudo-doc/chrome";
 import { DocHistory } from "@takazudo/zudo-doc/doc-history";
 import { defineChromeBindings } from "@takazudo/zudo-doc/chrome-bindings";
+import type {
+  DocPageEntryProps,
+  DocPageAutoIndexProps,
+} from "@takazudo/zudo-doc/doc-page-props";
 import { chromeBindings } from "virtual:zudo-doc-chrome-bindings";
 import { FootprintPreviewIsland } from "../../src/component-preview/footprint-preview-island.tsx";
 import { PackageModelViewerIsland } from "../../src/component-model-viewer/package-model-viewer-island.tsx";
@@ -61,7 +65,9 @@ const { renderDocPage } = createChrome(routeCtx, {
 
 export const frontmatter = { title: "Docs" };
 
-export function paths(): Array<{ params: { slug: string[] }; props: unknown }> {
+type DocPageProps = DocPageEntryProps | DocPageAutoIndexProps;
+
+export function paths(): Array<{ params: { slug: string[] }; props: DocPageProps }> {
   const locale = routeCtx.defaultLocale;
   const source = routeCtx.resolveNavSource(locale, undefined);
   return routeCtx.buildDocRouteEntries({
@@ -70,14 +76,14 @@ export function paths(): Array<{ params: { slug: string[] }; props: unknown }> {
     routeSig: `docs;${locale}`,
   }).map((item) => ({
     params: { slug: item.slugParams },
-    props: item.props,
+    props: item.props as DocPageProps,
   }));
 }
 
-type PageArgs = { params: { slug: string[] } } & Record<string, unknown>;
+type PageArgs = DocPageProps & { params: { slug: string[] } };
 
 export default function DocsPage(props: PageArgs): JSX.Element {
-  return renderDocPage(props as never, {
+  return renderDocPage(props, {
     locale: routeCtx.defaultLocale,
     docHistoryContentDir: routeCtx.settings.docsDir,
   });

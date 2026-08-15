@@ -77,6 +77,15 @@ describe("host bindings stay in step with the component allow-list", () => {
   // The registry body, comments stripped. Matching the whole file would let a
   // name mentioned only in a comment satisfy the assertion — which is exactly
   // the near-miss this test exists to catch.
+  // Source is regex-parsed rather than imported because this suite runs under
+  // `node --experimental-strip-types`, which cannot load `.tsx` at all
+  // (ERR_UNKNOWN_FILE_EXTENSION) — importing the registry is not an option here,
+  // however much cleaner it would read.
+  //
+  // The pattern requires the trailing comma after mdxExtras' closing `},`, and
+  // its lazy body would stop at the first nested `},` if an object is ever
+  // nested inside mdxExtras. Both failures are loud (empty registry -> the
+  // "finds the mdxExtras registry at all" case below fails), not silent.
   const registry = (/mdxExtras:\s*\{([\s\S]*?)\n\s*\},/u.exec(bindings)?.[1] ?? "").replace(
     /\/\/[^\n]*/gu,
     "",

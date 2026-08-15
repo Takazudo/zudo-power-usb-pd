@@ -23,8 +23,14 @@ export type PreviewEnlargeDialogProps = {
  *
  * A `transform` on the dialog would establish a containing block for its
  * `position: fixed` descendants, which would trap `.zld-preview-dialog__close`
- * at the dialog's corner instead of the viewport's. Same constraint, and same
- * value, as the package-owned image-enlarge dialog in `@takazudo/zudo-doc`.
+ * at the dialog's corner instead of the viewport's.
+ *
+ * `@takazudo/zudo-doc/island-types` exports a byte-identical constant, but this
+ * local copy is DELIBERATE and must not be replaced by that import:
+ * `presentation.test.ts` ("keeps the dialog transform-free…") asserts these
+ * exact literals in this file, so that an upstream change to the package's
+ * value cannot silently un-anchor this project's close control. Importing it
+ * moves the value outside the guard and turns that test red.
  */
 const ENLARGE_DIALOG_STYLE = {
   position: "fixed",
@@ -40,19 +46,21 @@ const FOCUSABLE_SELECTOR =
  * one dialog implementation behind both the footprint image and the 3D model
  * viewer.
  *
- * ## Hand-rolled, not ported
+ * ## Still hand-rolled at 5.5.1 — deliberately, for now
  *
  * led-lamp's version is a thin wrapper over `useModalDialog` /
- * `ENLARGE_DIALOG_STYLE` from `@takazudo/zudo-doc`. Neither subpath exists at
- * the `^0.2.9` installed here (`use-modal-dialog` and `island-types` are absent
- * from `node_modules/@takazudo/zudo-doc/dist/`), so the open/close, focus and
- * backdrop behaviour is implemented directly against the native `<dialog>`
- * element below.
+ * `ENLARGE_DIALOG_STYLE` from `@takazudo/zudo-doc`. Both subpaths DO exist at
+ * the `^5.5.1` installed here — the earlier claim that they were absent was
+ * true only of the `^0.2.9` this project used to run. `useModalDialog` would
+ * cover most of the open/close and focus handling below, but not all of it:
+ * the coordinate-based backdrop hit-test and the wrap-around Tab trap are
+ * local extensions this preview needs and the package hook does not provide.
+ * Consolidating onto the hook without losing those is tracked separately, not
+ * attempted here.
  *
- * `AFTER_NAVIGATE_EVENT` — the third import led-lamp takes — *does* exist at
- * 0.2.9 (`@takazudo/zudo-doc/transitions`, value `"zfb:after-swap"`, dispatched
- * on `document` by `@takazudo/zfb-runtime`'s client router), so SPA soft-swap
- * navigation closes this dialog exactly as it does in led-lamp. It is listened
+ * `AFTER_NAVIGATE_EVENT` (`@takazudo/zudo-doc/transitions`, value
+ * `"zfb:after-swap"`, dispatched on `document` by `@takazudo/zfb-runtime`'s
+ * client router) closes this dialog on SPA soft-swap navigation. It is listened
  * to by name rather than through the package's `onAfterNavigate()` helper so
  * the listener can share one effect with the dialog's own `close` handler.
  */
