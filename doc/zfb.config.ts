@@ -1,189 +1,68 @@
-import { z } from "zod";
 import { defineConfig } from "zfb/config";
-import { settings } from "./src/config/settings";
-import { buildDocsSchema } from "./src/config/docs-schema";
+import { zudoDoc } from "@takazudo/zudo-doc/config";
 
-const docsSchema = buildDocsSchema();
-
-const docsSchemaJson = z.toJSONSchema(docsSchema) as Record<string, unknown>;
-
-interface CollectionEntryShape {
-  name: string;
-  path: string;
-  schema: Record<string, unknown>;
-}
-
-const collections: CollectionEntryShape[] = [];
-
-collections.push({ name: "docs", path: settings.docsDir, schema: docsSchemaJson });
-
-for (const [code, config] of Object.entries(settings.locales)) {
-  collections.push({ name: `docs-${code}`, path: config.dir, schema: docsSchemaJson });
-}
-
-if (settings.versions) {
-  for (const version of settings.versions) {
-    collections.push({
-      name: `docs-v-${version.slug}`,
-      path: version.docsDir,
-      schema: docsSchemaJson,
-    });
-    if (version.locales) {
-      for (const [code, config] of Object.entries(version.locales)) {
-        collections.push({
-          name: `docs-v-${version.slug}-${code}`,
-          path: config.dir,
-          schema: docsSchemaJson,
-        });
-      }
-    }
-  }
-}
-
-const localeArray = Object.entries(settings.locales).map(([code, locale]) => ({
-  code,
-  dir: locale.dir,
-}));
-const localeRecord = Object.fromEntries(
-  Object.entries(settings.locales).map(([code, locale]) => [code, { dir: locale.dir }]),
-);
-
-// Plugin descriptors are bare module specifiers, not imported functions —
-// zfb evaluates this config with esbuild `--platform=neutral`, so pulling a
-// plugin's `node:fs`/`node:path` graph in here would fail the config load.
-// zudo-doc 5.x ships these three as package-owned plugins; the local
-// `plugins/*-plugin.mjs` shims that used to wrap the old
-// `@takazudo/zudo-doc/integrations/*` runners are gone.
-const integrationPlugins = [
-  ...(settings.claudeResources
-    ? [
-        {
-          name: "@takazudo/zudo-doc/plugins/claude-resources",
-          options: {
-            claudeDir: settings.claudeResources.claudeDir,
-            projectRoot: settings.claudeResources.projectRoot,
-            docsDir: settings.docsDir,
-          },
-        },
-      ]
-    : []),
-  ...(settings.docHistory
-    ? [
-        {
-          name: "@takazudo/zudo-doc/plugins/doc-history",
-          options: {
-            docsDir: settings.docsDir,
-            locales: localeRecord,
-            base: settings.base,
-          },
-        },
-      ]
-    : []),
-  {
-    name: "@takazudo/zudo-doc/plugins/search-index",
-    options: {
-      docsDir: settings.docsDir,
-      locales: localeRecord,
-      base: settings.base,
+// The entire site configuration is this one zudoDoc() call — collections,
+// markdown features, plugins (search-index, doc-history), routes and the
+// virtual route-context payload are all built by the package (#180 rescaffold).
+// Keys below are set because they differ from the package's DEFAULT_SETTINGS —
+// omitting one silently changes behavior. Two deliberate exceptions match the
+// default and are still spelled out: `claudeResources` (five modules under
+// component-docs/ cite this line as the record of decision D3 — see
+// component-docs/adapters/circuit/matrix.ts), and the keys inside `metaTags`
+// (that object REPLACES the default wholesale rather than merging, so a key
+// omitted there is a key turned off).
+export default defineConfig(
+  zudoDoc({
+    siteName: "zudo-PD",
+    githubUrl: "https://github.com/Takazudo/zudo-pd",
+    // siteUrl host MUST match the wrangler.toml custom-domain route pattern.
+    siteUrl: "https://pd.takazudomodular.com",
+    // Package default "auto" would generate a deterministic SVG; this site
+    // ships a real asset.
+    logo: "/img/logo.svg",
+    cjkFriendly: true,
+    docHistory: true,
+    // The ejected head builder emitted og:image (+ width/height/alt) and the
+    // twitter summary_large_image card unconditionally; the package defaults
+    // are ogImage:false/twitterCard:false, which silently dropped every social
+    // card. This object REPLACES the default wholesale, so all five keys are
+    // spelled out even where they match the default.
+    metaTags: {
+      description: true,
+      keywords: false,
+      ogImage: "/img/ogp.png",
+      ogSiteName: true,
+      twitterCard: "summary_large_image",
     },
-  },
-  {
-    name: "./plugins/copy-public-plugin.mjs",
-    options: {
-      publicDir: "public",
-    },
-  },
-];
-
-export default defineConfig({
-  framework: "preact",
-  // Pin the dev/preview port — zfb defaults to 3000, but the generated
-  // CLAUDE.md and the Tauri dev wrappers assume 4321.
-  port: 4321,
-  tailwind: { enabled: true },
-  // Dual-theme syntect highlighting (zfb next.47 / zudo-doc 0.2.8). Both names
-  // are SYNTECT built-ins (NOT Shiki names); setting the pair makes the engine
-  // color tokens with `--shiki-light`/`--shiki-dark` CSS custom props instead of
-  // a single inline `color:`, which `src/styles/global.css` resolves via
-  // `light-dark()`. Without this the default single `base16-ocean.dark` theme
-  // renders near-invisible code on the light site theme.
-  codeHighlight: {
-    themeLight: "base16-ocean.light",
-    themeDark: "base16-ocean.dark",
-  },
-  collections,
-  stripMdExt: true,
-  resolveMarkdownLinks: {
-    enabled: true,
-    dirs: [
-      { dir: settings.docsDir, routePrefix: "/docs/" },
-      ...Object.entries(settings.locales).map(([code, locale]) => ({
-        dir: locale.dir,
-        routePrefix: `/${code}/docs/`,
-      })),
-      // Versioned collections: each version's EN dir + per-locale dirs.
-      ...(settings.versions
-        ? settings.versions.flatMap((version) => [
-            { dir: version.docsDir, routePrefix: `/v/${version.slug}/docs/` },
-            ...Object.entries(version.locales ?? {}).map(([code, locale]) => ({
-              dir: locale.dir,
-              routePrefix: `/v/${version.slug}/${code}/docs/`,
-            })),
-          ])
-        : []),
+    sidebarResizer: true,
+    sidebarToggle: true,
+    imageEnlarge: true,
+    // D4 (#180): the old ejected sitemap route emitted a populated sitemap even
+    // with settings.sitemap=false; the package route returns an EMPTY <urlset>
+    // when false, so `true` is what preserves today's output.
+    sitemap: true,
+    // Today's site ships the SPA router + loading overlay unconditionally.
+    dynamicPageTransition: true,
+    // D3 (#180): keep strict route equivalence — no /docs/claude* trees. The
+    // repo-root .claude/ holds many skills that would bloat the build.
+    claudeResources: false,
+    headerNav: [
+      { label: "Overview", path: "/docs/overview", categoryMatch: "overview" },
+      { label: "Components", path: "/docs/components", categoryMatch: "components" },
+      { label: "Learning", path: "/docs/learning", categoryMatch: "learning" },
+      { label: "HowTo", path: "/docs/how-to", categoryMatch: "how-to" },
+      { label: "Misc", path: "/docs/misc", categoryMatch: "misc" },
+      { label: "INBOX", path: "/docs/inbox", categoryMatch: "inbox" },
     ],
-    onBrokenLinks: "warn",
-  },
-  base: settings.base,
-  trailingSlash: settings.trailingSlash,
-  markdown: {
-    features: {
-      // Former-Core features (were always-on before zfb next.12).
-      // imageEnlarge was a former-Core feature but was hard-removed in zfb
-      // next.18 — it is now re-implemented via an MDX p-override.
-      //
-      // Admonitions recipe: register the :::name directive vocabulary
-      // (note/tip/info/warning/danger/caution/details) → components.
-      //
-      // KNOWN-BROKEN (zfb next.49): the native engine accepts this map (the
-      // loader validates the key + deserializes the entries) but does NOT
-      // transform `:::name` container directives into the mapped components —
-      // they leak through as literal `<p>:::tip[...]</p>` text. `githubAlerts`
-      // (the `> [!NOTE]` path) works, so only the user-directive path is dead.
-      // Upstream bug: Takazudo/zudo-front-builder#1085. Until that lands,
-      // admonitions in the corpus are authored as `<Note>` / `<Tip title="…">`
-      // JSX (which renders correctly) — see doc/CLAUDE.md "Admonitions".
-      // This map is kept so re-enabling `:::` authoring is a one-line revert
-      // once the engine is fixed.
-      directives: {
-        note: "Note",
-        tip: "Tip",
-        info: "Info",
-        warning: "Warning",
-        danger: "Danger",
-        caution: "Caution",
-        details: "Details", // collapsible — routes to DetailsWrapper
-      },
-      mermaid: true,
-      headingMarkerToc: true,
-      // Safe opt-in features.
-      githubAlerts: true,
-      readingTime: true,
-      codeEnrichment: {},
-      codeTabs: true,
-      imageDimensions: {},
-      // warn-only link validation — failOnBroken: false never fails the build.
-      linkValidation: { failOnBroken: false },
-      // Heading-ID (anchor) strategy — single source of truth in
-      // settings.headingIdStrategy, also mirrored by the host TOC builder
-      // (pages/lib/_extract-headings.ts) so TOC anchors match rendered ids.
-      headingIds: { strategy: settings.headingIdStrategy },
-    },
-  },
-  // Cloudflare adapter — wraps the SSR bundle into `dist/_worker.js` (the
-  // explicit main entry for Workers static assets) plus a sidecar
-  // `dist/_zfb_inner.mjs`. Required so `pnpm build` emits a worker for the
-  // CF Workers static-assets deploy (see doc/wrangler.toml + main-deploy.yml).
-  adapter: "@takazudo/zfb-adapter-cloudflare",
-  plugins: integrationPlugins,
-});
+    headerRightItems: [
+      { type: "component", component: "github-link" },
+      { type: "component", component: "theme-toggle" },
+      { type: "component", component: "search" },
+    ],
+    // Registers the MDX components generated component pages reference,
+    // without editing the package-owned route stub under pages/.
+    chromeBindingsModule: "./src/chrome-bindings.tsx",
+    // Cloudflare Workers adapter — required for the deploy (dist/_worker.js).
+    adapter: "@takazudo/zfb-adapter-cloudflare",
+  }),
+);

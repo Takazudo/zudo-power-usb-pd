@@ -43,7 +43,7 @@ not_found_handling = "404-page"
 # CLOUDFLARE_ACCOUNT_ID. The apex takazudomodular.com is the main site, so the
 # docs are served from the pd. subdomain.
 #
-# Keep this hostname in sync with siteUrl in src/config/settings.ts.
+# Keep this hostname in sync with siteUrl in zfb.config.ts.
 # account_id is intentionally omitted — wrangler reads CLOUDFLARE_ACCOUNT_ID
 # from the environment.
 #
