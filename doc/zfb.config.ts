@@ -4,8 +4,13 @@ import { zudoDoc } from "@takazudo/zudo-doc/config";
 // The entire site configuration is this one zudoDoc() call — collections,
 // markdown features, plugins (search-index, doc-history), routes and the
 // virtual route-context payload are all built by the package (#180 rescaffold).
-// Every key below differs from the package's DEFAULT_SETTINGS; omitting one
-// silently changes behavior.
+// Keys below are set because they differ from the package's DEFAULT_SETTINGS —
+// omitting one silently changes behavior. Two deliberate exceptions match the
+// default and are still spelled out: `claudeResources` (five modules under
+// component-docs/ cite this line as the record of decision D3 — see
+// component-docs/adapters/circuit/matrix.ts), and the keys inside `metaTags`
+// (that object REPLACES the default wholesale rather than merging, so a key
+// omitted there is a key turned off).
 export default defineConfig(
   zudoDoc({
     siteName: "zudo-PD",

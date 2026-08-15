@@ -16,6 +16,12 @@
 // object when `chromeBindingsModule` is unset, while configured projects get
 // their MDX/chrome bindings without editing this stub.
 //
+// PRECEDENCE IS LOAD-BEARING: the routes plugin injects `/docs/[[...slug]]`
+// unconditionally, and this host file wins over it. That host-over-package
+// precedence is what puts the island imports below into the scanned graph — if
+// zfb ever flips it, the injected route serves instead, both islands stop
+// registering, and nothing errors at build time.
+//
 // docHistory note: DocHistory is statically imported from
 // "@takazudo/zudo-doc/doc-history" and merged over chromeBindings in
 // createChrome's hostBindings (second) argument — DocHistory's chrome-derive
