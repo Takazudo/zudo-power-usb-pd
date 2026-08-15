@@ -62,6 +62,6 @@ cp ~/Documents/Kicad/easyeda2kicad/easyeda2kicad.pretty/*.kicad_mod ./
 
 ## Notes
 
-- All LCSC part numbers are referenced in `/doc/docs/inbox/parts-list.md`
+- All LCSC part numbers are referenced in the [Bill of Materials](/doc/src/content/docs/overview/bom.md)
 - Footprints include pads, silkscreen, and courtyard layers
 - Some footprints may include 3D model references (if available from EasyEDA)

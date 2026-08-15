@@ -3,7 +3,7 @@
 #
 # Usage: bump-version.sh <x|y|z> [--notes "release notes body"]
 #
-# Version scheme X.Y.Z (see doc/docs/inbox/versioning.md):
+# Version scheme X.Y.Z (see doc/src/content/docs/inbox/versioning.md):
 #   X = product release (resets Z; KEEPS Y — Y is a lifetime JLCPCB-order counter)
 #   Y = Nth JLCPCB order (resets Z; tag + GitHub release)
 #   Z = local checkpoint tag (tag only, no GitHub release)
