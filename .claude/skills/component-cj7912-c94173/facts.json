@@ -258,10 +258,10 @@
       "record_id": "rec-cj7912-c94173",
       "source_id": "src-cj7912-schematic",
       "class": "PROJECT_STATE",
-      "value": "C16 470nF MLCC + C24 470uF electrolytic from U8.2 (-13.5V OUT net) to GND",
+      "value": "C16 470nF MLCC + C24||C12 940uF electrolytic bulk (2x 470uF) from U8.2 (-13.5V OUT net) to GND",
       "unit": "NONE",
-      "conditions": "post-#93 network (C16.2 and C24.1 on GND); differs in composition from the datasheet Ci=2.2uF application value (0.47uF ceramic local + 470uF bulk electrolytic)",
-      "locator": "src-cj7912-schematic: symbol property rows C16 Value '470nF', C24 Value '470uF'; membership per baseline rows '/DC-DC Conversion/-13.5V OUT' and 'GND'",
+      "conditions": "post-#93 network (C16.2, C24.1 and C12.1 on GND); C12 added by decision neg-rail-cap-bank as the output bank's third can, electrically on U8's input node; differs in composition from the datasheet Ci=2.2uF application value (0.47uF ceramic local + 940uF bulk electrolytic)",
+      "locator": "src-cj7912-schematic: symbol property rows C16 Value '470nF', C24/C12 Value '470uF'; membership per baseline rows '/DC-DC Conversion/-13.5V OUT' and 'GND'",
       "provenance": "PROJECT-CHOICE",
       "verdict": "NOT APPLICABLE",
       "depends_on": [],
@@ -288,7 +288,7 @@
       "class": "PROJECT_STATE",
       "value": "stability of CJ7912 with the project input/output capacitor networks is not provable from the Rev 2.0 datasheet",
       "unit": "NONE",
-      "conditions": "the datasheet fixes only Ci=2.2uF / Co=1uF with no ESR window; the project uses 470nF+470uF on the input and 100nF+470uF on the output - close on the bench on Board B with a load-step and output-ripple/oscillation check",
+      "conditions": "the datasheet fixes only Ci=2.2uF / Co=1uF with no ESR window; the project uses 470nF+940uF (C24||C12, decision neg-rail-cap-bank) on the input and 100nF+470uF on the output - close on the bench on Board B with a load-step and output-ripple/oscillation check",
       "locator": "src-cj7912-schematic: C16/C19/C24/C25 Value rows versus the datasheet TYPICAL APPLICATION figure values",
       "provenance": "PROJECT-CHOICE",
       "verdict": "NEEDS BENCH",
@@ -306,7 +306,10 @@
       "locator": "src-cj7912-project-docs: calculated - LDO summary table row 'U8 CJ7912' states the same 1.5V margin",
       "provenance": "CALCULATED",
       "verdict": "NEEDS BENCH",
-      "depends_on": ["fact-cj7912-vout-nominal", "fact-cj7912-rail-input"],
+      "depends_on": [
+        "fact-cj7912-vout-nominal",
+        "fact-cj7912-rail-input"
+      ],
       "expression": "fact_cj7912_vout_nominal - fact_cj7912_rail_input"
     },
     {
@@ -320,7 +323,10 @@
       "locator": "src-cj7912-project-docs: calculated - headroom (LDO table row 'U8 CJ7912') x rated current (same row)",
       "provenance": "CALCULATED",
       "verdict": "NEEDS BENCH",
-      "depends_on": ["fact-cj7912-rail-headroom", "fact-cj7912-project-io-max"],
+      "depends_on": [
+        "fact-cj7912-rail-headroom",
+        "fact-cj7912-project-io-max"
+      ],
       "expression": "fact_cj7912_rail_headroom * fact_cj7912_project_io_max"
     },
     {
@@ -334,7 +340,10 @@
       "locator": "src-cj7912-project-docs: calculated - pd-full-load x datasheet RthJA",
       "provenance": "CALCULATED",
       "verdict": "NEEDS BENCH",
-      "depends_on": ["fact-cj7912-pd-full-load-mw", "fact-cj7912-rthja"],
+      "depends_on": [
+        "fact-cj7912-pd-full-load-mw",
+        "fact-cj7912-rthja"
+      ],
       "expression": "fact_cj7912_pd_full_load_mw * fact_cj7912_rthja / 1000"
     }
   ]

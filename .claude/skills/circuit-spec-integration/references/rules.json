@@ -497,7 +497,7 @@
         "fact-usb-type-c-009-rating-current",
         "fact-usb-type-c-009-pd-contract-stress"
       ],
-      "conditions": "The manufacturer documents that U4's inverting startup can draw input current up to the ~4.5 A device current limit for 2 ms or more, 1.5 A beyond the 3.0 A PD-contract cap that the source, receptacle, and A-to-B interface share, and warns that current-limited sources may not start correctly. Whether a real adapter folds back, hard-resets the contract, or rides through on input capacitance is source-dependent; the datasheet's own mitigations (delayed startup, enlarged CIN) are not presently designed in.",
+      "conditions": "The manufacturer documents that U4's inverting startup can draw input current up to the ~4.5 A device current limit for 2 ms or more, 1.5 A beyond the 3.0 A PD-contract cap that the source, receptacle, and A-to-B interface share, and warns that current-limited sources may not start correctly. Whether a real adapter folds back, hard-resets the contract, or rides through on input capacitance is source-dependent; the datasheet's own mitigations (delayed startup, enlarged CIN) are not presently designed in. Decision neg-rail-cap-bank (issue #155) raised the -13.5 V output bulk 940 uF -> 1410 uF, lengthening the current-limited startup charge transient in the same direction this rule warns about -- the bench capture must use the 3-can bank.",
       "verdict": "NEEDS BENCH",
       "refusal": "Do not assume the -13.5 V stage starts on a compliant 3 A PD source: the documented startup demand exceeds the contract by 1.5 A and only bench startup capture on a current-limited source can prove behavior.",
       "conditioned_calculations": [

@@ -23,7 +23,7 @@ Physical height reference for PCB layout and enclosure design.
 | **CJ7912**        | U8                             | TO-252-3 (DPAK) | **2.3mm**  | -12V linear regulator                |
 | **CYA1265-100UH** | L1, L2, L3                     | SMD 13.8x12.8mm | **~6-7mm** | Power inductors                      |
 | **63951-1**       | J6, J7, J8, J9                 | FASTON 250 THT  | **8.89mm** | Power terminals                      |
-| **470uF 35V**     | C5, C7, C14, C20-C21, C24-C25  | D10xL10.5mm     | **10.5mm** | Electrolytic (tallest) — decision (d) |
+| **470uF 35V**     | C5, C7, C12, C14, C20-C21, C24-C25 | D10xL10.5mm  | **10.5mm** | Electrolytic (tallest) — decisions (d), neg-rail-cap-bank |
 | **470uF 25V**     | C3, C11                        | D8xL10.5mm      | **10.5mm** | Electrolytic (tallest)               |
 | **100uF 50V**     | C9                             | D8xL10.2mm      | **10.2mm** | Electrolytic, U4 bridging cap        |
 | **470uF 10V**     | C4, C22, C23                   | D6.3xL7.7mm     | **7.7mm**  | Electrolytic — decision (c)          |

@@ -557,9 +557,9 @@ the published −12 V rail contract, deliberately retained rather than shaved to
 smaller "expected" draw — see decision `neg-rail-cap-bank` in
 `scripts/schgen/decisions.json`.
 
-<Warning title="Updated by issue #150 — the ≈1.0 A rating this paragraph relied on was wrong">
+<Warning title="Updated by issue #150 — the ≈1.0 A rating the original review relied on was wrong">
 
-The C11 figure below (≈1.0 A at 120 Hz, from a partial PDF extraction) was **wrong by
+The C11 figure the original arithmetic used (≈1.0 A at 120 Hz, from a partial PDF extraction) was **wrong by
 ~4×**. Reading the hash-locked HRK datasheet directly gives 240 mA rms at 120 Hz/105 °C,
 with a published frequency multiplier of ×1.30 at 10 kHz and above — so the real rating
 at the LM2596's 150 kHz is **312 mA** (`fact-c2983319-ripple-hf-derate`). The recorded
@@ -574,6 +574,13 @@ parts' 1/ESR gave **C11 ≈362 mA against its 312 mA rating (≈1.16× over)** a
 ≈408 mA against its 403 mA rating (≈1.01×, at the limit)**
 (`fact-c22387780-installed-ripple-exceedance`). C9's 146 mA rating is a separate,
 120 Hz line-frequency figure (`fact-c970687-ripple`) and is not part of this split.
+
+Ripple-identity coverage across the board's five electrolytic groups — C3/C11, C9,
+C4/C22/C23, C5/C7, and C14/C20/C21/C24/C25 — is still partial, which is what the
+heading's NEEDS BENCH ×5 counts: the C2983319 and C22387780 lines now carry real
+150 kHz-derated ratings (issues #150/#155), but **C335982 (C4/C22/C23) retains no
+ripple fact at all, and C970687 (C9)'s 146 mA is a 120 Hz line-frequency figure**
+(`fact-c970687-ripple`) with no switching-frequency bound — those gaps remain open.
 
 <Tip title="Resolved by decision neg-rail-cap-bank — a third can added in parallel">
 
@@ -591,6 +598,14 @@ Aluminium-electrolytic ESR falls and flattens with frequency, so the absolute Ω
 are pessimistic while the ratio between two same-technology, similar-size cans is the
 trustworthy part. This is a resize against retained ratings, not a bench measurement —
 the installed ripple at C11/C24/C12 is still **NEEDS BENCH** (issue #155).
+
+One model input is known to lean the other way: the D ≈ 0.48 derivation credits the
+SS34 catch-diode drop but assumes a zero-volt switch, and no LM2596 switch-saturation
+fact is retained — including Vsat raises D and every per-can share by several percent
+in the non-conservative direction (the dominant omission in the model; the neglected
+inductor-ripple term is far smaller). The 85 % sizing bar exists to absorb exactly
+this class of omission; retaining the Vsat fact and tightening the arithmetic is
+tracked as issue #171.
 
 </Tip>
 

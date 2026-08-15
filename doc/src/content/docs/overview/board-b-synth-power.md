@@ -253,7 +253,7 @@ setpoint is a Board B design-phase decision, not a documentation decision.
 | `Net-(U6-OUT)` | `U6.3(OUT) C17.2 C21.1 R7.1 PTC1.1` | +12V LDO output, before PTC1 |
 | `/DC-DC Conversion/+7.5V OUT` (relevant) | `C15.1 C22.1 U7.1(IN)` | +5V LDO input |
 | `Net-(U7-OUT)` | `U7.3(OUT) C18.1 C23.1 R8.1 PTC2.1` | +5V LDO output, before PTC2 |
-| `/DC-DC Conversion/-13.5V OUT` (relevant) | `C16.1 C24.2 C12.2 U8.2(VIN)` | −12V LDO input. C12 is the output bank's third can (decision `neg-rail-cap-bank`), placed near the Eurorack bus headers (row H), not physically on this sheet, but electrically in parallel with C11/C24 on this net |
+| `/DC-DC Conversion/-13.5V OUT` (relevant) | `C16.1 C24.2 C12.2 U8.2(VIN)` | −12V LDO input. C12 is the output bank's third can (decision `neg-rail-cap-bank`); its row-H spot is a schematic-sheet slot only — no Board B layout exists yet, and at layout time it belongs physically with C11/C24 at the −13.5V output bank — electrically in parallel with C11/C24 on this net |
 | `Net-(U8-OUT)` | `U8.3(OUT) C19.1 C25.2 R9.1 PTC3.1` | −12V LDO output, before PTC3 |
 | `GND` (relevant) | `C14.2 C15.2 C17.1 C18.2 C20.2 C21.2 C22.2 C23.2 U6.4 U7.2 U8.1` | +12V/+5V decoupling references GND individually (see below for the −12V network's corrected form) |
 
