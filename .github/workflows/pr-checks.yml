@@ -160,9 +160,9 @@ jobs:
 
       # LINK INTEGRITY — the decision, because neither obvious option is
       # right. See doc/component-docs/scripts/check-zfb-link-warnings.sh for
-      # the full rationale and the two known-false classes it tolerates
-      # (generated-record `#fact-*` anchors, and schemdraw circuit-SVG
-      # dimension-probe warnings).
+      # the full rationale and the three known-false classes it tolerates
+      # (generated-record `#fact-*` anchors, schemdraw circuit-SVG
+      # dimension-probe warnings, and doc-history plugin progress output).
       - name: Hand-authored links resolve
         working-directory: doc
         run: bash component-docs/scripts/check-zfb-link-warnings.sh "$RUNNER_TEMP/$BUILD_LOG_NAME"

@@ -34,7 +34,7 @@ import type { SafeUrl } from "./url.ts";
  *
  * `EvidenceAnchor`, `EvidenceDetails`, `EvidenceTable` and
  * `ComponentReferences` are bound in this project's
- * `doc/pages/_mdx-components.ts`; `CategoryNav` ships globally from
+ * `doc/src/chrome-bindings.tsx`; `CategoryNav` ships globally from
  * `@takazudo/zudo-doc` and needs no binding. A name outside this map — or an
  * attribute outside its component's list — fails the guard, because an
  * unbound component renders as literal text and would silently swallow

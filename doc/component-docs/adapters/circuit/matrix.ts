@@ -14,7 +14,7 @@
  * This is a port of led-lamp's matrix with two zudo-pd-specific extensions:
  *
  *   - `record.ownerSkill` / `integration.ownerSkill` — zudo-pd runs with
- *     `claudeResources: false` (see `doc/src/config/settings.ts`), so
+ *     `claudeResources: false` (see `doc/zfb.config.ts`), so
  *     `/docs/claude-skills/<name>/` does not exist as a route. Publishing the
  *     owner-skill name would be a dead reciprocal link, not an existing one —
  *     the opposite of led-lamp's reasoning for PUBLISH here. Stays DENY.

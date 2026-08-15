@@ -686,7 +686,7 @@ export function ownerSkillOf(record: PublicRecord): SafeText | null {
 /**
  * Where a record's raw evidence bundle is published, when the owner is known.
  *
- * zudo-pd runs with `claudeResources: false` (see `doc/src/config/settings.ts`),
+ * zudo-pd runs with `claudeResources: false` (see `doc/zfb.config.ts`),
  * so neither `/docs/claude-skills/<bundle>/` nor a `/docs/claude/` hub exists as
  * a route — `ownerSkillOf()` therefore always returns `null` here (the matrix
  * denies `record.ownerSkill`/`integration.ownerSkill`), and every caller below

@@ -4,9 +4,10 @@
 /** @jsxImportSource preact */
 
 import type { ComponentChildren, JSX, RefObject } from "preact";
-import { useCallback, useEffect, useRef } from "preact/hooks";
+import { useCallback, useRef } from "preact/hooks";
 
 import { AFTER_NAVIGATE_EVENT } from "@takazudo/zudo-doc/transitions";
+import { useModalDialog } from "@takazudo/zudo-doc/use-modal-dialog";
 
 export type PreviewEnlargeDialogProps = {
   readonly children: ComponentChildren;
@@ -23,8 +24,14 @@ export type PreviewEnlargeDialogProps = {
  *
  * A `transform` on the dialog would establish a containing block for its
  * `position: fixed` descendants, which would trap `.zld-preview-dialog__close`
- * at the dialog's corner instead of the viewport's. Same constraint, and same
- * value, as `DIALOG_STYLE` in `src/components/image-enlarge.tsx`.
+ * at the dialog's corner instead of the viewport's.
+ *
+ * `@takazudo/zudo-doc/island-types` exports a byte-identical constant, but this
+ * local copy is DELIBERATE and must not be replaced by that import:
+ * `presentation.test.ts` ("keeps the dialog transform-free…") asserts these
+ * exact literals in this file, so that an upstream change to the package's
+ * value cannot silently un-anchor this project's close control. Importing it
+ * moves the value outside the guard and turns that test red.
  */
 const ENLARGE_DIALOG_STYLE = {
   position: "fixed",
@@ -40,21 +47,10 @@ const FOCUSABLE_SELECTOR =
  * one dialog implementation behind both the footprint image and the 3D model
  * viewer.
  *
- * ## Hand-rolled, not ported
- *
- * led-lamp's version is a thin wrapper over `useModalDialog` /
- * `ENLARGE_DIALOG_STYLE` from `@takazudo/zudo-doc`. Neither subpath exists at
- * the `^0.2.9` installed here (`use-modal-dialog` and `island-types` are absent
- * from `node_modules/@takazudo/zudo-doc/dist/`), so the open/close, focus and
- * backdrop behaviour is implemented directly against the native `<dialog>`
- * element below.
- *
- * `AFTER_NAVIGATE_EVENT` — the third import led-lamp takes — *does* exist at
- * 0.2.9 (`@takazudo/zudo-doc/transitions`, value `"zfb:after-swap"`, dispatched
- * on `document` by `@takazudo/zfb-runtime`'s client router), so SPA soft-swap
- * navigation closes this dialog exactly as it does in led-lamp. It is listened
- * to by name rather than through the package's `onAfterNavigate()` helper so
- * the listener can share one effect with the dialog's own `close` handler.
+ * `useModalDialog` owns native open/close synchronization, focus management,
+ * and SPA navigation cleanup. The coordinate-based backdrop hit-test and the
+ * wrap-around Tab trap below remain local because the package hook does not
+ * provide equivalent behavior.
  */
 export function PreviewEnlargeDialog({
   children,
@@ -65,56 +61,28 @@ export function PreviewEnlargeDialog({
   title,
   variant,
 }: PreviewEnlargeDialogProps) {
-  const dialogRef = useRef<HTMLDialogElement>(null);
-  // Read inside listeners that are registered once, so a re-rendered parent
-  // never leaves a stale `onClose` bound to the dialog.
-  const onCloseRef = useRef(onClose);
-  onCloseRef.current = onClose;
+  // The hook's navigation handler calls `dialog.close()` and `onClose()`. Its
+  // native close listener can then call `onClose()` again with the open render
+  // still captured, so allow only one notification per open cycle.
+  const closeNotifiedRef = useRef(false);
+  const previousIsOpenRef = useRef(isOpen);
+  if (isOpen && !previousIsOpenRef.current) closeNotifiedRef.current = false;
+  previousIsOpenRef.current = isOpen;
 
-  useEffect(() => {
-    const dialog = dialogRef.current;
-    if (dialog === null) return;
-    const handleClose = () => onCloseRef.current();
-    // The SPA router replaces the page body under an open dialog; without this
-    // the dialog would survive the swap in the top layer, over content it no
-    // longer belongs to.
-    const handleAfterNavigate = () => {
-      if (dialog.open) dialog.close();
-      else onCloseRef.current();
-    };
-    dialog.addEventListener("close", handleClose);
-    document.addEventListener(AFTER_NAVIGATE_EVENT, handleAfterNavigate);
-    return () => {
-      dialog.removeEventListener("close", handleClose);
-      document.removeEventListener(AFTER_NAVIGATE_EVENT, handleAfterNavigate);
-    };
-  }, []);
+  const handleClose = useCallback(() => {
+    if (closeNotifiedRef.current) return;
+    closeNotifiedRef.current = true;
+    onClose();
+  }, [onClose]);
 
-  // Whether the previous commit had this dialog open. Focus is only returned
-  // on an open -> closed transition; without this the closed dialog every
-  // record page renders would steal focus to its trigger on first mount.
-  const wasOpenRef = useRef(false);
-
-  useEffect(() => {
-    const dialog = dialogRef.current;
-    if (dialog === null) return;
-    if (isOpen) {
-      if (!dialog.open) dialog.showModal();
-      // Focus the close control rather than the dialog: the first thing a
-      // keyboard reader lands on should be the way out.
-      dialog.querySelector<HTMLElement>(".zld-preview-dialog__close")?.focus();
-      wasOpenRef.current = true;
-      return;
-    }
-    if (dialog.open) dialog.close();
-    if (wasOpenRef.current) {
-      // The native `close` event can be dispatched before this effect runs, so
-      // focus is restored here rather than in the close listener — this covers
-      // every close path (Escape, backdrop, close button, SPA navigation).
-      returnFocusRef.current?.focus();
-    }
-    wasOpenRef.current = false;
-  }, [isOpen, returnFocusRef]);
+  const { dialogRef } = useModalDialog({
+    isOpen,
+    onClose: handleClose,
+    navigateEvent: AFTER_NAVIGATE_EVENT,
+    backdropClickClose: false,
+    manageFocus: true,
+    returnFocusRef,
+  });
 
   const handleBackdropClick = useCallback((event: JSX.TargetedMouseEvent<HTMLDialogElement>) => {
     const dialog = event.currentTarget;
