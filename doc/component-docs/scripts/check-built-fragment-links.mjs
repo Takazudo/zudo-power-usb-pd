@@ -170,7 +170,12 @@ async function listMarkdownFiles(root) {
  * link, and must not be resolved.
  */
 export function maskNonProse(source) {
-  const characters = [...source];
+  // `split("")`, not `[...source]`: the spread iterates CODE POINTS, so one
+  // astral character would collapse two array slots into one and shift every
+  // offset after it out of step with `line.length` and `RegExp.index`, which
+  // are UTF-16 counts. Blanking both halves of a surrogate pair is harmless —
+  // they are always inside the same masked range.
+  const characters = source.split("");
   const blank = (from, to) => {
     for (let index = from; index < to && index < characters.length; index += 1) {
       if (characters[index] !== "\n") characters[index] = " ";
@@ -203,7 +208,7 @@ export function maskNonProse(source) {
   masked = masked.replace(/<!--[\s\S]*?-->/gu, (block) => block.replace(/[^\n]/gu, " "));
 
   // Inline code spans: a run of N backticks closes on the next run of exactly N.
-  const withoutInlineCode = [...masked];
+  const withoutInlineCode = masked.split("");
   const spanPattern = /`+/gu;
   let openMatch;
   while ((openMatch = spanPattern.exec(masked)) !== null) {
@@ -230,6 +235,7 @@ export function maskNonProse(source) {
  */
 export function findMarkdownLinks(source) {
   const text = maskNonProse(source);
+  const lineStarts = collectLineStarts(text);
   const links = [];
 
   for (let cursor = 0; cursor < text.length - 1; cursor += 1) {
@@ -279,7 +285,7 @@ export function findMarkdownLinks(source) {
     links.push({
       destination,
       offset: cursor,
-      line: countLines(text, cursor),
+      line: lineFor(lineStarts, cursor),
       isImage: openerIsImage(text, cursor),
     });
     cursor = index;
@@ -288,12 +294,24 @@ export function findMarkdownLinks(source) {
   return links;
 }
 
-function countLines(text, offset) {
-  let line = 1;
-  for (let index = 0; index < offset; index += 1) {
-    if (text[index] === "\n") line += 1;
+/** Offsets of every line start, built once so line lookup is a binary search. */
+function collectLineStarts(text) {
+  const starts = [0];
+  for (let index = 0; index < text.length; index += 1) {
+    if (text[index] === "\n") starts.push(index + 1);
   }
-  return line;
+  return starts;
+}
+
+function lineFor(lineStarts, offset) {
+  let low = 0;
+  let high = lineStarts.length - 1;
+  while (low < high) {
+    const middle = (low + high + 1) >> 1;
+    if (lineStarts[middle] <= offset) low = middle;
+    else high = middle - 1;
+  }
+  return low + 1;
 }
 
 /** Walk back to the `[` that opens this label and report whether a `!` precedes it. */
@@ -336,7 +354,9 @@ export function resolveDestination(relativeSourcePath, destination) {
   const hash = destination.indexOf("#");
   if (hash < 0) return null;
 
-  const target = destination.slice(0, hash);
+  // A query string is not part of the path — `/docs/x?v=2#frag` addresses the
+  // same page as `/docs/x#frag`, and leaving `?v=2` on would report NO_PAGE.
+  const target = destination.slice(0, hash).split("?")[0];
   const rawFragment = destination.slice(hash + 1);
   if (rawFragment === "") return null;
 

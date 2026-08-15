@@ -125,6 +125,20 @@ describe("what counts as a link", () => {
     );
   });
 
+  it("keeps offsets aligned when an astral character precedes the link", () => {
+    // The masking pass indexes by UTF-16 unit. Iterating by code point instead
+    // would collapse this emoji into one slot and shift every later offset,
+    // silently blanking the wrong span.
+    const source = ["🔧 a fence follows", "```", "[x](./gone.md#nope)", "```", "[y](./real.md#ok)"].join("\n");
+    const masked = maskNonProse(source);
+    assert.equal(masked.length, source.length);
+    assert.doesNotMatch(masked, /gone\.md/u);
+    assert.deepEqual(
+      findMarkdownLinks(source).map((link) => [link.destination, link.line]),
+      [["./real.md#ok", 5]],
+    );
+  });
+
   it("tells an image apart from a link", () => {
     const links = findMarkdownLinks("![alt](/circuits/x.svg#frag) and [label](./y.md#frag)");
     assert.deepEqual(
@@ -156,6 +170,13 @@ describe("which destinations this gate owns", () => {
     assert.deepEqual(resolveDestination(from, "/docs/components/integration/#rule-rail-envelope"), {
       route: "/docs/components/integration",
       fragment: "rule-rail-envelope",
+    });
+  });
+
+  it("drops a query string rather than folding it into the route", () => {
+    assert.deepEqual(resolveDestination(from, "/docs/overview/bom?v=2#protection-stage"), {
+      route: "/docs/overview/bom",
+      fragment: "protection-stage",
     });
   });
 
