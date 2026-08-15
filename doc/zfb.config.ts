@@ -17,6 +17,18 @@ export default defineConfig(
     logo: "/img/logo.svg",
     cjkFriendly: true,
     docHistory: true,
+    // The ejected head builder emitted og:image (+ width/height/alt) and the
+    // twitter summary_large_image card unconditionally; the package defaults
+    // are ogImage:false/twitterCard:false, which silently dropped every social
+    // card. This object REPLACES the default wholesale, so all five keys are
+    // spelled out even where they match the default.
+    metaTags: {
+      description: true,
+      keywords: false,
+      ogImage: "/img/ogp.png",
+      ogSiteName: true,
+      twitterCard: "summary_large_image",
+    },
     sidebarResizer: true,
     sidebarToggle: true,
     imageEnlarge: true,
