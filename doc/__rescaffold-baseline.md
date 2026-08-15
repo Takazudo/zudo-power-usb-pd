@@ -268,3 +268,55 @@ have no embedded newlines).
 Added `.zudo-doc/` to `doc/.gitignore` in this same commit, ahead of `packageOwnedRoutes`
 going active (which will write ~21 generated files into `doc/.zudo-doc/routes-src/` on every
 build).
+
+## S3 — Empirical assumption checks (issue #178)
+
+### Verdict 1: zfb 2.5.1 copies `public/` natively — CONFIRMED, PASS
+
+Temporarily removed the `./plugins/copy-public-plugin.mjs` entry from the
+`integrationPlugins` array in `doc/zfb.config.ts`, ran `pnpm build` (fresh `dist/`, plugin
+absent), and diffed every file under `public/` (83 files total) against `dist/`. **Zero
+files missing** — all 83 landed at their expected root-relative path, including:
+
+- `_redirects` — present, byte-identical content (still carries all 6 `/docs/components/records/*`
+  301s from issue #137)
+- `datasheets/` — **14 PDFs survived**, not the 10 the issue text estimated nor the 8 S1
+  recorded. The discrepancy is explained, not a regression: S1's baseline table used
+  `dist/datasheets/*.pdf` (non-recursive glob), which only counts the **8 top-level**
+  PDFs. There are also **6 more PDFs one level down** in `datasheets/packages/` (package
+  outline references: `D2PAK`, `DPAK`, `SMA-DO214AC`, `SMA`, `SOT143`, `TO-220`) that the
+  glob never matched. `find dist/datasheets -type f` (recursive) confirms 14 in both
+  `public/` and post-build `dist/`. No PDF of any kind went missing.
+- `favicon.ico`, `img/` (4 files), `circuits/` (7 SVGs), `kicad/` (1 PNG) — all present,
+  all accounted for
+- `assets/component-previews/` (55 files: 26 footprint SVGs + 1 manifest.json + 28 `.wrl`
+  3D models) — also present; this wasn't in the issue's explicit must-survive list but is
+  part of `public/` and confirms the copy is a full-tree copy, not a curated allowlist
+- `dist/assets/` cleanly **merges** the copied `component-previews/` subtree alongside the
+  build's own bundle output (`islands-*.js`, `styles-*.css`, the wasm/mjs md-render
+  resources) — no filename collision, no clobbering either direction
+
+This matches the documented behavior: `@takazudo/zfb/dist/config.d.ts:169-170` says
+`publicDir?: string; /** Public/static directory copied verbatim. Default: `public`. */`.
+Build itself succeeded identically to the S1 baseline — `✓ 101 pages built` — with only the
+same two pre-existing `broken link: #fact-...` / `#src-...` warnings on the
+`usb-type-c-009-c456012` record page (unrelated to this change).
+
+**`doc/plugins/copy-public-plugin.mjs` can be safely deleted by S5.** No fallback needed —
+the native `publicDir` copy is a strict superset of what the hand-rolled plugin did.
+
+`doc/zfb.config.ts` restored via `git checkout -- doc/zfb.config.ts` immediately after the
+test build; `git diff --exit-code doc/zfb.config.ts` is clean.
+
+### Verdict 2: package CSS subpaths — ALL FIVE RESOLVE
+
+Grepped the `exports` map in `doc/node_modules/@takazudo/zudo-doc/package.json`. All five
+subpaths S4 needs are present and map to real files under `dist/`:
+
+- `./theme.css` → `./dist/theme.css`
+- `./safelist.css` → `./dist/safelist.css`
+- `./content.css` → `./dist/content.css`
+- `./page-loading.css` → `./dist/page-loading.css`
+- `./features.css` → `./dist/features.css`
+
+None are missing; no fallback needed for S4.
