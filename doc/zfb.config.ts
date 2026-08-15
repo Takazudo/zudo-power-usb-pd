@@ -101,15 +101,18 @@ export default defineConfig({
   // CLAUDE.md and the Tauri dev wrappers assume 4321.
   port: 4321,
   tailwind: { enabled: true },
-  // Dual-theme syntect highlighting (zfb next.47 / zudo-doc 0.2.8). Both names
-  // are SYNTECT built-ins (NOT Shiki names); setting the pair makes the engine
-  // color tokens with `--shiki-light`/`--shiki-dark` CSS custom props instead of
-  // a single inline `color:`, which `src/styles/global.css` resolves via
-  // `light-dark()`. Without this the default single `base16-ocean.dark` theme
-  // renders near-invisible code on the light site theme.
+  // Class-mode highlighting — the same setting `@takazudo/zudo-doc/preset`
+  // ships (dist/preset.js). Each token gets a semantic role class (`hi-kw`,
+  // `hi-str`, …) instead of a baked-in color, and `@takazudo/zudo-doc`'s
+  // features.css bridges zfb's `--zfb-hi-*` defaults onto the `--zd-syntax-*`
+  // design tokens. The previous dual-theme syntect pair emitted inline
+  // `--shiki-light`/`--shiki-dark` custom props that only the hand-written
+  // `light-dark()` rule in global.css could resolve; that rule is gone with
+  // the package-theme swap, so the pair would leave code blocks uncolored.
+  // `mode` is mutually exclusive with `theme`/`themeLight`/`themeDark` —
+  // setting both is a build error, not a silent override.
   codeHighlight: {
-    themeLight: "base16-ocean.light",
-    themeDark: "base16-ocean.dark",
+    mode: "class",
   },
   collections,
   stripMdExt: true,
