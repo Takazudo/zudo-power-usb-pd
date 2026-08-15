@@ -553,7 +553,27 @@ p-p triangle, `fact-cya1265-ripple-13v5` / `fact-cya1265-ripple-7v5`). Condition
 arithmetic this pass adds (ideal CCM steady state, nominal setpoints, D =
 (13.53 + 0.55) ÷ (15 + 13.53 + 0.55) ≈ 0.48 using `fact-ss34-vf`): output-cap RMS
 ripple ≈ Iout × sqrt(D/(1−D)) ≈ **0.77 A at the 0.8 A rated load**, shared by
-C11‖C24. Against that: the only ripple identity retained on any of the five
+C11‖C24.
+
+<Warning title="Updated by issue #150 — the ≈1.0 A rating this paragraph relied on was wrong">
+
+The C11 figure below (≈1.0 A at 120 Hz, from a partial PDF extraction) was **wrong by
+~4×**. Reading the hash-locked HRK datasheet directly gives 240 mA rms at 120 Hz/105 °C,
+with a published frequency multiplier of ×1.30 at 10 kHz and above — so the real rating
+at the LM2596's 150 kHz is **312 mA** (`fact-c2983319-ripple-hf-derate`). The recorded
+ESR was wrong too: ~0.035 Ω against a tan-δ-implied **~0.51 Ω**
+(`fact-c2983319-esr-120hz`), ~14× out. Both errors ran in the non-conservative direction.
+
+This inverts the conclusion. Against the ≈0.77 A shared by C11‖C24, even a generous
+equal split puts ~0.39 A through C11 versus a 312 mA rating — **roughly 1.25× over**, and
+worse if C11's higher ESR pulls a larger share. C24's FOLLON line still retains no ripple
+fact, so the split cannot be bounded from retained evidence. This is no longer "unbounded
+by any retained spec"; it is a quantified apparent exceedance and needs a real
+sizing decision, not just a bench thermal check.
+
+</Warning>
+
+Against that: the only ripple identity retained on any of the five
 electrolytic lines is C11's family rating of ≈1.0 A **at 120 Hz** from a partial PDF
 extraction, with the 150 kHz figure "not given at all"
 (`fact-c2983319-ripple-esr-note`), and C9's 146 mA is likewise a 120 Hz line-frequency
@@ -640,7 +660,20 @@ Evidence: board-b-synth-power.md U2/U3 net tables; `board-b.json` `GND` array +
 `unresolved` note 7; `inventory.json` line-c8678 placements (D1/D2/D3, fitted);
 sch property reads D1/D2 (`SS34`/C8678).
 
-#### BB-12 — the C11 rail discrepancy resolves toward the −13.5 V rail on three independent reads; inventory.json's function text is the outlier (LOW lead)
+#### BB-12 — the C11 rail discrepancy resolves toward the −13.5 V rail on three independent reads; inventory.json's function text is the outlier (LOW lead) — **RESOLVED**
+
+<Note title="Resolved — the fix this lead names has been applied">
+
+The "netlist-neutral fix candidate" below has been taken up: `board_b_spec.py`'s `NETS`
+is the source of truth for placement and puts `C11.2` on `/DC-DC Conversion/-13.5V OUT`
+with `C3.1` on `/DC-DC Conversion/+13.5V OUT`, giving a fourth independent read
+agreeing with the doc table, the baseline, and the geometry probe. The
+`line-c2983319` function text now names both refdes and their rails,
+`fact-c2983319-c11-net-discrepancy` records the resolution and no longer blocks, and
+the `c11-rail-assignment` coverage domain is COVERED. Pin-1/pin-2 **polarity** is a
+separate question and stays UNCONFIRMED.
+
+</Note>
 
 `fact-c2983319-c11-net-discrepancy` (NEEDS BENCH) records the conflict: the doc's U4
 net table and the baseline put C11.2 on `/DC-DC Conversion/-13.5V OUT`, while

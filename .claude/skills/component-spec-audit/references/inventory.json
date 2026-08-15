@@ -517,11 +517,11 @@
       "mpn": "GVT1E477M0810CNVC",
       "manufacturer": "HRK",
       "lcsc": "C2983319",
-      "package": "CAP-SMD_BD10.0-L10.3-W10.3-LS11.0-FD",
+      "package": "CAP-SMD_BD8.0-L8.3-W8.3-LS9.0-FD",
       "owner_skill": "component-project-passives",
       "identity_state": "VERIFIED",
       "source_state": "AVAILABLE",
-      "function": "470 uF 25V aluminum electrolytic capacitor, +13.5V DC-DC output bulk filter",
+      "function": "470 uF 25V aluminum electrolytic capacitor, +13.5V and -13.5V DC-DC output bulk filter",
       "placements": [
         {
           "board": "board-b",

@@ -429,27 +429,41 @@
       "coverage_id": "cov-c2983319-net-discrepancy",
       "record_id": "rec-c2983319",
       "domain": "c11-rail-assignment",
-      "status": "OPEN",
-      "reason": "board-b-synth-power.md's netlist-derived table places C11.2 on -13.5V OUT, conflicting with inventory.json's +13.5V function text for C11; not resolved here.",
+      "status": "COVERED",
+      "reason": "Resolved against the generator spec, which is the source of truth for placement: board_b_spec.py NETS puts C11.2 on '/DC-DC Conversion/-13.5V OUT' and C3.1 on '/DC-DC Conversion/+13.5V OUT'. That matches the board-b doc's U4 net table, the locked baseline, and the sheet-geometry adjacency probe recorded in BB-12; inventory.json's function text was the lone outlier and is corrected. The 11.5 V margin is unaffected -- it was already computed against a 13.5 V magnitude, which both rails share.",
       "fact_ids": [
         "fact-c2983319-c11-net-discrepancy"
       ],
-      "blocking_fact_ids": [
-        "fact-c2983319-c11-net-discrepancy"
-      ]
+      "blocking_fact_ids": []
     },
     {
       "coverage_id": "cov-c2983319-ripple-esr",
       "record_id": "rec-c2983319",
       "domain": "switching-frequency-ripple-current",
       "status": "OPEN",
-      "reason": "Only a partially-extracted 120Hz line-frequency ripple/ESR figure is available; the project's 150kHz DC-DC switching ripple is not manufacturer-specified.",
+      "reason": "The manufacturer RATING is now fully sourced: 240 mA rms @120Hz/105C with a x1.30 multiplier at 10kHz and above, giving 312 mA rms at the project's 150kHz switching frequency, and max ESR ~0.51 Ohm derived from the specified tan-delta. The earlier partial-extraction figures (approx. 1.0A ripple, approx. 0.035 Ohm ESR) were wrong by ~4x and ~14x respectively, both in the non-conservative direction, and have been superseded. The domain stays OPEN because applying the rating shows a problem rather than clearing one. C24's line now carries ripple and ESR facts too (fact-c22387780-ripple-hf-derate, fact-c22387780-esr-120hz), so the C11 || C24 split the review could not bound is now computable: splitting the review's ~0.77 A by the two parts' max-ESR ratio gives C11 ~362 mA against its 312 mA rating (~1.16x over) and C24 ~408 mA against 403 mA (~1.01x). C3 is far less exposed -- a buck output cap carries only inductor ripple, not the pulsating diode current C11 sees. Needs a bench measurement or a resize decision -- issue #155, BB-7.",
       "fact_ids": [
-        "fact-c2983319-ripple-esr-note"
+        "fact-c2983319-ripple-esr-note",
+        "fact-c2983319-ripple-120hz",
+        "fact-c2983319-ripple-freq-multiplier",
+        "fact-c2983319-ripple-hf-derate",
+        "fact-c2983319-tan-delta",
+        "fact-c2983319-esr-120hz"
       ],
       "blocking_fact_ids": [
         "fact-c2983319-ripple-esr-note"
       ]
+    },
+    {
+      "coverage_id": "cov-c2983319-case-size",
+      "record_id": "rec-c2983319",
+      "domain": "case-size",
+      "status": "COVERED",
+      "reason": "The manufacturer datasheet states the case size three independent ways on page 1 -- the header line 'GVT, 25v, 470uF, 8x10.5', the Description line 'D8H10.5mm', and the Dimension & Marking table Case row 'Phi 8x10.5' with A 8.3 / B 8.3 / C 9.0 / D 8.0 / P 3.1 / L 10.5. Those map digit-for-digit onto zudo-pd:CAP-SMD_BD8.0-L8.3-W8.3-LS9.0-FD, which is now the assigned land. This closes issue #150: the part is Phi 8, not Phi 10, so no design decision was required -- the previous BD10.0 assignment was simply wrong.",
+      "fact_ids": [
+        "fact-c2983319-case-size"
+      ],
+      "blocking_fact_ids": []
     },
     {
       "coverage_id": "cov-c22383803-electrical-limits",
@@ -562,6 +576,35 @@
         "fact-c22387780-margin-ldo-output"
       ],
       "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-c22387780-case-size",
+      "record_id": "rec-c22387780",
+      "domain": "case-size",
+      "status": "COVERED",
+      "reason": "The FVH part-number key decodes EFVH035ADA471M10B0 as Phi 10 x 10.5 mm, and the DIMENSIONS table's 10X10.5 column (A 10.3, B 10.3, C 11.2) matches the assigned CAP-SMD_BD10.0-L10.3-W10.3-LS11.0-FD land. Confirms this line was NOT affected by issue #150 -- 470 uF / 35 V has no Phi 8 case option.",
+      "fact_ids": [
+        "fact-c22387780-case-size"
+      ],
+      "blocking_fact_ids": []
+    },
+    {
+      "coverage_id": "cov-c22387780-ripple-esr",
+      "record_id": "rec-c22387780",
+      "domain": "switching-frequency-ripple-current",
+      "status": "OPEN",
+      "reason": "The rating is fully sourced: 310 mA rms @120Hz/105C for the 10 x 10.5 case, x1.30 at 10kHz and above, giving 403 mA at 150kHz, with max ESR ~0.45 Ohm derived from tan-delta. This closes the evidence gap issue #155 opened. The domain stays OPEN because applying it shows a problem rather than clearing one: an ESR-ratio split of the review's ~0.77 A puts C24 at ~408 mA against 403 mA and C11 at ~362 mA against 312 mA, so both -13.5V output caps sit at or over rating. Needs a bench measurement or a resize decision -- issue #155, BB-7.",
+      "fact_ids": [
+        "fact-c22387780-ripple-120hz",
+        "fact-c22387780-ripple-freq-multiplier",
+        "fact-c22387780-ripple-hf-derate",
+        "fact-c22387780-tan-delta",
+        "fact-c22387780-esr-120hz",
+        "fact-c22387780-installed-ripple-exceedance"
+      ],
+      "blocking_fact_ids": [
+        "fact-c22387780-installed-ripple-exceedance"
+      ]
     },
     {
       "coverage_id": "cov-c2289-electrical-limits",

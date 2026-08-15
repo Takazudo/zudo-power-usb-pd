@@ -1,46 +1,62 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0.0000 0.0000 4.6736 2.3114" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0.0000 0.0000 5.0800 2.7178" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
 <g style="fill:#000000; fill-opacity:1.0000;stroke:#000000; stroke-opacity:1.0000;
 stroke-linecap:round; stroke-linejoin:round;"
  transform="translate(0 0) scale(1 1)">
 <path style="fill:#000000; fill-opacity:1.0000; stroke:none;fill-rule:evenodd;"
-d="M 0.3000,2.0300
-0.3000,0.3000
-1.4900,0.3000
-1.4900,2.0300
+d="M 0.5000,2.2300
+0.5000,0.5000
+1.6900,0.5000
+1.6900,2.2300
 Z" />
 <path style="fill:#000000; fill-opacity:1.0000; stroke:none;fill-rule:evenodd;"
-d="M 3.2000,2.0300
-3.2000,0.3000
-4.3900,0.3000
-4.3900,2.0300
+d="M 3.4000,2.2300
+3.4000,0.5000
+4.5900,0.5000
+4.5900,2.2300
 Z" />
 </g>
 <g style="fill:none;
 stroke:#000000; stroke-width:0.1500; stroke-opacity:1;
 stroke-linecap:round; stroke-linejoin:round;">
-<path d="M1.4150 0.0750
-L0.2250 0.0750
+<path d="M1.6150 0.2750
+L0.4250 0.2750
 " />
-<path d="M3.2750 0.0750
-L4.4650 0.0750
+<path d="M3.4750 0.2750
+L4.6650 0.2750
 " />
-<path d="M0.0750 0.2250
-L0.0750 2.1050
+<path d="M0.2750 0.4250
+L0.2750 2.3050
 " />
-<path d="M4.6150 0.2250
-L4.6150 2.1050
+<path d="M4.8150 0.4250
+L4.8150 2.3050
 " />
-<path d="M0.2250 2.2550
-L1.4150 2.2550
+<path d="M0.4250 2.4550
+L1.6150 2.4550
 " />
-<path d="M4.4650 2.2550
-L3.2750 2.2550
+<path d="M4.6650 2.4550
+L3.4750 2.4550
 " />
 </g>
 <g style="fill:none;
 stroke:#000000; stroke-width:0.0800; stroke-opacity:1;
 stroke-linecap:round; stroke-linejoin:round;">
-<path d="M2.3450 0.3250 A0.8422 0.8422 0.0 0 0 2.3463 1.1672" />
-<path d="M2.3450 2.0050 A0.8422 0.8422 0.0 0 0 2.3437 1.1628" />
+<path d="M2.5450 0.5250 A0.8422 0.8422 0.0 0 0 2.5463 1.3672" />
+<path d="M2.5450 2.2050 A0.8422 0.8422 0.0 0 0 2.5437 1.3628" />
+</g>
+<g style="fill:none;
+stroke:#000000; stroke-width:0.0500; stroke-opacity:1;
+stroke-linecap:round; stroke-linejoin:round;">
+<path d="M0.0250 0.0250
+L5.0650 0.0250
+" />
+<path d="M5.0650 0.0250
+L5.0650 2.7050
+" />
+<path d="M5.0650 2.7050
+L0.0250 2.7050
+" />
+<path d="M0.0250 2.7050
+L0.0250 0.0250
+" />
 </g>
 </svg>

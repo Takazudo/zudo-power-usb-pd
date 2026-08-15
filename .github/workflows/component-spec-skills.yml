@@ -26,6 +26,7 @@ on:
       # hash — a footprint's .kicad_sym or unrelated library metadata
       # shouldn't invalidate check:footprint-previews / check:models below.
       - 'footprints/**/*.kicad_mod'
+      - 'footprints/scripts/**'
       - 'footprints/**/*.wrl'
       - 'footprints/**/*.step'
       - 'doc/**'
@@ -44,6 +45,7 @@ on:
       - 'boards/**'
       - 'symbols/**'
       - 'footprints/**/*.kicad_mod'
+      - 'footprints/scripts/**'
       - 'footprints/**/*.wrl'
       - 'footprints/**/*.step'
       - 'doc/**'
@@ -99,6 +101,8 @@ jobs:
           python3 scripts/schgen/check_baseline.py scripts/schgen/board_b_spec.py scripts/schgen/baselines/board-b.json --allow scripts/schgen/baselines/board-b-allow.json
       - name: Validate wave-6 decision lock (decisions.json)
         run: python3 scripts/schgen/check_decisions.py
+      - name: Courtyards enclose every pad (footprint library)
+        run: python3 footprints/scripts/gen_courtyards.py --check
 
   # The doc-engine suite (~9k lines under doc/component-docs/tests/) is the
   # only guard on the TypeScript projection — including the two-place MDX

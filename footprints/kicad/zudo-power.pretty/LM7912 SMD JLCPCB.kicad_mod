@@ -250,6 +250,10 @@
 		(layers "F.Cu" "F.Paste" "F.Mask")
 		(uuid "9b8f762f-26ac-4015-8130-66e6d9c2aca8")
 	)
+	(fp_line (start -10.21 -5.31) (end 6.85 -5.31) (layer "F.CrtYd") (width 0.05))
+	(fp_line (start 6.85 -5.31) (end 6.85 5.33) (layer "F.CrtYd") (width 0.05))
+	(fp_line (start 6.85 5.33) (end -10.21 5.33) (layer "F.CrtYd") (width 0.05))
+	(fp_line (start -10.21 5.33) (end -10.21 -5.31) (layer "F.CrtYd") (width 0.05))
 	(model "${EASYEDA2KICAD}/easyeda2kicad.3dshapes/TO-263-3_L10.2-W8.7-H4.5-LS14.4-P2.54.wrl"
 		(offset
 			(xyz -1.7 0 -0)

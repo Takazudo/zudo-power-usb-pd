@@ -81,6 +81,10 @@ const REQUIRED_PATHS: Record<string, readonly string[]> = {
     "footprints/**/*.kicad_mod",
     "footprints/**/*.wrl",
     "footprints/**/*.step",
+    // The courtyard gate runs footprints/scripts/gen_courtyards.py --check, so
+    // an edit to the generator itself must select the workflow that runs it —
+    // footprints/**/*.kicad_mod does not match a .py file.
+    "footprints/scripts/**",
     "doc/**",
   ],
 };

@@ -431,7 +431,7 @@
       "mpn": "GVT1E477M0810CNVC",
       "manufacturer": "HRK",
       "lcsc": "C2983319",
-      "package": "CAP-SMD_BD10.0-L10.3-W10.3-LS11.0-FD",
+      "package": "CAP-SMD_BD8.0-L8.3-W8.3-LS9.0-FD",
       "source_ids": [
         "src-c2983319-datasheet",
         "src-c2983319-boardbdoc"
@@ -442,13 +442,18 @@
         "fact-c2983319-tolerance",
         "fact-c2983319-voltage",
         "fact-c2983319-temperature",
+        "fact-c2983319-case-size",
         "fact-c2983319-ripple-esr-note",
+        "fact-c2983319-ripple-120hz",
+        "fact-c2983319-ripple-freq-multiplier",
+        "fact-c2983319-ripple-hf-derate",
+        "fact-c2983319-tan-delta",
+        "fact-c2983319-esr-120hz",
         "fact-c2983319-rail-margin",
         "fact-c2983319-c11-net-discrepancy"
       ],
       "interaction_ids": [],
       "open_domains": [
-        "c11-rail-assignment",
         "switching-frequency-ripple-current"
       ]
     },
@@ -554,10 +559,19 @@
         "fact-c22387780-voltage",
         "fact-c22387780-temperature",
         "fact-c22387780-margin-ldo-input",
-        "fact-c22387780-margin-ldo-output"
+        "fact-c22387780-margin-ldo-output",
+        "fact-c22387780-case-size",
+        "fact-c22387780-ripple-120hz",
+        "fact-c22387780-ripple-freq-multiplier",
+        "fact-c22387780-ripple-hf-derate",
+        "fact-c22387780-tan-delta",
+        "fact-c22387780-esr-120hz",
+        "fact-c22387780-installed-ripple-exceedance"
       ],
       "interaction_ids": [],
-      "open_domains": []
+      "open_domains": [
+        "switching-frequency-ripple-current"
+      ]
     },
     {
       "record_id": "rec-c2289",

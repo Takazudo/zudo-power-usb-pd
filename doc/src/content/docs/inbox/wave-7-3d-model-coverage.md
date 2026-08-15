@@ -60,6 +60,22 @@ the 8&nbsp;MB aggregate cap.
 
 ## The one substitution: a supplier data-quality mismatch, not a package error
 
+<Warning title="RETRACTED — this section drew the wrong conclusion (issue #150)">
+
+The reasoning below is **wrong** and is kept only as a record of how the error
+was made. EasyEDA's `CAP-SMD_BD8.0-…` model for `C2983319` was **correct**: the
+HRK datasheet states the part is a Φ8 × 10.5 mm can (`D8H10.5mm`). The supplier
+data was the truth-teller, and it was overruled here to preserve a package
+assignment that was itself the mistake. `C2983319` now carries
+`CAP-SMD_BD8.0-L8.3-W8.3-LS9.0-FD`, and C3/C11 were re-landed accordingly.
+
+Generalizable lesson: when a supplier asset disagrees with a project package
+assignment, read the manufacturer datasheet before deciding which one is wrong.
+Neither side is presumptively authoritative — here the "obviously bad supplier
+data" heuristic inverted the correct answer.
+
+</Warning>
+
 `CAP-SMD_BD10.0-L10.3-W10.3-LS11.0-FD` has two inventory lines: `C2983319`
 (GVT1E477M0810CNVC) and `C22387780` (EFVH035ADA471M10B0). Fetching `C2983319`
 first — the natural "first line wins" choice — returns a 3D model EasyEDA
