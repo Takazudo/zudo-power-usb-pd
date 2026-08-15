@@ -450,7 +450,8 @@
         "fact-c2983319-tan-delta",
         "fact-c2983319-esr-120hz",
         "fact-c2983319-rail-margin",
-        "fact-c2983319-c11-net-discrepancy"
+        "fact-c2983319-c11-net-discrepancy",
+        "fact-c2983319-c11-ripple-share-3can"
       ],
       "interaction_ids": [],
       "open_domains": [
@@ -566,7 +567,8 @@
         "fact-c22387780-ripple-hf-derate",
         "fact-c22387780-tan-delta",
         "fact-c22387780-esr-120hz",
-        "fact-c22387780-installed-ripple-exceedance"
+        "fact-c22387780-installed-ripple-exceedance",
+        "fact-c22387780-can-ripple-share-3can"
       ],
       "interaction_ids": [],
       "open_domains": [

@@ -14,7 +14,7 @@
     "orderable_lines": 41,
     "fitted_lines": 40,
     "dnp_or_hand_fit_lines": 2,
-    "fitted_placements": 80,
+    "fitted_placements": 81,
     "dnp_placements": 4
   },
   "exclusions": [
@@ -828,6 +828,11 @@
         {
           "board": "board-b",
           "refdes": "C7",
+          "dnp": false
+        },
+        {
+          "board": "board-b",
+          "refdes": "C12",
           "dnp": false
         },
         {
