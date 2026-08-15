@@ -559,10 +559,19 @@
         "fact-c22387780-voltage",
         "fact-c22387780-temperature",
         "fact-c22387780-margin-ldo-input",
-        "fact-c22387780-margin-ldo-output"
+        "fact-c22387780-margin-ldo-output",
+        "fact-c22387780-case-size",
+        "fact-c22387780-ripple-120hz",
+        "fact-c22387780-ripple-freq-multiplier",
+        "fact-c22387780-ripple-hf-derate",
+        "fact-c22387780-tan-delta",
+        "fact-c22387780-esr-120hz",
+        "fact-c22387780-installed-ripple-exceedance"
       ],
       "interaction_ids": [],
-      "open_domains": []
+      "open_domains": [
+        "switching-frequency-ripple-current"
+      ]
     },
     {
       "record_id": "rec-c2289",
