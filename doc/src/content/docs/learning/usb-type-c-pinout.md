@@ -86,11 +86,11 @@ USB Type-C is reversible. When you plug in a cable:
 
 ```
 Orientation 1 (normal):
-- CC1 active → CH224D detects cable on CC1
+- CC1 active → the PD sink controller detects cable on CC1
 - CC2 inactive
 
 Orientation 2 (flipped):
-- CC2 active → CH224D detects cable on CC2
+- CC2 active → the PD sink controller detects cable on CC2
 - CC1 inactive
 ```
 
@@ -106,7 +106,7 @@ For standard USB Type-C (without PD negotiation), CC pins advertise available cu
 
 ### 3. Power Delivery Negotiation
 
-With USB-PD (like CH224D), CC pins carry **digital communication**:
+With USB-PD (negotiated by this project's STUSB4500, U1), CC pins carry **digital communication**:
 
 ```
 Negotiation Sequence:
@@ -114,7 +114,7 @@ Negotiation Sequence:
 1. Initial Connection (0-100ms):
    ┌─────────┐                    ┌─────────┐
    │ Source  │ ─── CC line ────→  │  Sink   │
-   │ (PD     │                    │ (CH224D)│
+   │ (PD     │                    │  (U1)   │
    │ Charger)│                    │         │
    └─────────┘                    └─────────┘
    VBUS = 5V (default)
@@ -206,12 +206,12 @@ Pin 1 (GND)  ──┬─→ System GND
                │   (via wide trace or ground plane)
 Pin 6 (GND)  ──┘
 
-Pin 2 (VBUS) ──┬─→ VBUS node → CH224D pin 2
+Pin 2 (VBUS) ──┬─→ VBUS node → PD sink controller VBUS pin
                │   (via wide trace or copper pour)
 Pin 5 (VBUS) ──┘
 
-Pin 3 (CC1)  ────→ CH224D pin 10 (separate)
-Pin 4 (CC2)  ────→ CH224D pin 11 (separate)
+Pin 3 (CC1)  ────→ PD sink controller CC1 pin (separate)
+Pin 4 (CC2)  ────→ PD sink controller CC2 pin (separate)
 ```
 
 ### ❌ Wrong: Connecting Only One Pin
@@ -309,7 +309,20 @@ The **USB Type-C specification requires** all redundant power pins to be connect
 
 ## CH224D Connection to USB-C Connector
 
-In this project, the CH224D connects to the 6-pin USB Type-C connector:
+<Warning title="Historical: CH224D was replaced by the STUSB4500 (v1.1)">
+
+This section is written around the **CH224D**, the deprecated v1.0 USB-PD
+controller (see [CH224D USB-PD Controller](./ch224d-usb-pd-controller.md)).
+The current controller, **STUSB4500** (U1), connects to the same J1 6-pin
+connector, but on different pin names/numbers — see the
+[Net-connectivity table](../overview/board-a-usb-pd-core.md#net-connectivity-table-fixed-circuit)
+for the current, authoritative J1↔U1 pin map. The pin-pairing pattern shown
+below (VBUS/GND doubled up, CC1/CC2 kept separate) still applies conceptually
+— only the specific IC and pin numbers have changed.
+
+</Warning>
+
+In the original (v1.0) design, the CH224D connected to the 6-pin USB Type-C connector:
 
 ```
 J1 (USB-C 6P)          CH224D (QFN-20)
@@ -354,7 +367,7 @@ Pin 6 (GND) ──────────→ Pin 0 (GND/EPAD)
 
 ### ❌ "Both CC pins are always active"
 
-**False.** Only **one CC pin is active** at a time, depending on cable orientation. The CH224D automatically detects which one.
+**False.** Only **one CC pin is active** at a time, depending on cable orientation. The PD sink controller automatically detects which one.
 
 ### ❌ "More VBUS pins = more power"
 
