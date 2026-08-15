@@ -13,6 +13,8 @@ netlist-derived doc tables as-fixed: Net-(C16-Pad2) merged to GND, C9 = C970687
   BB-3 disposition: U4's -0.93V clamp-table-point abs-max overage is an accepted
   transient-class residual — no part or topology change; bench surge test must
   observe the U4 effective-input node.
+  (neg-rail-cap-bank) C12 = 470uF/35V FOLLON C22387780 added in parallel on
+  '/DC-DC Conversion/-13.5V OUT'; C11 stays C2983319 on its Phi 8 land
 
 U4 inverting referencing is LOCKED: U4 GND (pin 3), ~ON/OFF (pin 5), and TAB
 (pin 6) all ride the '/DC-DC Conversion/-13.5V OUT' net, L3.2 is the only
@@ -121,6 +123,8 @@ COMPONENTS = {
     'J7':   (*_FASTON, False, (342.9, 355.6)),
     'J8':   (*_FASTON, False, (393.7, 355.6)),
     'J9':   (*_FASTON, False, (444.5, 355.6)),
+    # -13.5V output-bank third can (row H) -- decision neg-rail-cap-bank
+    'C12':  (*_C470U_35, False, (38.1, 393.7)),
     # Eurorack bus headers (row H)
     'J10':  (*_EURO16, False, (139.7, 393.7)),
     'J11':  (*_EURO16, False, (292.1, 393.7)),
@@ -150,6 +154,7 @@ NETS = {
         'U4.3', 'U4.5', 'U4.6', 'D3.2', 'C9.2', 'C10.2', 'C11.2', 'R6.2',
         'C16.1', 'C24.2', 'U8.2',
         'TP5.1',                              # rail test pad (derived)
+        'C12.2',                              # -13.5V output-bank third can (derived)
     ],
     'Net-(U4-Feedback)': ['U4.4', 'R5.1', 'R6.1', 'C33.1'],
     'GND': [
@@ -164,6 +169,8 @@ NETS = {
         'D1.2', 'D2.2',
         # derived: baseline unresolved note 7 (doc-implied DC-DC GND pins)
         'C3.2', 'C4.2', 'C11.1', 'R5.2', 'C33.2',
+        # derived: -13.5V output-bank third can (decision neg-rail-cap-bank)
+        'C12.1',
         # derived: A-B interface GND pair + P1 probe return
         'J5.5', 'J5.6', 'P1.3',
         # derived: indicator LED ground legs (green 2=K; blue 1=K; red 2=A on GND)

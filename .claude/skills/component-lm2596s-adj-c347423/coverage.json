@@ -59,10 +59,12 @@
       "record_id": "rec-lm2596s-adj-c347423",
       "domain": "switch-power-stage",
       "status": "COVERED",
-      "reason": "4.5 A typical / 3.6 A minimum switch current limit and the 150 kHz oscillator are primary-source confirmed",
+      "reason": "4.5 A typical / 3.6 A minimum switch current limit, the 150 kHz oscillator, and the switch saturation voltage (1.16 V typ, 1.4 V max at 25 C / 1.5 V max over temperature) are primary-source confirmed; the Vsat rows close the omission issue #171 raised in the -13.5V output-cap ripple model",
       "fact_ids": [
         "fact-lm2596-current-limit",
-        "fact-lm2596-oscillator-frequency"
+        "fact-lm2596-oscillator-frequency",
+        "fact-lm2596-vsat",
+        "fact-lm2596-vsat-max"
       ],
       "blocking_fact_ids": []
     },

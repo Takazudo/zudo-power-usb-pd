@@ -217,6 +217,7 @@ recorded as an open bench item, **not** changed on paper.
 | **C7** | **[C22387780](https://jlcpcb.com/partdetail/C22387780)** | **470 µF 35 V** (FOLLON EFVH035ADA471M10B0) | D10 | **$0.04** | U3 input bulk | [D3](./circuit-diagrams.mdx#diagram3-15v-→-7-5v-buck-converter-lm2596s-adj-2-u3) |
 | **C9** | **[C970687](https://jlcpcb.com/partdetail/C970687)** | **100 µF 50 V** (DMBJ RVT1H101M0810) | D8 | **~$0.05** (est.) | U4 input bulk — bridges +15 V to -13.5 V, 28.5 V of stress | [D4](./circuit-diagrams.mdx#diagram4-15v-→--13-5v-inverting-buck-boost-lm2596s-adj-u4) |
 | **C11** | **[C2983319](https://jlcpcb.com/partdetail/C2983319)** | **470 µF 25 V** (GVT1E477M0810CNVC) | D8 | **$0.04** | U4 output filter | [D4](./circuit-diagrams.mdx#diagram4-15v-→--13-5v-inverting-buck-boost-lm2596s-adj-u4) |
+| **C12** | **[C22387780](https://jlcpcb.com/partdetail/C22387780)** | **470 µF 35 V** (FOLLON EFVH035ADA471M10B0) | D10 | **$0.04** | U4 output filter, added in parallel with C11 (decision `neg-rail-cap-bank`, resolves the BB-7 ripple over-rating) | [D4](./circuit-diagrams.mdx#diagram4-15v-→--13-5v-inverting-buck-boost-lm2596s-adj-u4) |
 
 <Info title="Three wave-6 electrolytic corrections land in this table">
 
@@ -246,7 +247,8 @@ recorded as an open bench item, **not** changed on paper.
 | **C32** | **[C1729](https://jlcpcb.com/partdetail/C1729)** | **22 nF** (CL21B223KBANNNC) | 0805 | **$0.002** | U3 feedback compensation | [D3](./circuit-diagrams.mdx#diagram3-15v-→-7-5v-buck-converter-lm2596s-adj-2-u3) |
 | **C33** | **[C1729](https://jlcpcb.com/partdetail/C1729)** | **22 nF** (CL21B223KBANNNC) | 0805 | **$0.002** | U4 feedback compensation | [D4](./circuit-diagrams.mdx#diagram4-15v-→--13-5v-inverting-buck-boost-lm2596s-adj-u4) |
 
-**Stage 2 subtotal: ~$2.24** (includes the C9 estimate).
+**Stage 2 subtotal: ~$2.28** (includes the C9 estimate and C12, added by decision
+`neg-rail-cap-bank`).
 
 ## Stage 3: Linear Regulators (Board B)
 
@@ -463,24 +465,27 @@ The tallest parts are the 470 µF electrolytics, then the FASTON terminals at 8.
 Total board height is ~12 mm including the 1.6 mm PCB. The exact can height is stated
 once, in [Mechanical Design](./mechanical-design.md) — do not restate it here, so the
 two pages cannot drift apart again. Note that
-decision (d)'s C5/C7 swap moved those two positions from a D6.3 can to a D10 can, so
-Board B now carries **seven** D10 electrolytics (C5, C7, C14, C20, C21, C24, C25 are
-D10; C3, C9, C11 are D8; C4, C22, C23 are D6.3). C3/C11 were counted as D10 until
-issue #150: the fitted part there (C2983319, GVT1E477M0810CNVC) is a Φ8 × 10.5 mm can
-per its datasheet, and had simply been assigned the Φ10 land by mistake.
+decision (d)'s C5/C7 swap moved those two positions from a D6.3 can to a D10 can, and
+decision `neg-rail-cap-bank` then added a new D10 can, C12, in parallel with C11 on the
+−13.5 V output. Board B now carries **eight** D10 electrolytics (C5, C7, C12, C14, C20,
+C21, C24, C25 are D10; C3, C9, C11 are D8; C4, C22, C23 are D6.3). C3/C11 were counted
+as D10 until issue #150: the fitted part there (C2983319, GVT1E477M0810CNVC) is a
+Φ8 × 10.5 mm can per its datasheet, and had simply been assigned the Φ10 land by
+mistake; C12 is a different, freshly-added position and was never subject to that
+mistake — it is a genuine Φ10 × 10.5 mm FOLLON can from the start.
 
 ## Total Cost Summary
 
 | Stage | Description | Board | Subtotal |
 | ----- | ----------- | ----- | -------- |
 | **Stage 1** | USB-PD voltage acquisition (incl. J4) | A | **~$2.90** |
-| **Stage 2** | DC-DC converters | B | **~$2.24** |
+| **Stage 2** | DC-DC converters | B | **~$2.28** |
 | **Stage 3** | Linear regulators | B | **~$0.64** |
 | **Stage 4** | Protection + indicators | B | **~$0.82** |
 | **Stage 5** | Output connectors + J5/P1/test pads | B | **~$1.28** |
 | | **Board A total** (Stage 1) | A | **~$2.90** |
-| | **Board B total** (Stages 2-5) | B | **~$4.98** |
-| | **Both boards, components only** | | **~$7.88** |
+| | **Board B total** (Stages 2-5) | B | **~$5.02** |
+| | **Both boards, components only** | | **~$7.92** |
 
 <Note title="These totals are recomputed, and they are larger than the figures this page used to show">
 

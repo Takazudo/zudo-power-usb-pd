@@ -226,7 +226,7 @@ describe("relationships stay visible on the page, not just in the model", () => 
         }
       }
     }
-    assert.equal(crossRecord, 3);
+    assert.equal(crossRecord, 5);
   });
 });
 

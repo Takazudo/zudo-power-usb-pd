@@ -212,6 +212,34 @@
       "expression": ""
     },
     {
+      "fact_id": "fact-lm2596-vsat",
+      "record_id": "rec-lm2596s-adj-c347423",
+      "source_id": "src-lm2596-umw-ds",
+      "class": "GUARANTEED_ELECTRICAL",
+      "value": 1.16,
+      "unit": "V",
+      "conditions": "internal output-switch saturation voltage, typical at TJ=25C; test condition IOUT=3A with Note 7 (no diode, inductor or capacitor connected to the output pin) and Note 8 (feedback pin removed from output and tied to 0V to force the output transistor ON); the same 1.16 V typical is restated as the VSAT term of the datasheet's own buck E*T inductor-selection formula",
+      "locator": "src-lm2596-umw-ds: Electrical Characteristics 10.2 table row Saturation Voltage VSAT, IOUT=3A (Notes 7, 8), Typ column (printed page 6); restated in section 16 Series Buck Regulator Design Procedure step 2A as 'VSAT=internal switch saturation voltage=1.16V' (printed page 16)",
+      "provenance": "PRIMARY-SPEC",
+      "verdict": "PASS - primary-source confirmed",
+      "depends_on": [],
+      "expression": ""
+    },
+    {
+      "fact_id": "fact-lm2596-vsat-max",
+      "record_id": "rec-lm2596s-adj-c347423",
+      "source_id": "src-lm2596-umw-ds",
+      "class": "GUARANTEED_ELECTRICAL",
+      "value": 1.4,
+      "unit": "V",
+      "conditions": "guaranteed maximum output-switch saturation voltage at TJ=25C (standard-typeface limit, matching the bundle's min/max convention set by fact-lm2596-fb-vref-max/-min); the boldface full-operating-temperature-range limit is 1.5 V; same IOUT=3A Notes 7/8 test conditions as the typical (fact-lm2596-vsat)",
+      "locator": "src-lm2596-umw-ds: Electrical Characteristics 10.2 table row Saturation Voltage VSAT, Limit column '1.4/1.5' against unit row 'V(max)' (printed page 6); typeface convention per the table header note and Note 4 (printed pages 6 and 7)",
+      "provenance": "PRIMARY-SPEC",
+      "verdict": "PASS - primary-source confirmed",
+      "depends_on": [],
+      "expression": ""
+    },
+    {
       "fact_id": "fact-lm2596-inverting-topology-support",
       "record_id": "rec-lm2596s-adj-c347423",
       "source_id": "src-lm2596-umw-ds",

@@ -100,6 +100,22 @@ If you find a missing or wrong correction, use the plugin's **Corrections Manage
 - **BOM**: `production_files/BOM-zudo-pd.csv`
 - **CPL**: `production_files/POS-zudo-pd.csv`
 
+<Note>
+The bare-copper footprints (pogo pads, test pads) carry footprint-level
+`exclude_from_pos_files` / `exclude_from_bom` attributes so they never export as
+phantom assembly rows. The v0.4.0 order snapshots are evidence the toolchain
+honors these attributes: the `MountingHole` footprints carrying them appear in
+neither the CPL nor the BOM snapshot, while the then-unexcluded J2/J3/TP* pads
+shipped as exactly the phantom rows this guards against
+(`jlcpcb-order-snapshots/v0_4_0/used-for-order/CPL-zudo-pd.csv`). At the first
+Board A/B order, still confirm the exported `POS-*.csv` contains no
+J2/J3/P1/TP* rows; if a phantom row does appear, delete it from the generated
+CSV before upload and investigate the plugin's `project.db` cache. Note this
+applies to future Board A/B layouts only — the legacy as-built board file
+embeds its own frozen `(attr smd)` copies, and KiCad's "Update Footprints from
+Library" does not reset fabrication attributes by default.
+</Note>
+
 > **Scope note:** `zudo-pd.kicad_pcb` is the legacy root project — the as-built v4
 > board — so the worked example below (Q1/D4) reflects that board's fitted parts.
 > Board A's schematic redesign removed D4 (USBLC6-2SC6) in favor of DNP
