@@ -38,9 +38,8 @@ doc/
 │   ├── datasheets/     # Component datasheets (PDF)
 │   ├── img/            # General images
 │   └── kicad/          # KiCad screenshots
-├── pages/              # zfb route files (framework — do not edit by hand)
-├── plugins/            # zfb build plugins (search, doc-history, public copy)
-├── zfb.config.ts       # zfb build config (collections, adapter, features)
+├── pages/              # two package-owned route stubs (index, docs catch-all)
+├── zfb.config.ts       # site config — one zudoDoc({...}) call
 └── wrangler.toml       # Cloudflare Workers deploy config
 ```
 
