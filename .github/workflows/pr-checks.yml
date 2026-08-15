@@ -5,9 +5,10 @@
 # doc/, component evidence under .claude/skills/, canonical footprint
 # geometry, or this workflow. Pipeline: type check -> footprint/model checks
 # -> component generator tests -> build -> built-reference check -> link
-# check -> generated-docs drift check -> component projection drift check ->
-# denied-value scan over the built bytes -> deploy preview (wrangler versions
-# upload --preview-alias) -> route smoke test -> sticky PR comment.
+# check -> fragment check -> generated-docs drift check -> component
+# projection drift check -> denied-value scan over the built bytes -> deploy
+# preview (wrangler versions upload --preview-alias) -> route smoke test ->
+# sticky PR comment.
 #
 # Everything up to and including the scan is CREDENTIAL-FREE and mandatory,
 # and it is `pnpm b4push` plus two steps b4push cannot express as one command:
@@ -165,6 +166,21 @@ jobs:
       - name: Hand-authored links resolve
         working-directory: doc
         run: bash component-docs/scripts/check-zfb-link-warnings.sh "$RUNNER_TEMP/$BUILD_LOG_NAME"
+
+      # FRAGMENT INTEGRITY — the half the log gate structurally cannot cover.
+      # zfb resolves `#fragment` against heading anchors only and, with
+      # `onBrokenLinks: "warn"`, never fails a build; a dead hand-authored
+      # anchor is not even WARNED about, so the step above sees a clean log
+      # and passes. Verified by injecting one: build exit 0, zero warning
+      # lines naming it, log gate exit 0, this step exit 1.
+      #
+      # This reads the ids out of `dist/` rather than slugifying headings —
+      # zfb's strategy is HIERARCHICAL (an h3's id carries its parent h2's
+      # slug) and keeps unicode, which is exactly what 18 hand-written
+      # anchors got wrong. See the script header.
+      - name: Hand-authored fragments resolve against built ids
+        working-directory: doc
+        run: pnpm check:fragment-links
 
       # THE drift authority for every committed generated file. `pnpm build`
       # rewrites doc/src/content/docs/components/ AND
