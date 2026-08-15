@@ -39,6 +39,14 @@
  * Structural `:has()` is the only available hook. Both forms are matched: the
  * loose form (all 95 items in this corpus today) and the tight form, which is
  * what a future item authored without surrounding blank lines would produce.
+ *
+ * WHY THIS WORKS, AND HOW IT WOULD SILENTLY BREAK: ordinary markers are not
+ * set by any class rule — the MDX pipeline emits the declaration INLINE on the
+ * list itself (`<ul style="padding-left:2em;list-style-type:disc">`). This rule
+ * wins only because it targets the `li`, and a rule on the child outranks a
+ * value merely inherited from the parent's inline style. If that inline
+ * `list-style-type` ever moves from the `ul` onto the `li`, inline style beats
+ * this stylesheet and every task item silently gets its disc back.
  * ======================================== */
 
 .zd-content li:has(> p > input[type="checkbox"]),
