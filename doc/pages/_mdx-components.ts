@@ -3,7 +3,7 @@
 //
 // ## Why a shared helper
 //
-// Pre-S4e the page-side `components` map only carried `htmlOverrides` plus
+// Pre-S4e the page-side `components` map only carried `defaultComponents` plus
 // `HtmlPreview`, because the zfb content bridge wasn't installed and every
 // `<entry.Content>` call took the raw-markdown `<pre data-zfb-content-fallback>`
 // path. Now that the bridge IS installed (zudo-doc#506), the compiled
@@ -21,7 +21,7 @@
 // (render nothing), and real Preact bindings for tags whose ports are complete.
 // As real components land, they replace their stub here and propagate to every page automatically.
 //
-// `htmlOverrides` (basic typography — h2/h3/h4/p/a/ul/ol/blockquote/strong/table)
+// `defaultComponents` (basic typography — h2/h3/h4/p/a/ul/ol/blockquote/strong/table/code)
 // and `HtmlPreview: HtmlPreviewWrapper` (Island wrapper) stay in their
 // non-stub form because their Preact bindings already exist.
 //
@@ -42,7 +42,7 @@ import type { ComponentChildren } from "preact";
 import { toChildArray } from "preact";
 import type { VNode } from "preact";
 import { settings } from "@/config/settings";
-import { htmlOverrides } from "@takazudo/zudo-doc/content";
+import { defaultComponents } from "@takazudo/zudo-doc/content";
 import { HtmlPreviewWrapper } from "@takazudo/zudo-doc/html-preview-wrapper";
 import { Tabs } from "@takazudo/zudo-doc/code-syntax";
 import { TabItem } from "@takazudo/zudo-doc/tab-item";
@@ -207,7 +207,7 @@ const ENLARGE_SVG = {
  * (Preact's h() is lazy — child.type is still the ContentImg function, not
  * yet called). ContentImg strips the sentinel from the rendered img DOM.
  *
- * All other paragraphs delegate to htmlOverrides.p (ContentParagraph passthrough).
+ * All other paragraphs delegate to defaultComponents.p (ContentParagraph passthrough).
  */
 function EnlargeableParagraph(props: {
   children?: ComponentChildren;
@@ -266,7 +266,7 @@ function EnlargeableParagraph(props: {
   }
 
   // Fallback: delegate to the standard ContentParagraph passthrough.
-  return (htmlOverrides.p as (props: unknown) => unknown)(props);
+  return (defaultComponents.p as (props: unknown) => unknown)(props);
 }
 /**
  * Build a locale-aware MDX components map for the given locale.
@@ -280,8 +280,8 @@ function EnlargeableParagraph(props: {
  * the static mdxComponents export.
  *
  * Components map includes:
- * - `htmlOverrides` — element-level overrides for native tags (h2..h4,
- *   p, a, ul/ol, blockquote, strong, table). Defined in
+ * - `defaultComponents` — element-level overrides for native tags (h2..h4,
+ *   p, a, ul/ol, blockquote, strong, table, code). Defined in
  *   `@takazudo/zudo-doc/content`.
  * - `HtmlPreview` — Island-wrapped preview component.
  * - Real Preact wrappers for CategoryNav, CategoryTreeNav, SiteTreeNav,
@@ -305,7 +305,7 @@ export function createMdxComponents(lang: Locale | string = defaultLocale) {
     SiteTreeNavWrapper({ ...(props as Parameters<typeof SiteTreeNavWrapper>[0]), lang });
 
   return {
-    ...htmlOverrides,
+    ...defaultComponents,
     // img override: rewrites root-relative src to include the site base path.
     // Required when settings.base is a sub-path (e.g. /my-docs/) so that
     // MDX images like ![alt](/img/foo.webp) resolve correctly on the deployed
@@ -314,7 +314,7 @@ export function createMdxComponents(lang: Locale | string = defaultLocale) {
 
     // p override: wraps block-level images in <figure class="zd-enlargeable">
     // with an enlarge button when settings.imageEnlarge is enabled.
-    // Must come AFTER the ...htmlOverrides spread to override ContentParagraph.
+    // Must come AFTER the ...defaultComponents spread to override ContentParagraph.
     p: EnlargeableParagraph,
     HtmlPreview: HtmlPreviewWrapper,
     // Component-docs bindings (`doc/component-docs/`) — the components that

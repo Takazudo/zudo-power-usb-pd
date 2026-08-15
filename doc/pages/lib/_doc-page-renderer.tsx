@@ -27,12 +27,12 @@ import type { NavNode } from "@/utils/docs";
 import { getNavSectionForSlug } from "@/utils/nav-scope";
 import { toRouteSlug } from "@/utils/slug";
 import type { JSX } from "preact";
-// Shared MDX-tag → Preact-component bag. Includes htmlOverrides
+// Shared MDX-tag → Preact-component bag. Includes defaultComponents
 // (native typography), HtmlPreviewWrapper (Island), and stub bindings
 // for every other custom tag the MDX corpus references — see
 // `pages/_mdx-components.ts` for the full list and rationale.
 import { createMdxComponents } from "../_mdx-components";
-import type { DocPageBaseProps } from "./doc-page-props";
+import type { DocPageBaseProps } from "./_doc-page-props";
 import { DocHistoryArea } from "./_doc-history-area";
 import { DocMetainfoArea } from "./_doc-metainfo-area";
 import { buildInlineVersionSwitcher } from "./_inline-version-switcher";

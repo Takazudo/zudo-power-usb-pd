@@ -18,7 +18,7 @@
 // Used by:
 //   - _sidebar-with-defaults.tsx / _header-with-defaults.tsx (per-page nav)
 //   - the 4 doc-route paths() files (route enumeration + nav tree)
-//   - route-enumerators.ts (sitemap) and the MDX nav wrappers
+//   - _route-enumerators.ts (sitemap) and the MDX nav wrappers
 // each picking the `NavSourceVariant` matching its filter needs.
 
 import { defaultLocale, getLocaleConfig, type Locale } from "@/config/i18n";
@@ -29,9 +29,9 @@ import {
   type CategoryMeta,
 } from "@/utils/docs";
 import type { DocsEntry } from "@/types/docs-entry";
-import type { DocPageEntry } from "./doc-page-props";
+import type { DocPageEntry } from "./_doc-page-props";
 import { stableDocs, memoizeDerived } from "./_nav-source-cache";
-import { mergeLocaleDocs } from "./locale-merge";
+import { mergeLocaleDocs } from "./_locale-merge";
 
 // ---------------------------------------------------------------------------
 // Stable category-meta merge

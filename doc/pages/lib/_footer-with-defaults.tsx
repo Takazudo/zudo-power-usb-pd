@@ -30,7 +30,7 @@ import { defaultLocale } from "@/config/i18n";
 import { tagVocabulary } from "@/config/tag-vocabulary";
 import { collectTags } from "@/utils/tags";
 import { toRouteSlug } from "@/utils/slug";
-import { mergeLocaleDocs } from "./locale-merge";
+import { mergeLocaleDocs } from "./_locale-merge";
 import { stableDocs, memoizeDerived } from "./_nav-source-cache";
 import type { DocsEntry } from "@/types/docs-entry";
 

@@ -18,7 +18,7 @@ import { frontmatterRenderers } from "@/config/frontmatter-preview-renderers";
 import { DocMetainfoArea } from "./_doc-metainfo-area";
 import { DocTagsArea } from "./_doc-tags-area";
 import { buildFrontmatterPreviewEntries } from "./_frontmatter-preview-data";
-import type { DocPageEntry } from "./doc-page-props";
+import type { DocPageEntry } from "./_doc-page-props";
 
 interface DocContentHeaderProps {
   /** The full content entry (title, description, tags, frontmatter data). */

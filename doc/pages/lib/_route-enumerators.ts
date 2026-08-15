@@ -17,7 +17,7 @@
 //     emitted by building the nav tree and calling collectAutoIndexNodes.
 
 import { loadDocs } from "../_data";
-import { mergeLocaleDocs } from "./locale-merge";
+import { mergeLocaleDocs } from "./_locale-merge";
 import { resolveNavSource, resolveVersionedLocaleSource } from "./_nav-source-docs";
 import { settings } from "@/config/settings";
 import { defaultLocale, type Locale } from "@/config/i18n";

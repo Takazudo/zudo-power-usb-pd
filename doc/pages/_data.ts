@@ -14,7 +14,7 @@ import { getCollection } from "zfb/content";
 import type { CollectionEntry } from "zfb/content";
 import type { DocsData } from "@/config/docs-schema";
 import type { DocsEntry } from "@/types/docs-entry";
-import type { DocPageEntry } from "./lib/doc-page-props";
+import type { DocPageEntry } from "./lib/_doc-page-props";
 import { toRouteSlug } from "@/utils/slug";
 
 // ---------------------------------------------------------------------------

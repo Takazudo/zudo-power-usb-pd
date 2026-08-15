@@ -156,13 +156,15 @@ export function buildNavTree(
   }
 
   const sidebarTree = buildSidebarTree(
-    // Pass `{ id, data }` only — NOT the whole entry. zfb entries carry the
-    // raw, un-index-stripped engine slug on the top-level `slug` field
-    // (e.g. "getting-started/index"), and the shared builder prefers
-    // `entry.slug` over the id-derived form; forwarding it would mint wrong
-    // node paths. Omitting it reproduces the legacy host derivation
-    // `data.slug ?? toRouteSlug(id)` (ids arrive pre-stripped via _data.ts).
-    docs.map((d) => ({ id: d.id, data: d.data })),
+    // Build the entry shape by hand — do NOT forward the whole entry. zfb
+    // entries carry the raw, un-index-stripped engine slug on their top-level
+    // `slug` field (e.g. "getting-started/index"), and the shared builder
+    // derives node paths from `data.slug ?? toRouteSlug(entry.slug)`; passing
+    // the engine value through would mint wrong paths. Feeding the
+    // pre-stripped `d.id` (stripped in `_data.ts`) as `slug` reproduces the
+    // legacy host derivation exactly. zudo-doc 5.x renamed this field from
+    // `id` to `slug` on `CollectionEntryLike`.
+    docs.map((d) => ({ slug: d.id, data: d.data })),
     lang,
     {
       categoryMeta,

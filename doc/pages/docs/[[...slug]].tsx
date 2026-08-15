@@ -31,7 +31,7 @@ import { settings } from "@/config/settings";
 import { defaultLocale } from "@/config/i18n";
 import type { JSX } from "preact";
 import { resolveNavSource } from "../lib/_nav-source-docs";
-import type { DocPageEntryProps, DocPageAutoIndexProps } from "../lib/doc-page-props";
+import type { DocPageEntryProps, DocPageAutoIndexProps } from "../lib/_doc-page-props";
 import { buildDocRouteEntries } from "../lib/_doc-route-entries";
 import { renderDocPage } from "../lib/_doc-page-renderer";
 import { FootprintPreviewIsland } from "../../src/component-preview/footprint-preview-island.tsx";

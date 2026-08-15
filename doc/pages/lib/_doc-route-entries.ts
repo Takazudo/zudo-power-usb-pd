@@ -36,7 +36,7 @@ import { getNavSectionForSlug, getNavSubtree } from "@/utils/nav-scope";
 import { toRouteSlug, toSlugParams } from "@/utils/slug";
 import type { Locale } from "@/config/i18n";
 import { extractHeadings } from "./_extract-headings";
-import type { AutoIndexNode, DocPageBaseProps } from "./doc-page-props";
+import type { AutoIndexNode, DocPageBaseProps } from "./_doc-page-props";
 import { memoizeDerived } from "./_nav-source-cache";
 import type { NavSourceDocs } from "./_nav-source-docs";
 import {

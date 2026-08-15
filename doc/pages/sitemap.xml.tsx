@@ -7,7 +7,7 @@
 // explicit `contentType` export pins the dev-server `Content-Type`
 // header to `application/xml` regardless of the filename hint.
 //
-// URL enumeration is delegated to `pages/lib/route-enumerators.ts` so
+// URL enumeration is delegated to `pages/lib/_route-enumerators.ts` so
 // the sitemap cannot drift from the actual routes the page modules build.
 // Previously the sitemap walked raw collection slugs directly and missed:
 //   (a) tag pages           (b) JA fallback URLs
@@ -15,7 +15,7 @@
 //   (e) emitted /index/ suffix on category pages (closes #690)
 
 import { settings } from "@/config/settings";
-import { enumerateAllRoutes } from "./lib/route-enumerators";
+import { enumerateAllRoutes } from "./lib/_route-enumerators";
 
 export const frontmatter = { title: "Sitemap" };
 export const contentType = "application/xml";

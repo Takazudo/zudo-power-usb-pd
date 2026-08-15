@@ -35,7 +35,7 @@
 
 import { getCollection, getContentSnapshot } from "zfb/content";
 import { bridgeDocsEntries, type ZfbDocsData } from "../_data";
-import type { DocPageEntry } from "./doc-page-props";
+import type { DocPageEntry } from "./_doc-page-props";
 
 // ---------------------------------------------------------------------------
 // Snapshot anchor → stable bridged arrays
