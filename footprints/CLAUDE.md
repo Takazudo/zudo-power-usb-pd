@@ -6,8 +6,10 @@ This project uses [easyeda2kicad.py](https://github.com/uPesy/easyeda2kicad.py) 
 
 **Footprints (PCB physical pads):**
 - **KiCad source files**: `/footprints/kicad/*.kicad_mod` (individual footprint files)
-- **SVG exports**: `/footprints/images/*.svg` (intermediate)
-- **Documentation SVGs**: `/doc/docs/_fragments/footprints/*.svg` (final destination)
+- **Documentation previews**: generated automatically into
+  `/doc/public/assets/component-previews/footprints/*.svg` by
+  `doc/component-docs/footprint-previews/generate.ts` (`pnpm generate:footprint-previews`
+  from `doc/`) — do not hand-export or hand-edit
 - **Package previews**: `/doc/static/footprints/*.png` (datasheet images)
 - **Datasheets**: `/doc/static/datasheets/*.pdf` (component specs)
 
@@ -35,31 +37,25 @@ cp ~/Documents/Kicad/easyeda2kicad/easyeda2kicad.kicad_sym ./symbols/zudo-pd.kic
 - [Footprints](https://github.com/Takazudo/zudo-pd/tree/main/footprints)
 - [Symbols](https://github.com/Takazudo/zudo-pd/tree/main/symbols)
 
-## Exporting SVG Files for Documentation (Manual Workflow)
+## Generating SVG Files for Documentation
 
-When footprints are added or updated, export SVGs manually for documentation:
+Documentation footprint previews are **generated automatically**, not hand-exported.
+When a footprint is added or updated, regenerate previews from `doc/`:
 
-**For detailed instructions, see:**
-- **[Create Footprint SVG Files](/doc/docs/how-to/create-footprint-svg.md)**
-
-**Quick workflow:**
 ```bash
-# 1. Create .pretty directory if needed
-cd footprints/kicad
-mkdir -p zudo-power.pretty
-cp *.kicad_mod zudo-power.pretty/
-
-# 2. Export SVGs using KiCad CLI
-kicad-cli fp export svg zudo-power.pretty -o ../images --black-and-white
-
-# 3. Clean SVG files (remove REF** text)
-python3 ../scripts/clean-svg-refs.py ../images/
-
-# 4. Copy to documentation
-cp ../images/*.svg ../../doc/docs/_fragments/footprints/
+pnpm generate:footprint-previews
 ```
 
-**Note**: This is a manual process. Run after adding/updating footprints. Future automation may be added via CI/CD.
+This renders each footprint straight from `footprints/kicad/*.kicad_mod` (via a
+digest-pinned KiCad container) into
+`doc/public/assets/component-previews/footprints/*.svg`, and the generated component
+record pages embed it automatically. `pnpm check:footprint-previews` fails the build
+on drift. Do not hand-export a footprint SVG and link it from navigation — update the
+footprint file or the component evidence and re-run the generator instead.
+
+The former Docusaurus-era manual workflow (`footprints/scripts/generate-footprint-svgs.sh`,
+copying into `doc/docs/_fragments/footprints/`) has been removed — that directory no
+longer exists.
 
 ## Dual-location sync rule
 
