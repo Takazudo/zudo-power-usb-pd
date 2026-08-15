@@ -124,7 +124,7 @@ diodes and no fuse of any kind, so nothing on the board is consumed by a fault a
 nothing needs replacing afterwards. Note that on a hard short the regulator's **own**
 current limit engages long before the PTC heats to its trip point — the cascade is worked
 through in
-[Board B — Synth Power Conversion](./board-b-synth-power.md#ptc1-and-the-l7812-current-limit-cascade).
+[Board B — Synth Power Conversion](./board-b-synth-power.md#protection-stage-ptc1-and-the-l7812-current-limit-cascade).
 
 </Note>
 
