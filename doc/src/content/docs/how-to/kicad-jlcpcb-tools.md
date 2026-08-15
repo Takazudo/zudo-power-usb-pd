@@ -100,6 +100,16 @@ If you find a missing or wrong correction, use the plugin's **Corrections Manage
 - **BOM**: `production_files/BOM-zudo-pd.csv`
 - **CPL**: `production_files/POS-zudo-pd.csv`
 
+<Note>
+The `POS-*.csv` (CPL) and `BOM-*.csv` above are produced by this plugin, which
+keeps its own per-part exclusion state in `project.db` rather than reading
+KiCad's footprint-level `exclude_from_pos_files` / `exclude_from_bom` attributes
+directly. Whether it honors those footprint attributes is unverified. At the
+first Board A/B order, confirm the exported `POS-*.csv` contains no J2/J3/P1/TP*
+rows (pogo pads and test points); if the plugin ignores the attribute, use its
+own per-part exclusion toggle in the panel as a fallback.
+</Note>
+
 > **Scope note:** `zudo-pd.kicad_pcb` is the legacy root project — the as-built v4
 > board — so the worked example below (Q1/D4) reflects that board's fitted parts.
 > Board A's schematic redesign removed D4 (USBLC6-2SC6) in favor of DNP
