@@ -112,6 +112,21 @@ Use the legacy `(module ...)` S-expression format. Copy the style and layer assi
 
 Both prefix styles resolve correctly because the single `fp-lib-table` entry `zudo-pd` points at the `footprints/kicad/zudo-power.pretty/` directory. The library prefix stored inside the `.kicad_mod` file itself is documentation only — KiCad resolves footprints by directory, not by the prefix string inside the file.
 
+### Assembly attributes (mandatory for bare-copper footprints)
+
+A hand-created footprint with no physical part to assemble (test pads, pogo pads,
+card-edge pads, fiducials, mechanical features) MUST carry the exclusion tokens on
+its `(attr ...)` line, in KiCad's native token order:
+
+```
+(attr smd exclude_from_pos_files exclude_from_bom)
+```
+
+Without them, KiCad's position-file export emits the footprint as a placeable part
+and the CPL gains a phantom pick-and-place row — the v0.4.0 order shipped phantom
+J2/J3/TP* rows exactly this way (`jlcpcb-order-snapshots/v0_4_0/used-for-order/`).
+Apply the tokens in **both** dual-rule locations, byte-identically.
+
 ### Where to save
 
 Write the new footprint to **two locations**:
@@ -127,3 +142,4 @@ The following footprints in this library were created by hand (not downloaded fr
 
 - `PogoPad_1x04_P2.54mm` — 4P 2.54 mm pogo pad array for STUSB4500 NVM I2C programming (see `doc/src/content/docs/inbox/nvm-programming.md`)
 - `PogoPad_1x08_P2.54mm` — 8P 2.54 mm pogo pad array for STUSB4500 chip-side debug signals (CC1DB, CC2DB, VREG_2V7, VDD, RESET, ATTACH, PD_OK, VBUS_EN_SNK; see `doc/src/content/docs/overview/board-a-usb-pd-core.md`)
+- `TestPad_D1.5mm` — single 1.5 mm bare-copper test pad used for board test points (TP1/TP2/TP6 on board A, TP3/TP4/TP5 on board B)
