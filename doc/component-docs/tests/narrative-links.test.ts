@@ -52,16 +52,15 @@ async function mdxFiles(root: string): Promise<string[]> {
 
 /**
  * `<generated root>/records/stusb4500qtr/index.mdx` →
- * `/docs/components/records/records/stusb4500qtr/`.
+ * `/docs/components/records/stusb4500qtr/`.
  *
- * zudo-pd re-roots the generated tree one level down (`GENERATED_ROOT` is
- * `components/records/`, not led-lamp's `components/`), so the route prefix
- * gains that extra segment — see `core/links.ts` `GENERATED_ROUTE_PREFIX`.
+ * `GENERATED_ROOT` is `components/`, matching led-lamp — see
+ * `core/links.ts` `GENERATED_ROUTE_PREFIX`.
  */
 function routeOf(path: string): string {
   const rel = relative(GENERATED_ROOT, path).split("\\").join("/");
   const dir = rel.slice(0, rel.length - "index.mdx".length);
-  return `/docs/components/records/${dir}`;
+  return `/docs/components/${dir}`;
 }
 
 async function anchorsByRoute(): Promise<Map<string, Set<string>>> {
@@ -126,7 +125,7 @@ describe("hand-authored pages linking into the generated tree", () => {
   // `power/ratings-matrix.mdx`) and specific `calc-*`/`rule-*` citations in
   // prose, and require every owner-skill `SKILL.md`'s "## Human component
   // reference" section to already point at the newly-generated
-  // `/docs/components/records/records/<slug>/` pages. Those narrative files
+  // `/docs/components/records/<slug>/` pages. Those narrative files
   // do not exist in zudo-pd, and all 20 `SKILL.md` files' reference sections
   // were authored BEFORE this engine existed — they deliberately point at
   // the pre-existing hand-written `/docs/components/<slug>` pages instead

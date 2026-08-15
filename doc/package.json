@@ -3,9 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@11.5.2",
   "scripts": {
     "dev": "zfb dev",
-    "build": "pnpm generate:components && zfb build",
+    "build": "pnpm generate:models && pnpm generate:components && zfb build",
     "preview": "zfb preview",
     "check": "zfb check",
     "check:html": "html-validate \"dist/**/*.html\"",
@@ -14,9 +15,15 @@
     "scan:components": "node --experimental-strip-types component-docs/cli/scan.ts",
     "test:components": "node --experimental-strip-types --test \"component-docs/tests/*.test.ts\"",
     "dev:components": "node --experimental-strip-types component-docs/cli/generate.ts --watch",
-    "b4push": "pnpm check && pnpm test:components && pnpm build && pnpm check:components && pnpm scan:components",
-    "format:md": "../scripts/mdx-format.sh --write \"src/content/docs/**/*.{md,mdx}\" --ignore \"node_modules/**,dist/**,build/**,.git/**,worktrees/**,src/content/docs/components/records/**\"",
-    "format:md:check": "../scripts/mdx-format.sh --check \"src/content/docs/**/*.{md,mdx}\" --ignore \"node_modules/**,dist/**,build/**,.git/**,worktrees/**,src/content/docs/components/records/**\"",
+    "generate:footprint-previews": "node --experimental-strip-types component-docs/footprint-previews/generate.ts",
+    "check:footprint-previews": "node --experimental-strip-types component-docs/footprint-previews/check.ts",
+    "generate:models": "node --experimental-strip-types component-docs/cli/models.ts",
+    "check:models": "node --experimental-strip-types component-docs/cli/models.ts --check",
+    "test:model-viewer:browser": "node component-docs/scripts/model-viewer-browser-smoke.mjs",
+    "check:built-component-references": "node scripts/check-built-component-references.mjs",
+    "b4push": "pnpm check && pnpm test:components && pnpm check:footprint-previews && pnpm check:models && pnpm build && pnpm check:built-component-references && pnpm check:components && pnpm scan:components",
+    "format:md": "../scripts/mdx-format.sh --write \"src/content/docs/**/*.{md,mdx}\" --ignore \"node_modules/**,dist/**,build/**,.git/**,worktrees/**,src/content/docs/components/**\"",
+    "format:md:check": "../scripts/mdx-format.sh --check \"src/content/docs/**/*.{md,mdx}\" --ignore \"node_modules/**,dist/**,build/**,.git/**,worktrees/**,src/content/docs/components/**\"",
     "prepare": "cd .. && lefthook install --reset-hooks-path"
   },
   "dependencies": {
@@ -40,7 +47,8 @@
     "@takazudo/zudo-doc-history-server": "^0.2.9",
     "mdast-util-to-markdown": "^2.1.2",
     "mdast-util-mdx": "^3.0.0",
-    "mdast-util-gfm-table": "^2.0.0"
+    "mdast-util-gfm-table": "^2.0.0",
+    "three": "0.185.1"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.2.0",
@@ -52,7 +60,8 @@
     "html-validate": "^10.0.0",
     "lefthook": "^2.1.9",
     "pagefind": "^1.4.0",
-    "tsx": "^4.21.0"
+    "tsx": "^4.21.0",
+    "@types/three": "0.185.3"
   },
   "pnpm": {
     "onlyBuiltDependencies": ["esbuild", "lefthook", "sharp", "workerd"]

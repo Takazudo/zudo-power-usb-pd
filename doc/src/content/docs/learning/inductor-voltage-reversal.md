@@ -538,7 +538,7 @@ This inverting buck-boost technique is widely used in:
 
 - [Circuit Diagrams](../overview/circuit-diagrams.mdx) - Complete circuit schematics
 - [Buck Converter Feedback](./buck-converter-feedback.md) - How feedback regulation works
-- [LM2596S-ADJ Component](../components/lm2596s-adj.mdx) - IC datasheet information
+- [LM2596S-ADJ DC-DC Conversion Stage](../overview/board-b-synth-power.md#dc-dc-conversion-stage) - IC datasheet information
 
 ---
 

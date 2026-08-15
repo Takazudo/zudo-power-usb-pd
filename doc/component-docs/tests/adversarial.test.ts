@@ -39,12 +39,12 @@ import {
   fixtureBundle,
   fixtureIntegrationRules,
   fixtureInventory,
+  withFixtureReferences,
 } from "./provider-fixtures.ts";
 
-// zudo-pd's `EvidenceIndex` has no `references` field to attach (see
-// `provider-fixtures.ts`) — this is `indexEvidence` unwrapped, kept under a
-// local alias so the rest of this file reads the same as led-lamp's.
-const indexEvidence = rawIndexEvidence;
+// See `projection.test.ts`: `projectIndex()` requires the reference contract.
+const indexEvidence: typeof rawIndexEvidence = (...args) =>
+  withFixtureReferences(rawIndexEvidence(...args));
 import { GUARD_REJECTED_TEXT, HOSTILE_TEXT, fixtureModel } from "./fixtures.ts";
 
 let scratch = "";

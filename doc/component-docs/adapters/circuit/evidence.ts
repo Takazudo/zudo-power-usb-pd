@@ -40,6 +40,7 @@ import type {
   ProviderIntegrationRule,
   ProviderIntegrationRules,
 } from "./integration.ts";
+import type { CircuitReferenceContract } from "./references.ts";
 
 /** The only provider schema version this adapter knows how to read. */
 export const PROVIDER_SCHEMA_VERSION = 1;
@@ -190,9 +191,14 @@ export type IndexedRecord = {
 };
 
 export type EvidenceIndex = {
-  // zudo-pd has no 3D assets and does not port `references.ts` / the
-  // footprint-preview feature, so there is no `references` field here at
-  // all (led-lamp's optional `references?: CircuitReferenceContract`).
+  /**
+   * Optional because `indexEvidence()` builds the index that
+   * `readCircuitReferenceContract()` then reads: the contract cannot exist
+   * before the thing it validates. `readEvidenceIndex()` attaches it, and
+   * `projectIndex()` treats its absence as fatal rather than as "no
+   * references".
+   */
+  readonly references?: CircuitReferenceContract;
   readonly inventory: Inventory;
   readonly ownerSkills: readonly string[];
   /**

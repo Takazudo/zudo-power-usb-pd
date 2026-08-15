@@ -46,14 +46,12 @@ export const CONTENT_ROOT = join(DOC_ROOT, "src", "content", "docs");
 /**
  * The exclusively-owned generated tree.
  *
- * Re-rooted one level down from led-lamp's `join(CONTENT_ROOT, "components")`:
- * `doc/src/content/docs/components/` already holds 17 hand-written pages
- * (including `index.mdx`), and `core/emit.ts` treats any unmarked `.mdx`
- * under the owned root as a fatal `PATH_CONTAINMENT`. Nothing outside this
- * directory is ever written, and everything inside it is regenerated from
- * evidence.
+ * Matches led-lamp's `join(CONTENT_ROOT, "components")` exactly. Nothing
+ * outside this directory is ever written, and everything inside it is
+ * regenerated from evidence — `core/emit.ts` treats any unmarked `.mdx`
+ * under the owned root as a fatal `PATH_CONTAINMENT`.
  */
-export const GENERATED_ROOT = join(CONTENT_ROOT, "components", "records");
+export const GENERATED_ROOT = join(CONTENT_ROOT, "components");
 
 /** Committed, deterministic publication preflight report. */
 export const PREFLIGHT_FILE = join(DOC_ROOT, "component-docs", "preflight.json");
@@ -66,10 +64,31 @@ export const PREFLIGHT_FILE = join(DOC_ROOT, "component-docs", "preflight.json")
  */
 export const DIST_ROOT = join(DOC_ROOT, "dist");
 
-// No `FOOTPRINT_MASTER_ROOT` / `FOOTPRINT_ROOT` / `MODEL_ROOT`: those back
-// led-lamp's footprint-preview / 3D-model feature (`references.ts`,
-// `model-assets.ts`), which is not ported. zudo-pd has no 3D assets at all —
-// `find` for `*.3dshapes` / `*.wrl` / `*.step` returns nothing.
+/**
+ * The KiCad footprint library, and the 3D-model directory that does not exist
+ * yet.
+ *
+ * `FOOTPRINT_MASTER_ROOT` is the authoring copy — every `.kicad_mod` here is
+ * expected to be byte-identical to its `FOOTPRINT_ROOT` copy;
+ * `footprint-previews/parity.ts` `assertFootprintLibraryParity()` is what
+ * enforces that rather than assuming it.
+ *
+ * `FOOTPRINT_ROOT` is the library `fp-lib-table` registers as `zudo-pd`
+ * (`${KIPRJMOD}/footprints/kicad/zudo-power.pretty`) — the name is a leftover
+ * from an earlier project name and is load-bearing, so it is spelled out here
+ * rather than derived from the repository name.
+ *
+ * `MODEL_ROOT` holds reviewed `.wrl`/`.step` pairs, sourced (wave 7) via
+ * `easyeda2kicad` against the central inventory's LCSC ids for every package
+ * it could supply one — 27 of 27 published packages, see the wave-7 coverage
+ * manifest. A package `easyeda2kicad` genuinely cannot supply a model for
+ * still has no `(model …)` line, or one pointing outside this repository;
+ * those remain an unresolved model with a stated reason rather than a
+ * failure — see `references.ts`.
+ */
+export const FOOTPRINT_MASTER_ROOT = join(REPO_ROOT, "footprints", "kicad");
+export const FOOTPRINT_ROOT = join(FOOTPRINT_MASTER_ROOT, "zudo-power.pretty");
+export const MODEL_ROOT = join(REPO_ROOT, "footprints", "kicad", "zudo-pd.3dshapes");
 
 /** Per-record bundle files, in the order a record page consumes them. */
 export const BUNDLE_FILES = [

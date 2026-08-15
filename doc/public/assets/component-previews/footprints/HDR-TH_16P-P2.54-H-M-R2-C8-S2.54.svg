@@ -1,0 +1,196 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0.0000 0.0000 21.1328 13.9954" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+<g style="fill:#000000; fill-opacity:1.0000;stroke:#000000; stroke-opacity:1.0000;
+stroke-linecap:round; stroke-linejoin:round;"
+ transform="translate(0 0) scale(1 1)">
+<path style="fill:#000000; fill-opacity:1.0000; stroke:none;fill-rule:evenodd;"
+d="M 2.6000,2.5400
+2.6000,4.3400
+0.8200,4.3400
+0.8200,2.5400
+Z" />
+</g>
+<g style="fill:#000000; fill-opacity:1.0000; stroke:none;">
+<circle cx="1.7100" cy="0.9000" r="0.9000" />
+</g>
+<g style="fill:#000000; fill-opacity:1.0000; stroke:none;">
+<circle cx="4.2500" cy="3.4400" r="0.9000" />
+</g>
+<g style="fill:#000000; fill-opacity:1.0000; stroke:none;">
+<circle cx="4.2500" cy="0.9000" r="0.9000" />
+</g>
+<g style="fill:#000000; fill-opacity:1.0000; stroke:none;">
+<circle cx="6.7900" cy="3.4400" r="0.9000" />
+</g>
+<g style="fill:#000000; fill-opacity:1.0000; stroke:none;">
+<circle cx="6.7900" cy="0.9000" r="0.9000" />
+</g>
+<g style="fill:#000000; fill-opacity:1.0000; stroke:none;">
+<circle cx="9.3300" cy="3.4400" r="0.9000" />
+</g>
+<g style="fill:#000000; fill-opacity:1.0000; stroke:none;">
+<circle cx="9.3300" cy="0.9000" r="0.9000" />
+</g>
+<g style="fill:#000000; fill-opacity:1.0000; stroke:none;">
+<circle cx="11.8700" cy="3.4400" r="0.9000" />
+</g>
+<g style="fill:#000000; fill-opacity:1.0000; stroke:none;">
+<circle cx="11.8700" cy="0.9000" r="0.9000" />
+</g>
+<g style="fill:#000000; fill-opacity:1.0000; stroke:none;">
+<circle cx="14.4100" cy="3.4400" r="0.9000" />
+</g>
+<g style="fill:#000000; fill-opacity:1.0000; stroke:none;">
+<circle cx="14.4100" cy="0.9000" r="0.9000" />
+</g>
+<g style="fill:#000000; fill-opacity:1.0000; stroke:none;">
+<circle cx="16.9500" cy="3.4400" r="0.9000" />
+</g>
+<g style="fill:#000000; fill-opacity:1.0000; stroke:none;">
+<circle cx="16.9500" cy="0.9000" r="0.9000" />
+</g>
+<g style="fill:#000000; fill-opacity:1.0000; stroke:none;">
+<circle cx="19.4900" cy="3.4400" r="0.9000" />
+</g>
+<g style="fill:#000000; fill-opacity:1.0000; stroke:none;">
+<circle cx="19.4900" cy="0.9000" r="0.9000" />
+</g>
+<g style="fill:none;
+stroke:#000000; stroke-width:0.2500; stroke-opacity:1;
+stroke-linecap:round; stroke-linejoin:round;">
+<path d="M21.0100 5.2600
+L21.0100 7.8000
+" />
+<path d="M21.0100 7.8000
+L0.2800 7.8000
+" />
+<path d="M0.1900 5.2600
+L21.0100 5.2600
+" />
+<path d="M19.2500 13.8300
+L19.8300 13.8300
+" />
+<path d="M20.1100 7.8300
+L20.1100 13.5500
+" />
+<path d="M20.1100 13.5500
+L19.8300 13.8300
+" />
+<path d="M19.0000 7.8300
+L19.0000 13.5800
+" />
+<path d="M19.0000 13.5800
+L19.2500 13.8300
+" />
+<path d="M16.5900 13.8300
+L17.1800 13.8300
+" />
+<path d="M17.4600 7.8300
+L17.4600 13.5500
+" />
+<path d="M17.4600 13.5500
+L17.1800 13.8300
+" />
+<path d="M16.3400 7.8300
+L16.3400 13.5800
+" />
+<path d="M16.3400 13.5800
+L16.5900 13.8300
+" />
+<path d="M14.1500 13.8200
+L14.7400 13.8200
+" />
+<path d="M15.0200 7.8200
+L15.0200 13.5400
+" />
+<path d="M15.0200 13.5400
+L14.7400 13.8200
+" />
+<path d="M13.9000 7.8200
+L13.9000 13.5700
+" />
+<path d="M13.9000 13.5700
+L14.1500 13.8200
+" />
+<path d="M11.4900 13.8200
+L12.0800 13.8200
+" />
+<path d="M12.3600 7.8200
+L12.3600 13.5400
+" />
+<path d="M12.3600 13.5400
+L12.0800 13.8200
+" />
+<path d="M11.2400 7.8200
+L11.2400 13.5700
+" />
+<path d="M11.2400 13.5700
+L11.4900 13.8200
+" />
+<path d="M9.1100 13.8100
+L9.7000 13.8100
+" />
+<path d="M9.9800 7.8100
+L9.9800 13.5300
+" />
+<path d="M9.9800 13.5300
+L9.7000 13.8100
+" />
+<path d="M8.8600 7.8100
+L8.8600 13.5600
+" />
+<path d="M8.8600 13.5600
+L9.1100 13.8100
+" />
+<path d="M6.4500 13.8100
+L7.0400 13.8100
+" />
+<path d="M7.3200 7.8100
+L7.3200 13.5300
+" />
+<path d="M7.3200 13.5300
+L7.0400 13.8100
+" />
+<path d="M6.2000 7.8100
+L6.2000 13.5600
+" />
+<path d="M6.2000 13.5600
+L6.4500 13.8100
+" />
+<path d="M4.0100 13.8000
+L4.6000 13.8000
+" />
+<path d="M4.8800 7.8000
+L4.8800 13.5200
+" />
+<path d="M4.8800 13.5200
+L4.6000 13.8000
+" />
+<path d="M3.7600 7.8000
+L3.7600 13.5500
+" />
+<path d="M3.7600 13.5500
+L4.0100 13.8000
+" />
+<path d="M1.3600 13.8000
+L1.9400 13.8000
+" />
+<path d="M2.2200 7.8000
+L2.2200 13.5200
+" />
+<path d="M2.2200 13.5200
+L1.9400 13.8000
+" />
+<path d="M1.1000 7.8000
+L1.1000 13.5500
+" />
+<path d="M1.1000 13.5500
+L1.3600 13.8000
+" />
+<path d="M0.2800 7.8000
+L0.1900 7.8000
+" />
+<path d="M0.1900 7.8000
+L0.1900 5.2600
+" />
+</g>
+</svg>

@@ -5,6 +5,18 @@ sidebar_position: 4
 
 Understanding the CH224D USB Power Delivery sink controller and how it negotiates voltage with PD adapters.
 
+<Warning title="Historical: CH224D was replaced by the STUSB4500 (v1.1)">
+
+CH224D was the **v1.0 USB-PD sink controller** — the design was upgraded to
+**STUSB4500** starting with v1.1 for significantly improved charger
+compatibility (~95%+ vs ~33%). See
+[Board A: USB-PD Core](../overview/board-a-usb-pd-core.md) for the current
+controller. This page describes CH224D's PD-negotiation behavior as-designed
+for the v1.0 board; it is kept for its teaching value on USB-PD negotiation
+concepts, which apply to PD sink controllers generally.
+
+</Warning>
+
 ## What is CH224D?
 
 CH224D is a **USB PD sink controller** - a specialized IC that:
@@ -746,9 +758,8 @@ Our modular synth power supply needs:
 
 ## Related Documentation
 
-- [CH224D Component Page](../components/ch224d.md) - Full specifications and pinout
-- [J1 USB-C Connector](../components/usb-c-connector.md) - Connector specifications
-- [Diagram1: USB-PD Section](../overview/circuit-diagrams.mdx#diagram1-usb-pd-power-supply-section) - Complete circuit
+- [J1 substitution options](../overview/board-a-usb-pd-core.md#component-list-lcsc-parts-and-rough-cost-j1-substitution-options) - Connector specifications
+- [Board A: USB-PD Core](../overview/board-a-usb-pd-core.md) - Complete circuit (current STUSB4500 design)
 - [USB Type-C Pinout](./usb-type-c-pinout.md) - Understanding USB-C pins
 - [CH224D Datasheet](/datasheets/CH224D-datasheet.pdf) - Official datasheet
 

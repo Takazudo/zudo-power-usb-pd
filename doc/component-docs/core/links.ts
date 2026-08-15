@@ -31,12 +31,8 @@ import type { GeneratedPage } from "./page.ts";
 
 /**
  * The route prefix the generated tree owns. Mirrors `render/shared.ts`.
- *
- * zudo-pd re-roots the generated tree one level down, under
- * `components/records/`, so the hand-written pages directly under
- * `components/` stay untouched by the emitter's owned-root pruning.
  */
-const GENERATED_ROUTE_PREFIX = "/docs/components/records/";
+const GENERATED_ROUTE_PREFIX = "/docs/components/";
 
 /** How many broken links to name before the message gets useless. */
 const REPORTED_LIMIT = 20;

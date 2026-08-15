@@ -5,6 +5,19 @@ sidebar_position: 7
 
 How the CH224D's Power Good (PG) pin works and why the LED circuit is connected the way it is.
 
+<Warning title="Historical: CH224D was replaced by the STUSB4500 (v1.1)">
+
+This page is written around the **CH224D**, the deprecated v1.0 USB-PD
+controller (see [CH224D USB-PD Controller](./ch224d-usb-pd-controller.md)).
+The current controller, **STUSB4500**, has no dedicated PG pin — it exposes
+`ATT` (ATTACH) and `PDOK` (POWER_OK2) as open-drain flags instead, wired the
+same way electrically (pull to GND when asserted, no on-board pull-up). See
+[Board A: USB-PD Core](../overview/board-a-usb-pd-core.md#component-list-lcsc-parts-and-rough-cost)
+for the current pin map. The **open-drain concept taught below is still
+correct and still applies** — only the specific pin name and IC have changed.
+
+</Warning>
+
 ## The Question
 
 When designing the LED status indicator for the USB-PD circuit, I needed to understand:
@@ -190,5 +203,5 @@ Understanding open-drain outputs is essential for reading datasheets and designi
 
 ## See Also
 
-- [CH224D Documentation](../components/ch224d.md) - Full CH224D specifications
-- [Circuit Diagrams - Diagram1](../overview/circuit-diagrams.mdx#diagram1-usb-pd-power-supply-section) - Complete USB-PD circuit
+- [CH224D USB-PD Controller](./ch224d-usb-pd-controller.md) - Full CH224D specifications
+- [Board A: USB-PD Core](../overview/board-a-usb-pd-core.md) - Complete USB-PD circuit

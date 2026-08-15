@@ -48,17 +48,17 @@ describe("collecting references off the AST", () => {
         routeLink(fragmentRoute(anchor("rec-one")), literal("here")),
         // A label containing brackets is exactly what a regex over the
         // serialized file would misread as a second link.
-        routeLink(route("/docs/components/records/catalog/"), literal("a [bracketed] label")),
+        routeLink(route("/docs/components/catalog/"), literal("a [bracketed] label")),
       ]),
     ]);
 
     assert.deepEqual(built.anchors, ["rec-one"]);
-    assert.deepEqual(built.links, ["#rec-one", "/docs/components/records/catalog/"]);
+    assert.deepEqual(built.links, ["#rec-one", "/docs/components/catalog/"]);
   });
 
   it("does not mistake a plain text mention of a path for a link", () => {
     const built = page("index.mdx", [
-      paragraph([text(literal("see /docs/components/records/records/nope/ for details"))]),
+      paragraph([text(literal("see /docs/components/records/nope/ for details"))]),
     ]);
 
     assert.deepEqual(built.links, []);
@@ -91,7 +91,7 @@ describe("link integrity", () => {
     assert.equal(
       breaks([
         page("index.mdx", [
-          linkTo(route("/docs/components/records/records/al8860mp-13/", anchor("rec-al8860mp-13"))),
+          linkTo(route("/docs/components/records/al8860mp-13/", anchor("rec-al8860mp-13"))),
         ]),
         page("records/al8860mp-13/index.mdx", [evidenceAnchor(anchor("rec-al8860mp-13"))]),
       ]),
@@ -101,28 +101,28 @@ describe("link integrity", () => {
 
   it("rejects a link to a route no page in this run produced", () => {
     const broken = breaks([
-      page("index.mdx", [linkTo(route("/docs/components/records/records/ghost/"))]),
+      page("index.mdx", [linkTo(route("/docs/components/records/ghost/"))]),
     ]);
 
     assert.deepEqual(broken, [
-      "index.mdx → /docs/components/records/records/ghost/ (no such generated page)",
+      "index.mdx → /docs/components/records/ghost/ (no such generated page)",
     ]);
   });
 
   it("rejects a cross-page fragment the target page does not define", () => {
     const broken = breaks([
-      page("index.mdx", [linkTo(route("/docs/components/records/catalog/", anchor("rec-ghost")))]),
+      page("index.mdx", [linkTo(route("/docs/components/catalog/", anchor("rec-ghost")))]),
       page("catalog/index.mdx", [evidenceAnchor(anchor("rec-real"))]),
     ]);
 
     assert.deepEqual(broken, [
-      "index.mdx → /docs/components/records/catalog/#rec-ghost (no such anchor on the target page)",
+      "index.mdx → /docs/components/catalog/#rec-ghost (no such anchor on the target page)",
     ]);
   });
 
   it("treats a route that merely shares a string prefix as outside the tree", () => {
     // Containment is segment-wise: `/docs/components-other/` is NOT inside
-    // `/docs/components/records/`, so it must fall through rather than be
+    // `/docs/components/`, so it must fall through rather than be
     // mapped onto a generated page and reported as missing.
     assert.equal(breaks([page("index.mdx", [linkTo(route("/docs/components-other/"))])]), null);
   });

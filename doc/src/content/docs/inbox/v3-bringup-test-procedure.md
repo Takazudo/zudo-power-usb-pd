@@ -49,8 +49,9 @@ A **fresh, un-programmed** STUSB4500 advertises **20 V at highest priority**. On
 | Oscilloscope (optional) | Ripple measurement (Stage 7). |
 | Dummy loads: power resistors or electronic load | Load test (Stage 6). |
 
-**Rated-load reference** (note: docs disagree — `CLAUDE.md` says 1.2/0.8/0.5 A, `quick-reference`
-says 1.5/1.0/1.5 A). Test at the **lower** figure first, then push up:
+**Rated-load reference** (conservative figures match `CLAUDE.md`'s 1.2/0.8/0.5 A
+rail spec; stretch figures are headroom above spec, not a formal rating). Test
+at the **lower** figure first, then push up:
 
 | Rail | Conservative | Stretch |
 | --- | --- | --- |
@@ -184,7 +185,7 @@ To test the power chain **without depending on PD**, you can feed a bench supply
 **⚠️ Mandatory pre-check before injecting (unpowered, ohmmeter):** measure between **TP1** and **U1's VDD pin (J3 pad 4)**.
 
 - **Open / high resistance** → TP1 is isolated from the chip supply. **Safe to inject 15 V.**
-- **Continuous (~0 Ω)** → `VBUS_OUT` back-feeds the STUSB4500 supply. **Do NOT inject 15 V at TP1** — you'd put 15 V onto the chip. (The docs conflict: `test-points-v3.md` calls VDD "post-MOSFET load switch," which would mean exactly this back-feed; the netlist trace suggested VDD = VBUS_IN. Resolve it with this meter check before trusting TP1 injection.) In that case, drive the chain through the normal PD path (Stage 3) instead.
+- **Continuous (~0 Ω)** → `VBUS_OUT` back-feeds the STUSB4500 supply. **Do NOT inject 15 V at TP1** — you'd put 15 V onto the chip. In that case, drive the chain through the normal PD path (Stage 3) instead.
 
 Note: there is **no input fuse** on the VBUS path (the SMD fuses are all on the output rails). If you inject and a converter stays dark, confirm 15 V actually reaches *that* converter's VIN before suspecting the converter itself.
 

@@ -661,86 +661,86 @@
     },
     {
       "key": "reference.document.sourceId",
-      "decision": "DENY",
-      "emitted": 0,
+      "decision": "PUBLISH",
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "reference.document.documentTitle",
-      "decision": "DENY",
-      "emitted": 0,
+      "decision": "PUBLISH",
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "reference.document.label",
-      "decision": "DENY",
-      "emitted": 0,
+      "decision": "PUBLISH",
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "reference.document.authorityClass",
-      "decision": "DENY",
-      "emitted": 0,
+      "decision": "PUBLISH",
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "reference.document.url",
-      "decision": "DENY",
-      "emitted": 0,
+      "decision": "PUBLISH",
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "reference.document.availability",
-      "decision": "DENY",
-      "emitted": 0,
+      "decision": "PUBLISH",
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "reference.document.documentKind",
-      "decision": "DENY",
-      "emitted": 0,
+      "decision": "PUBLISH",
+      "emitted": 40,
       "withheld": 0
     },
     {
       "key": "reference.footprint.packageId",
-      "decision": "DENY",
-      "emitted": 0,
+      "decision": "PUBLISH",
+      "emitted": 41,
       "withheld": 0
     },
     {
       "key": "reference.footprint.name",
-      "decision": "DENY",
-      "emitted": 0,
+      "decision": "PUBLISH",
+      "emitted": 41,
       "withheld": 0
     },
     {
       "key": "reference.footprint.path",
-      "decision": "DENY",
-      "emitted": 0,
+      "decision": "PUBLISH",
+      "emitted": 41,
       "withheld": 0
     },
     {
       "key": "reference.model.path",
-      "decision": "DENY",
-      "emitted": 0,
+      "decision": "PUBLISH",
+      "emitted": 41,
       "withheld": 0
     },
     {
       "key": "reference.model.offset",
-      "decision": "DENY",
-      "emitted": 0,
+      "decision": "PUBLISH",
+      "emitted": 41,
       "withheld": 0
     },
     {
       "key": "reference.model.rotation",
-      "decision": "DENY",
-      "emitted": 0,
+      "decision": "PUBLISH",
+      "emitted": 41,
       "withheld": 0
     },
     {
       "key": "reference.model.scale",
-      "decision": "DENY",
-      "emitted": 0,
+      "decision": "PUBLISH",
+      "emitted": 41,
       "withheld": 0
     },
     {
@@ -757,8 +757,8 @@
     },
     {
       "key": "asset.datasheetPdf",
-      "decision": "DENY",
-      "emitted": 0,
+      "decision": "PUBLISH",
+      "emitted": 40,
       "withheld": 0
     },
     {

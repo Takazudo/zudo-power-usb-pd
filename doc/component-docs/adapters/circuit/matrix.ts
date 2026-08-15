@@ -11,17 +11,20 @@
  * refactoring. Denied fields are the ones that leak audit machinery,
  * distribution-controlled content, or internal review state.
  *
- * This is a port of led-lamp's matrix with two zudo-pd-specific extensions,
- * both DENY:
+ * This is a port of led-lamp's matrix with two zudo-pd-specific extensions:
  *
  *   - `record.ownerSkill` / `integration.ownerSkill` — zudo-pd runs with
  *     `claudeResources: false` (see `doc/src/config/settings.ts`), so
  *     `/docs/claude-skills/<name>/` does not exist as a route. Publishing the
  *     owner-skill name would be a dead reciprocal link, not an existing one —
- *     the opposite of led-lamp's reasoning for PUBLISH here.
- *   - every `reference.*` field — zudo-pd has no 3D assets at all (no
- *     `.wrl`/`.step` audit pairs), so `references.ts` / `model-assets.ts` are
- *     not ported and no record ever has a reference descriptor to publish.
+ *     the opposite of led-lamp's reasoning for PUBLISH here. Stays DENY.
+ *   - the `reference.footprint.path` / `reference.model.*` fields — each
+ *     started DENY because zudo-pd had neither reviewed assets nor an
+ *     emitter for them, and each flipped to PUBLISH once both existed: assets
+ *     appearing before that review fail loudly on `publishRequired` rather
+ *     than publishing themselves, so a flip is only ever safe in hindsight.
+ *     See the inline comment at each field for its own landing wave.
+ *     `reference.package.recordIds` has no emitter yet and stays DENY.
  */
 
 import type { PublicationMatrix } from "../../core/publication.ts";
@@ -158,32 +161,51 @@ export const CIRCUIT_PUBLICATION_MATRIX: PublicationMatrix = {
   // bookkeeping that reads as a quality claim out of context.
   "pinMap.reviewedBy": "DENY",
 
-  // zudo-pd has no 3D assets at all (no `.wrl`/`.step` audit pairs), so
-  // `references.ts` / `model-assets.ts` are not ported and none of this ever
-  // has a value to publish. Denied rather than deleted from the matrix — see
-  // the module comment — so the matrix stays diffable against led-lamp's for
-  // a future re-sync, and preflight records the withheld counts.
-  "reference.document.sourceId": "DENY",
-  "reference.document.documentTitle": "DENY",
-  "reference.document.label": "DENY",
-  "reference.document.authorityClass": "DENY",
-  "reference.document.url": "DENY",
-  "reference.document.availability": "DENY",
-  "reference.document.documentKind": "DENY",
-  "reference.footprint.packageId": "DENY",
-  "reference.footprint.name": "DENY",
-  "reference.footprint.path": "DENY",
-  "reference.model.path": "DENY",
-  "reference.model.offset": "DENY",
-  "reference.model.rotation": "DENY",
-  "reference.model.scale": "DENY",
+  // Curated shortcuts only. These do not widen the complete evidence-source
+  // list and do not publish arbitrary repository binaries: the document half
+  // republishes one already-selected, already-linkable source under a reviewed
+  // PDF label, and the footprint half republishes the package name the pin map
+  // already publishes.
+  "reference.document.sourceId": "PUBLISH",
+  "reference.document.documentTitle": "PUBLISH",
+  "reference.document.label": "PUBLISH",
+  "reference.document.authorityClass": "PUBLISH",
+  "reference.document.url": "PUBLISH",
+  "reference.document.availability": "PUBLISH",
+  "reference.document.documentKind": "PUBLISH",
+  "reference.footprint.packageId": "PUBLISH",
+  "reference.footprint.name": "PUBLISH",
+  // Flipped from DENY: `footprint-previews/` (wave 6) is the emitter this was
+  // waiting on. The record page now renders the reviewed KiCad source path as
+  // provenance next to the rendered SVG preview it backs — see
+  // `core/render/record.ts`'s `componentReferencesSection()` and
+  // `ui/footprint-preview.tsx`. Note this is the `.kicad_mod` SOURCE path, not
+  // the preview asset URL (that is derived from `footprintName` alone).
+  "reference.footprint.path": "PUBLISH",
+
+  // Flipped from DENY, same precondition as `reference.footprint.path` above:
+  // `ui/component-references.tsx`'s `ModelCard` was already the emitter waiting
+  // on assets — it now renders the interactive WebGL viewer
+  // (`ui/package-model-viewer.tsx`, wave 8) where it once rendered a static
+  // "Open the VRML model" link. Wave 7
+  // (`footprints/kicad/zudo-pd.3dshapes/`) landed a reviewed `.wrl`/`.step`
+  // pair for every package `easyeda2kicad` could supply against the central
+  // inventory's LCSC ids (27 of 27 — see the wave-7 coverage manifest). A
+  // package `readPackage()` still cannot resolve renders its unresolved card
+  // exactly as before; this flip only stops denying the ones that did.
+  "reference.model.path": "PUBLISH",
+  "reference.model.offset": "PUBLISH",
+  "reference.model.rotation": "PUBLISH",
+  "reference.model.scale": "PUBLISH",
+
+  // Still denied: no renderer reads this yet.
   "reference.package.recordIds": "DENY",
 
   "corpus.counts": "PUBLISH",
 
-  // Same reason as the `reference.*` block above: no 3D/document reference
-  // feature is ported, so these assets never exist to publish.
-  "asset.datasheetPdf": "DENY",
+  // The one narrow capability the reference contract needs: the selected
+  // document is an outbound audited URL that already passed `classifyUrl`.
+  "asset.datasheetPdf": "PUBLISH",
   // No catch-all binary publication is permitted.
   "asset.binary": "DENY",
 };

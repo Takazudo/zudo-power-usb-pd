@@ -40,6 +40,7 @@ import type {
   PublicPinMap,
   PublicRecord,
   PublicRecordIdentity,
+  PublicRecordReference,
   PublicSource,
   PublicViewModel,
 } from "../core/view-model.ts";
@@ -202,9 +203,57 @@ function source(input: SourceInput): PublicSource {
   };
 }
 
-// No `referenceFor()` builder: zudo-pd has no 3D assets, so every fixture
-// record's `reference` is `null`, matching the real circuit adapter (see
-// `core/view-model.ts` and `adapters/circuit/index.ts`).
+/**
+ * A record's curated references.
+ *
+ * Both optional halves default to unresolved so the renderer's stated-reason
+ * branch is exercised without a caller opting in. This is the ONLY corpus that
+ * still reaches that branch on the model half: since wave 7 sourced a pair for
+ * all 27 packages, the real corpus resolves every model, and these fixtures
+ * are what keeps the unresolved path from rotting (see `model-viewer.test.ts`).
+ * The document half is unresolved for `rec-c335982` alone in the real corpus;
+ * passing `document` exercises the resolved branch the other 40 records take.
+ */
+function referenceFor(
+  input: {
+    readonly recordId: string;
+    readonly footprintName?: string;
+    readonly document?: {
+      readonly sourceId: string;
+      readonly documentTitle: string;
+      readonly label: "Datasheet PDF" | "Specification PDF" | "Mechanical drawing PDF";
+      readonly authorityClass: string;
+      readonly url: string;
+      readonly availability: string;
+      readonly documentKind: "datasheet" | "specification" | "drawing";
+    };
+  },
+): PublicRecordReference {
+  const footprintName = input.footprintName ?? "FIXTURE-PKG-8";
+  return {
+    document: input.document === undefined
+      ? null
+      : {
+        sourceId: t(input.document.sourceId),
+        documentTitle: t(input.document.documentTitle),
+        label: t(input.document.label),
+        authorityClass: t(input.document.authorityClass),
+        url: assertSafeUrl(input.document.url, `${input.recordId} fixture document url`),
+        availability: t(input.document.availability),
+        documentKind: input.document.documentKind,
+      },
+    documentUnresolvedReason: input.document === undefined
+      ? t("No single document has been reviewed as this component's authoritative PDF yet.")
+      : null,
+    footprint: {
+      packageId: t(footprintName),
+      footprintName: t(footprintName),
+      footprintPath: t(`footprints/kicad/zudo-power.pretty/${footprintName}.kicad_mod`),
+      model: null,
+      modelUnresolvedReason: t("The KiCad footprint names no 3D model."),
+    },
+  };
+}
 
 type CoverageInput = {
   readonly coverageId: string;
@@ -420,7 +469,22 @@ export const FIXTURE_IDS = {
  */
 function driverRecord(): PublicRecord {
   return {
-    reference: null,
+    // The one fixture whose document card resolves: the real corpus has no
+    // curated `documentSelections` yet, so without this the resolved branch
+    // of the renderer would never be exercised at all.
+    reference: referenceFor({
+      recordId: FIXTURE_IDS.driverRecord,
+      footprintName: "MSOP-8_L3.0-W3.0-P0.65-LS4.9-BL-EP1.8",
+      document: {
+        sourceId: "src-fixture-driver-ds",
+        documentTitle: "FX8860MP-13 datasheet",
+        label: "Datasheet PDF",
+        authorityClass: "MANUFACTURER_PRIMARY",
+        url: "https://example.invalid/fx8860mp-13.pdf",
+        availability: "AVAILABLE",
+        documentKind: "datasheet",
+      },
+    }),
     identity: identity({
       recordId: FIXTURE_IDS.driverRecord,
       kind: "standalone",
@@ -657,7 +721,7 @@ function driverRecord(): PublicRecord {
 /** The subordinate: owns the fact the driver's calculation reaches for. */
 function senseRecord(): PublicRecord {
   return {
-    reference: null,
+    reference: referenceFor({ recordId: FIXTURE_IDS.senseRecord, footprintName: "R2512" }),
     identity: identity({
       recordId: FIXTURE_IDS.senseRecord,
       kind: "subordinate",
@@ -724,7 +788,7 @@ function senseRecord(): PublicRecord {
  */
 function hostileRecord(): PublicRecord {
   return {
-    reference: null,
+    reference: referenceFor({ recordId: FIXTURE_IDS.hostileRecord, footprintName: "SOD-523" }),
     identity: identity({
       recordId: FIXTURE_IDS.hostileRecord,
       kind: "standalone",
@@ -787,7 +851,7 @@ export function fixtureModel(): PublicViewModel {
  */
 export function emptyArraysModel(): PublicViewModel {
   const stripped: PublicRecord = {
-    reference: null,
+    reference: referenceFor({ recordId: "rec-fixture-bare" }),
     identity: identity({
       recordId: "rec-fixture-bare",
       kind: "standalone",
@@ -814,7 +878,7 @@ export function denseModel(recordCount = 64): PublicViewModel {
   for (let n = 0; n < recordCount; n += 1) {
     const recordId = `rec-fixture-dense-${n}`;
     records.push({
-      reference: null,
+      reference: referenceFor({ recordId, footprintName: "TYPE-C-SMD_TYPE-C-6P" }),
       identity: identity({
         recordId,
         kind: n % 4 === 3 ? "subordinate" : "standalone",

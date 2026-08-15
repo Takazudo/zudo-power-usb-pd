@@ -36,18 +36,16 @@ mismatch fails the build.
 | Path | Owner | Rule |
 |---|---|---|
 | `doc/component-docs/` | this feature | all generator code, tests, this document |
-| `doc/src/content/docs/components/records/` | **generator, exclusively** | committed; never hand-edit; every file is rewritten from evidence |
+| `doc/src/content/docs/components/` | **generator, exclusively** | committed; never hand-edit; every file is rewritten from evidence |
 | `doc/component-docs/preflight.json` | generator | committed, deterministic, reviewable |
 | `doc/pages/_mdx-components.ts` | site | carries the three evidence-component registrations; must stay in sync with `core/mdx.ts` `ALLOWED_COMPONENT_ATTRIBUTES` (guarded by `tests/presentation.test.ts`) |
 | `doc/src/styles/global.css` | site | an appended presentation block for the generated pages (`.zld-evidence-*`) |
 | `.claude/skills/**` | evidence owners | **read-only** to this feature |
 
-**Re-rooting difference vs led-lamp.** led-lamp's generator owns
-`doc/src/content/docs/components/` outright. In zudo-pd that directory already
-holds 17 hand-written component pages, so the exclusively-owned generated tree
-is re-rooted one level down at `components/records/` (`GENERATED_ROOT` in
-`adapters/circuit/paths.ts`). The public URLs therefore read
-`/docs/components/records/{catalog,integration,records/<slug>}/`.
+**Matches led-lamp.** The exclusively-owned generated tree is rooted directly
+at `doc/src/content/docs/components/` (`GENERATED_ROOT` in
+`adapters/circuit/paths.ts`), identical to led-lamp's shape. The public URLs
+read `/docs/components/{catalog,integration,records,records/<slug>}/`.
 
 ### Module layout under `doc/component-docs/`
 
@@ -65,11 +63,11 @@ core/                       provider-neutral; no Python, no `.claude`, no fs pat
   adapter.ts                ComponentDataAdapter + ValidationRunner interfaces
   pipeline.ts               the one generation path
   scan.ts                   denied-value artifact scanning (wired by cli/scan.ts)
-  render/landing.ts         /docs/components/records/            (landing)
-  render/catalog.ts         /docs/components/records/catalog/
-  render/record.ts          /docs/components/records/records/<slug>/
+  render/landing.ts         /docs/components/                    (landing)
+  render/catalog.ts         /docs/components/catalog/
+  render/record.ts          /docs/components/records/<slug>/
   render/shared.ts          routes, glosses and orderings the pages share
-  render/integration.ts     /docs/components/records/integration/
+  render/integration.ts     /docs/components/integration/
 adapters/circuit/           this repository's evidence provider
   paths.ts                  every path the adapter may touch
   validate.ts               python3 validate.py --strict subprocess
@@ -79,11 +77,23 @@ adapters/circuit/           this repository's evidence provider
   canaries.ts               denied-key harvest for the artifact scan
   integration.ts            cross-component rules: shapes, projection, closure
   evidence.ts               provider shapes, bundle reads, the joins (pure)
+  references.ts             the reviewed document / footprint / model contract
+  model-assets.ts           deterministic WRL publication into doc/public/
   index.ts                  the adapter itself; `projectIndex` is the pure projection
-cli/                        run.ts (shared body), generate.ts, check.ts, scan.ts, watch.ts
-ui/                         evidence-anchor.tsx, evidence-details.tsx, evidence-table.tsx
+footprint-previews/         the committed footprint SVG generator + drift check
+cli/                        run.ts (shared body), generate.ts, check.ts, scan.ts, watch.ts, models.ts
+ui/                         evidence-{anchor,details,table}.tsx, component-references.tsx,
+                            footprint-preview.tsx, package-model-viewer.tsx
+scripts/                    model-viewer-browser-smoke.mjs (headless Chrome over CDP)
 tests/                      node:test suites + fixtures.ts / provider fixtures
 ```
+
+The two interactive previews live outside this directory, under
+`doc/src/component-preview/` and `doc/src/component-model-viewer/`: they are
+`"use client"` islands the site's build bundles, and `ui/` holds only the
+SSR-safe bindings that mount them. `three` is imported by exactly one module
+(`viewer-runtime.ts`), which the island loads with a dynamic `import()`, so it
+ships in its own chunk and never in the page bundle.
 
 `evidence.ts` and `projectIndex` are pure functions over parsed JSON, so every
 join rule and every publication rule is provable against a fixture corpus with
@@ -103,14 +113,23 @@ The dependency direction is one-way: `adapters/circuit/**` imports from
 | `scan:components` | denied-value scan of the BUILT site (`dist/`, §6.1) |
 | `test:components` | unit + integration suites |
 | `dev:components` | debounced regeneration (watch) |
-| `build` | `pnpm generate:components && zfb build` — generation precedes the content snapshot |
-| `b4push` | `check && test:components && build && check:components && scan:components` |
+| `generate:models` / `check:models` | publish (or drift-check) the reviewed WRL models |
+| `generate:footprint-previews` / `check:footprint-previews` | the same pair for the footprint SVGs |
+| `check:built-component-references` | the reference section's built-`dist/` contract |
+| `test:model-viewer:browser` | headless-Chrome smoke over `dist/` (not in `b4push`; needs a browser) |
+| `build` | `pnpm generate:models && pnpm generate:components && zfb build` — generation precedes the content snapshot |
+| `b4push` | `check && test:components && check:footprint-previews && check:models && build && check:built-component-references && check:components && scan:components` |
 
 Generation ordering is a **package-script** boundary, not a host-plugin
 assumption: `generate:components` has finished and exited before `zfb` starts,
 which is why `cli/generate.ts` can promise the snapshot already contains its
 output. (led-lamp's §3 records the full plugin-vs-script rationale; it applies
-here unchanged.)
+here unchanged.) `generate:models` runs before it for the same reason one step
+down: the model assets have to be in `public/` before `zfb` copies it.
+
+The browser smoke is deliberately outside `b4push`. It needs a Chrome binary
+and roughly a minute of wall clock, which is a reasonable ask of CI and of a
+change to the viewer, but not of every push.
 
 ## 4. Validation — one validator, in Python, fatal on failure
 
@@ -158,11 +177,14 @@ Port-specific shape decisions:
   `claudeResources: false`, so `/docs/claude-skills/<name>/` does not exist
   as a route to link back to; `matrix.ts` denies both `record.ownerSkill`
   and `integration.ownerSkill`.
-- **No 3D/preview seam** — `PublicTransform3d` / `PublicFootprintReference` /
-  `PublicPackagePreview` / `packagePreviews` and the
-  `asset.footprintPreview` / `asset.modelPreview` field keys are not ported;
-  zudo-pd has no 3D assets. Re-porting starts from led-lamp's source, not
-  from a vestigial copy here.
+- **No `packagePreviews` seam** — led-lamp carries previews as a top-level
+  view-model collection (`PublicPackagePreview` / `packagePreviews`) plus the
+  `asset.footprintPreview` / `asset.modelPreview` field keys. Neither is
+  ported: here both previews hang off `reference.footprint` on the record that
+  uses them, so a preview cannot exist without a record pointing at it. The
+  assets themselves do exist (waves 6 and 7) and both previews render — this
+  is a shape difference, not an absence. Re-porting the collection starts from
+  led-lamp's source, not from a vestigial copy here.
 - **`corpus` counts what was published**, not what the provider holds: the
   landing page must never assert counts the site does not deliver. The three
   inventory-scoped rows (`inventoryLines`, `fittedLines`,
@@ -189,15 +211,20 @@ corpus once shipped a record (`rec-bzt52c11-c92321`) whose bundle validated
 and whose counts were bumped while the ID list was left behind — the record
 silently had no page. Either direction failing is a `STALE_SELECTION`.
 
-zudo-pd's `DENY` set is 26 of 97 keys: led-lamp's seven content denials
+zudo-pd's `DENY` set is 11 of 97 keys: led-lamp's seven content denials
 (`source.sha256`, `source.evidenceExtract`,
 `source.alternateAuthoritativeUrl`, `source.physicalPdfPageIndex`,
 `routing.positivePrompts`, `routing.negativePrompts`, `pinMap.reviewedBy`),
-`asset.datasheetPdf` / `asset.binary`, both `ownerSkill` keys
-(`claudeResources: false`), and every `reference.*` key (the single-document
-shortcut feature is unused here: `documentSelections` is deliberately empty).
-URL policy, the preflight report contract, and the emitted-vs-withheld
-accounting are ported unchanged from led-lamp §6.
+`asset.binary`, both `ownerSkill` keys (`claudeResources: false`), and
+`reference.package.recordIds`, which no renderer reads. All three halves of
+`reference.*` publish: `documentSelections` names one reviewed source for 40
+of the 41 records and `documentExceptions` names why the 41st has none,
+`reference.footprint.{packageId,name,path}` back the rendered footprint
+preview and its `Source:` line, and `reference.model.*` backs the interactive
+package model viewer (wave 7 sourced a reviewed `.wrl`/`.step` pair for all
+27 packages; wave 8 built the viewer). URL policy, the preflight report
+contract, and the emitted-vs-withheld accounting are ported unchanged from
+led-lamp §6.
 
 ### 6.1 Artifact-level proof (`pnpm scan:components`)
 
@@ -241,7 +268,7 @@ is a publication decision, not a refactor.
 
 ## 8. Generated-tree ownership and cleanup
 
-`doc/src/content/docs/components/records/` is written by `core/emit.ts` and
+`doc/src/content/docs/components/` is written by `core/emit.ts` and
 nothing else. Every write path is `assertContained` (segment-wise); emit
 never `rm -rf`s — it prunes only marker-carrying `.mdx` leftovers under the
 owned root; a file there without the generated marker is a fatal
@@ -252,15 +279,13 @@ evidence-read side; emit is idempotent (a second run reports `0 written`).
 
 | Route | Source |
 |---|---|
-| `/docs/components/records/` | `render/landing.ts` |
-| `/docs/components/records/catalog/` | `render/catalog.ts` |
-| `/docs/components/records/integration/` | `render/integration.ts` |
-| `/docs/components/records/records/<slug>/` | `render/record.ts` |
+| `/docs/components/` | `render/landing.ts` |
+| `/docs/components/catalog/` | `render/catalog.ts` |
+| `/docs/components/integration/` | `render/integration.ts` |
+| `/docs/components/records/` | `render/record.ts` (records index) |
+| `/docs/components/records/<slug>/` | `render/record.ts` (per-record pages) |
 
-The doubled `records/records/` segment is a consequence of the re-rooting
-(§2): the owned generated root sits below the hand-written `components/`
-section, and record pages live in a `records/` directory inside it. The
-landing page's `CategoryNav` targets `components/records` — this project's
+The landing page's `CategoryNav` targets `components` — this project's
 wrapper resolves `category` as a slug path. The three evidence components
 (`EvidenceAnchor`, `EvidenceDetails`, `EvidenceTable`) are registered in
 `doc/pages/_mdx-components.ts`; that registry and
@@ -300,7 +325,9 @@ incompatible change" at that extraction boundary (§5).
 ## 13. Non-goals
 
 No re-stated facts, no prose summaries of evidence, no component-wide
-verdicts, no PDF republication, no 3D previews, no `/docs/claude-skills/`
-routes, no sitemap change, no framework feature. The generated pages are a
-projection; where they disagree with the evidence JSON, the evidence is
-correct.
+verdicts, no PDF republication, no `/docs/claude-skills/` routes, no sitemap
+change, no framework feature. The generated pages are a projection; where they
+disagree with the evidence JSON, the evidence is correct. The 3D preview is
+in scope but stays inside that rule: the viewer shows the shared FOOTPRINT
+package's geometry and says so on the card, which is a weaker claim than
+"this is the part" and is the only one the evidence supports.

@@ -115,12 +115,10 @@ export function renderLanding(
     ),
 
     heading(2, literal("Sections")),
-    // The page is emitted at `components/records/index.mdx` (see
-    // `paths.ts`), and this project's CategoryNav wrapper resolves
-    // `category` as a slug PATH — so the value must name this page's own
-    // section, not the hand-written `components` parent, or the grid renders
-    // the wrong children.
-    component("CategoryNav", { category: "components/records" }),
+    // The page is emitted at `components/index.mdx` (see `paths.ts`), and
+    // this project's CategoryNav wrapper resolves `category` as a slug
+    // PATH — so the value must name this page's own section.
+    component("CategoryNav", { category: "components" }),
   ];
 
   return buildPage(

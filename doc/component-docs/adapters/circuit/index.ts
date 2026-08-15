@@ -14,10 +14,10 @@
  * facts follow the manifest's own order — that order is curated (primary
  * source first) and re-sorting would throw the curation away.
  *
- * zudo-pd has no 3D assets at all, so unlike led-lamp this adapter never reads
- * a reference contract and never builds a `PublicRecordReference` — every
- * record publishes `reference: null` (see `core/view-model.ts`).
- * `references.ts` / `model-assets.ts` are not ported.
+ * Unlike led-lamp's, this adapter's `PublicRecordReference` is partial by
+ * design: the footprint identity always resolves, but the reviewed document
+ * and the 3D model are each optional and each carry a stated reason when
+ * absent. See `references.ts` for why, and `core/view-model.ts` for the shape.
  */
 
 import { anchor, byCodeUnit, recordSlug, type Slug } from "../../core/ids.ts";
@@ -34,15 +34,22 @@ import type {
   PublicFact,
   PublicFactValue,
   PublicFactValueEntry,
+  PublicFootprintReference,
   PublicInteraction,
   PublicPinMap,
   PublicRecord,
   PublicRecordIdentity,
+  PublicRecordReference,
   PublicSource,
   PublicViewModel,
 } from "../../core/view-model.ts";
 import { CIRCUIT_PUBLICATION_MATRIX } from "./matrix.ts";
 import { CIRCUIT_SELECTION } from "./selection.ts";
+import {
+  readCircuitReferenceContract,
+  type CircuitPackageReference,
+  type CircuitReferenceContract,
+} from "./references.ts";
 import { INTEGRATION_RULES_FILE, INTEGRATION_SKILL_NAME, INVENTORY_FILE } from "./paths.ts";
 import { projectIntegrationRules } from "./integration.ts";
 import { createPythonValidator } from "./validate.ts";
@@ -94,7 +101,8 @@ export async function readEvidenceIndex(): Promise<EvidenceIndex> {
     Promise.all(ownerSkills.map(readBundle)),
     readIntegrationRules(INTEGRATION_RULES_FILE),
   ]);
-  return indexEvidence(inventory, bundles, rules.rules);
+  const index = indexEvidence(inventory, bundles, rules.rules);
+  return { ...index, references: await readCircuitReferenceContract(index, CIRCUIT_SELECTION) };
 }
 
 /**
@@ -116,13 +124,17 @@ export function projectIndex(index: EvidenceIndex, policy: PublicationPolicy): P
   const selected = index.records.filter((entry) => policy.isRecordSelected(entry.record.record_id));
   const ordered = orderRecords(selected, inventory.lines);
   assertSelectionIsClosed(ordered, index, policy);
+  const references = index.references;
+  if (references === undefined) {
+    fail("ADAPTER_CONTRACT", "reference assets were not validated before projection");
+  }
 
   const slugByRecordId = new Map(
     ordered.map((entry) => [entry.record.record_id, recordSlug(entry.record.record_id)]),
   );
 
   const records: PublicRecord[] = ordered.map((entry) =>
-    projectRecord(entry, index, slugByRecordId, policy),
+    projectRecord(entry, index, slugByRecordId, references, policy),
   );
 
   // The rules are projected against what was actually published, not against
@@ -190,6 +202,7 @@ function projectRecord(
   entry: IndexedRecord,
   index: EvidenceIndex,
   slugByRecordId: ReadonlyMap<string, Slug>,
+  references: CircuitReferenceContract,
   policy: PublicationPolicy,
 ): PublicRecord {
   return {
@@ -206,8 +219,115 @@ function projectRecord(
       projectInteraction(interactionOf(index, interactionId), policy),
     ),
     pinMaps: entry.pinMaps.map((pinMap) => projectPinMap(pinMap, policy)),
-    // No 3D assets — see the module comment.
-    reference: null,
+    reference: projectRecordReference(entry, references, policy),
+  };
+}
+
+/**
+ * The curated shortcuts for one record.
+ *
+ * The footprint half is required — `readCircuitReferenceContract` resolved a
+ * canonical footprint for every selected record, and its absence here would
+ * mean the contract and the projection disagree about the corpus. The document
+ * half is optional: a record with no curated `documentSelections` entry gets a
+ * stated reason instead of a card, and the reason distinguishes "nothing was
+ * curated yet" from "this record has no manufacturer document to curate".
+ */
+function projectRecordReference(
+  entry: IndexedRecord,
+  references: CircuitReferenceContract,
+  policy: PublicationPolicy,
+): PublicRecordReference {
+  const recordId = entry.record.record_id;
+  const footprint = references.packageByRecordId.get(recordId);
+  if (footprint === undefined) {
+    fail("ADAPTER_CONTRACT", "record has no footprint reference", { recordId });
+  }
+  const document = references.documentsByRecordId.get(recordId);
+  if (document === undefined) {
+    const reason = references.documentUnresolvedReasonByRecordId.get(recordId);
+    if (reason === undefined) {
+      // Unreachable while `PublicationPolicy` holds the partition, and checked
+      // anyway: a record that reached here with neither a document nor a
+      // reason would render a card that states nothing at all.
+      fail("ADAPTER_CONTRACT", "record has neither a curated document nor a stated reason", {
+        recordId,
+      });
+    }
+    return {
+      document: null,
+      documentUnresolvedReason: safeText(
+        reason,
+        { field: `${recordId}.reference.documentUnresolvedReason` },
+      ),
+      footprint: projectFootprint(footprint, policy),
+    };
+  }
+  const classified = classifyUrl(document.source.authoritative_url);
+  if (classified.decision === "DENY") {
+    fail("UNSAFE_VALUE", "selected document URL failed classification", {
+      recordId,
+      sourceId: document.source.source_id,
+      reason: classified.reason,
+    });
+  }
+  policy.publishRequired("asset.datasheetPdf", true);
+  const labels = {
+    datasheet: "Datasheet PDF",
+    specification: "Specification PDF",
+    drawing: "Mechanical drawing PDF",
+  } as const;
+  return {
+    document: {
+      sourceId: policy.publishRequired("reference.document.sourceId", safeText(document.source.source_id, { field: `${recordId}.reference.sourceId` })),
+      documentTitle: policy.publishRequired("reference.document.documentTitle", safeText(document.source.document_title, { field: `${recordId}.reference.documentTitle` })),
+      label: policy.publishRequired("reference.document.label", safeText(labels[document.documentKind], { field: `${recordId}.reference.label` })),
+      authorityClass: policy.publishRequired("reference.document.authorityClass", safeText(document.source.authority_class, { field: `${recordId}.reference.authorityClass` })),
+      url: policy.publishRequired("reference.document.url", classified.url),
+      availability: policy.publishRequired("reference.document.availability", safeText(document.source.availability, { field: `${recordId}.reference.availability` })),
+      documentKind: policy.publishRequired("reference.document.documentKind", document.documentKind),
+    },
+    documentUnresolvedReason: null,
+    footprint: projectFootprint(footprint, policy),
+  };
+}
+
+function projectFootprint(
+  entry: CircuitPackageReference,
+  policy: PublicationPolicy,
+): PublicFootprintReference {
+  const at = `${entry.packageId}.reference`;
+  const identity = {
+    packageId: policy.publishRequired("reference.footprint.packageId", safeText(entry.packageId, { field: `${at}.packageId` })),
+    footprintName: policy.publishRequired("reference.footprint.name", safeText(entry.footprintName, { field: `${at}.footprintName` })),
+    footprintPath: policy.publishRequired("reference.footprint.path", safeText(entry.footprintPath, { field: `${at}.footprintPath` })),
+  };
+  if (entry.model === undefined) {
+    const reason = entry.modelUnresolvedReason;
+    if (reason === undefined) {
+      fail("ADAPTER_CONTRACT", "package has neither a model nor a reason for its absence", {
+        packageId: entry.packageId,
+      });
+    }
+    return {
+      ...identity,
+      model: null,
+      modelUnresolvedReason: safeText(reason, { field: `${at}.modelUnresolvedReason` }),
+    };
+  }
+  // Reachable since wave 7 landed reviewed `.wrl`/`.step` pairs in
+  // `MODEL_ROOT` and `reference.model.*` flipped to PUBLISH in matrix.ts.
+  // Before that, this branch was dead: `publishRequired` failed here rather
+  // than publish a field nothing supplied a value for.
+  return {
+    ...identity,
+    model: {
+      modelPath: policy.publishRequired("reference.model.path", safeText(entry.model.modelPath, { field: `${at}.modelPath` })),
+      offset: policy.publishRequired("reference.model.offset", entry.model.offset),
+      rotation: policy.publishRequired("reference.model.rotation", entry.model.rotation),
+      scale: policy.publishRequired("reference.model.scale", entry.model.scale),
+    },
+    modelUnresolvedReason: null,
   };
 }
 

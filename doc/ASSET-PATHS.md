@@ -7,33 +7,50 @@ zfb serves `doc/public/` at the site root, so a file at `doc/public/circuits/foo
 | Asset type | Old path | New `doc/public/` path | Public URL |
 |---|---|---|---|
 | Circuit SVGs | `doc/static/circuits/<name>.svg` | `doc/public/circuits/<name>.svg` | `/circuits/<name>.svg` |
-| Footprint SVGs | `doc/docs/_fragments/footprints/<name>.svg` | `doc/public/footprints/<name>.svg` | `/footprints/<name>.svg` |
-| Footprint PNGs | `doc/static/footprints/<name>.png` | `doc/public/footprint-imgs/<name>.png` | `/footprint-imgs/<name>.png` |
 | Datasheets | `doc/static/datasheets/<name>` | `doc/public/datasheets/<name>` | `/datasheets/<name>` |
 | Images | `doc/static/img/<name>` | `doc/public/img/<name>` | `/img/<name>` |
 | KiCad assets | `doc/static/kicad/<name>` | `doc/public/kicad/<name>` | `/kicad/<name>` |
 | Favicon | `doc/static/favicon.ico` | `doc/public/favicon.ico` | `/favicon.ico` |
 
-## IMPORTANT: Footprint SVG vs Footprint PNG — two separate dirs
+## UPDATE (components-docs-restructure epic, #133): the hand-authored footprint gallery is gone
 
-Content tasks must use the correct URL depending on asset type:
+The hand-authored footprint SVG/PNG dual-directory scheme documented below
+until this note (`doc/public/footprints/` and `doc/public/footprint-imgs/`,
+54 SVGs + 11 PNGs, linked by hand from content pages) was **purged** by the
+Components Docs Restructure epic — neither directory exists anymore. Every
+component record's footprint preview is now **generated** straight from the
+KiCad library into a single directory:
 
-- **`/footprints/<name>.svg`** — footprint layout diagrams as SVGs (54 files, formerly in `doc/docs/_fragments/footprints/`). These are the detailed pad-layout vector drawings.
-- **`/footprint-imgs/<name>.png`** — footprint preview screenshots as PNGs (11 files, formerly in `doc/static/footprints/`). These are component package photos/renders.
+- **`/assets/component-previews/footprints/<footprint-name>.svg`** — one
+  generated preview per distinct footprint (27 files as of wave 6), embedded
+  automatically on each component record page via `FootprintPreviewIsland`.
+  Regenerate with `pnpm generate:footprint-previews`; do not hand-add or
+  hand-edit files here (`pnpm check:footprint-previews` fails on drift).
 
-These are intentionally in **separate directories** to avoid filename collisions (e.g., both had a `CH224D` file in different formats).
+There is no longer a separate hand-authored SVG-vs-PNG split, and no more
+filename-collision concern between the two — content pages never link a
+footprint preview by hand; the generator wires it to the record automatically.
 
 ## `doc/public/` contents summary
 
-| Directory | Count | Notes |
-|---|---|---|
-| `doc/public/circuits/` | 9 SVGs | Circuit stage diagrams |
-| `doc/public/footprints/` | 54 SVGs | Footprint layout diagrams |
-| `doc/public/footprint-imgs/` | 11 PNGs | Footprint preview images |
-| `doc/public/datasheets/` | 12 files | PDF datasheets |
-| `doc/public/img/` | 5 files | Site images (logo, favicon copy, enlarge icon) |
-| `doc/public/kicad/` | 3 files | KiCad setup screenshots |
-| `doc/public/favicon.ico` | 1 | Site favicon |
+| Directory | Notes |
+|---|---|
+| `doc/public/circuits/` | Circuit stage diagrams |
+| `doc/public/datasheets/` | PDF datasheets |
+| `doc/public/img/` | Site images (logo, favicon copy, enlarge icon) |
+| `doc/public/kicad/` | KiCad setup screenshots |
+| `doc/public/favicon.ico` | Site favicon |
+| `doc/public/assets/component-previews/footprints/` | 27 SVGs — **Generated** — `pnpm generate:footprint-previews` |
+| `doc/public/assets/component-previews/models/` | 27 WRLs — **Generated** — `pnpm generate:models` |
+
+(Per-directory file counts for the hand-authored asset types above drift as
+content is curated; only the generated `component-previews/` counts are
+pinned to a checked invariant, so those two are the only counts kept here.)
+
+The two `assets/component-previews/` directories are owned by
+`doc/component-docs/` and regenerated from the KiCad library; do not hand-edit
+or hand-add files there. They are committed, and `pnpm check:footprint-previews`
+/ `pnpm check:models` fail on drift.
 
 ## Not moved (S7/S8 handle these)
 

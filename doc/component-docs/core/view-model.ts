@@ -234,15 +234,57 @@ export type PublicDocumentReference = {
   readonly documentKind: PublicDocumentKind;
 };
 
+export type PublicTransform3d = {
+  readonly x: number;
+  readonly y: number;
+  readonly z: number;
+};
+
+/** A safe local WRL descriptor, derived from one canonical KiCad footprint. */
+export type PublicPackageModel = {
+  readonly modelPath: SafeText;
+  readonly offset: PublicTransform3d;
+  readonly rotation: PublicTransform3d;
+  readonly scale: PublicTransform3d;
+};
+
 /**
- * The led-lamp 3D/footprint-preview seam (`PublicTransform3d`,
- * `PublicFootprintReference`, `PublicPackagePreview`, `packagePreviews`,
- * the `asset.*` field keys) was deliberately NOT ported: zudo-pd has no 3D
- * assets and the types had no constructor here. Re-porting starts from
- * led-lamp's view-model.ts, not from a vestigial copy in this file.
+ * The footprint half of a record's references.
+ *
+ * Unlike led-lamp's, the model is optional: `model` is `null` and
+ * `modelUnresolvedReason` states why whenever no reviewed WRL/STEP pair backs
+ * this package. Exactly one of the two is set — the adapter never produces a
+ * reference with both or with neither.
+ */
+export type PublicFootprintReference = {
+  readonly packageId: SafeText;
+  readonly footprintName: SafeText;
+  /**
+   * The reviewed `.kicad_mod` source path, repo-root-relative — provenance
+   * for the rendered footprint preview, not the preview asset URL itself
+   * (which is derived from `footprintName`; see `matrix.ts`'s
+   * `reference.footprint.path`).
+   */
+  readonly footprintPath: SafeText;
+  readonly model: PublicPackageModel | null;
+  readonly modelUnresolvedReason: SafeText | null;
+};
+
+/**
+ * A record's curated reference shortcuts. The footprint is always known (it
+ * comes from the reviewed pin map); the document and the 3D model are each
+ * independently optional, and each carries its own reason when absent so the
+ * page can name why rather than drop the card.
+ *
+ * `PublicPackagePreview` / `packagePreviews` are still NOT ported: they are
+ * the deduplicated input to led-lamp's preview GENERATOR, which has no
+ * counterpart here yet. The deduplicated package list lives on the adapter's
+ * `CircuitReferenceContract` in the meantime.
  */
 export type PublicRecordReference = {
-  readonly document: PublicDocumentReference;
+  readonly document: PublicDocumentReference | null;
+  readonly documentUnresolvedReason: SafeText | null;
+  readonly footprint: PublicFootprintReference;
 };
 
 /** One published record page's complete data. */
@@ -255,12 +297,10 @@ export type PublicRecord = {
   readonly interactions: readonly PublicInteraction[];
   readonly pinMaps: readonly PublicPinMap[];
   /**
-   * `null` always for zudo-pd: this project publishes no reviewed
-   * single-document shortcut (see `matrix.ts`, which denies every
-   * `reference.document.*` field, and `selection.ts`, whose
-   * `documentSelections` is deliberately empty).
+   * Always present — the footprint identity always resolves. Its document and
+   * model halves may each be unresolved, with a stated reason.
    */
-  readonly reference: PublicRecordReference | null;
+  readonly reference: PublicRecordReference;
 };
 
 /**

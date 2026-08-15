@@ -220,7 +220,7 @@ describe("relationships stay visible on the page, not just in the model", () => 
           const page = pages.get(record.identity.slug);
           assert.ok(page);
           assert.ok(
-            page.includes(`/docs/components/records/records/${target}/#${dependency}`),
+            page.includes(`/docs/components/records/${target}/#${dependency}`),
             `${fact.factId} does not link to ${dependency} on ${target}`,
           );
         }
@@ -253,30 +253,18 @@ describe("the canary set cannot quietly become empty", () => {
     // owner's bundle name.
     "record.ownerSkill": "owner_skill",
     "integration.ownerSkill": "owner_skill",
-    // No provider key for any of these: zudo-pd has no 3D assets, so
-    // `references.ts` is not ported and the adapter never reads a
-    // reference/footprint/model value at all — nothing exists to canary.
-    "reference.document.sourceId": "",
-    "reference.document.documentTitle": "",
-    "reference.document.label": "",
-    "reference.document.authorityClass": "",
-    "reference.document.url": "",
-    "reference.document.availability": "",
-    "reference.document.documentKind": "",
-    "reference.footprint.packageId": "",
-    "reference.footprint.name": "",
-    "reference.footprint.path": "",
-    "reference.model.path": "",
-    "reference.model.offset": "",
-    "reference.model.rotation": "",
-    "reference.model.scale": "",
+    // No provider key: derived from the package-collapse join rather than
+    // read out of a bundle field, so there is no provider value to load with
+    // a canary. `reference.footprint.path` moved to PUBLISH in wave 6
+    // (footprint-preview generator landed); `reference.model.*` moved to
+    // PUBLISH in wave 7 (3D assets sourced) — both left this list, see
+    // `matrix.ts`.
     "reference.package.recordIds": "",
-    "asset.datasheetPdf": "",
   };
 
   it("covers every denied field in the committed matrix", () => {
     const denied = FIELD_KEYS.filter((key) => CIRCUIT_PUBLICATION_MATRIX[key] === "DENY");
-    assert.equal(denied.length, 26, "the number of denied fields moved without review");
+    assert.equal(denied.length, 11, "the number of denied fields moved without review");
 
     for (const key of denied) {
       const providerKey = PROVIDER_KEY_FOR_DENIED_FIELD[key];

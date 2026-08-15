@@ -147,8 +147,8 @@ Full findings: `experiments/ai-circuit-design/circuit-synth-spike/FINDINGS.md`
 
 **What was flagged:**
 
-- Both the +12V (L7812, F-11) and −12V (CJ7912, F-13) LDOs run at only ~1.5 V dropout against a ~2 V typical spec — marginal at rated current. The existing `components/l7812cv.md` doc already flags this.
-- Documentation discrepancy (F-9): `CLAUDE.md` and the architecture text describe the negative rail as "−15V (LM2586SX-ADJ inverted SEPIC)," but the actual schematic uses a third `LM2596S-ADJ` in an inverting buck-boost topology — a stale description that should be corrected.
+- Both the +12V (L7812, F-11) and −12V (CJ7912, F-13) LDOs run at only ~1.5 V dropout against a ~2 V typical spec — marginal at rated current. The [Linear Regulator (LDO) Stage](../overview/board-b-synth-power.md#linear-regulator-ldo-stage) section already flags this.
+- Documentation discrepancy (F-9, **since corrected**): at the time of this review, `CLAUDE.md` and the architecture text described the negative rail as "−15V (LM2586SX-ADJ inverted SEPIC)," while the actual schematic used a third `LM2596S-ADJ` in an inverting buck-boost topology. `CLAUDE.md` now states the correct topology (see its Technical Architecture section and decision (b) in `scripts/schgen/decisions.json`); this finding is kept here as the historical record of the discrepancy this review caught.
 
 Full findings: `experiments/ai-circuit-design/schematic-review/REVIEW-REPORT.md`
 

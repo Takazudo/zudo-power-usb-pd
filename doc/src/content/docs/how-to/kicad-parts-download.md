@@ -148,8 +148,8 @@ easyeda2kicad --lcsc_id C2678061 --footprint --symbol
 # LM2596S-ADJ - Buck Converter
 easyeda2kicad --lcsc_id C347423 --footprint --symbol
 
-# L7812CV - +12V Regulator
-easyeda2kicad --lcsc_id C2914 --footprint --symbol
+# L7812CD2T-TR - +12V Regulator
+easyeda2kicad --lcsc_id C13456 --footprint --symbol
 
 # L7805ABD2T - +5V Regulator
 easyeda2kicad --lcsc_id C86206 --footprint --symbol
@@ -158,25 +158,24 @@ easyeda2kicad --lcsc_id C86206 --footprint --symbol
 easyeda2kicad --lcsc_id C94173 --footprint --symbol
 
 # SMAJ15A - TVS Diode
-easyeda2kicad --lcsc_id C347883 --footprint --symbol
+easyeda2kicad --lcsc_id C571368 --footprint --symbol
 
-# SD05 - TVS Diode (5V)
-easyeda2kicad --lcsc_id C502527 --footprint --symbol
+# SMAJ6.5A - TVS Diode (5V rail)
+easyeda2kicad --lcsc_id C87267 --footprint --symbol
 ```
 
 ### 2. Copy to Project
 
-```bash
-# Create symbols directory
-mkdir -p /Users/takazudo/repos/personal/zudo-pd/symbols
+Run from the repository root:
 
+```bash
 # Copy footprints
 cp ~/Documents/Kicad/easyeda2kicad/easyeda2kicad.pretty/*.kicad_mod \
-   /Users/takazudo/repos/personal/zudo-pd/footprints/kicad/
+   footprints/kicad/
 
 # Copy symbols
 cp ~/Documents/Kicad/easyeda2kicad/easyeda2kicad.kicad_sym \
-   /Users/takazudo/repos/personal/zudo-pd/symbols/zudo-pd.kicad_sym
+   symbols/zudo-pd.kicad_sym
 ```
 
 ### 3. Add Libraries to KiCad
@@ -200,12 +199,14 @@ cp ~/Documents/Kicad/easyeda2kicad/easyeda2kicad.kicad_sym \
 
 ### 4. Verify Files
 
+Run from the repository root:
+
 ```bash
 # Check footprints
-ls -l /Users/takazudo/repos/personal/zudo-pd/footprints/kicad/*.kicad_mod
+ls -l footprints/kicad/*.kicad_mod
 
 # Check symbols
-ls -l /Users/takazudo/repos/personal/zudo-pd/symbols/zudo-pd.kicad_sym
+ls -l symbols/zudo-pd.kicad_sym
 ```
 
 ## Footprint File Format
@@ -213,11 +214,11 @@ ls -l /Users/takazudo/repos/personal/zudo-pd/symbols/zudo-pd.kicad_sym
 KiCad footprint files (`.kicad_mod`) are text files in S-expression format:
 
 ```lisp
-(footprint "QFN-20_L3.0-W3.0-P0.40-BL-EP1.7"
+(footprint "QFN-24_L4.0-W4.0-P0.50-BL-EP2.8"
   (layer "F.Cu")
   (attr smd)
   (fp_text reference "REF**" (at 0 -2.5) (layer "F.SilkS"))
-  (fp_text value "CH224D" (at 0 2.5) (layer "F.Fab"))
+  (fp_text value "STUSB4500QTR" (at 0 2.5) (layer "F.Fab"))
   (pad "1" smd rect (at -1.4 -1.0) (size 0.25 0.6) (layers "F.Cu" "F.Paste" "F.Mask"))
   ...
 )
@@ -284,9 +285,8 @@ easyeda2kicad --easyeda_id <EASYEDA_ID> --footprint
 
 After downloading footprints:
 
-1. [Create Footprint SVG Files](./create-footprint-svg.mdx) - Export SVGs for documentation
-2. Review footprints in KiCad PCB editor
-3. Add footprints to your PCB design
+1. Review footprints in KiCad PCB editor
+2. Add footprints to your PCB design
 
 ## References
 

@@ -209,6 +209,19 @@ describe("the stylesheet declares what the components emit", () => {
       "zld-evidence-table",
       "zld-evidence-table--parts-index",
       "zld-evidence-table--facts",
+      "zld-model-viewer",
+      "zld-model-viewer__caption",
+      "zld-model-viewer__viewport",
+      "zld-model-viewer__viewport-frame",
+      "zld-model-viewer__status",
+      "zld-preview-enlarge-button",
+      "zld-preview-dialog",
+      "zld-preview-dialog__close",
+      "zld-preview-dialog__close-icon",
+      "zld-preview-dialog__title",
+      "zld-preview-dialog__content",
+      "zld-preview-dialog--footprint",
+      "zld-preview-dialog--model",
     ]) {
       assert.ok(stylesheet.includes(`.${className}`), `global.css has no rule for .${className}`);
     }
@@ -225,10 +238,84 @@ describe("the stylesheet declares what the components emit", () => {
     assert.match(stylesheet, /\.zld-evidence-table table\s*\{[^}]*min-width:/u);
   });
 
-  // led-lamp's `.zld-component-references*` / `.zld-preview-dialog*` rules
-  // (auto-fit preview grid, enlarge dialogs, 44px touch targets) style the
-  // `ComponentReferences`/`PackageModelViewer` 3D-preview feature, which is
-  // not ported here — zudo-pd has no 3D assets, so there is no such markup
-  // to style. See `core/render/record.ts` (no `componentReferencesSection`)
-  // and `core/mdx.ts`'s `ALLOWED_COMPONENT_ATTRIBUTES`.
+  it("gives component references an auto-fit grid and contained preview media", () => {
+    assert.match(
+      stylesheet,
+      /\.zld-component-references__grid\s*\{[^}]*grid-template-columns:\s*repeat\(auto-fit, minmax\(min\(18rem, 100%\), 1fr\)\)/u,
+    );
+    assert.match(
+      stylesheet,
+      /\.zld-component-references__footprint-frame > a\s*\{[^}]*aspect-ratio:\s*16 \/ 9/u,
+    );
+    assert.match(
+      stylesheet,
+      /\.zld-component-references__footprint img\s*\{[^}]*object-fit:\s*contain/u,
+    );
+  });
+
+  it("styles an unresolved card as a stated fact, not as an error", () => {
+    // One record's document card is unresolved today, and any future package
+    // `easyeda2kicad` cannot supply a model for adds a model card to the list.
+    // If they read as failures the page looks broken rather than honest, so
+    // the rule must use the muted token the metadata it stands in for uses —
+    // never a danger/warning colour.
+    const rule = /\.zld-component-references__unresolved\s*\{([^}]*)\}/u.exec(stylesheet)?.[1] ?? "";
+    assert.match(rule, /color:\s*var\(--color-muted\)/u);
+    assert.doesNotMatch(rule, /--color-(?:danger|warning)/u);
+  });
+
+  it("hides both enlarge triggers until their preview is actually live", () => {
+    // A control that opens nothing is worse than no control. The footprint
+    // trigger waits on the image decoding, the model trigger on WebGL
+    // reaching `ready` — and a reader with no JavaScript sees neither.
+    const rule = new RegExp(
+      String.raw`\.zld-component-references__footprint\[data-footprint-preview-state="no-js"\] \.zld-preview-enlarge-button,\s*` +
+        String.raw`\.zld-model-viewer:not\(\[data-viewer-state="ready"\]\) \.zld-preview-enlarge-button\s*\{[^}]*display:\s*none`,
+      "u",
+    );
+    assert.match(stylesheet, rule);
+  });
+
+  it("gives both enlarge controls a 44px target and a visible focus ring", () => {
+    for (const selector of ["\\.zld-preview-enlarge-button", "\\.zld-preview-dialog__close"]) {
+      const rule = new RegExp(String.raw`${selector}\s*\{([^}]*)\}`, "u").exec(stylesheet)?.[1] ?? "";
+      assert.match(rule, /min-width:\s*44px/u, selector);
+      assert.match(rule, /min-height:\s*44px/u, selector);
+    }
+    assert.match(
+      stylesheet,
+      /\.zld-preview-enlarge-button:focus-visible,\s*\.zld-preview-dialog__close:focus-visible\s*\{[^}]*outline:/u,
+    );
+    assert.match(stylesheet, /\.zld-model-viewer__viewport:focus-visible\s*\{[^}]*outline:/u);
+  });
+
+  it("keeps the dialog transform-free so its close control anchors to the viewport", () => {
+    // `.zld-preview-dialog__close` is `position: fixed`. A transform on the
+    // dialog would make the dialog its containing block and pull the control
+    // inside — which is why `ENLARGE_DIALOG_STYLE` centres with auto margins.
+    const dialogRule = /\.zld-preview-dialog\s*\{([^}]*)\}/u.exec(stylesheet)?.[1] ?? "";
+    assert.notEqual(dialogRule, "");
+    assert.doesNotMatch(dialogRule, /transform:/u);
+    const closeRule = /\.zld-preview-dialog__close\s*\{([^}]*)\}/u.exec(stylesheet)?.[1] ?? "";
+    assert.match(closeRule, /position:\s*fixed/u);
+    const dialogSource = readFileSync(
+      new URL("../../src/component-preview/preview-enlarge-dialog.tsx", import.meta.url),
+      "utf8",
+    );
+    assert.match(dialogSource, /const ENLARGE_DIALOG_STYLE = \{\s*position: "fixed",\s*inset: "0",\s*margin: "auto",/u);
+    assert.doesNotMatch(dialogSource, /transform:/u);
+  });
+
+  it("hides the viewport in every state that has no canvas to show", () => {
+    for (const state of ["no-js", "error", "unavailable"]) {
+      assert.ok(
+        stylesheet.includes(`.zld-model-viewer[data-viewer-state="${state}"] .zld-model-viewer__viewport`),
+        `${state} must hide the empty viewport`,
+      );
+    }
+    assert.match(
+      stylesheet,
+      /\.zld-model-viewer\[data-viewer-state="unavailable"\] \.zld-model-viewer__viewport[\s\S]{0,40}\{[^}]*display:\s*none/u,
+    );
+  });
 });

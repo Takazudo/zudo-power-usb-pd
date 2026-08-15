@@ -228,7 +228,7 @@ USB-C Input → DC-DC Conversion → Linear Regulation → Outputs
 1. Press `W` to start wiring
 2. Click start point → Click end point
 3. Use labels for:
-- Power nets: `+15V`, `+13.5V`, `+12V`, `+5V`, `-12V`, `-15V`
+- Power nets: `+15V`, `+13.5V`, `+7.5V`, `-13.5V`, `+12V`, `+5V`, `-12V`
 - Ground: `GND` (use power symbol)
 - Signal names: `PG` (Power Good), `EN` (Enable), `FB` (Feedback)
 
@@ -373,7 +373,7 @@ The dialog should show:
 
 **Example assignments:**
 
-- LM7812 → `TO-252-2` (DPAK)
+- LM7812 → `TO-263-2` (D2PAK-2, fitted part is L7812CD2T-TR)
 - LM2596S → `TO-263-5` (D2PAK)
 - STUSB4500 → `QFN-24` (from LCSC)
 - 10µF capacitor → `C_0805_2012Metric`
@@ -411,8 +411,8 @@ The dialog should show:
 
 1. **Input stage (left):**
 - USB-C connector on board edge
-- CH224Q near connector
-- Input capacitors near CH224Q
+- STUSB4500 near connector
+- Input capacitors near STUSB4500
 
 2. **DC-DC stage (center):**
 - LM2596S converters in row
@@ -622,9 +622,8 @@ cpl_jlcpcb.csv
 After completing the KiCad workflow:
 
 1. **Documentation:**
-- Export circuit diagram as SVG (see [Create Circuit SVG Files](./create-circuit-svg.mdx))
-- Export footprint previews (see [Create Footprint SVG Files](./create-footprint-svg.mdx))
 - Update parts list with LCSC IDs
+- Document connectivity using the [net-table convention](./net-table-convention.md)
 
 2. **Testing plan:**
 - Order PCBs without assembly first
@@ -635,7 +634,8 @@ After completing the KiCad workflow:
 3. **Version control:**
 - Commit KiCad project files (.kicad_pro, .kicad_sch, .kicad_pcb)
 - Commit Gerber outputs for reference
-- Tag release versions (v1.0, v1.1, etc.)
+- Tag checkpoints per the project's X.Y.Z versioning scheme (see
+  `../inbox/versioning.md`) — not free-form release tags like v1.0/v1.1
 
 ## References
 
@@ -646,4 +646,3 @@ After completing the KiCad workflow:
 - [KiCad Documentation](https://docs.kicad.org/)
 - [KiCad Parts Download Guide](./kicad-parts-download.md)
 - [JLCPCB SMT Assembly](https://jlcpcb.com/smt-assembly)
-- [Create Footprint SVG Files](./create-footprint-svg.mdx)

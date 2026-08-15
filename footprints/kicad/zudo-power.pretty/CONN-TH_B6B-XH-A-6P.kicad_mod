@@ -41,4 +41,9 @@
 	(fp_line (start 8.88 -2.63) (end 8.88 3.63) (layer F.CrtYd) (width 0.05))
 	(fp_line (start 8.88 3.63) (end -8.88 3.63) (layer F.CrtYd) (width 0.05))
 	(fp_line (start -8.88 3.63) (end -8.88 -2.63) (layer F.CrtYd) (width 0.05))
+	(model "${KIPRJMOD}/../../footprints/kicad/zudo-pd.3dshapes/CONN-TH_XH2.50-LI-6P.wrl"
+		(offset (xyz 0.000 0.000 0.000))
+		(scale (xyz 1 1 1))
+		(rotate (xyz 0 0 0))
+	)
 )

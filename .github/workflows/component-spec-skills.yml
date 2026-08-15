@@ -22,7 +22,12 @@ on:
       - 'scripts/schgen/**'
       - 'boards/**'
       - 'symbols/**'
-      - 'footprints/**'
+      # Narrowed to the geometry files the footprint/model manifests actually
+      # hash — a footprint's .kicad_sym or unrelated library metadata
+      # shouldn't invalidate check:footprint-previews / check:models below.
+      - 'footprints/**/*.kicad_mod'
+      - 'footprints/**/*.wrl'
+      - 'footprints/**/*.step'
       - 'doc/**'
   push:
     # main only: a push to a topic branch with an open PR already runs the
@@ -38,7 +43,9 @@ on:
       - 'scripts/schgen/**'
       - 'boards/**'
       - 'symbols/**'
-      - 'footprints/**'
+      - 'footprints/**/*.kicad_mod'
+      - 'footprints/**/*.wrl'
+      - 'footprints/**/*.step'
       - 'doc/**'
 
 concurrency:
@@ -118,3 +125,7 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Doc-engine test suite
         run: pnpm test:components
+      - name: Footprint previews are current and safe
+        run: pnpm check:footprint-previews
+      - name: Published package models are safe and up to date
+        run: pnpm check:models

@@ -76,8 +76,8 @@ the strongest available source and record it:
   (`https://www.st.com/resource/en/datasheet/stusb4500.pdf`; the direct PDF fetch may time
   out — a WebSearch for `STUSB4500 DS12499 VBUS_VS_DISCH` returns the authoritative content).
   If you cannot reach it, **label every STUSB4500 finding "based on repo docs
-  (stusb4500-pinout.md / components/stusb4500.md), verify against ST DS12499"** rather than
-  asserting a value from memory.
+  (stusb4500-pinout.md / overview/board-a-usb-pd-core.md), verify against ST DS12499"**
+  rather than asserting a value from memory.
 
 ### 4. Walk the power-supply checklist
 

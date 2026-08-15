@@ -105,19 +105,24 @@ Voltage
 
 ## CC Line ESD Protection
 
-<Info title="Current Design Uses USBLC6-2SC6">
+<Warning title="Historical: D4/USBLC6-2SC6 was removed entirely, not relocated">
 
-The v1.1 design uses **[USBLC6-2SC6](../components/usblc6-2sc6.md)** (D4) instead of ESDA25L for CC line protection. USBLC6-2SC6 provides:
+The v1.1 design used **USBLC6-2SC6** (D4) instead of ESDA25L for CC line
+protection. D4 no longer exists on either board: the 2-board split's Board A
+spec removes it outright — its VBUS-clamp role was a hard abs-max violation (a
+6V-rated zener on a 15V rail), and CC-line ESD is instead covered by the
+STUSB4500's own integrated 22V-rated protection, with PESD24VS1UB (D6/D7) DNP
+footprints kept as an opt-in upgrade for enclosed/production builds only. See
+[Board A's deltas](../overview/board-a-usb-pd-core.md#deltas-vs-the-current-single-board-circuit)
+for the full removal rationale and the DNP provision.
 
-- Lower clamping voltage (~17V vs ~44V)
-- Additional VBUS protection channel
-- Better suited for USB-C applications
+Everything below describes how the now-removed D4 worked. The general TVS
+principles (breakdown voltage, clamping, response time, placement) still apply
+to any TVS diode, including the ones still fitted on Board B (TVS1/TVS2/TVS3).
 
-The principles below still apply - only the specific component has changed.
+</Warning>
 
-</Info>
-
-### Circuit connection (USBLC6-2SC6)
+### Circuit connection (USBLC6-2SC6, historical — D4 no longer exists)
 
 ```
 USB-C Connector        D4 (USBLC6-2SC6)        STUSB4500
@@ -169,9 +174,10 @@ Each channel clamps to GND and VBUS independently
 | **ESD rating**        | 15kV (HBM)  | Survives typical human static discharge |
 | **VBUS channel**      | Yes (Pin 5) | Additional protection for power rail    |
 
-## ESD Event Timeline
+## ESD Event Timeline (historical — how the removed D4 responded)
 
-What happens when you touch the USB-C cable with static charge:
+What happened when you touched the USB-C cable with static charge, back when
+D4 was fitted:
 
 ```
 Time 0ns:
@@ -270,16 +276,21 @@ ESD travels long trace before clamping ❌
 
 ## Other TVS Diodes in the Circuit
 
-Our circuit has multiple TVS diodes for different protection needs:
+The project's other TVS diodes protect different rails. D4 (historical, CC1/
+CC2/VBUS, now removed) is included below for contrast with the still-fitted
+parts:
 
-| Component | Type        | Protects         | Working Voltage |
-| --------- | ----------- | ---------------- | --------------- |
-| **D4**    | USBLC6-2SC6 | CC1, CC2, VBUS   | 5.25V           |
-| **TVS1**  | SMAJ15A     | VBUS power rail  | 15V             |
-| **TVS2**  | SD05        | +5V output rail  | 5V              |
-| **TVS3**  | SMAJ15A     | +12V output rail | 15V             |
+| Component | Type        | Protects          | Working Voltage | Status |
+| --------- | ----------- | ------------------ | --------------- | ------ |
+| **D4**    | USBLC6-2SC6 | CC1, CC2, VBUS      | 5.25V           | Removed — Board A, see the Warning above |
+| **TVS1**  | SMAJ15A     | +12V output rail    | 15V             | Fitted — Board B |
+| **TVS2**  | SMAJ6.5A    | +5V output rail     | 6.5V            | Fitted — Board B (replaced SD05, decision (a)) |
+| **TVS3**  | SMAJ15A     | -12V output rail    | 15V             | Fitted — Board B (reversed orientation, decision `tvs3-orientation`) |
+| **D5**    | SMAJ20A     | VBUS input rail     | 20V             | Fitted — Board A (D4's VBUS-clamp role) |
 
-Each TVS is matched to the voltage of the line it protects.
+Each TVS is matched to the voltage of the line it protects. See
+[Board B's Protection Stage](../overview/board-b-synth-power.md#protection-stage)
+for the current fitted parts and their margin analysis.
 
 ## Key Takeaways
 
@@ -320,8 +331,8 @@ Each TVS is matched to the voltage of the line it protects.
 
 ## See Also
 
-- [USBLC6-2SC6 Documentation](../components/usblc6-2sc6.md) - Full component specifications
-- [ESDA25L Documentation](../components/esda25l.md) - Legacy component (replaced by USBLC6-2SC6)
-- [SMAJ15A Documentation](../components/smaj15a.md) - VBUS protection TVS
-- [SD05 Documentation](../components/sd05.md) - 5V rail protection TVS
+- [USBLC6-2SC6 removal background](../overview/board-a-usb-pd-core.md#deltas-vs-the-current-single-board-circuit) - D4 was deleted entirely in the 2-board split, not relocated
+- ESDA25L - Legacy component (replaced by USBLC6-2SC6, then USBLC6-2SC6 itself removed; no current design page)
+- [SMAJ15A (Protection Stage)](../overview/board-b-synth-power.md#protection-stage) - +12V/-12V output rail protection TVS (TVS1/TVS3)
+- [SD05 (Protection Stage)](../overview/board-b-synth-power.md#protection-stage) - 5V rail protection TVS (superseded by SMAJ6.5A — see decision (a))
 - [USB Type-C Pinout](./usb-type-c-pinout.md) - Understanding CC and other pins
