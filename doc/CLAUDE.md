@@ -105,12 +105,14 @@ When the user provides a local docs URL like `http://localhost:4321/docs/...`:
    The optional `title="…"` attribute is the callout heading (defaults to the
    capitalized variant name). Put the body on its own lines between the tags.
 
-   > **Do NOT use the `:::name` directive form.** The zfb next.49 engine does
-   > not transform container directives — `:::tip[Title]` leaks through as
-   > literal `:::tip[Title]` text in the rendered page. Upstream bug:
-   > Takazudo/zudo-front-builder#1085. The `directives` map in `zfb.config.ts`
-   > is kept (commented) so `:::` authoring can be restored in one revert once
-   > the engine is fixed. Until then, JSX is the only form that renders.
+   > The `:::name` directive form (e.g. `:::note` / `:::tip[Title]`) now also
+   > works — retested under zfb 2.5.1 by building a throwaway page and
+   > inspecting the built `dist/` HTML: both forms compiled to the same
+   > `admonition`/`admonition-title` markup as the JSX tags above, with the
+   > `[Title]` variant correctly setting the custom heading. The old
+   > next.49-era restriction (upstream Takazudo/zudo-front-builder#1085) no
+   > longer applies. JSX tags remain the documented default for consistency,
+   > but `:::` directive authoring is no longer broken.
 5. **Collapsible blocks** — use `<Details title="...">...</Details>` (global,
    no import). Makes the file `.mdx`.
 6. **Category landing pages** — use `<CategoryNav category="<section>" />` in a

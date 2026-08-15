@@ -28,9 +28,10 @@ doc/
 │   │   ├── how-to/     # How-to guides
 │   │   ├── misc/       # Footprint preview, misc
 │   │   └── inbox/      # Status, debug logs, quick reference
-│   ├── config/         # settings.ts (site config, nav), schemas
-│   ├── components/     # Framework Preact components (do not edit by hand)
-│   └── ...
+│   ├── chrome-bindings.tsx    # MDX component registry for generated pages
+│   ├── component-model-viewer/ # 3D model viewer island
+│   ├── component-preview/     # Footprint/component preview island
+│   └── styles/                # Global CSS
 ├── public/             # Static assets served at site root
 │   ├── circuits/       # Circuit diagram SVGs   → /circuits/<name>.svg
 │   ├── footprints/     # Footprint layout SVGs  → /footprints/<name>.svg
