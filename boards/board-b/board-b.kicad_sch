@@ -3839,7 +3839,7 @@
 				(font (size 1.27 1.27))
 			)
 		)
-		(property "Footprint" "zudo-pd:CAP-SMD_BD10.0-L10.3-W10.3-LS11.0-FD"
+		(property "Footprint" "zudo-pd:CAP-SMD_BD8.0-L8.3-W8.3-LS9.0-FD"
 			(at 38.1 152.4 0)
 			(effects
 				(font (size 1.27 1.27))
@@ -4295,7 +4295,7 @@
 				(font (size 1.27 1.27))
 			)
 		)
-		(property "Footprint" "zudo-pd:CAP-SMD_BD10.0-L10.3-W10.3-LS11.0-FD"
+		(property "Footprint" "zudo-pd:CAP-SMD_BD8.0-L8.3-W8.3-LS9.0-FD"
 			(at 444.5 152.4 0)
 			(effects
 				(font (size 1.27 1.27))

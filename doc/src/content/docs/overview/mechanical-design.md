@@ -36,21 +36,15 @@ MPN case codes (`GVT1E477M0810` and `RVT1H101M0810` are Φ8 cans; `RVT1A471M0607
 10.2 mm is separately confirmed in the
 [Board B design notes](./board-b-synth-power.md#design-notes-from-the-89-architecture-review).
 
-No manufacturer dimension **drawing** has been captured for the two 10.5 mm lines, so
-treat that figure as the project's working number rather than a datasheet-verified one,
-and confirm it before committing to an enclosure height.
+Both 10.5 mm figures are now **datasheet-verified** (issue #150). The 25 V line's HRK
+datasheet states the case three ways on page 1 — the header `GVT, 25v, 470uF, 8x10.5`,
+the description `D8H10.5mm`, and a Dimension & Marking table giving A 8.3 / B 8.3 /
+C 9.0 / D 8.0 / L 10.5. The 35 V line's FOLLON FVH datasheet lists the 10 × 10.5 case at
+A 10.3 / B 10.3 / C 11.2 / L 10.5 ± 0.5, and its own part-number key decodes
+`EFVH035ADA471M10B0` as diameter code `10` (Ø10) and height code `B0` (10.5 mm). Recorded
+as `fact-c2983319-case-size` in the passives bundle.
 
 </Note>
-
-<Warning title="C3/C11 sit on an oversized land">
-
-`scripts/schgen/board_b_spec.py` assigns C3/C11 the `CAP-SMD_BD10.0-L10.3-W10.3-LS11.0-FD`
-footprint — a Φ10 land pattern — while the fitted part (`GVT1E477M0810CNVC`, C2983319) is
-a Φ8 can. Nothing is broken by this today because Board B has no layout yet, but it needs
-a decision at layout time: either shrink the land to `CAP-SMD_BD8.0-…` or keep the larger
-pad deliberately.
-
-</Warning>
 
 ### Height Profile
 

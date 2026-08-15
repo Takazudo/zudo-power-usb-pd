@@ -18,8 +18,8 @@
     "textPolicy": "suppress-all-fp-text-in-temporary-library",
     "postprocessor": "repository-svg-normalizer-v1"
   },
-  "canonicalInputSha256": "4dfa36e2de708c3263b79d81b6c6bf76ea232286225ad8321776950ffc8442d3",
-  "generatedOutputSha256": "4e1bb7a255a10e9a3d2351aa7d8df168e28724bfdcda3c9b20bbf9679ac65258",
+  "canonicalInputSha256": "c8300a2696ac5c8a36142a68abcbb0ca6a8a1f8cd07820d2b10c05855483a8ff",
+  "generatedOutputSha256": "459cbdb5c81ab79368a873fbbda3abd678f1e80719cecac15e611bb5dd767013",
   "packages": [
     {
       "packageId": "QFN-24_L4.0-W4.0-P0.50-BL-EP2.8",
@@ -132,16 +132,16 @@
       "generatedOutputSha256": "68dfe4e3d42ac6b4c4a8bb368bee6c662639ecdbad0f538d08f8da52880809c0"
     },
     {
-      "packageId": "CAP-SMD_BD10.0-L10.3-W10.3-LS11.0-FD",
-      "footprintName": "CAP-SMD_BD10.0-L10.3-W10.3-LS11.0-FD",
-      "footprintPath": "footprints/kicad/zudo-power.pretty/CAP-SMD_BD10.0-L10.3-W10.3-LS11.0-FD.kicad_mod",
+      "packageId": "CAP-SMD_BD8.0-L8.3-W8.3-LS9.0-FD",
+      "footprintName": "CAP-SMD_BD8.0-L8.3-W8.3-LS9.0-FD",
+      "footprintPath": "footprints/kicad/zudo-power.pretty/CAP-SMD_BD8.0-L8.3-W8.3-LS9.0-FD.kicad_mod",
       "recordIds": [
         "rec-c2983319",
-        "rec-c22387780"
+        "rec-c970687"
       ],
-      "assetPath": "/assets/component-previews/footprints/CAP-SMD_BD10.0-L10.3-W10.3-LS11.0-FD.svg",
-      "canonicalInputSha256": "efe85b18f6f4f544bab7e715ff7d53ada36faa608bc31fed5d1e11904c2548d9",
-      "generatedOutputSha256": "50dbf5ad20280f58d6639c4f8116b04972b47838e674ca77b19488c232a21d28"
+      "assetPath": "/assets/component-previews/footprints/CAP-SMD_BD8.0-L8.3-W8.3-LS9.0-FD.svg",
+      "canonicalInputSha256": "f2bf19783c6f87a34d5b5fae191858dad6cf437263f0d5f677bd18ed957d059c",
+      "generatedOutputSha256": "40a9515c458a28ee81e8a7d7d8c8b4d36daa20671515962440be6d0822823f06"
     },
     {
       "packageId": "CAP-SMD_BD6.3-L6.6-W6.6-FD",
@@ -155,15 +155,15 @@
       "generatedOutputSha256": "a579e3c2cb3fe74d7bd3f3f7f8e6ed567c88ab2bd962c819947ffb26daa5ff7d"
     },
     {
-      "packageId": "CAP-SMD_BD8.0-L8.3-W8.3-LS9.0-FD",
-      "footprintName": "CAP-SMD_BD8.0-L8.3-W8.3-LS9.0-FD",
-      "footprintPath": "footprints/kicad/zudo-power.pretty/CAP-SMD_BD8.0-L8.3-W8.3-LS9.0-FD.kicad_mod",
+      "packageId": "CAP-SMD_BD10.0-L10.3-W10.3-LS11.0-FD",
+      "footprintName": "CAP-SMD_BD10.0-L10.3-W10.3-LS11.0-FD",
+      "footprintPath": "footprints/kicad/zudo-power.pretty/CAP-SMD_BD10.0-L10.3-W10.3-LS11.0-FD.kicad_mod",
       "recordIds": [
-        "rec-c970687"
+        "rec-c22387780"
       ],
-      "assetPath": "/assets/component-previews/footprints/CAP-SMD_BD8.0-L8.3-W8.3-LS9.0-FD.svg",
-      "canonicalInputSha256": "b255e1e6b8e0079c84cc365f621a4ef6a6ee2ce33e8445e727c9366e89a22991",
-      "generatedOutputSha256": "40a9515c458a28ee81e8a7d7d8c8b4d36daa20671515962440be6d0822823f06"
+      "assetPath": "/assets/component-previews/footprints/CAP-SMD_BD10.0-L10.3-W10.3-LS11.0-FD.svg",
+      "canonicalInputSha256": "efe85b18f6f4f544bab7e715ff7d53ada36faa608bc31fed5d1e11904c2548d9",
+      "generatedOutputSha256": "50dbf5ad20280f58d6639c4f8116b04972b47838e674ca77b19488c232a21d28"
     },
     {
       "packageId": "LED0603-RD",

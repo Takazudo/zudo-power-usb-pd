@@ -443,13 +443,29 @@
       "record_id": "rec-c2983319",
       "domain": "switching-frequency-ripple-current",
       "status": "OPEN",
-      "reason": "Only a partially-extracted 120Hz line-frequency ripple/ESR figure is available; the project's 150kHz DC-DC switching ripple is not manufacturer-specified.",
+      "reason": "The manufacturer RATING is now fully sourced: 240 mA rms @120Hz/105C with a x1.30 multiplier at 10kHz and above, giving 312 mA rms at the project's 150kHz switching frequency, and max ESR ~0.51 Ohm derived from the specified tan-delta. The earlier partial-extraction figures (approx. 1.0A ripple, approx. 0.035 Ohm ESR) were wrong by ~4x and ~14x respectively, both in the non-conservative direction, and have been superseded. The domain stays OPEN because the INSTALLED ripple current at C3 and especially C11 (the U4 inverting buck-boost output filter, the higher-stress position) has not been measured against that 312 mA rating -- tracked as BB-7.",
       "fact_ids": [
-        "fact-c2983319-ripple-esr-note"
+        "fact-c2983319-ripple-esr-note",
+        "fact-c2983319-ripple-120hz",
+        "fact-c2983319-ripple-freq-multiplier",
+        "fact-c2983319-ripple-hf-derate",
+        "fact-c2983319-tan-delta",
+        "fact-c2983319-esr-120hz"
       ],
       "blocking_fact_ids": [
         "fact-c2983319-ripple-esr-note"
       ]
+    },
+    {
+      "coverage_id": "cov-c2983319-case-size",
+      "record_id": "rec-c2983319",
+      "domain": "case-size",
+      "status": "COVERED",
+      "reason": "The manufacturer datasheet states the case size three independent ways on page 1 -- the header line 'GVT, 25v, 470uF, 8x10.5', the Description line 'D8H10.5mm', and the Dimension & Marking table Case row 'Phi 8x10.5' with A 8.3 / B 8.3 / C 9.0 / D 8.0 / P 3.1 / L 10.5. Those map digit-for-digit onto zudo-pd:CAP-SMD_BD8.0-L8.3-W8.3-LS9.0-FD, which is now the assigned land. This closes issue #150: the part is Phi 8, not Phi 10, so no design decision was required -- the previous BD10.0 assignment was simply wrong.",
+      "fact_ids": [
+        "fact-c2983319-case-size"
+      ],
+      "blocking_fact_ids": []
     },
     {
       "coverage_id": "cov-c22383803-electrical-limits",

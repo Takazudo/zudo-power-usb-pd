@@ -914,13 +914,14 @@
     {
       "record_id": "rec-c2983319",
       "pin_map_id": "pinmap-c2983319",
-      "canonical_sha256": "7fdf516ffc29b8254090fdc1d03739bceed7dc83d548eda187c563ca7702dcd1",
+      "canonical_sha256": "8a9ee91513310e4461f6c15ad44edde3ba2e6e7873bf559a8eb8b7f398e9dcc3",
       "evidence_fact_ids": [
-        "fact-c2983319-manufacturer"
+        "fact-c2983319-manufacturer",
+        "fact-c2983319-case-size"
       ],
       "trust_status": "PROJECT-LOCKED",
       "critical_pins": [],
-      "reviewer": "component-project-passives self-review: 2-terminal electrolytic, generic pad numbering, project footprint file"
+      "reviewer": "component-project-passives self-review: 2-terminal electrolytic, generic pad numbering, project footprint file. Re-locked for issue #150: footprint corrected from CAP-SMD_BD10.0-L10.3-W10.3-LS11.0-FD to CAP-SMD_BD8.0-L8.3-W8.3-LS9.0-FD after the manufacturer datasheet's Dimension & Marking table (Phi 8x10.5, D 8.0) was read directly; pin-1/pin-2 polarity remains UNCONFIRMED and is unchanged by this pass"
     },
     {
       "record_id": "rec-c22383803",

@@ -553,7 +553,27 @@ p-p triangle, `fact-cya1265-ripple-13v5` / `fact-cya1265-ripple-7v5`). Condition
 arithmetic this pass adds (ideal CCM steady state, nominal setpoints, D =
 (13.53 + 0.55) ÷ (15 + 13.53 + 0.55) ≈ 0.48 using `fact-ss34-vf`): output-cap RMS
 ripple ≈ Iout × sqrt(D/(1−D)) ≈ **0.77 A at the 0.8 A rated load**, shared by
-C11‖C24. Against that: the only ripple identity retained on any of the five
+C11‖C24.
+
+<Warning title="Updated by issue #150 — the ≈1.0 A rating this paragraph relied on was wrong">
+
+The C11 figure below (≈1.0 A at 120 Hz, from a partial PDF extraction) was **wrong by
+~4×**. Reading the hash-locked HRK datasheet directly gives 240 mA rms at 120 Hz/105 °C,
+with a published frequency multiplier of ×1.30 at 10 kHz and above — so the real rating
+at the LM2596's 150 kHz is **312 mA** (`fact-c2983319-ripple-hf-derate`). The recorded
+ESR was wrong too: ~0.035 Ω against a tan-δ-implied **~0.51 Ω**
+(`fact-c2983319-esr-120hz`), ~14× out. Both errors ran in the non-conservative direction.
+
+This inverts the conclusion. Against the ≈0.77 A shared by C11‖C24, even a generous
+equal split puts ~0.39 A through C11 versus a 312 mA rating — **roughly 1.25× over**, and
+worse if C11's higher ESR pulls a larger share. C24's FOLLON line still retains no ripple
+fact, so the split cannot be bounded from retained evidence. This is no longer "unbounded
+by any retained spec"; it is a quantified apparent exceedance and needs a real
+sizing decision, not just a bench thermal check.
+
+</Warning>
+
+Against that: the only ripple identity retained on any of the five
 electrolytic lines is C11's family rating of ≈1.0 A **at 120 Hz** from a partial PDF
 extraction, with the 150 kHz figure "not given at all"
 (`fact-c2983319-ripple-esr-note`), and C9's 146 mA is likewise a 120 Hz line-frequency

@@ -211,12 +211,12 @@ recorded as an open bench item, **not** changed on paper.
 
 | Symbol | Part Number | Specification | Package | Price | Application | Diagram |
 | ------ | ----------- | ------------- | ------- | ----- | ----------- | ------- |
-| **C3** | **[C2983319](https://jlcpcb.com/partdetail/C2983319)** | **470 µF 25 V** (GVT1E477M0810CNVC) | D10 | **$0.04** | U2 output filter | [D2](./circuit-diagrams.mdx#diagram2-usb-pd-15v-→-13-5v-buck-converter-lm2596s-adj-1) |
+| **C3** | **[C2983319](https://jlcpcb.com/partdetail/C2983319)** | **470 µF 25 V** (GVT1E477M0810CNVC) | D8 | **$0.04** | U2 output filter | [D2](./circuit-diagrams.mdx#diagram2-usb-pd-15v-→-13-5v-buck-converter-lm2596s-adj-1) |
 | **C4** | **[C335982](https://jlcpcb.com/partdetail/C335982)** | **470 µF 10 V** (ROQANG RVT1A471M0607) | D6.3 | **$0.05** | U3 output filter | [D3](./circuit-diagrams.mdx#diagram3-15v-→-7-5v-buck-converter-lm2596s-adj-2-u3) |
 | **C5** | **[C22387780](https://jlcpcb.com/partdetail/C22387780)** | **470 µF 35 V** (FOLLON EFVH035ADA471M10B0) | D10 | **$0.04** | U2 input bulk | [D2](./circuit-diagrams.mdx#diagram2-usb-pd-15v-→-13-5v-buck-converter-lm2596s-adj-1) |
 | **C7** | **[C22387780](https://jlcpcb.com/partdetail/C22387780)** | **470 µF 35 V** (FOLLON EFVH035ADA471M10B0) | D10 | **$0.04** | U3 input bulk | [D3](./circuit-diagrams.mdx#diagram3-15v-→-7-5v-buck-converter-lm2596s-adj-2-u3) |
 | **C9** | **[C970687](https://jlcpcb.com/partdetail/C970687)** | **100 µF 50 V** (DMBJ RVT1H101M0810) | D8 | **~$0.05** (est.) | U4 input bulk — bridges +15 V to -13.5 V, 28.5 V of stress | [D4](./circuit-diagrams.mdx#diagram4-15v-→--13-5v-inverting-buck-boost-lm2596s-adj-u4) |
-| **C11** | **[C2983319](https://jlcpcb.com/partdetail/C2983319)** | **470 µF 25 V** (GVT1E477M0810CNVC) | D10 | **$0.04** | U4 output filter | [D4](./circuit-diagrams.mdx#diagram4-15v-→--13-5v-inverting-buck-boost-lm2596s-adj-u4) |
+| **C11** | **[C2983319](https://jlcpcb.com/partdetail/C2983319)** | **470 µF 25 V** (GVT1E477M0810CNVC) | D8 | **$0.04** | U4 output filter | [D4](./circuit-diagrams.mdx#diagram4-15v-→--13-5v-inverting-buck-boost-lm2596s-adj-u4) |
 
 <Info title="Three wave-6 electrolytic corrections land in this table">
 
@@ -464,8 +464,10 @@ Total board height is ~12 mm including the 1.6 mm PCB. The exact can height is s
 once, in [Mechanical Design](./mechanical-design.md) — do not restate it here, so the
 two pages cannot drift apart again. Note that
 decision (d)'s C5/C7 swap moved those two positions from a D6.3 can to a D10 can, so
-Board B now carries **nine** D10 electrolytics (C3, C5, C7, C11, C14, C20, C21, C24, C25
-are D10; C4, C22, C23 are D6.3; C9 is D8).
+Board B now carries **seven** D10 electrolytics (C5, C7, C14, C20, C21, C24, C25 are
+D10; C3, C9, C11 are D8; C4, C22, C23 are D6.3). C3/C11 were counted as D10 until
+issue #150: the fitted part there (C2983319, GVT1E477M0810CNVC) is a Φ8 × 10.5 mm can
+per its datasheet, and had simply been assigned the Φ10 land by mistake.
 
 ## Total Cost Summary
 
