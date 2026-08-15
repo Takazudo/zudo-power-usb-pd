@@ -57,7 +57,7 @@ The L78xx family's 1.5 A rating is a property of the package, not of these rails
 +5 V rail is budgeted at 0.5 A and its L7805ABD2T evidence bundle records `iout-rating`
 as 0.5 A; PTC2 holds at 1.1 A, well under 1.5 A. Sizing a load against "1.5 A per rail"
 would exceed both the PTC hold currents and the 26.5 W output budget. See
-[Board B → PTC2 hold-current rationale](./board-b-synth-power.md#ptc2-hold-current-rationale-on-the-5-v-rail).
+[Board B → PTC2 hold-current rationale](./board-b-synth-power.md#protection-stage-ptc2-hold-current-rationale-on-the-5-v-rail).
 
 </Warning>
 
@@ -82,7 +82,7 @@ list only.
 | ------ | ----------- | ------------------------ | ----------- | ------- | ----- | ----------- | --------- |
 | **U1** | **[C2678061](https://jlcpcb.com/partdetail/C2678061)** | **STUSB4500QTR** | USB-IF certified PD sink | QFN-24 | **$2.50** | PD negotiation (15 V) | [Board A](./board-a-usb-pd-core.md#component-list-lcsc-parts-and-rough-cost) |
 | **Q1** | **[C347476](https://jlcpcb.com/partdetail/C347476)** | **AO3401A** (UMW) | P-channel MOSFET -30 V -4 A | SOT-23 | **$0.02** | Load switch (high-side) | [Board A](./board-a-usb-pd-core.md#load-switch-q1-gate-network-and-soft-start) |
-| **J1** | **[C456012](https://jlcpcb.com/partdetail/C456012)** | **USB-TYPE-C-009** | 6P Type-C female | SMD | **$0.05** | USB-C input | [Board A](./board-a-usb-pd-core.md#j1-substitution-options) |
+| **J1** | **[C456012](https://jlcpcb.com/partdetail/C456012)** | **USB-TYPE-C-009** | 6P Type-C female | SMD | **$0.05** | USB-C input | [Board A](./board-a-usb-pd-core.md#component-list-lcsc-parts-and-rough-cost-j1-substitution-options) |
 | **D5** | **[C571370](https://jlcpcb.com/partdetail/C571370)** | **SMAJ20A** | 20 V unidirectional TVS | SMA | **~$0.15** (est.) | VBUS clamp — cathode `VBUS_IN`, anode `GND` | [Board A](./board-a-usb-pd-core.md#deltas-vs-the-current-single-board-circuit) |
 | **D8** | **[C92321](https://jlcpcb.com/partdetail/C92321)** | **BZT52C11-7-F** (Diodes Inc.) | Zener, Vz 10.4-11.6 V | SOD-123 | **$0.054** | Q1 gate-source clamp — cathode `VBUS_IN`, anode `Net-(Q1-G)` | [Board A](./board-a-usb-pd-core.md#programming-order-and-the-d8-gate-clamp) |
 | **J4** | **[C144397](https://jlcpcb.com/partdetail/C144397)** | **B6B-XH-A(LF)(SN)** (JST) | 6-pin shrouded header, 2.5 mm | THT | **~$0.08** (est.) | Board A → Board B interface | [Board A](./board-a-usb-pd-core.md#a↔b-interface-contract-locked-—-copied-verbatim-from-90) |
@@ -339,7 +339,7 @@ revisions of this page. The L7812CD2T bundle retains **no** current-limit figure
 thermal-shutdown temperature — only a `TJ` range of 0-125 °C. The *ordering* of the cascade
 above is sound and is why the design works; the regulator-side numbers must come from
 DS0422 or a bench measurement before anyone designs against them. See
-[Board B → PTC1 and the L7812 current-limit cascade](./board-b-synth-power.md#ptc1-and-the-l7812-current-limit-cascade).
+[Board B → PTC1 and the L7812 current-limit cascade](./board-b-synth-power.md#protection-stage-ptc1-and-the-l7812-current-limit-cascade).
 
 </Warning>
 
@@ -558,7 +558,7 @@ PTC series resistance is a budget item, not free protection. The fitted `SMD1210
 has **no retained resistance figure** in this project's evidence base — the C20808
 sibling's numbers belong to a different part and must not be substituted. The drop is a
 bench measurement against a ≤50 mV project budget at 1.2 A; see
-[Board B → PTC1 voltage drop and acceptance testing](./board-b-synth-power.md#ptc1-voltage-drop-and-acceptance-testing).
+[Board B → PTC1 voltage drop and acceptance testing](./board-b-synth-power.md#protection-stage-ptc1-voltage-drop-and-acceptance-testing).
 
 ### Overload (current above the PTC hold rating)
 

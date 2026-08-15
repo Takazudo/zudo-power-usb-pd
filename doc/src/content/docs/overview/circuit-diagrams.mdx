@@ -206,7 +206,7 @@ into them still resolve. There is no Diagram1 any more.
 The L7812CD2T evidence bundle retains no current-limit figure and no thermal-shutdown
 temperature. Figures like "≈2.2A limit" and "150°C shutdown" appeared in older revisions of
 this page and are **not** backed by DS0422 here — see
-[Board B → PTC1 and the L7812 current-limit cascade](./board-b-synth-power.md#ptc1-and-the-l7812-current-limit-cascade).
+[Board B → PTC1 and the L7812 current-limit cascade](./board-b-synth-power.md#protection-stage-ptc1-and-the-l7812-current-limit-cascade).
 The *ordering* of the cascade is sound; the regulator-side numbers are not.
 
 </Warning>
@@ -253,7 +253,7 @@ The *ordering* of the cascade is sound; the regulator-side numbers are not.
 The +5V rail is budgeted at **0.5A** (`CLAUDE.md`; the L7805ABD2T bundle records `iout-rating`
 as 0.5A). 1.5A is a capability of the L78xx package family and is not a figure this design
 draws on — see
-[Board B → PTC2 hold-current rationale](./board-b-synth-power.md#ptc2-hold-current-rationale-on-the-5-v-rail).
+[Board B → PTC2 hold-current rationale](./board-b-synth-power.md#protection-stage-ptc2-hold-current-rationale-on-the-5-v-rail).
 
 </Note>
 

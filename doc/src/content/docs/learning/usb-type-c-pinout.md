@@ -68,7 +68,7 @@ USB Type-C 6-Pin Connector (Power-Only)
 | **3**    | **CC1**  | Configuration Channel 1 (orientation & PD) |
 | **4**    | **CC2**  | Configuration Channel 2 (orientation & PD) |
 
-**This project uses a 6-pin connector** (JLCPCB C456012) - see [J1 substitution options](../overview/board-a-usb-pd-core.md#j1-substitution-options).
+**This project uses a 6-pin connector** (JLCPCB C456012) - see [J1 substitution options](../overview/board-a-usb-pd-core.md#component-list-lcsc-parts-and-rough-cost-j1-substitution-options).
 
 ## Configuration Channel (CC) Pins
 
@@ -362,7 +362,7 @@ Pin 6 (GND) ──────────→ Pin 0 (GND/EPAD)
 
 ## Related Documentation
 
-- [J1 substitution options](../overview/board-a-usb-pd-core.md#j1-substitution-options) - Full specifications and footprint
+- [J1 substitution options](../overview/board-a-usb-pd-core.md#component-list-lcsc-parts-and-rough-cost-j1-substitution-options) - Full specifications and footprint
 - [CH224D USB-PD Controller](./ch224d-usb-pd-controller.md) - PD negotiation IC
 - [Board A: USB-PD Core](../overview/board-a-usb-pd-core.md) - Complete circuit diagram
 - [Open-Drain PG Pin](./open-drain-pg-pin.md) - Understanding the Power Good indicator
