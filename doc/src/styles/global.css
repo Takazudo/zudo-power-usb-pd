@@ -34,6 +34,9 @@
 /* ========================================
  * GFM task lists
  *
+ * Workaround for https://github.com/zudolab/zudo-doc/issues/3388 — remove once
+ * the package ships its own task-list marker reset.
+ *
  * The zudo-doc preset hardcodes `gfm.taskListItem: true` with no opt-out, so
  * `- [ ]` items render a real `<input type=checkbox>`. The emitted markup is
  * bare — `<li><p><input type=checkbox> …` with NO class on the `ul`/`li` (no
