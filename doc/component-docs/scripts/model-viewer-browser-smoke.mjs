@@ -686,13 +686,18 @@ async function exerciseViewerInteractions(cdp, instance = "inline", testResize =
   before = await renderCount(cdp, instance);
   await setViewportAndMedia(cdp, 1200, "light", false);
   await waitFor(cdp, `Number(document.querySelector(${JSON.stringify(rootSelector)}).dataset.renderCount) > ${before}`);
-  const resized = await evaluate(cdp, `(() => {
-    const canvas = document.querySelector(${JSON.stringify(`${rootSelector} [data-model-viewer-viewport] canvas`)});
-    const viewport = document.querySelector(${JSON.stringify(`${rootSelector} [data-model-viewer-viewport]`)});
-    return { cssWidth: canvas.clientWidth, viewportWidth: viewport.clientWidth, pixelWidth: canvas.width, ratio: devicePixelRatio };
-  })()`);
-  const expectedPixelWidth = resized.viewportWidth * resized.ratio;
-  if (Math.abs(resized.pixelWidth - expectedPixelWidth) > Math.max(4, expectedPixelWidth * 0.01)) {
+  // The first render tick can land before the ResizeObserver -> rAF backing-store update,
+  // so a one-shot sample here races the resize by a frame (observed in CI as pixelWidth
+  // lagging viewportWidth by a few px). Poll the settled invariant instead, like the
+  // dialog path already does; on timeout, throw with the sampled diagnostics.
+  try {
+    await waitForCanvasSize(cdp, instance);
+  } catch {
+    const resized = await evaluate(cdp, `(() => {
+      const canvas = document.querySelector(${JSON.stringify(`${rootSelector} [data-model-viewer-viewport] canvas`)});
+      const viewport = document.querySelector(${JSON.stringify(`${rootSelector} [data-model-viewer-viewport]`)});
+      return { cssWidth: canvas.clientWidth, viewportWidth: viewport.clientWidth, pixelWidth: canvas.width, ratio: devicePixelRatio };
+    })()`);
     throw new Error(`viewer canvas did not resize to viewport: ${JSON.stringify(resized)}`);
   }
   await setViewportAndMedia(cdp, 1440, "light", false);
