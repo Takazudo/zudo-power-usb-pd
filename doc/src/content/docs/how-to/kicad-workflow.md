@@ -8,7 +8,7 @@ Complete workflow for creating a PCB design in KiCad, from schematic to manufact
 <Warning title="This page's Stage 1-2 hand-drawing workflow is for the legacy root project only">
 
 Board A and Board B (`boards/board-a/`, `boards/board-b/`) are **not** drawn by hand in
-KiCad's Schematic Editor — see [Spec-driven schematic generation](#spec-driven-schematic-generation-boards-board-a--board-b)
+KiCad's Schematic Editor — see [Spec-driven schematic generation](#spec-driven-schematic-generation-boards-board-a-boards-board-b)
 directly below. The rest of this page (Stage 1: Symbol Management through Stage 2:
 Schematic Creation) describes the manual workflow used for the **legacy root project**
 (`zudo-pd.kicad_pro` / `zudo-pd.kicad_sch` and its sub-sheets) — the as-built v4

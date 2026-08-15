@@ -11,7 +11,7 @@ allowed-tools: Bash(bash .claude/scripts/bump-version.sh *), Bash(git *), Bash(g
 # l-bump-version-y — new JLCPCB order
 
 Bumps **Y** in the project version `X.Y.Z`. Y = the Nth JLCPCB PCBA order (lifetime counter).
-See `doc/docs/inbox/versioning.md` for the full scheme.
+See `doc/src/content/docs/inbox/versioning.md` for the full scheme.
 
 **Effect:** `0.4.0 → 0.5.0` (resets Z to 0) → commit `chore(version): bump to 0.5.0` →
 annotated tag `v0.5.0` → push → **GitHub release `v0.5.0`**.

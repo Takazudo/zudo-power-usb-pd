@@ -11,7 +11,7 @@ allowed-tools: Bash(bash .claude/scripts/bump-version.sh *), Bash(git *), Bash(c
 # l-bump-version-z — local checkpoint
 
 Bumps **Z** in the project version `X.Y.Z`. Z = an ad-hoc local checkpoint, tagged whenever a
-point in the work is worth marking. See `doc/docs/inbox/versioning.md`.
+point in the work is worth marking. See `doc/src/content/docs/inbox/versioning.md`.
 
 **Effect:** `0.4.0 → 0.4.1` → commit `chore(version): bump to 0.4.1` → annotated tag
 `v0.4.1` → push. **No GitHub release** (git tag only, by design — that's what separates Z from

@@ -11,7 +11,7 @@ allowed-tools: Bash(bash .claude/scripts/bump-version.sh *), Bash(git *), Bash(g
 # l-bump-version-x — product release
 
 Bumps **X** in the project version `X.Y.Z`. X = the product's own release version (currently 0
-— nothing shipped yet). See `doc/docs/inbox/versioning.md`.
+— nothing shipped yet). See `doc/src/content/docs/inbox/versioning.md`.
 
 **Effect:** e.g. `0.5.2 → 1.5.0` — increments X, resets Z to 0, and **keeps Y** (Y is a
 lifetime JLCPCB-order counter and does not reset). Then commit → annotated tag `v1.5.0` →
