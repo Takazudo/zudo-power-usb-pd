@@ -27,6 +27,26 @@
 @source "component-docs/**/*.{tsx,ts,jsx,js}";
 
 /* ========================================
+ * GFM task lists
+ *
+ * The zudo-doc preset hardcodes `gfm.taskListItem: true` with no opt-out, so
+ * `- [ ]` items render a real `<input type=checkbox>`. The emitted markup is
+ * bare — `<li><p><input type=checkbox> …` with NO class on the `ul`/`li` (no
+ * `contains-task-list` / `task-list-item` hook), and the package ships no rule
+ * suppressing the list marker. Without this the disc paints beside the
+ * checkbox and every row reads as double-bulleted.
+ *
+ * Structural `:has()` is the only available hook. Both forms are matched: the
+ * loose form (all 95 items in this corpus today) and the tight form, which is
+ * what a future item authored without surrounding blank lines would produce.
+ * ======================================== */
+
+.zd-content li:has(> p > input[type="checkbox"]),
+.zd-content li:has(> input[type="checkbox"]) {
+  list-style: none;
+}
+
+/* ========================================
  * Generated component-record pages (doc/component-docs)
  *
  * Styles for the UI components component-record pages emit
@@ -37,10 +57,10 @@
  * here, so the two stacked overlays carry plain z-index values rather than
  * token references.
  *
- * This is the ONLY hand-authored block left in this file — everything else
- * (tokens, preflight, content typography, admonitions, code-block chrome,
- * page-loading) now ships from the @takazudo/zudo-doc stylesheets imported
- * above.
+ * This and the task-list rule above are the only hand-authored blocks left in
+ * this file — everything else (tokens, preflight, content typography,
+ * admonitions, code-block chrome, page-loading) now ships from the
+ * @takazudo/zudo-doc stylesheets imported above.
  * ======================================== */
 
 /* Generated component pages anchor on evidence IDs rather than heading text,
