@@ -190,7 +190,7 @@ appear in the tables below, though the net names and pin roles are unchanged:
 |-----|--------------------------|------------|
 | `+15V -> +13.5V gen` | `U4.1 C9.1 C10.1` (shared bus) | +15V input |
 | `Net-(D3-K)` | `U4.2 D3.1 L3.1` | Switch node |
-| `/DC-DC Conversion/-13.5V OUT` | `U4.3(Gnd) U4.5(~ON/OFF) U4.6(TAB) D3.2 C9.2 C10.2 C11.2 R6.2` (+ `C16.1 C24.2 U8.2(VIN)` on the LDO sheet) | U4's own GND pin, ON/OFF, and TAB all bootstrap to −13.5V (not system GND) — feeds U8 (CJ7912) |
+| `/DC-DC Conversion/-13.5V OUT` | `U4.3(Gnd) U4.5(~ON/OFF) U4.6(TAB) D3.2 C9.2 C10.2 C11.2 R6.2` (+ `C16.1 C24.2 C12.2 U8.2(VIN)` on the LDO sheet) | U4's own GND pin, ON/OFF, and TAB all bootstrap to −13.5V (not system GND) — feeds U8 (CJ7912). C12 (decision `neg-rail-cap-bank`) is the output bank's third can, added in parallel with C11/C24 |
 | `Net-(U4-Feedback)` | `U4.4 R5.1 R6.1 C33.1` | FB divider midpoint |
 | `GND` (system) | `L3.2` only | Inductor references system GND (inverting topology: inductor switch-node→GND, catch diode switch-node→output — opposite of U2/U3's buck arrangement) |
 
@@ -204,7 +204,7 @@ flowchart TD
 
   U2 -->|"/DC-DC Conversion/+13.5V OUT"| OUT135["+13.5V rail"]
   U3 -->|"/DC-DC Conversion/+7.5V OUT"| OUT75["+7.5V rail"]
-  U4 -->|"switch node -> D3 -> -13.5V OUT"| OUTN135["-13.5V rail\n(U4 local GND bootstrapped here)"]
+  U4 -->|"switch node -> D3 -> -13.5V OUT"| OUTN135["-13.5V rail\n(U4 local GND bootstrapped here)\nC11 + C24 + C12 output bank"]
 
   OUT135 --> U6["U6 L7812\n+12V LDO"]
   OUT75 --> U7["U7 L7805\n+5V LDO"]
@@ -253,7 +253,7 @@ setpoint is a Board B design-phase decision, not a documentation decision.
 | `Net-(U6-OUT)` | `U6.3(OUT) C17.2 C21.1 R7.1 PTC1.1` | +12V LDO output, before PTC1 |
 | `/DC-DC Conversion/+7.5V OUT` (relevant) | `C15.1 C22.1 U7.1(IN)` | +5V LDO input |
 | `Net-(U7-OUT)` | `U7.3(OUT) C18.1 C23.1 R8.1 PTC2.1` | +5V LDO output, before PTC2 |
-| `/DC-DC Conversion/-13.5V OUT` (relevant) | `C16.1 C24.2 U8.2(VIN)` | −12V LDO input |
+| `/DC-DC Conversion/-13.5V OUT` (relevant) | `C16.1 C24.2 C12.2 U8.2(VIN)` | −12V LDO input. C12 is the output bank's third can (decision `neg-rail-cap-bank`), placed near the Eurorack bus headers (row H), not physically on this sheet, but electrically in parallel with C11/C24 on this net |
 | `Net-(U8-OUT)` | `U8.3(OUT) C19.1 C25.2 R9.1 PTC3.1` | −12V LDO output, before PTC3 |
 | `GND` (relevant) | `C14.2 C15.2 C17.1 C18.2 C20.2 C21.2 C22.2 C23.2 U6.4 U7.2 U8.1` | +12V/+5V decoupling references GND individually (see below for the −12V network's corrected form) |
 
@@ -269,6 +269,23 @@ become `GND` members). Board B's design should carry forward the **corrected**
 network — i.e. C16.2/C24.1 and C19.2/C25.1 route straight to `GND`, matching
 the +12V/+5V pattern — not the network as it appears in today's still-unfixed
 netlist.
+
+</Info>
+
+<Info title="C12 added — third can on the -13.5V output bank (decision neg-rail-cap-bank)">
+
+The −13.5V output-cap bank was `C11 ‖ C24` at 940 µF total. Per [BB-7 in the
+spec-architecture review](../inbox/spec-architecture-review.md), splitting the
+≈0.77 A output-cap ripple across just those two cans put both at or over their
+150 kHz-derated ripple rating (C11 ≈1.16×, C24 ≈1.01×). Decision `neg-rail-cap-bank`
+adds a third can, **C12** (a second FOLLON C22387780, 470 µF/35 V, reusing the same
+line already fitted at C14/C20/C21/C24/C25), in parallel: `C12.2` on
+`/DC-DC Conversion/-13.5V OUT`, `C12.1` on `GND` — mirroring C24's pin sense exactly.
+The bank becomes **C11 ‖ C24 ‖ C12 = 1410 µF**, and the three-way split puts every can
+inside the 85% sizing bar (C11 75.9%, C24 = C12 66.1%). The bench caveat is
+unchanged: the split uses 120 Hz ESR ratios because neither datasheet publishes ESR at
+150 kHz — the ratios are trustworthy, the absolute ohm values are pessimistic — and the
+installed ripple is still an open bench item (issue #155).
 
 </Info>
 
@@ -593,7 +610,7 @@ complexity. Figures below are the existing single-board
 | Board | Stages carried | Component subtotal | Source |
 |-------|-----------------|---------------------|--------|
 | Board A | USB-PD (STUSB4500, load switch, USB-C receptacle, ESD/TVS, resistors/caps) | **~$2.90** | [BOM](./bom.md) Stage 1 |
-| **Board B** | DC-DC ($2.24) + LDO ($0.64) + Protection ($0.82) + Output ($1.28) | **~$4.98** | [BOM](./bom.md) Stages 2–5 |
+| **Board B** | DC-DC ($2.28) + LDO ($0.64) + Protection ($0.82) + Output ($1.28) | **~$5.02** | [BOM](./bom.md) Stages 2–5 |
 
 Both boards additionally carry one A↔B interface connector (JST B6B-XH-A,
 LCSC C144397, a few cents each) — negligible next to the totals above.
@@ -605,7 +622,7 @@ LCSC C144397, a few cents each) — negligible next to the totals above.
 | USB-PD controller | U1 STUSB4500QTR | $2.50 | 1 | A |
 | Power inductors, 100µH/4.5A | L1, L2, L3 | $0.378 | 3 | **B** |
 | DC-DC converter ICs (TO-263-5) | U2, U3, U4 LM2596S-ADJ | $0.266 | 3 | **B** |
-| Bulk electrolytics, 470µF (25V/35V) | C3, C11, C14, C20, C21, C24, C25 | $0.04 | 7 | **B** |
+| Bulk electrolytics, 470µF (25V/35V) | C3, C11, C12, C14, C20, C21, C24, C25 | $0.04 | 8 | **B** |
 | Bulk electrolytics, 470µF (16V) | C4, C22, C23 | $0.05 | 3 | **B** |
 | LDO regulators (TO-263-2 / TO-252) | U6 L7812, U7 L7805, U8 CJ7912 | $0.11 | 3 | **B** |
 | Faston power terminals | J6–J9 | ~$0.26 | 4 | **B** |

@@ -404,61 +404,61 @@
     {
       "key": "fact.factId",
       "decision": "PUBLISH",
-      "emitted": 467,
+      "emitted": 469,
       "withheld": 0
     },
     {
       "key": "fact.class",
       "decision": "PUBLISH",
-      "emitted": 467,
+      "emitted": 469,
       "withheld": 0
     },
     {
       "key": "fact.value",
       "decision": "PUBLISH",
-      "emitted": 467,
+      "emitted": 469,
       "withheld": 0
     },
     {
       "key": "fact.unit",
       "decision": "PUBLISH",
-      "emitted": 467,
+      "emitted": 469,
       "withheld": 0
     },
     {
       "key": "fact.conditions",
       "decision": "PUBLISH",
-      "emitted": 467,
+      "emitted": 469,
       "withheld": 0
     },
     {
       "key": "fact.locator",
       "decision": "PUBLISH",
-      "emitted": 467,
+      "emitted": 469,
       "withheld": 0
     },
     {
       "key": "fact.provenance",
       "decision": "PUBLISH",
-      "emitted": 467,
+      "emitted": 469,
       "withheld": 0
     },
     {
       "key": "fact.verdict",
       "decision": "PUBLISH",
-      "emitted": 467,
+      "emitted": 469,
       "withheld": 0
     },
     {
       "key": "fact.dependsOn",
       "decision": "PUBLISH",
-      "emitted": 467,
+      "emitted": 469,
       "withheld": 0
     },
     {
       "key": "fact.expression",
       "decision": "PUBLISH",
-      "emitted": 467,
+      "emitted": 469,
       "withheld": 0
     },
     {
@@ -1529,7 +1529,7 @@
   "counts": {
     "generatedPages": 45,
     "publishedCoverageDomains": 147,
-    "publishedFacts": 467,
+    "publishedFacts": 469,
     "publishedIntegrationRules": 9,
     "publishedInteractions": 36,
     "publishedPinMaps": 41,
