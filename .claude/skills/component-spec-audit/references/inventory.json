@@ -521,7 +521,7 @@
       "owner_skill": "component-project-passives",
       "identity_state": "VERIFIED",
       "source_state": "AVAILABLE",
-      "function": "470 uF 25V aluminum electrolytic capacitor, +13.5V DC-DC output bulk filter",
+      "function": "470 uF 25V aluminum electrolytic capacitor, +13.5V and -13.5V DC-DC output bulk filter",
       "placements": [
         {
           "board": "board-b",

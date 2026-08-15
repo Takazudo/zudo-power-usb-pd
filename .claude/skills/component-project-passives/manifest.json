@@ -454,7 +454,6 @@
       ],
       "interaction_ids": [],
       "open_domains": [
-        "c11-rail-assignment",
         "switching-frequency-ripple-current"
       ]
     },

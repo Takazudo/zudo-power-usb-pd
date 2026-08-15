@@ -429,14 +429,12 @@
       "coverage_id": "cov-c2983319-net-discrepancy",
       "record_id": "rec-c2983319",
       "domain": "c11-rail-assignment",
-      "status": "OPEN",
-      "reason": "board-b-synth-power.md's netlist-derived table places C11.2 on -13.5V OUT, conflicting with inventory.json's +13.5V function text for C11; not resolved here.",
+      "status": "COVERED",
+      "reason": "Resolved against the generator spec, which is the source of truth for placement: board_b_spec.py NETS puts C11.2 on '/DC-DC Conversion/-13.5V OUT' and C3.1 on '/DC-DC Conversion/+13.5V OUT'. That matches the board-b doc's U4 net table, the locked baseline, and the sheet-geometry adjacency probe recorded in BB-12; inventory.json's function text was the lone outlier and is corrected. The 11.5 V margin is unaffected -- it was already computed against a 13.5 V magnitude, which both rails share.",
       "fact_ids": [
         "fact-c2983319-c11-net-discrepancy"
       ],
-      "blocking_fact_ids": [
-        "fact-c2983319-c11-net-discrepancy"
-      ]
+      "blocking_fact_ids": []
     },
     {
       "coverage_id": "cov-c2983319-ripple-esr",

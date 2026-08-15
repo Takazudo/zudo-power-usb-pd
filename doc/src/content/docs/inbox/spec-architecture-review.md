@@ -660,7 +660,20 @@ Evidence: board-b-synth-power.md U2/U3 net tables; `board-b.json` `GND` array +
 `unresolved` note 7; `inventory.json` line-c8678 placements (D1/D2/D3, fitted);
 sch property reads D1/D2 (`SS34`/C8678).
 
-#### BB-12 — the C11 rail discrepancy resolves toward the −13.5 V rail on three independent reads; inventory.json's function text is the outlier (LOW lead)
+#### BB-12 — the C11 rail discrepancy resolves toward the −13.5 V rail on three independent reads; inventory.json's function text is the outlier (LOW lead) — **RESOLVED**
+
+<Note title="Resolved — the fix this lead names has been applied">
+
+The "netlist-neutral fix candidate" below has been taken up: `board_b_spec.py`'s `NETS`
+is the source of truth for placement and puts `C11.2` on `/DC-DC Conversion/-13.5V OUT`
+with `C3.1` on `/DC-DC Conversion/+13.5V OUT`, giving a fourth independent read
+agreeing with the doc table, the baseline, and the geometry probe. The
+`line-c2983319` function text now names both refdes and their rails,
+`fact-c2983319-c11-net-discrepancy` records the resolution and no longer blocks, and
+the `c11-rail-assignment` coverage domain is COVERED. Pin-1/pin-2 **polarity** is a
+separate question and stays UNCONFIRMED.
+
+</Note>
 
 `fact-c2983319-c11-net-discrepancy` (NEEDS BENCH) records the conflict: the doc's U4
 net table and the baseline put C11.2 on `/DC-DC Conversion/-13.5V OUT`, while
